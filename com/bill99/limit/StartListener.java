@@ -32,6 +32,7 @@ public class StartListener implements LifecycleListener {
 		// Identify the context we are associated with
 		// System.out.println("lifecycleEvent: " + event.getType());
 		try {
+
 			context = (Context) event.getLifecycle();
 		} catch (ClassCastException e) {
 			log.error(sm.getString("contextConfig.cce", event.getLifecycle()), e);
