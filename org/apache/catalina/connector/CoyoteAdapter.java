@@ -45,6 +45,7 @@ import org.apache.tomcat.util.http.ServerCookie;
 import org.apache.tomcat.util.net.SocketStatus;
 
 import com.bill99.limit.TwiceReadRequest;
+import com.bill99.limit.util.RequestUtil;
 import com.bill99.limit.util.XmlParse;
 
 /**
@@ -82,6 +83,7 @@ public class CoyoteAdapter implements Adapter {
 
 		super();
 		this.connector = connector;
+		System.out.println("###########I am create once");
 
 	}
 
@@ -275,18 +277,16 @@ public class CoyoteAdapter implements Adapter {
 		}
 
 		System.out.println("enter coyoteAdapter service");
-		Map m = request.getParameterMap();
-		for (Object o : m.keySet()) {
-			System.out.println(MessageFormat.format("parameter key:{0} value{1}", o, m.get(o)));
-		}
-		InputStream input = request.getInputStream();
 
-		Map<String, String> kv = XmlParse.sax(input);
-		// String content =
-		// com.bill99.limit.IOUtils.convertStreamToString(input);
-		if (kv != null) {
-			for (String key : kv.keySet()) {
-				System.out.println("key: " + key + " value: " + kv.get(key));
+		boolean isSOAPRequest = RequestUtil.isSOAPRequest(request);
+
+		if (isSOAPRequest) {
+			InputStream input = request.getInputStream();
+			Map<String, String> kv = XmlParse.sax(input);
+			if (kv != null) {
+				for (String key : kv.keySet()) {
+					System.out.println("key: " + key + " value: " + kv.get(key));
+				}
 			}
 		}
 		boolean comet = false;

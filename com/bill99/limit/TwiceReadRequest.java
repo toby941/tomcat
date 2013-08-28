@@ -8,10 +8,15 @@ import java.io.InputStreamReader;
 
 import javax.servlet.ServletInputStream;
 
+import org.apache.catalina.connector.CoyoteAdapter;
 import org.apache.catalina.connector.CoyoteInputStream;
 import org.apache.catalina.connector.Request;
 
 /**
+ * {@link Request}包装类，用于实现对于 {@link Request#getInputStream()}的两次读取功能 在
+ * {@link CoyoteAdapter#service(org.apache.coyote.Request, org.apache.coyote.Response)}
+ * 方法中需提前获取 {@link Request#getInputStream()}解析请求参数用于判断限流优先级
+ * 
  * @author jun.bao
  * @since 2013年8月22日
  */
@@ -75,9 +80,7 @@ public class TwiceReadRequest extends Request {
 
 	@Override
 	public InputStream getStream() {
-		System.out.println("call getStream: " + body);
 		final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes());
-
 		ServletInputStream inputStream = new ServletInputStream() {
 			public int read() throws IOException {
 				return byteArrayInputStream.read();
@@ -86,6 +89,9 @@ public class TwiceReadRequest extends Request {
 		return inputStream;
 	}
 
+	/**
+	 * request请求重用时，用新的inputStream填充body
+	 */
 	public void resetBody() {
 		StringBuilder stringBuilder = new StringBuilder();
 		BufferedReader bufferedReader = null;
@@ -103,7 +109,7 @@ public class TwiceReadRequest extends Request {
 					stringBuilder.append(charBuffer, 0, bytesRead);
 				}
 			} else {
-				stringBuilder.append("xx");
+				stringBuilder.append("");
 			}
 		} catch (IOException ex) {
 			logger.error("Error reading the request body...");
@@ -118,7 +124,6 @@ public class TwiceReadRequest extends Request {
 		}
 
 		body = stringBuilder.toString();
-		System.out.println("TwiceReadRequest create body: " + body);
 	}
 
 }

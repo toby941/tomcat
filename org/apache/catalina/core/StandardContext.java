@@ -103,7 +103,7 @@ import org.apache.naming.resources.ProxyDirContext;
 import org.apache.naming.resources.WARDirContext;
 import org.apache.tomcat.util.modeler.Registry;
 
-import com.bill99.limit.StartListener;
+import com.bill99.limit.LimitLifecycleListener;
 
 /**
  * Standard implementation of the <b>Context</b> interface. Each child container
@@ -5300,7 +5300,7 @@ public class StandardContext extends ContainerBase implements Context, Serializa
 			this.addLifecycleListener(new TldConfig());
 		}
 
-		this.addLifecycleListener(new StartListener());
+		this.addLifecycleListener(new LimitLifecycleListener());
 
 		super.init();
 

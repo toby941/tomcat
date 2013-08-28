@@ -1,4 +1,4 @@
-package com.bill99.limit;
+package com.bill99.limit.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;

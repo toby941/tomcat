@@ -1003,7 +1003,6 @@ public class Connector implements Lifecycle, MBeanRegistration {
 				log.info(sm.getString("coyoteConnector.alreadyInitialized"));
 			return;
 		}
-
 		this.initialized = true;
 
 		if (oname == null && (container instanceof StandardEngine)) {
