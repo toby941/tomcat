@@ -18,10 +18,8 @@
 package org.apache.catalina.connector;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
-import java.util.Map;
 
 import org.apache.catalina.CometEvent;
 import org.apache.catalina.Context;
@@ -45,8 +43,7 @@ import org.apache.tomcat.util.http.ServerCookie;
 import org.apache.tomcat.util.net.SocketStatus;
 
 import com.bill99.limit.TwiceReadRequest;
-import com.bill99.limit.util.RequestUtil;
-import com.bill99.limit.util.XmlParse;
+import com.bill99.limit.service.token.TokenPoolManager;
 
 /**
  * Implementation of a request processor which delegates the processing to a
@@ -278,17 +275,6 @@ public class CoyoteAdapter implements Adapter {
 
 		System.out.println("enter coyoteAdapter service");
 
-		boolean isSOAPRequest = RequestUtil.isSOAPRequest(request);
-
-		if (isSOAPRequest) {
-			InputStream input = request.getInputStream();
-			Map<String, String> kv = XmlParse.sax(input);
-			if (kv != null) {
-				for (String key : kv.keySet()) {
-					System.out.println("key: " + key + " value: " + kv.get(key));
-				}
-			}
-		}
 		boolean comet = false;
 
 		try {
@@ -298,14 +284,13 @@ public class CoyoteAdapter implements Adapter {
 			req.getRequestProcessor().setWorkerThreadName(Thread.currentThread().getName());
 			if (postParseRequest(req, request, res, response)) {
 				// Calling the container
-				String query = request.getQueryString();
-				String c = request.getParameter("c");
-				System.out.println(query);
-
-				if (false && query != null && query.contains("1")) {
-
-					response.getResponse().getWriter()
-							.println(MessageFormat.format("I am blocked by limit,with query:{0},Parameter c:{1}", query, c));
+				Boolean token = TokenPoolManager.getTokenPoolManager().getToken(request);
+				if (!token) {
+					response.getResponse()
+							.getWriter()
+							.println(
+									MessageFormat.format("can not obtain a token so end request,with requestURI:{0}",
+											request.getRequestURI()));
 				} else {
 					connector.getContainer().getPipeline().getFirst().invoke(request, response);
 				}
