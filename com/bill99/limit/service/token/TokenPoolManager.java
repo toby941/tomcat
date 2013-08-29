@@ -12,6 +12,8 @@ import java.util.concurrent.TimeoutException;
 import org.apache.catalina.connector.Request;
 
 import com.bill99.limit.service.token.priority.PriorityManager;
+import com.bill99.limit.service.token.task.AlarmPoolExecutor;
+import com.bill99.limit.service.token.task.AlertCallable;
 
 /**
  * @author jun.bao
@@ -25,6 +27,7 @@ public class TokenPoolManager {
 
 	private static TokenPoolManager manager;
 	private PriorityManager priorityManager;
+	private AlarmPoolExecutor alarmPoolExecutor;
 
 	public static TokenPoolManager getTokenPoolManager() {
 		if (manager == null) {
@@ -46,7 +49,6 @@ public class TokenPoolManager {
 	}
 
 	public void init() {
-
 		List<TokenQueueConfig> queueConfigs = new ArrayList<TokenQueueConfig>();
 		for (int i = 0; i < 5; i++) {
 			TokenQueueConfig config = new TokenQueueConfig();
@@ -58,11 +60,16 @@ public class TokenPoolManager {
 		tokenPoolMap = new HashMap<String, TokenPool>();
 		tokenPoolMap.put("pool", pool);
 		priorityManager = PriorityManager.getPriorityManager();
+		alarmPoolExecutor = new AlarmPoolExecutor();
 	}
 
 	public boolean releaseToken(String name) {
 		TokenPool pool = getPool(name);
-		return pool.releaseToken(userThreadLocal.get());
+		if (pool != null) {
+			return pool.releaseToken(userThreadLocal.get());
+		}
+		return true;
+
 	}
 
 	/**
@@ -89,15 +96,15 @@ public class TokenPoolManager {
 		return getToken(requestURI, priority);
 	}
 
-	private boolean getToken(String poolName, int priority) {
-		TokenPool pool = getPool(poolName);
+	private boolean getToken(String requestURI, int priority) {
+		TokenPool pool = getPool(requestURI);
+		// requestURI无限流情况下，请求放行
 		if (pool == null) {
 			return true;
 		}
 		Future<String> future = pool.submit(priority);
 		String threadName = Thread.currentThread().getName();
 		try {
-			System.out.println("begin thread: " + threadName);
 			String result = future.get(defaultRequestTimeout, TimeUnit.SECONDS);
 			if (result != null && result.length() > 0) {
 				userThreadLocal.set(result);
@@ -111,9 +118,33 @@ public class TokenPoolManager {
 			e.printStackTrace();
 			return false;
 		} catch (TimeoutException e) {
-			System.out.println("timeout thread: " + threadName);
+			sendGetTokenTimeOutAlert(requestURI, priority, threadName, e);
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	private Map<String, String> getAlarmInfo(String requestURI, int priority) {
+		Map<String, String> map = new HashMap<String, String>();
+		TokenPool pool = getPool(requestURI);
+		map.put("name", requestURI);
+		map.put("priority", String.valueOf(priority));
+		map.put("size", String.valueOf(pool.getQueue(priority).size()));
+		return map;
+	}
+
+	/**
+	 * 异步上传报警信息
+	 * 
+	 * @param requestURI
+	 * @param priority
+	 * @param exception
+	 */
+	public void sendGetTokenTimeOutAlert(String requestURI, int priority, String threadName, TimeoutException exception) {
+		Map<String, String> map = getAlarmInfo(requestURI, priority);
+		map.put("error", exception.getMessage());
+		map.put("threadName", threadName);
+		AlertCallable callable = new AlertCallable(map);
+		alarmPoolExecutor.submit(callable);
 	}
 }

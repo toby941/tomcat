@@ -43,6 +43,8 @@ public class LimitLifecycleListener implements LifecycleListener {
 			init();
 		} else if (event.getType().equals(StandardContext.STOP_EVENT)) {
 			stop();
+		} else if (event.getType().equals(StandardContext.BEFORE_START_EVENT)) {
+			System.out.println(this.getClass().getName() + " enter before start **********************");
 		}
 	}
 
@@ -53,7 +55,6 @@ public class LimitLifecycleListener implements LifecycleListener {
 			return;
 		}
 		initialized = true;
-		log.error(context.getPath());
 	}
 
 	protected synchronized void stop() {

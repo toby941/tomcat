@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.catalina.CometEvent;
 import org.apache.catalina.Context;
 import org.apache.catalina.Globals;
@@ -286,14 +288,13 @@ public class CoyoteAdapter implements Adapter {
 				// Calling the container
 				Boolean token = TokenPoolManager.getTokenPoolManager().getToken(request);
 				if (!token) {
-					response.getResponse()
-							.getWriter()
-							.println(
-									MessageFormat.format("can not obtain a token so end request,with requestURI:{0}",
-											request.getRequestURI()));
+					response.sendError(HttpServletResponse.SC_SERVICE_UNAVAILABLE,
+							MessageFormat.format("can not obtain a token so end request,with requestURI:{0}", request.getRequestURI()));
 				} else {
 					connector.getContainer().getPipeline().getFirst().invoke(request, response);
 				}
+				// 请求执行完毕后释放token
+				TokenPoolManager.getTokenPoolManager().releaseToken(request.getRequestURI());
 				if (request.isComet()) {
 					if (!response.isClosed() && !response.isError()) {
 						if (request.getAvailable() || (request.getContentLength() > 0 && (!request.isParametersParsed()))) {

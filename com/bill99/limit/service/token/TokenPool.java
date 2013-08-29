@@ -21,19 +21,130 @@ import com.bill99.limit.service.token.task.TokenPoolExecutor;
  */
 public class TokenPool implements TokenDispatch {
 
-	public final Map<String, Token> tokenMap = new HashMap<String, Token>();
-
-	private Map<Integer, LimitArrayBlockingQueue<Token>> queueMap;
+	private static Integer maxCapacity = 1000;
 
 	private Map<Integer, TokenPoolExecutor> executorMap;
 
-	private Integer[] priorityArry;
-
-	private Integer requestTimeout;
 	private Integer holdTimeout;
 
 	private String poolName;
-	private static Integer maxCapacity = 1000;
+
+	private Integer[] priorityArry;
+
+	private Map<Integer, LimitArrayBlockingQueue<Token>> queueMap;
+
+	private Integer requestTimeout;
+
+	private final Map<String, Token> tokenMap = new HashMap<String, Token>();
+
+	public TokenPool() {
+	}
+
+	@Override
+	public void dispatch(Integer priority) {
+		if (queueMap == null || queueMap.isEmpty()) {
+			return;
+		}
+		LimitArrayBlockingQueue<Token> needTokenQueue = queueMap.get(priority);
+		for (Integer pri : priorityArry) {
+			if (pri.equals(priority)) {
+				continue;
+			}
+			LimitArrayBlockingQueue<Token> otherTokenQueue = queueMap.get(pri);
+
+			int count = otherTokenQueue.size();
+
+			if (count > 5) {
+				Token token = null;
+				try {
+					token = otherTokenQueue.poll(1, TimeUnit.SECONDS);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (token != null) {
+					needTokenQueue.offer(token);
+					return;
+				}
+			}
+		}
+
+	}
+
+	public TokenPoolExecutor getExecutor(Integer priority) {
+		return executorMap.get(priority);
+	}
+
+	public Map<Integer, TokenPoolExecutor> getExecutorMap() {
+		return executorMap;
+	}
+
+	public Integer getHoldTimeout() {
+		return holdTimeout;
+	}
+
+	public String getPoolName() {
+		return poolName;
+	}
+
+	public Integer[] getPriorityArry() {
+		return priorityArry;
+	}
+
+	public BlockingQueue<Token> getQueue(Integer priority) {
+		return queueMap.get(priority);
+	}
+
+	public Map<Integer, LimitArrayBlockingQueue<Token>> getQueueMap() {
+		return queueMap;
+	}
+
+	public Integer getRequestTimeout() {
+		return requestTimeout;
+	}
+
+	public String getToken(Integer priority) {
+		try {
+			BlockingQueue<Token> queue = getQueue(priority);
+			Token token = queue.poll(requestTimeout, TimeUnit.SECONDS);
+			if (token != null) {
+				token.setLastAssessTime(Calendar.getInstance().getTime());
+				tokenMap.put(token.getName(), token);
+				return token.getName();
+			}
+		} catch (InterruptedException e) {
+			return null;
+		}
+		return null;
+	}
+
+	public Map<String, Token> getTokenMap() {
+		return tokenMap;
+	}
+
+	public void init() {
+		queueMap = new HashMap<Integer, LimitArrayBlockingQueue<Token>>();
+		executorMap = new HashMap<Integer, TokenPoolExecutor>();
+		priorityArry = new Integer[] { 1, 2, 3 };
+		for (Integer index : priorityArry) {
+
+			int tokenCount = index * 5;
+			if (index.equals(3)) {
+				tokenCount = 9999;
+			} else {
+				tokenCount = 99991;
+			}
+			LimitArrayBlockingQueue<Token> queue = new LimitArrayBlockingQueue<Token>(tokenCount, true);
+			for (int i = 0; i < tokenCount; i++) {
+				Token token = new Token(UUID.randomUUID().toString(), index);
+				queue.add(token);
+			}
+			queue.setDispatch(this);
+			queue.setPriority(index);
+			queueMap.put(index, queue);
+			TokenPoolExecutor executor = new TokenPoolExecutor(10, 10, 18, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+			executorMap.put(index, executor);
+		}
+	}
 
 	/**
 	 * 
@@ -73,44 +184,12 @@ public class TokenPool implements TokenDispatch {
 		});
 	}
 
-	public void init() {
-		queueMap = new HashMap<Integer, LimitArrayBlockingQueue<Token>>();
-		executorMap = new HashMap<Integer, TokenPoolExecutor>();
-		priorityArry = new Integer[] { 1, 2, 3 };
-		for (Integer index : priorityArry) {
+	public void printQueue(Integer priority) {
+		BlockingQueue<Token> queue = queueMap.get(priority);
+		System.err.print("priority:" + priority);
+		System.err.print(" size:" + queue.size());
+		System.err.print("\r\n");
 
-			int tokenCount = index * 5;
-			if (index.equals(3)) {
-				tokenCount = 9999;
-			} else {
-				tokenCount = 99991;
-			}
-			LimitArrayBlockingQueue<Token> queue = new LimitArrayBlockingQueue<Token>(tokenCount, true);
-			for (int i = 0; i < tokenCount; i++) {
-				Token token = new Token(UUID.randomUUID().toString(), index);
-				queue.add(token);
-			}
-			queue.setDispatch(this);
-			queue.setPriority(index);
-			queueMap.put(index, queue);
-			TokenPoolExecutor executor = new TokenPoolExecutor(10, 10, 18, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-			executorMap.put(index, executor);
-		}
-	}
-
-	public BlockingQueue<Token> getQueue(Integer priority) {
-		return queueMap.get(priority);
-	}
-
-	public TokenPoolExecutor getExecutor(Integer priority) {
-		return executorMap.get(priority);
-	}
-
-	public Future<String> submit(Integer priority) {
-		TokenCallable callable = new TokenCallable();
-		callable.setPriority(priority);
-		callable.setTokenPool(this);
-		return executorMap.get(priority).submit(callable);
 	}
 
 	public boolean releaseToken(String uuid) {
@@ -128,60 +207,35 @@ public class TokenPool implements TokenDispatch {
 		return false;
 	}
 
-	public String getToken(Integer priority) {
-		try {
-			BlockingQueue<Token> queue = getQueue(priority);
-			Token token = queue.poll(requestTimeout, TimeUnit.SECONDS);
-			if (token != null) {
-				token.setLastAssessTime(Calendar.getInstance().getTime());
-				tokenMap.put(token.getName(), token);
-				return token.getName();
-			}
-		} catch (InterruptedException e) {
-			return null;
-		}
-		return null;
+	public void setExecutorMap(Map<Integer, TokenPoolExecutor> executorMap) {
+		this.executorMap = executorMap;
 	}
 
-	@Override
-	public void dispatch(Integer priority) {
-		if (queueMap == null || queueMap.isEmpty()) {
-			return;
-		}
-		LimitArrayBlockingQueue<Token> needTokenQueue = queueMap.get(priority);
-		for (Integer pri : priorityArry) {
-			if (pri.equals(priority)) {
-				continue;
-			}
-			LimitArrayBlockingQueue<Token> otherTokenQueue = queueMap.get(pri);
-
-			int count = otherTokenQueue.size();
-
-			if (count > 5) {
-				Token token = null;
-				try {
-					token = otherTokenQueue.poll(1, TimeUnit.SECONDS);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				if (token != null) {
-					needTokenQueue.offer(token);
-					return;
-				}
-			}
-		}
-
+	public void setHoldTimeout(Integer holdTimeout) {
+		this.holdTimeout = holdTimeout;
 	}
 
-	public TokenPool() {
+	public void setPoolName(String poolName) {
+		this.poolName = poolName;
 	}
 
-	public void printQueue(Integer priority) {
-		BlockingQueue<Token> queue = queueMap.get(priority);
-		System.err.print("priority:" + priority);
-		System.err.print(" size:" + queue.size());
-		System.err.print("\r\n");
+	public void setPriorityArry(Integer[] priorityArry) {
+		this.priorityArry = priorityArry;
+	}
 
+	public void setQueueMap(Map<Integer, LimitArrayBlockingQueue<Token>> queueMap) {
+		this.queueMap = queueMap;
+	}
+
+	public void setRequestTimeout(Integer requestTimeout) {
+		this.requestTimeout = requestTimeout;
+	}
+
+	public Future<String> submit(Integer priority) {
+		TokenCallable callable = new TokenCallable();
+		callable.setPriority(priority);
+		callable.setTokenPool(this);
+		return executorMap.get(priority).submit(callable);
 	}
 
 }

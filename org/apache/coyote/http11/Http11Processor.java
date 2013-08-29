@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.text.MessageFormat;
 import java.util.StringTokenizer;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -694,7 +693,6 @@ public class Http11Processor implements ActionHook {
 	 *             error during an I/O operation
 	 */
 	public void process(Socket theSocket) throws IOException {
-		log.error("just in process");
 		RequestInfo rp = request.getRequestProcessor();
 		rp.setStage(org.apache.coyote.Constants.STAGE_PARSE);
 
@@ -777,9 +775,7 @@ public class Http11Processor implements ActionHook {
 				// Setting up filters, and parse some request headers
 				rp.setStage(org.apache.coyote.Constants.STAGE_PREPARE);
 				try {
-
 					prepareRequest();
-					log.error(MessageFormat.format("after prepareRequest: c={0}", request.getParameters().getParameter("c")));
 				} catch (Throwable t) {
 					if (log.isDebugEnabled()) {
 						log.debug(sm.getString("http11processor.request.prepare"), t);
