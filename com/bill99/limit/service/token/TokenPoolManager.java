@@ -35,7 +35,7 @@ public class TokenPoolManager {
 		return manager;
 	}
 
-	private static Integer defaultRequestTimeout = 5;
+	private static Integer defaultRequestTimeout = 25;
 	private static Integer defaultHoldTimeout = 5;
 
 	private TokenPool getPool(String name) {
