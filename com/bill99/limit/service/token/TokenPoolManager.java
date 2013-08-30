@@ -1,6 +1,7 @@
 package com.bill99.limit.service.token;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.catalina.connector.Request;
 
 import com.bill99.limit.service.token.priority.PriorityManager;
-import com.bill99.limit.service.token.task.AlarmPoolExecutor;
-import com.bill99.limit.service.token.task.AlertCallable;
+import com.bill99.limit.service.token.task.HttpRequestPoolExecutor;
+import com.bill99.limit.service.token.task.HttpCallable;
 
 /**
  * @author jun.bao
@@ -25,7 +26,7 @@ public class TokenPoolManager {
 
 	private static TokenPoolManager manager;
 	private PriorityManager priorityManager;
-	private AlarmPoolExecutor alarmPoolExecutor;
+	private HttpRequestPoolExecutor requestPoolExecutor;
 
 	public static TokenPoolManager getTokenPoolManager() {
 		if (manager == null) {
@@ -64,7 +65,7 @@ public class TokenPoolManager {
 		tokenPoolMap = new HashMap<String, TokenPool>();
 		tokenPoolMap.put("/demo/second.do", pool);
 		priorityManager = PriorityManager.getPriorityManager();
-		alarmPoolExecutor = new AlarmPoolExecutor();
+		requestPoolExecutor = new HttpRequestPoolExecutor();
 	}
 
 	public boolean releaseToken(String name) {
@@ -144,7 +145,12 @@ public class TokenPoolManager {
 		Map<String, String> map = getAlarmInfo(requestURI, priority);
 		map.put("error", exception.getMessage());
 		map.put("threadName", Thread.currentThread().getName());
-		AlertCallable callable = new AlertCallable(map);
-		alarmPoolExecutor.submit(callable);
+		HttpCallable callable = new HttpCallable(map);
+		requestPoolExecutor.submit(callable);
 	}
+
+	public void sendSnapshot() {
+		System.out.println(Calendar.getInstance().getTime() + "send Snapshot");
+	}
+
 }

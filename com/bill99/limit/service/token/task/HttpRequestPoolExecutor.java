@@ -7,12 +7,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 异步提交报警信息的线程调度类
+ * 异步提交http请求的线程调度类
  * 
  * @author jun.bao
  * @since 2013年8月29日
  */
-public class AlarmPoolExecutor extends ThreadPoolExecutor {
+public class HttpRequestPoolExecutor extends ThreadPoolExecutor {
 
 	/**
 	 * 初始处理线程数
@@ -31,7 +31,7 @@ public class AlarmPoolExecutor extends ThreadPoolExecutor {
 	 */
 	private static Integer workQueueSize = 1000;
 
-	public AlarmPoolExecutor() {
+	public HttpRequestPoolExecutor() {
 		super(coreSize, maxSize, keepTime, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(workQueueSize), new LogAlarmPolicy());
 	}
 
@@ -48,7 +48,7 @@ public class AlarmPoolExecutor extends ThreadPoolExecutor {
 		}
 
 		public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
-			AlertCallable alertCallable = (AlertCallable) r;
+			HttpCallable alertCallable = (HttpCallable) r;
 			Map<String, String> alarmInfo = alertCallable.getPostMap();
 			StringBuffer sb = new StringBuffer();
 			for (String key : alarmInfo.keySet()) {

@@ -9,23 +9,24 @@ import com.bill99.limit.util.JDKHttpClient;
  * @author jun.bao
  * @since 2013年8月29日
  */
-public class AlertCallable implements Callable<String> {
+public class HttpCallable implements Callable<String> {
 
-	private String postURL;
+	private String requstURL;
 	private Map<String, String> postMap;
+	private Boolean isGet;
 
-	public AlertCallable(Map<String, String> info) {
+	public HttpCallable(Map<String, String> info) {
 		super();
 		this.postMap = info;
-		this.postURL = "http://localhost:8080/alarm";
+		this.requstURL = "http://localhost:8080/alarm";
 	}
 
-	public String getPostURL() {
-		return postURL;
+	public String getRequstURL() {
+		return requstURL;
 	}
 
-	public void setPostURL(String postURL) {
-		this.postURL = postURL;
+	public void setRequstURL(String requstURL) {
+		this.requstURL = requstURL;
 	}
 
 	public Map<String, String> getPostMap() {
@@ -38,7 +39,11 @@ public class AlertCallable implements Callable<String> {
 
 	@Override
 	public String call() throws Exception {
-		return JDKHttpClient.doPost(postURL, postMap);
+		if (isGet) {
+			return JDKHttpClient.doGet(requstURL);
+		} else {
+			return JDKHttpClient.doPost(requstURL, postMap);
+		}
 	}
 
 }

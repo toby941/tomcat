@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -170,8 +171,8 @@ public class TokenPool implements TokenDispatch {
 			queue.setDispatch(this);
 			queue.setPriority(priority);
 			queueMap.put(priority, queue);
-			TokenPoolExecutor executor = new TokenPoolExecutor(10, 10, requestTimeout, TimeUnit.SECONDS,
-					new LinkedBlockingQueue<Runnable>());
+			TokenPoolExecutor executor = new TokenPoolExecutor(10, 10, requestTimeout, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(
+					maxCapacity));
 			executorMap.put(priority, executor);
 			priorityArry[i] = priority;
 		}

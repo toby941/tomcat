@@ -31,30 +31,42 @@ public class XmlParse {
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
 		// ClassLoader.getSystemResourceAsStream("soap.xml");
+		List<String> list = new ArrayList<String>();
+		list.add("ip");
+		list.add("username");
+		list.add("mac");
 		URL url = Thread.currentThread().getContextClassLoader().getResource("com/bill99/soap.xml");
 		InputStream in = new FileInputStream(new File(url.getFile()));
 		// System.out.println(url.getFile());
 		int times = 1;
 		Long time1 = Calendar.getInstance().getTimeInMillis();
 		for (int i = 0; i < times; i++) {
-			sax(in);
+			sax(in, list);
 		}
 		Long time2 = Calendar.getInstance().getTimeInMillis();
 		System.out.println(time2 - time1);
 	}
 
-	public static Map<String, String> sax(InputStream in) throws ParserConfigurationException, SAXException, FileNotFoundException,
-			IOException {
+	/**
+	 * 解析xml
+	 * 
+	 * @param in
+	 * @param keys
+	 * @return 提取 xml中 所有 keys中属性，以key-value形式map返回
+	 * @throws ParserConfigurationException
+	 * @throws SAXException
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public static Map<String, String> sax(InputStream in, List<String> keys) throws ParserConfigurationException, SAXException,
+			FileNotFoundException, IOException {
 		Map<String, String> map = null;
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
 			XMLReader reader = parser.getXMLReader();
-			List<String> list = new ArrayList<String>();
-			list.add("ip");
-			list.add("username");
-			list.add("mac");
-			XMLFilter myFilter = new KeyFilter(reader, list);
+
+			XMLFilter myFilter = new KeyFilter(reader, keys);
 
 			DefaultHandler defaultHandler = new KeyValueHandler();
 			myFilter.setContentHandler(defaultHandler);

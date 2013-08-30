@@ -27,7 +27,7 @@ public class DefaultPriorityPloy implements PriorityPloy {
 			Map<String, String> kv = null;
 			try {
 				InputStream input = request.getInputStream();
-				kv = XmlParse.sax(input);
+				kv = XmlParse.sax(input, null);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

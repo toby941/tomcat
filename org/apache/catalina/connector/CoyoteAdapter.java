@@ -44,7 +44,7 @@ import org.apache.tomcat.util.http.Cookies;
 import org.apache.tomcat.util.http.ServerCookie;
 import org.apache.tomcat.util.net.SocketStatus;
 
-import com.bill99.limit.TwiceReadRequest;
+import com.bill99.limit.container.TwiceReadRequest;
 import com.bill99.limit.service.token.TokenPoolManager;
 
 /**

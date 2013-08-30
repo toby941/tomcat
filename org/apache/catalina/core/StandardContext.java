@@ -103,7 +103,7 @@ import org.apache.naming.resources.ProxyDirContext;
 import org.apache.naming.resources.WARDirContext;
 import org.apache.tomcat.util.modeler.Registry;
 
-import com.bill99.limit.LimitLifecycleListener;
+import com.bill99.limit.container.LimitLifecycleListener;
 
 /**
  * Standard implementation of the <b>Context</b> interface. Each child container
