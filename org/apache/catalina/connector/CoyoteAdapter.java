@@ -82,7 +82,6 @@ public class CoyoteAdapter implements Adapter {
 
 		super();
 		this.connector = connector;
-		System.out.println("###########I am create once");
 
 	}
 

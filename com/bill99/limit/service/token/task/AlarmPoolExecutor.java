@@ -14,9 +14,21 @@ import java.util.concurrent.TimeUnit;
  */
 public class AlarmPoolExecutor extends ThreadPoolExecutor {
 
+	/**
+	 * 初始处理线程数
+	 */
 	private static final Integer coreSize = 2;
+	/**
+	 * 最大处理线程数
+	 */
 	private static final Integer maxSize = 10;
+	/**
+	 * task允许执行时间
+	 */
 	private static Long keepTime = 10L;
+	/**
+	 * 最大任务排队数
+	 */
 	private static Integer workQueueSize = 1000;
 
 	public AlarmPoolExecutor() {

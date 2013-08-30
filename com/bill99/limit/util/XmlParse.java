@@ -54,13 +54,13 @@ public class XmlParse {
 			list.add("ip");
 			list.add("username");
 			list.add("mac");
-			XMLFilter myFilter = new MyFilter(reader, list);
+			XMLFilter myFilter = new KeyFilter(reader, list);
 
-			DefaultHandler defaultHandler = new MyDefaultHandler();
+			DefaultHandler defaultHandler = new KeyValueHandler();
 			myFilter.setContentHandler(defaultHandler);
 			myFilter.parse(new InputSource(in));
 
-			map = ((MyDefaultHandler) defaultHandler).getKv();
+			map = ((KeyValueHandler) defaultHandler).getKv();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

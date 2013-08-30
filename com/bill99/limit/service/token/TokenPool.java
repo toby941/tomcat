@@ -54,7 +54,7 @@ public class TokenPool implements TokenDispatch {
 
 			int count = otherTokenQueue.size();
 
-			if (count > 5) {
+			if (count > 1) {
 				Token token = null;
 				try {
 					token = otherTokenQueue.poll(1, TimeUnit.SECONDS);
@@ -62,6 +62,7 @@ public class TokenPool implements TokenDispatch {
 					e.printStackTrace();
 				}
 				if (token != null) {
+					System.out.println("dispatch priority" + pri + " to " + priority);
 					needTokenQueue.offer(token);
 					return;
 				}

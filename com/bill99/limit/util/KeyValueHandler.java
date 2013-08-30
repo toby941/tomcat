@@ -12,12 +12,12 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author jun.bao
  * @since 2013年8月27日
  */
-public class MyDefaultHandler extends DefaultHandler {
+public class KeyValueHandler extends DefaultHandler {
 	private StringBuffer buf;
 
 	private Map<String, String> kv;
 
-	public MyDefaultHandler() {
+	public KeyValueHandler() {
 		super();
 		kv = new HashMap<String, String>();
 	}

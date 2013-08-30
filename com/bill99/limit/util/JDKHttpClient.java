@@ -23,11 +23,12 @@ public class JDKHttpClient {
 
 	/**
 	 * 
-	 * @param getURL
+	 * @param requestURL
+	 * @param timeout
+	 *            调用者指定请求超时时间
 	 * @return
-	 * @throws IOException
 	 */
-	public static String doGet(String requestURL) {
+	public static String doGet(String requestURL, Integer timeout) {
 		// 拼凑get请求的URL字串，使用URLEncoder.encode对特殊和不可见字符进行编码
 		StringBuffer sb = new StringBuffer();
 		BufferedReader reader = null;
@@ -39,7 +40,7 @@ public class JDKHttpClient {
 			connection = (HttpURLConnection) getUrl.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setUseCaches(false);
-			connection.setConnectTimeout(connectTimeout);
+			connection.setConnectTimeout(timeout);
 			connection.setReadTimeout(readTimeout);
 			// 进行连接，但是实际上get request要在下一句的connection.getInputStream()函数中才会真正发到
 			// 服务器
@@ -66,7 +67,17 @@ public class JDKHttpClient {
 		}
 	}
 
-	public static String doPost(String postURL, Map<String, String> paramaters) {
+	/**
+	 * 
+	 * @param getURL
+	 * @return
+	 * @throws IOException
+	 */
+	public static String doGet(String requestURL) {
+		return doGet(requestURL, connectTimeout);
+	}
+
+	public static String doPost(String postURL, Map<String, String> paramaters, Integer timeout) {
 		StringBuffer sb = new StringBuffer();
 		BufferedReader reader = null;
 		HttpURLConnection connection = null;
@@ -82,7 +93,7 @@ public class JDKHttpClient {
 			// Post 请求不能使用缓存
 			connection.setUseCaches(false);
 			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			connection.setConnectTimeout(connectTimeout);
+			connection.setConnectTimeout(timeout);
 			connection.setReadTimeout(readTimeout);
 			// 连接，从postUrl.openConnection()至此的配置必须要在connect之前完成，
 			// 要注意的是connection.getOutputStream会隐含的进行connect。
@@ -116,6 +127,10 @@ public class JDKHttpClient {
 			}
 
 		}
+	}
+
+	public static String doPost(String postURL, Map<String, String> paramaters) {
+		return doPost(postURL, paramaters, connectTimeout);
 	}
 
 	/**
