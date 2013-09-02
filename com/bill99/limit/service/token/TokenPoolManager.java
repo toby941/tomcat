@@ -1,5 +1,6 @@
 package com.bill99.limit.service.token;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -11,8 +12,8 @@ import java.util.concurrent.TimeUnit;
 import org.apache.catalina.connector.Request;
 
 import com.bill99.limit.service.token.priority.PriorityManager;
-import com.bill99.limit.service.token.task.HttpRequestPoolExecutor;
 import com.bill99.limit.service.token.task.HttpCallable;
+import com.bill99.limit.service.token.task.HttpRequestPoolExecutor;
 
 /**
  * @author jun.bao
@@ -26,7 +27,9 @@ public class TokenPoolManager {
 
 	private static TokenPoolManager manager;
 	private PriorityManager priorityManager;
-	private HttpRequestPoolExecutor requestPoolExecutor;
+	// 两个HttpRequestPoolExecutor分别作为警告信息与快照信息的上传通道，相互之间独立，避免影响
+	private HttpRequestPoolExecutor alarmPoolExecutor;
+	private HttpRequestPoolExecutor snapshotPoolExecutor;
 
 	public static TokenPoolManager getTokenPoolManager() {
 		if (manager == null) {
@@ -65,7 +68,8 @@ public class TokenPoolManager {
 		tokenPoolMap = new HashMap<String, TokenPool>();
 		tokenPoolMap.put("/demo/second.do", pool);
 		priorityManager = PriorityManager.getPriorityManager();
-		requestPoolExecutor = new HttpRequestPoolExecutor();
+		alarmPoolExecutor = new HttpRequestPoolExecutor();
+		snapshotPoolExecutor = new HttpRequestPoolExecutor();
 	}
 
 	public boolean releaseToken(String name) {
@@ -146,11 +150,26 @@ public class TokenPoolManager {
 		map.put("error", exception.getMessage());
 		map.put("threadName", Thread.currentThread().getName());
 		HttpCallable callable = new HttpCallable(map);
-		requestPoolExecutor.submit(callable);
+		alarmPoolExecutor.submit(callable);
 	}
 
+	/**
+	 * 发送token池快照信息
+	 */
 	public void sendSnapshot() {
+		StringBuffer snapshot = new StringBuffer();
+
+		for (String key : tokenPoolMap.keySet()) {
+			TokenPool pool = tokenPoolMap.get(key);
+			String summary = pool.getSnapshot();
+			snapshot.append(MessageFormat.format("name:{0},summary:{1} ", key, summary));
+		}
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("snapshot", snapshot.toString());
+		HttpCallable callable = new HttpCallable(map);
+		callable.setIsGet(false);
+		snapshotPoolExecutor.submit(callable);
+
 		System.out.println(Calendar.getInstance().getTime() + "send Snapshot");
 	}
-
 }

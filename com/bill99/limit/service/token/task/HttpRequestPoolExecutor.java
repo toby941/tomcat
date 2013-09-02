@@ -23,7 +23,7 @@ public class HttpRequestPoolExecutor extends ThreadPoolExecutor {
 	 */
 	private static final Integer maxSize = 10;
 	/**
-	 * task允许执行时间
+	 * task允许执行时间 单位 秒
 	 */
 	private static Long keepTime = 10L;
 	/**
@@ -54,7 +54,7 @@ public class HttpRequestPoolExecutor extends ThreadPoolExecutor {
 			for (String key : alarmInfo.keySet()) {
 				sb.append(key + ": " + alarmInfo.get(key) + "&");
 			}
-			log.error("post alarm task rejected,alarm info:" + sb.toString());
+			log.error("http request task rejected,info:" + sb.toString());
 		}
 	}
 

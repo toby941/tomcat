@@ -1,5 +1,6 @@
 package com.bill99.limit.service.token;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
@@ -10,7 +11,7 @@ import java.util.UUID;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Future;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.bill99.limit.service.token.task.TokenCallable;
@@ -24,6 +25,9 @@ public class TokenPool implements TokenDispatch {
 
 	private static Integer maxCapacity = 1000;
 
+	/**
+	 * 进行令牌分配的任务掉度集合，按优先级分类
+	 */
 	private Map<Integer, TokenPoolExecutor> executorMap;
 
 	private Integer holdTimeout;
@@ -32,13 +36,20 @@ public class TokenPool implements TokenDispatch {
 
 	private Integer[] priorityArry;
 
+	/**
+	 * 空闲token集合，按优先级分类
+	 */
 	private Map<Integer, LimitArrayBlockingQueue<Token>> queueMap;
 
 	private Integer requestTimeout;
 
+	/**
+	 * 存放所有正在使用的token，非线程安全，近似结果
+	 */
 	private final Map<String, Token> tokenMap = new HashMap<String, Token>();
 
 	public TokenPool() {
+		super();
 	}
 
 	@Override
@@ -121,31 +132,6 @@ public class TokenPool implements TokenDispatch {
 
 	public Map<String, Token> getTokenMap() {
 		return tokenMap;
-	}
-
-	public void init() {
-		queueMap = new HashMap<Integer, LimitArrayBlockingQueue<Token>>();
-		executorMap = new HashMap<Integer, TokenPoolExecutor>();
-		priorityArry = new Integer[] { 1, 2, 3 };
-		for (Integer index : priorityArry) {
-
-			int tokenCount = index * 5;
-			if (index.equals(3)) {
-				tokenCount = 9999;
-			} else {
-				tokenCount = 99991;
-			}
-			LimitArrayBlockingQueue<Token> queue = new LimitArrayBlockingQueue<Token>(tokenCount, true);
-			for (int i = 0; i < tokenCount; i++) {
-				Token token = new Token(UUID.randomUUID().toString(), index);
-				queue.add(token);
-			}
-			queue.setDispatch(this);
-			queue.setPriority(index);
-			queueMap.put(index, queue);
-			TokenPoolExecutor executor = new TokenPoolExecutor(10, 10, 18, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-			executorMap.put(index, executor);
-		}
 	}
 
 	/**
@@ -233,6 +219,12 @@ public class TokenPool implements TokenDispatch {
 		this.requestTimeout = requestTimeout;
 	}
 
+	/**
+	 * 提交请求token任务
+	 * 
+	 * @param priority
+	 * @return 一个支持异步结果的Future对象
+	 */
 	public Future<String> submit(Integer priority) {
 		TokenCallable callable = new TokenCallable();
 		callable.setPriority(priority);
@@ -240,4 +232,38 @@ public class TokenPool implements TokenDispatch {
 		return executorMap.get(priority).submit(callable);
 	}
 
+	/**
+	 * 获取tokenpool的运行快照,快照元素：各个优先级队列token使用占比，排队数量，各优先级token平均请求时间，持有时间
+	 * TokenPoolExecutor相关指标： <br/>
+	 * {@link ThreadPoolExecutor#getActiveCount()} 返回主动执行任务的近似线程数。<br/>
+	 * {@link ThreadPoolExecutor#getCompletedTaskCount()} 返回已完成执行的近似任务总数。<br/>
+	 * {@link ThreadPoolExecutor#getTaskCount()} 返回曾计划执行的近似任务总数。<br/>
+	 * {@link ThreadPoolExecutor#getPoolSize()} 返回池中的当前线程数。<br/>
+	 * {@link ThreadPoolExecutor#getQueue()} 返回此执行程序使用的任务队列。<br/>
+	 * 
+	 * 
+	 * @return
+	 */
+	public String getSnapshot() {
+
+		StringBuffer freeTokenSummarySB = new StringBuffer();
+		for (Integer priority : queueMap.keySet()) {
+			freeTokenSummarySB.append("priority: " + priority + " count: " + queueMap.get(priority).size() + ";");
+		}
+
+		StringBuffer executorSummarySB = new StringBuffer();
+		for (Integer priority : executorMap.keySet()) {
+			TokenPoolExecutor executor = executorMap.get(priority);
+			String info = MessageFormat.format(
+					"priority:{0},activecount:{1},completedtaskcount:{2},taskcount:{3},poolsize：{4},queuesize:{5}; ", executor
+							.getActiveCount(), executor.getCompletedTaskCount(), executor.getTaskCount(), executor.getPoolSize(), executor
+							.getQueue().size());
+			executorSummarySB.append(info);
+		}
+
+		Integer inUseToken = tokenMap.size();
+
+		return MessageFormat.format("free token summary [{0}],executor summary [{1}] ,in use token [{2}]", freeTokenSummarySB.toString(),
+				executorSummarySB.toString(), inUseToken);
+	}
 }
