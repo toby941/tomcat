@@ -406,10 +406,10 @@ public class XByteBuffer
      * @exception java.lang.ArrayIndexOutOfBoundsException
      */
     public static int toInt(byte[] b,int off){
-        return ( ( (int) b[off+3]) & 0xFF) +
-            ( ( ( (int) b[off+2]) & 0xFF) << 8) +
-            ( ( ( (int) b[off+1]) & 0xFF) << 16) +
-            ( ( ( (int) b[off+0]) & 0xFF) << 24);
+        return ( ( b[off+3]) & 0xFF) +
+            ( ( ( b[off+2]) & 0xFF) << 8) +
+            ( ( ( b[off+1]) & 0xFF) << 16) +
+            ( ( ( b[off+0]) & 0xFF) << 24);
     }
 
     /**
@@ -437,7 +437,8 @@ public class XByteBuffer
      * @return - four bytes in an array
      * @deprecated use toBytes(boolean,byte[],int)
      */
-    public static byte[] toBytes(boolean bool) {
+    @Deprecated
+	public static byte[] toBytes(boolean bool) {
         byte[] b = new byte[1] ;
         return toBytes(bool,b,0);
 
@@ -464,7 +465,8 @@ public class XByteBuffer
      * @return - four bytes in an array
      * @deprecated use toBytes(int,byte[],int)
      */
-    public static byte[] toBytes(int n) {
+    @Deprecated
+	public static byte[] toBytes(int n) {
         return toBytes(n,new byte[4],0);
     }
 
@@ -485,7 +487,8 @@ public class XByteBuffer
      * @return - eight bytes in an array
      * @deprecated use toBytes(long,byte[],int)
      */
-    public static byte[] toBytes(long n) {
+    @Deprecated
+	public static byte[] toBytes(long n) {
         return toBytes(n,new byte[8],0);
     }
     public static byte[] toBytes(long n, byte[] b, int offset) {

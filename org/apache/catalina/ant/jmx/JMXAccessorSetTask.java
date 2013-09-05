@@ -83,7 +83,8 @@ public class JMXAccessorSetTask extends JMXAccessorTask {
      * corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -156,7 +157,8 @@ public class JMXAccessorSetTask extends JMXAccessorTask {
      * @exception Exception
      *                if an error occurs
      */
-    public String jmxExecute(MBeanServerConnection jmxServerConnection)
+    @Override
+	public String jmxExecute(MBeanServerConnection jmxServerConnection)
         throws Exception {
 
         if (getName() == null) {

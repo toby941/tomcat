@@ -30,7 +30,6 @@ import org.apache.catalina.tribes.Channel;
 import org.apache.catalina.tribes.io.ReplicationStream;
 import org.apache.catalina.tribes.tipis.LazyReplicatedMap;
 import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapOwner;
-import org.apache.catalina.tribes.tipis.AbstractReplicatedMap;
 
 /**
  *@author Filip Hanik
@@ -82,29 +81,34 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
 //      ClusterManager Interface     
 //******************************************************************************/
 
-    public void messageDataReceived(ClusterMessage msg) {
+    @Override
+	public void messageDataReceived(ClusterMessage msg) {
     }
 
-    public boolean doDomainReplication() {
+    @Override
+	public boolean doDomainReplication() {
         return false;
     }
 
     /**
      * @param sendClusterDomainOnly The sendClusterDomainOnly to set.
      */
-    public void setDomainReplication(boolean sendClusterDomainOnly) {
+    @Override
+	public void setDomainReplication(boolean sendClusterDomainOnly) {
     }
 
     /**
      * @return Returns the defaultMode.
      */
-    public boolean isDefaultMode() {
+    @Override
+	public boolean isDefaultMode() {
         return false;
     }
     /**
      * @param defaultMode The defaultMode to set.
      */
-    public void setDefaultMode(boolean defaultMode) {
+    @Override
+	public void setDefaultMode(boolean defaultMode) {
     }
 
     public void setExpireSessionsOnShutdown(boolean expireSessionsOnShutdown)
@@ -112,7 +116,8 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
         mExpireSessionsOnShutdown = expireSessionsOnShutdown;
     }
 
-    public void setCluster(CatalinaCluster cluster) {
+    @Override
+	public void setCluster(CatalinaCluster cluster) {
         if(log.isDebugEnabled())
             log.debug("Cluster associated with SimpleTcpReplicationManager");
         this.cluster = cluster;
@@ -127,10 +132,12 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
     /**
      * Override persistence since they don't go hand in hand with replication for now.
      */
-    public void unload() throws IOException {
+    @Override
+	public void unload() throws IOException {
     }
     
-    public ClusterMessage requestCompleted(String sessionId) {
+    @Override
+	public ClusterMessage requestCompleted(String sessionId) {
         if ( !this.started ) return null;
         LazyReplicatedMap map = (LazyReplicatedMap)sessions;
         map.replicate(sessionId,false);
@@ -141,7 +148,8 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
 //=========================================================================
 // OVERRIDE THESE METHODS TO IMPLEMENT THE REPLICATION
 //=========================================================================
-    public void objectMadePrimay(Object key, Object value) {
+    @Override
+	public void objectMadePrimay(Object key, Object value) {
         if (value!=null && value instanceof DeltaSession) {
             DeltaSession session = (DeltaSession)value;
             synchronized (session) {
@@ -152,7 +160,8 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
         }
     }
 
-    public Session createEmptySession() {
+    @Override
+	public Session createEmptySession() {
         return new DeltaSession(this);
     }
     
@@ -168,11 +177,13 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
      * @return The object input stream
      * @throws IOException
      */
-    public ReplicationStream getReplicationStream(byte[] data) throws IOException {
+    @Override
+	public ReplicationStream getReplicationStream(byte[] data) throws IOException {
         return getReplicationStream(data,0,data.length);
     }
 
-    public ReplicationStream getReplicationStream(byte[] data, int offset, int length) throws IOException {
+    @Override
+	public ReplicationStream getReplicationStream(byte[] data, int offset, int length) throws IOException {
         ByteArrayInputStream fis = new ByteArrayInputStream(data, offset, length);
         return new ReplicationStream(fis, getClassLoaders());
     }    
@@ -180,7 +191,8 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
 
 
 
-    public String getName() {
+    @Override
+	public String getName() {
         return this.name;
     }
     /**
@@ -194,12 +206,13 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
         if ( this.started ) return;
         
         try {
             cluster.registerManager(this);
-            CatalinaCluster catclust = (CatalinaCluster)cluster;
+            CatalinaCluster catclust = cluster;
             LazyReplicatedMap map = new LazyReplicatedMap(this,
                                                           catclust.getChannel(),
                                                           rpcTimeout,
@@ -216,7 +229,7 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
     }
     
     public String getMapName() {
-        CatalinaCluster catclust = (CatalinaCluster)cluster;
+        CatalinaCluster catclust = cluster;
         String name = catclust.getManagerName(getName(),this)+"-"+"map";
         if ( log.isDebugEnabled() ) log.debug("Backup manager, Setting map name to:"+name);
         return name;
@@ -231,7 +244,8 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException
+    @Override
+	public void stop() throws LifecycleException
     {
         if (sessions instanceof LazyReplicatedMap) {
             LazyReplicatedMap map = (LazyReplicatedMap)sessions;
@@ -249,18 +263,22 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
 
     }
 
-    public void setDistributable(boolean dist) {
+    @Override
+	public void setDistributable(boolean dist) {
         this.distributable = dist;
     }
 
-    public boolean getDistributable() {
+    @Override
+	public boolean getDistributable() {
         return distributable;
     }
 
-    public void setName(String name) {
+    @Override
+	public void setName(String name) {
         this.name = name;
     }
-    public boolean isNotifyListenersOnReplication() {
+    @Override
+	public boolean isNotifyListenersOnReplication() {
         return notifyListenersOnReplication;
     }
     public void setNotifyListenersOnReplication(boolean notifyListenersOnReplication) {
@@ -274,7 +292,8 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
     /* 
      * @see org.apache.catalina.ha.ClusterManager#getCluster()
      */
-    public CatalinaCluster getCluster() {
+    @Override
+	public CatalinaCluster getCluster() {
         return cluster;
     }
 
@@ -290,11 +309,13 @@ public class BackupManager extends StandardManager implements ClusterManager, Ma
         return rpcTimeout;
     }
 
-    public String[] getInvalidatedSessions() {
+    @Override
+	public String[] getInvalidatedSessions() {
         return new String[0];
     }
     
-    public ClusterManager cloneFromTemplate() {
+    @Override
+	public ClusterManager cloneFromTemplate() {
         BackupManager result = new BackupManager();
         result.mExpireSessionsOnShutdown = mExpireSessionsOnShutdown;
         result.name = "Clone-from-"+name;

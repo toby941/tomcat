@@ -63,7 +63,8 @@ public final class JSSEKeyManager implements X509KeyManager {
      * @return The alias name for the desired key, or null if there are no
      * matches
      */
-    public String chooseClientAlias(String[] keyType, Principal[] issuers,
+    @Override
+	public String chooseClientAlias(String[] keyType, Principal[] issuers,
                                     Socket socket) {
         return delegate.chooseClientAlias(keyType, issuers, socket);
     }
@@ -81,7 +82,8 @@ public final class JSSEKeyManager implements X509KeyManager {
      *
      * @return Alias name for the desired key
      */
-    public String chooseServerAlias(String keyType, Principal[] issuers,
+    @Override
+	public String chooseServerAlias(String keyType, Principal[] issuers,
                                     Socket socket) {
         return serverKeyAlias;
     }
@@ -95,7 +97,8 @@ public final class JSSEKeyManager implements X509KeyManager {
      * and the root certificate authority last), or null if the alias can't be
      * found
      */
-    public X509Certificate[] getCertificateChain(String alias) {
+    @Override
+	public X509Certificate[] getCertificateChain(String alias) {
         return delegate.getCertificateChain(alias); 
     }
 
@@ -111,7 +114,8 @@ public final class JSSEKeyManager implements X509KeyManager {
      * @return Array of the matching alias names, or null if there were no
      * matches
      */
-    public String[] getClientAliases(String keyType, Principal[] issuers) {
+    @Override
+	public String[] getClientAliases(String keyType, Principal[] issuers) {
         return delegate.getClientAliases(keyType, issuers);
     }
 
@@ -127,7 +131,8 @@ public final class JSSEKeyManager implements X509KeyManager {
      * @return Array of the matching alias names, or null if there were no
      * matches
      */
-    public String[] getServerAliases(String keyType, Principal[] issuers) {
+    @Override
+	public String[] getServerAliases(String keyType, Principal[] issuers) {
         return delegate.getServerAliases(keyType, issuers);
     }
 
@@ -138,7 +143,8 @@ public final class JSSEKeyManager implements X509KeyManager {
      *
      * @return The requested key, or null if the alias can't be found
      */
-    public PrivateKey getPrivateKey(String alias) {
+    @Override
+	public PrivateKey getPrivateKey(String alias) {
         return delegate.getPrivateKey(alias);
     }
 }

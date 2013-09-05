@@ -136,7 +136,8 @@ public class IISConfig extends BaseJkConfig  {
     /** Initialize defaults for properties that are not set
 	explicitely
     */
-    protected void initProperties() {
+    @Override
+	protected void initProperties() {
         super.initProperties();
 
 	regConfig=getConfigFile( regConfig, configHome, ISAPI_REG_FILE);
@@ -147,11 +148,13 @@ public class IISConfig extends BaseJkConfig  {
 
     // -------------------- Generate config --------------------
 
-    protected PrintWriter getWriter() throws IOException {
+    @Override
+	protected PrintWriter getWriter() throws IOException {
 	String abUriConfig = uriConfig.getAbsolutePath();
 	return new PrintWriter(new FileWriter(abUriConfig,append));        
     }
-    protected boolean generateJkHead(PrintWriter mod_jk) {
+    @Override
+	protected boolean generateJkHead(PrintWriter mod_jk) {
 	try {
 	    PrintWriter regfile = new PrintWriter(new FileWriter(regConfig));
 	    log.info("Generating IIS registry file = "+regConfig );
@@ -201,7 +204,8 @@ public class IISConfig extends BaseJkConfig  {
     /** Forward all requests for a context to tomcat.
 	The default.
      */
-    protected void generateStupidMappings(Context context, PrintWriter uri_worker )
+    @Override
+	protected void generateStupidMappings(Context context, PrintWriter uri_worker )
     {
         String ctxPath  = context.getPath();
 	String nPath=("".equals(ctxPath)) ? "/" : ctxPath;
@@ -224,7 +228,8 @@ public class IISConfig extends BaseJkConfig  {
             uri_worker.println(nPath +"/*=$(default.worker)");
     }
 
-    protected void generateContextMappings(Context context, PrintWriter uri_worker )
+    @Override
+	protected void generateContextMappings(Context context, PrintWriter uri_worker )
     {
         String ctxPath  = context.getPath();
 	String nPath=("".equals(ctxPath)) ? "/" : ctxPath;
@@ -278,7 +283,8 @@ public class IISConfig extends BaseJkConfig  {
 
     /** Add a fulling specified IIS mapping.
      */
-    protected boolean addMapping( String fullPath, PrintWriter uri_worker ) {
+    @Override
+	protected boolean addMapping( String fullPath, PrintWriter uri_worker ) {
         if( log.isDebugEnabled() )
             log.debug( "Adding map for " + fullPath );
         uri_worker.println(fullPath + "=$(default.worker)" );

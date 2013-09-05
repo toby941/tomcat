@@ -62,7 +62,8 @@ public class CoyoteReader
     /**
      * Prevent cloning the facade.
      */
-    protected Object clone()
+    @Override
+	protected Object clone()
         throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
@@ -82,60 +83,70 @@ public class CoyoteReader
     // --------------------------------------------------------- Reader Methods
 
 
-    public void close()
+    @Override
+	public void close()
         throws IOException {
         ib.close();
     }
 
 
-    public int read()
+    @Override
+	public int read()
         throws IOException {
         return ib.read();
     }
 
 
-    public int read(char[] cbuf)
+    @Override
+	public int read(char[] cbuf)
         throws IOException {
         return ib.read(cbuf, 0, cbuf.length);
     }
 
 
-    public int read(char[] cbuf, int off, int len)
+    @Override
+	public int read(char[] cbuf, int off, int len)
         throws IOException {
         return ib.read(cbuf, off, len);
     }
 
 
-    public long skip(long n)
+    @Override
+	public long skip(long n)
         throws IOException {
         return ib.skip(n);
     }
 
 
-    public boolean ready()
+    @Override
+	public boolean ready()
         throws IOException {
         return ib.ready();
     }
 
 
-    public boolean markSupported() {
+    @Override
+	public boolean markSupported() {
         return true;
     }
 
 
-    public void mark(int readAheadLimit)
+    @Override
+	public void mark(int readAheadLimit)
         throws IOException {
         ib.mark(readAheadLimit);
     }
 
 
-    public void reset()
+    @Override
+	public void reset()
         throws IOException {
         ib.reset();
     }
 
 
-    public String readLine()
+    @Override
+	public String readLine()
         throws IOException {
 
         if (lineBuffer == null) {

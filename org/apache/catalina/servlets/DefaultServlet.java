@@ -253,14 +253,16 @@ public class DefaultServlet
     /**
      * Finalize this servlet.
      */
-    public void destroy() {
+    @Override
+	public void destroy() {
     }
 
 
     /**
      * Initialize this servlet.
      */
-    public void init() throws ServletException {
+    @Override
+	public void init() throws ServletException {
 
         if (getServletConfig().getInitParameter("debug") != null)
             debug = Integer.parseInt(getServletConfig().getInitParameter("debug"));
@@ -390,7 +392,8 @@ public class DefaultServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    protected void doGet(HttpServletRequest request,
+    @Override
+	protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -409,7 +412,8 @@ public class DefaultServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    protected void doHead(HttpServletRequest request,
+    @Override
+	protected void doHead(HttpServletRequest request,
                           HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -438,7 +442,8 @@ public class DefaultServlet
      * @exception ServletException  if the request for the
      *                                  OPTIONS cannot be handled
      */
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+    @Override
+	protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
         StringBuffer allow = new StringBuffer();
@@ -471,7 +476,8 @@ public class DefaultServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    protected void doPost(HttpServletRequest request,
+    @Override
+	protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
         throws IOException, ServletException {
         doGet(request, response);
@@ -487,7 +493,8 @@ public class DefaultServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+    @Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
         if (readOnly) {
@@ -626,7 +633,8 @@ public class DefaultServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+    @Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
         if (readOnly) {

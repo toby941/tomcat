@@ -126,7 +126,8 @@ public class DirContextURLConnection
      * 
      * @throws IOException Object not found
      */
-    public void connect()
+    @Override
+	public void connect()
         throws IOException {
         
         if (!connected) {
@@ -172,7 +173,8 @@ public class DirContextURLConnection
     /**
      * Return the content length value.
      */
-    public int getContentLength() {
+    @Override
+	public int getContentLength() {
         return getHeaderFieldInt(ResourceAttributes.CONTENT_LENGTH, -1);
     }
     
@@ -180,7 +182,8 @@ public class DirContextURLConnection
     /**
      * Return the content type value.
      */
-    public String getContentType() {
+    @Override
+	public String getContentType() {
         return getHeaderField(ResourceAttributes.CONTENT_TYPE);
     }
     
@@ -188,7 +191,8 @@ public class DirContextURLConnection
     /**
      * Return the last modified date.
      */
-    public long getDate() {
+    @Override
+	public long getDate() {
         return date;
     }
     
@@ -196,7 +200,8 @@ public class DirContextURLConnection
     /**
      * Return the last modified date.
      */
-    public long getLastModified() {
+    @Override
+	public long getLastModified() {
 
         if (!connected) {
             // Try to connect (silently)
@@ -238,7 +243,8 @@ public class DirContextURLConnection
     /**
      * Returns an unmodifiable Map of the header fields.
      */
-    public Map getHeaderFields() {
+    @Override
+	public Map getHeaderFields() {
 
       if (!connected) {
           // Try to connect (silently)
@@ -279,7 +285,8 @@ public class DirContextURLConnection
     /**
      * Returns the name of the specified header field.
      */
-    public String getHeaderField(String name) {
+    @Override
+	public String getHeaderField(String name) {
 
         if (!connected) {
             // Try to connect (silently)
@@ -315,7 +322,8 @@ public class DirContextURLConnection
     /**
      * Get object content.
      */
-    public Object getContent()
+    @Override
+	public Object getContent()
         throws IOException {
         
         if (!connected)
@@ -337,7 +345,8 @@ public class DirContextURLConnection
     /**
      * Get object content.
      */
-    public Object getContent(Class[] classes)
+    @Override
+	public Object getContent(Class[] classes)
         throws IOException {
         
         Object object = getContent();
@@ -355,7 +364,8 @@ public class DirContextURLConnection
     /**
      * Get input stream.
      */
-    public InputStream getInputStream() 
+    @Override
+	public InputStream getInputStream() 
         throws IOException {
         
         if (!connected)
@@ -380,7 +390,8 @@ public class DirContextURLConnection
     /**
      * Get the Permission for this URL
      */
-    public Permission getPermission() {
+    @Override
+	public Permission getPermission() {
 
         return permission;
     }

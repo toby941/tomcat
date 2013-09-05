@@ -221,9 +221,10 @@ public class WebappLoader
     /**
      * Return the Java class loader to be used by this Container.
      */
-    public ClassLoader getClassLoader() {
+    @Override
+	public ClassLoader getClassLoader() {
 
-        return ((ClassLoader) classLoader);
+        return (classLoader);
 
     }
 
@@ -231,7 +232,8 @@ public class WebappLoader
     /**
      * Return the Container with which this Logger has been associated.
      */
-    public Container getContainer() {
+    @Override
+	public Container getContainer() {
 
         return (container);
 
@@ -243,7 +245,8 @@ public class WebappLoader
      *
      * @param container The associated Container
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         // Deregister from the old Container (if any)
         if ((this.container != null) && (this.container instanceof Context))
@@ -267,7 +270,8 @@ public class WebappLoader
      * Return the "follow standard delegation model" flag used to configure
      * our ClassLoader.
      */
-    public boolean getDelegate() {
+    @Override
+	public boolean getDelegate() {
 
         return (this.delegate);
 
@@ -280,7 +284,8 @@ public class WebappLoader
      *
      * @param delegate The new flag
      */
-    public void setDelegate(boolean delegate) {
+    @Override
+	public void setDelegate(boolean delegate) {
 
         boolean oldDelegate = this.delegate;
         this.delegate = delegate;
@@ -295,7 +300,8 @@ public class WebappLoader
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -327,7 +333,8 @@ public class WebappLoader
     /**
      * Return the reloadable flag for this Loader.
      */
-    public boolean getReloadable() {
+    @Override
+	public boolean getReloadable() {
 
         return (this.reloadable);
 
@@ -339,7 +346,8 @@ public class WebappLoader
      *
      * @param reloadable The new reloadable flag
      */
-    public void setReloadable(boolean reloadable) {
+    @Override
+	public void setReloadable(boolean reloadable) {
 
         // Process this property change
         boolean oldReloadable = this.reloadable;
@@ -376,7 +384,8 @@ public class WebappLoader
      *
      * @param listener The listener to add
      */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
 
         support.addPropertyChangeListener(listener);
 
@@ -388,7 +397,8 @@ public class WebappLoader
      *
      * @param repository Repository to be added
      */
-    public void addRepository(String repository) {
+    @Override
+	public void addRepository(String repository) {
 
         if (log.isDebugEnabled())
             log.debug(sm.getString("webappLoader.addRepository", repository));
@@ -417,7 +427,8 @@ public class WebappLoader
      * invoked inside the classloading context of this container. Unexpected
      * throwables will be caught and logged.
      */
-    public void backgroundProcess() {
+    @Override
+	public void backgroundProcess() {
         if (reloadable && modified()) {
             try {
                 Thread.currentThread().setContextClassLoader
@@ -443,14 +454,15 @@ public class WebappLoader
      * For security reason, returns a clone of the Array (since 
      * String are immutable).
      */
-    public String[] findRepositories() {
+    @Override
+	public String[] findRepositories() {
 
-        return ((String[])repositories.clone());
+        return (repositories.clone());
 
     }
 
     public String[] getRepositories() {
-        return ((String[])repositories.clone());
+        return (repositories.clone());
     }
 
     /** Extra repositories for this loader
@@ -495,7 +507,8 @@ public class WebappLoader
      * Has the internal repository associated with this Loader been modified,
      * such that the loaded classes should be reloaded?
      */
-    public boolean modified() {
+    @Override
+	public boolean modified() {
 
         return (classLoader.modified());
 
@@ -517,7 +530,8 @@ public class WebappLoader
      *
      * @param listener The listener to remove
      */
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
 
         support.removePropertyChangeListener(listener);
 
@@ -527,7 +541,8 @@ public class WebappLoader
     /**
      * Return a String representation of this component.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("WebappLoader[");
         if (container != null)
@@ -546,7 +561,8 @@ public class WebappLoader
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -557,7 +573,8 @@ public class WebappLoader
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -569,7 +586,8 @@ public class WebappLoader
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -623,7 +641,8 @@ public class WebappLoader
      *
      * @exception LifecycleException if a lifecycle error occurs
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
         // Validate and update our current component state
         if( ! initialized ) init();
         if (started)
@@ -690,7 +709,7 @@ public class WebappLoader
 
             // Binding the Webapp class loader to the directory context
             DirContextURLStreamHandler.bind
-                ((ClassLoader) classLoader, this.container.getResources());
+                (classLoader, this.container.getResources());
 
             StandardContext ctx=(StandardContext)container;
             Engine eng=(Engine)ctx.getParent().getParent();
@@ -717,7 +736,8 @@ public class WebappLoader
      *
      * @exception LifecycleException if a lifecycle error occurs
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Validate and update our current component state
         if (!started)
@@ -738,7 +758,7 @@ public class WebappLoader
         // Throw away our current class loader
         if (classLoader instanceof Lifecycle)
             ((Lifecycle) classLoader).stop();
-        DirContextURLStreamHandler.unbind((ClassLoader) classLoader);
+        DirContextURLStreamHandler.unbind(classLoader);
 
         try {
             StandardContext ctx=(StandardContext)container;
@@ -770,7 +790,8 @@ public class WebappLoader
      *
      * @param event The property change event that has occurred
      */
-    public void propertyChange(PropertyChangeEvent event) {
+    @Override
+	public void propertyChange(PropertyChangeEvent event) {
 
         // Validate the source of this event
         if (!(event.getSource() instanceof Context))
@@ -1254,7 +1275,8 @@ public class WebappLoader
     private String domain;
     private ObjectName controller;
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -1263,13 +1285,16 @@ public class WebappLoader
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 
     public ObjectName getController() {

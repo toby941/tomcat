@@ -70,7 +70,8 @@ public class SSIFilter implements Filter {
      * @exception ServletException
      *                if an error occurs
      */
-    public void init(FilterConfig config) throws ServletException {
+    @Override
+	public void init(FilterConfig config) throws ServletException {
     	this.config = config;
     	
         if (config.getInitParameter("debug") != null) {
@@ -96,7 +97,8 @@ public class SSIFilter implements Filter {
                     "SSIFilter.init() SSI invoker started with 'debug'=" + debug);
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response,
+    @Override
+	public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         // cast once
         HttpServletRequest req = (HttpServletRequest)request;
@@ -180,6 +182,7 @@ public class SSIFilter implements Filter {
         }
     }
 
-    public void destroy() {
+    @Override
+	public void destroy() {
     }
 }

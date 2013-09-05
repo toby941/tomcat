@@ -57,7 +57,8 @@ public class TagPluginManager {
 	this.pageInfo = pageInfo;
 
         page.visit(new Node.Visitor() {
-            public void visit(Node.CustomTag n)
+            @Override
+			public void visit(Node.CustomTag n)
                     throws JasperException {
                 invokePlugin(n);
                 visitBody(n);
@@ -152,7 +153,8 @@ public class TagPluginManager {
 	    pluginAttributes = new HashMap();
         }
 
-        public TagPluginContext getParentContext() {
+        @Override
+		public TagPluginContext getParentContext() {
             Node parent = node.getParent();
             if (! (parent instanceof Node.CustomTag)) {
                 return null;
@@ -160,67 +162,80 @@ public class TagPluginManager {
             return ((Node.CustomTag) parent).getTagPluginContext();
         }
 
-        public void setPluginAttribute(String key, Object value) {
+        @Override
+		public void setPluginAttribute(String key, Object value) {
             pluginAttributes.put(key, value);
         }
 
-        public Object getPluginAttribute(String key) {
+        @Override
+		public Object getPluginAttribute(String key) {
             return pluginAttributes.get(key);
         }
 
-        public boolean isScriptless() {
+        @Override
+		public boolean isScriptless() {
             return node.getChildInfo().isScriptless();
         }
 
-        public boolean isConstantAttribute(String attribute) {
+        @Override
+		public boolean isConstantAttribute(String attribute) {
             Node.JspAttribute attr = getNodeAttribute(attribute);
             if (attr == null)
                 return false;
             return attr.isLiteral();
         }
 
-        public String getConstantAttribute(String attribute) {
+        @Override
+		public String getConstantAttribute(String attribute) {
             Node.JspAttribute attr = getNodeAttribute(attribute);
             if (attr == null)
                 return null;
             return attr.getValue();
         }
 
-        public boolean isAttributeSpecified(String attribute) {
+        @Override
+		public boolean isAttributeSpecified(String attribute) {
             return getNodeAttribute(attribute) != null;
         }
 
-        public String getTemporaryVariableName() {
+        @Override
+		public String getTemporaryVariableName() {
             return node.getRoot().nextTemporaryVariableName();
         }
 
-        public void generateImport(String imp) {
+        @Override
+		public void generateImport(String imp) {
             pageInfo.addImport(imp);
         }
 
-        public void generateDeclaration(String id, String text) {
+        @Override
+		public void generateDeclaration(String id, String text) {
             if (pageInfo.isPluginDeclared(id)) {
                 return;
             }
             curNodes.add(new Node.Declaration(text, node.getStart(), null));
         }
 
-        public void generateJavaSource(String sourceCode) {
+        @Override
+		public void generateJavaSource(String sourceCode) {
             curNodes.add(new Node.Scriptlet(sourceCode, node.getStart(),
                                             null));
         }
 
-        public void generateAttribute(String attributeName) {
+        @Override
+		public void generateAttribute(String attributeName) {
             curNodes.add(new Node.AttributeGenerator(node.getStart(),
                                                      attributeName,
                                                      node));
         }
 
-        public void dontUseTagPlugin() {
+        @Override
+		public void dontUseTagPlugin() {
             node.setUseTagPlugin(false);
         }
 
-        public void generateBody() {
+        @Override
+		public void generateBody() {
             // Since we'll generate the body anyway, this is really a nop, 
             // except for the fact that it lets us put the Java sources the
             // plugins produce in the correct order (w.r.t the body).

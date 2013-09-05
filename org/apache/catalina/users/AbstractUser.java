@@ -63,7 +63,8 @@ public abstract class AbstractUser implements User {
     /**
      * Return the full name of this user.
      */
-    public String getFullName() {
+    @Override
+	public String getFullName() {
 
         return (this.fullName);
 
@@ -75,7 +76,8 @@ public abstract class AbstractUser implements User {
      *
      * @param fullName The new full name
      */
-    public void setFullName(String fullName) {
+    @Override
+	public void setFullName(String fullName) {
 
         this.fullName = fullName;
 
@@ -85,7 +87,8 @@ public abstract class AbstractUser implements User {
     /**
      * Return the set of {@link Group}s to which this user belongs.
      */
-    public abstract Iterator getGroups();
+    @Override
+	public abstract Iterator getGroups();
 
 
     /**
@@ -93,7 +96,8 @@ public abstract class AbstractUser implements User {
      * identifier of an encoding scheme surrounded by curly braces, such as
      * <code>{md5}xxxxx</code>.
      */
-    public String getPassword() {
+    @Override
+	public String getPassword() {
 
         return (this.password);
 
@@ -107,7 +111,8 @@ public abstract class AbstractUser implements User {
      *
      * @param password The new logon password
      */
-    public void setPassword(String password) {
+    @Override
+	public void setPassword(String password) {
 
         this.password = password;
 
@@ -117,14 +122,16 @@ public abstract class AbstractUser implements User {
     /**
      * Return the set of {@link Role}s assigned specifically to this user.
      */
-    public abstract Iterator getRoles();
+    @Override
+	public abstract Iterator getRoles();
 
 
     /**
      * Return the logon username of this user, which must be unique
      * within the scope of a {@link org.apache.catalina.UserDatabase}.
      */
-    public String getUsername() {
+    @Override
+	public String getUsername() {
 
         return (this.username);
 
@@ -137,7 +144,8 @@ public abstract class AbstractUser implements User {
      *
      * @param username The new logon username
      */
-    public void setUsername(String username) {
+    @Override
+	public void setUsername(String username) {
 
         this.username = username;
 
@@ -152,7 +160,8 @@ public abstract class AbstractUser implements User {
      *
      * @param group The new group
      */
-    public abstract void addGroup(Group group);
+    @Override
+	public abstract void addGroup(Group group);
 
 
     /**
@@ -160,7 +169,8 @@ public abstract class AbstractUser implements User {
      *
      * @param role The new role
      */
-    public abstract void addRole(Role role);
+    @Override
+	public abstract void addRole(Role role);
 
 
     /**
@@ -168,7 +178,8 @@ public abstract class AbstractUser implements User {
      *
      * @param group The group to check
      */
-    public abstract boolean isInGroup(Group group);
+    @Override
+	public abstract boolean isInGroup(Group group);
 
 
     /**
@@ -178,7 +189,8 @@ public abstract class AbstractUser implements User {
      *
      * @param role The role to check
      */
-    public abstract boolean isInRole(Role role);
+    @Override
+	public abstract boolean isInRole(Role role);
 
 
     /**
@@ -186,13 +198,15 @@ public abstract class AbstractUser implements User {
      *
      * @param group The old group
      */
-    public abstract void removeGroup(Group group);
+    @Override
+	public abstract void removeGroup(Group group);
 
 
     /**
      * Remove all {@link Group}s from those this user belongs to.
      */
-    public abstract void removeGroups();
+    @Override
+	public abstract void removeGroups();
 
 
     /**
@@ -200,13 +214,15 @@ public abstract class AbstractUser implements User {
      *
      * @param role The old role
      */
-    public abstract void removeRole(Role role);
+    @Override
+	public abstract void removeRole(Role role);
 
 
     /**
      * Remove all {@link Role}s from those assigned to this user.
      */
-    public abstract void removeRoles();
+    @Override
+	public abstract void removeRoles();
 
 
     // ------------------------------------------------------ Principal Methods
@@ -215,7 +231,8 @@ public abstract class AbstractUser implements User {
     /**
      * Make the principal name the same as the group name.
      */
-    public String getName() {
+    @Override
+	public String getName() {
 
         return (getUsername());
 

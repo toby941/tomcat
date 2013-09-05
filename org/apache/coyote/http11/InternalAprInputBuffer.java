@@ -734,7 +734,8 @@ public class InternalAprInputBuffer implements InputBuffer {
     /**
      * Read some bytes.
      */
-    public int doRead(ByteChunk chunk, Request req) 
+    @Override
+	public int doRead(ByteChunk chunk, Request req) 
         throws IOException {
 
         if (lastActiveFilter == -1)
@@ -828,7 +829,8 @@ public class InternalAprInputBuffer implements InputBuffer {
         /**
          * Read bytes into the specified chunk.
          */
-        public int doRead(ByteChunk chunk, Request req ) 
+        @Override
+		public int doRead(ByteChunk chunk, Request req ) 
             throws IOException {
 
             if (pos >= lastValid) {

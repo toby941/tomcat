@@ -156,7 +156,8 @@ public class FilterDef implements Serializable {
     /**
      * Render a String representation of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("FilterDef[");
         sb.append("filterName=");

@@ -79,7 +79,8 @@ public class SendMailFactory implements ObjectFactory
     protected final String DataSourceClassName = 
 	"javax.mail.internet.MimePartDataSource";
 
-    public Object getObjectInstance(Object RefObj, Name Nm, Context Ctx,
+    @Override
+	public Object getObjectInstance(Object RefObj, Name Nm, Context Ctx,
 				    Hashtable Env) throws Exception 
     {
 	final Reference Ref = (Reference)RefObj;
@@ -90,6 +91,7 @@ public class SendMailFactory implements ObjectFactory
 	if (Ref.getClassName().equals(DataSourceClassName)) {
 	    return AccessController.doPrivileged( new PrivilegedAction()
 	    {
+		@Override
 		public Object run() {
         	    // set up the smtp session that will send the message
 	            Properties props = new Properties();
@@ -104,7 +106,7 @@ public class SendMailFactory implements ObjectFactory
 			refaddr = (RefAddr)list.nextElement();
 
 			// set property
-			props.put(refaddr.getType(), (String)refaddr.getContent());
+			props.put(refaddr.getType(), refaddr.getContent());
 		    }
 		    MimeMessage message = new MimeMessage(
 			Session.getInstance(props));

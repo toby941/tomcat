@@ -83,7 +83,8 @@ public class HandlerRequest extends JkHandler
     public HandlerRequest() {
     }
 
-    public void init() {
+    @Override
+	public void init() {
         dispatch=(HandlerDispatch)wEnv.getHandler( "dispatch" );
         if( dispatch != null ) {
             // register incoming message handlers
@@ -255,7 +256,8 @@ public class HandlerRequest extends JkHandler
     private boolean shutdownEnabled=false;
     private boolean delayInitialRead = true;
 
-    public int invoke(Msg msg, MsgContext ep ) 
+    @Override
+	public int invoke(Msg msg, MsgContext ep ) 
         throws IOException    {
         int type=msg.getByte();
         ThreadWithAttributes twa = null;
@@ -282,7 +284,7 @@ public class HandlerRequest extends JkHandler
                 if (twa != null) {
                     twa.setCurrentStage(control, "JkService");
                     twa.setParam(control,
-                                 ((Request)ep.getRequest()).unparsedURI());
+                                 ep.getRequest().unparsedURI());
                 }
             } catch( Exception ex ) {
                 /* If we are here it is because we have a bad header or something like that */
@@ -405,7 +407,7 @@ public class HandlerRequest extends JkHandler
         // Translate the HTTP method code to a String.
         byte methodCode = msg.getByte();
         if (methodCode != AjpConstants.SC_M_JK_STORED) {
-            String mName=AjpConstants.methodTransArray[(int)methodCode - 1];
+            String mName=AjpConstants.methodTransArray[methodCode - 1];
             req.method().setString(mName);
         }
 

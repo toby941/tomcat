@@ -126,7 +126,8 @@ public final class Cookies { // extends MultiMap {
     /**
      * EXPENSIVE!!!  only for debugging.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         pw.println("=== Cookies ===");
@@ -566,7 +567,8 @@ public final class Cookies { // extends MultiMap {
      * @deprecated - Use private method
      * {@link #getTokenEndPosition(byte[], int, int, boolean)} instead
      */
-    public static final int getTokenEndPosition(byte bytes[], int off, int end){
+    @Deprecated
+	public static final int getTokenEndPosition(byte bytes[], int off, int end){
         return getTokenEndPosition(bytes, off, end, true);
     }
     

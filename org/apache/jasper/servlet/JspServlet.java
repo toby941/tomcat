@@ -69,7 +69,8 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
     /*
      * Initializes this JspServlet.
      */
-    public void init(ServletConfig config) throws ServletException {
+    @Override
+	public void init(ServletConfig config) throws ServletException {
         
         super.init(config);
         this.config = config;
@@ -205,7 +206,8 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
     }
     
 
-    public void service (HttpServletRequest request, 
+    @Override
+	public void service (HttpServletRequest request, 
     			 HttpServletResponse response)
                 throws ServletException, IOException {
 
@@ -270,7 +272,8 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
 
     }
 
-    public void destroy() {
+    @Override
+	public void destroy() {
         if (log.isDebugEnabled()) {
             log.debug("JspServlet.destroy()");
         }
@@ -279,7 +282,8 @@ public class JspServlet extends HttpServlet implements PeriodicEventListener {
     }
 
 
-    public void periodicEvent() {
+    @Override
+	public void periodicEvent() {
         rctxt.checkCompile();
     }
 

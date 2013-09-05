@@ -55,7 +55,8 @@ public interface ChannelSender extends Heartbeat
     /**
      * A channel heartbeat, use this method to clean up resources
      */
-    public void heartbeat() ;
+    @Override
+	public void heartbeat() ;
     
     /**
      * Send a message to one or more recipients.

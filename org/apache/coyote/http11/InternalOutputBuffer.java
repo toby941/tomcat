@@ -477,7 +477,8 @@ public class InternalOutputBuffer
         if (org.apache.coyote.Constants.IS_SECURITY_ENABLED){
            AccessController.doPrivileged(
                 new PrivilegedAction(){
-                    public Object run(){
+                    @Override
+					public Object run(){
                         buf[pos++] = Constants.CR;
                         buf[pos++] = Constants.LF;
                         return null;
@@ -495,7 +496,8 @@ public class InternalOutputBuffer
         if (org.apache.coyote.Constants.IS_SECURITY_ENABLED){
            return (String)AccessController.doPrivileged(
                 new PrivilegedAction(){
-                    public Object run(){
+                    @Override
+					public Object run(){
                         return HttpMessages.getMessage(message); 
                     }
                 }
@@ -580,7 +582,8 @@ public class InternalOutputBuffer
      * @return number of bytes written
      * @throws IOException an undelying I/O error occured
      */
-    public int doWrite(ByteChunk chunk, Response res) 
+    @Override
+	public int doWrite(ByteChunk chunk, Response res) 
         throws IOException {
 
         if (!committed) {
@@ -755,7 +758,8 @@ public class InternalOutputBuffer
     /**
      * Callback to write data from the buffer.
      */
-    public void realWriteBytes(byte cbuf[], int off, int len)
+    @Override
+	public void realWriteBytes(byte cbuf[], int off, int len)
         throws IOException {
         if (len > 0) {
             outputStream.write(cbuf, off, len);
@@ -777,7 +781,8 @@ public class InternalOutputBuffer
         /**
          * Write chunk.
          */
-        public int doWrite(ByteChunk chunk, Response res) 
+        @Override
+		public int doWrite(ByteChunk chunk, Response res) 
             throws IOException {
 
             int length = chunk.getLength();

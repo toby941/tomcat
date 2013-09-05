@@ -48,7 +48,8 @@ public class SetPropertyRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #SetPropertyRule(String name, String value)} instead.
      */
-    public SetPropertyRule(Digester digester, String name, String value) {
+    @Deprecated
+	public SetPropertyRule(Digester digester, String name, String value) {
 
         this(name, value);
 
@@ -96,7 +97,8 @@ public class SetPropertyRule extends Rule {
      * @exception NoSuchMethodException if the bean does not
      *  have a writeable property of the specified name
      */
-    public void begin(Attributes attributes) throws Exception {
+    @Override
+	public void begin(Attributes attributes) throws Exception {
 
         // Identify the actual property name and value to be used
         String actualName = null;
@@ -139,7 +141,8 @@ public class SetPropertyRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SetPropertyRule[");
         sb.append("name=");

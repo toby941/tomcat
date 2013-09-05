@@ -294,7 +294,8 @@ public final class CGIServlet extends HttpServlet {
      *                                  interferes with the servlet's normal
      *                                  operation
      */
-    public void init(ServletConfig config) throws ServletException {
+    @Override
+	public void init(ServletConfig config) throws ServletException {
 
         super.init(config);
 
@@ -566,7 +567,8 @@ public final class CGIServlet extends HttpServlet {
      * @see javax.servlet.http.HttpServlet
      *
      */
-    protected void doPost(HttpServletRequest req, HttpServletResponse res)
+    @Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res)
         throws IOException, ServletException {
         doGet(req, res);
     }
@@ -585,7 +587,8 @@ public final class CGIServlet extends HttpServlet {
      * @see javax.servlet.http.HttpServlet
      *
      */
-    protected void doGet(HttpServletRequest req, HttpServletResponse res)
+    @Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException {
 
         // Verify that we were not accessed using the invoker servlet
@@ -1216,7 +1219,8 @@ public final class CGIServlet extends HttpServlet {
          * @return  HTML string containing CGI environment info
          *
          */
-        public String toString() {
+        @Override
+		public String toString() {
 
             StringBuffer sb = new StringBuffer();
 
@@ -1260,7 +1264,7 @@ public final class CGIServlet extends HttpServlet {
 
             sb.append("<tr><td>Command Line Params</td><td>");
             for (int i=0; i < cmdLineParameters.size(); i++) {
-                String param = (String) cmdLineParameters.get(i);
+                String param = cmdLineParameters.get(i);
                 sb.append("<p>");
                 sb.append(param);
                 sb.append("</p>");
@@ -1669,7 +1673,8 @@ public final class CGIServlet extends HttpServlet {
                 final BufferedReader stdErrRdr = commandsStdErr ;
 
                 errReaderThread = new Thread() {
-                    public void run () {
+                    @Override
+					public void run () {
                         sendToLog(stdErrRdr) ;
                     } ;
                 };
@@ -1877,7 +1882,8 @@ public final class CGIServlet extends HttpServlet {
         /**
          * @see java.io.InputStream#read()
          */
-        public int read() throws IOException {
+        @Override
+		public int read() throws IOException {
             if (state == STATE_HEADER_END) {
                 return -1;
             }

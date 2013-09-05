@@ -113,7 +113,8 @@ public class CometConnectionManagerValve
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -124,7 +125,8 @@ public class CometConnectionManagerValve
      * Get the lifecycle listeners associated with this lifecycle. If this
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -136,7 +138,8 @@ public class CometConnectionManagerValve
      *
      * @param listener The listener to add
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -151,7 +154,8 @@ public class CometConnectionManagerValve
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started)
@@ -175,7 +179,8 @@ public class CometConnectionManagerValve
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Validate and update our current component state
         if (!started)
@@ -191,7 +196,8 @@ public class CometConnectionManagerValve
     }
 
     
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
         if (event.getType() == Lifecycle.BEFORE_STOP_EVENT) {
             // The container is getting stopped, close all current connections 
             Iterator<Request> iterator = cometRequests.iterator();
@@ -228,7 +234,8 @@ public class CometConnectionManagerValve
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
         return (info);
     }
 
@@ -242,7 +249,8 @@ public class CometConnectionManagerValve
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void invoke(Request request, Response response)
+    @Override
+	public void invoke(Request request, Response response)
         throws IOException, ServletException {
         // Perform the request
         getNext().invoke(request, response);
@@ -288,7 +296,8 @@ public class CometConnectionManagerValve
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void event(Request request, Response response, CometEvent event)
+    @Override
+	public void event(Request request, Response response, CometEvent event)
         throws IOException, ServletException {
         
         // Perform the request
@@ -362,11 +371,13 @@ public class CometConnectionManagerValve
     }
 
 
-    public void sessionCreated(HttpSessionEvent se) {
+    @Override
+	public void sessionCreated(HttpSessionEvent se) {
     }
 
 
-    public void sessionDestroyed(HttpSessionEvent se) {
+    @Override
+	public void sessionDestroyed(HttpSessionEvent se) {
         // Close all Comet connections associated with this session
         Request[] reqs = (Request[])
             se.getSession().getAttribute(cometRequestsAttribute);

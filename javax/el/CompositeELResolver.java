@@ -45,6 +45,7 @@ public class CompositeELResolver extends ELResolver {
 		this.resolvers[this.size++] = elResolver;
 	}
 
+	@Override
 	public Object getValue(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		context.setPropertyResolved(false);
@@ -59,6 +60,7 @@ public class CompositeELResolver extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public void setValue(ELContext context, Object base, Object property,
 			Object value) throws NullPointerException,
 			PropertyNotFoundException, PropertyNotWritableException,
@@ -73,6 +75,7 @@ public class CompositeELResolver extends ELResolver {
 		}
 	}
 
+	@Override
 	public boolean isReadOnly(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		context.setPropertyResolved(false);
@@ -87,10 +90,12 @@ public class CompositeELResolver extends ELResolver {
 		return false;
 	}
 
+	@Override
 	public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
 		return new FeatureIterator(context, base, this.resolvers, this.size);
 	}
 
+	@Override
 	public Class<?> getCommonPropertyType(ELContext context, Object base) {
 		int sz = this.size;
 		Class<?> commonType = null, type = null;
@@ -104,6 +109,7 @@ public class CompositeELResolver extends ELResolver {
 		return commonType;
 	}
 
+	@Override
 	public Class<?> getType(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		context.setPropertyResolved(false);
@@ -153,7 +159,8 @@ public class CompositeELResolver extends ELResolver {
 			}
 		}
 
-        public boolean hasNext() {          
+        @Override
+		public boolean hasNext() {          
             if (this.next != null)
                 return true;
             if (this.itr != null){
@@ -170,7 +177,8 @@ public class CompositeELResolver extends ELResolver {
             return hasNext();
         }
 
-        public FeatureDescriptor next() {
+        @Override
+		public FeatureDescriptor next() {
             if (!hasNext())
                 throw new NoSuchElementException();
             FeatureDescriptor next = this.next;
@@ -179,6 +187,7 @@ public class CompositeELResolver extends ELResolver {
 
         }
 
+		@Override
 		public void remove() {
 			throw new UnsupportedOperationException();
 		}

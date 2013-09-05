@@ -66,7 +66,8 @@ public final class ProtectedFunctionMapper extends javax.el.FunctionMapper
         if (SecurityUtil.isPackageProtectionEnabled()) {
             funcMapper = (ProtectedFunctionMapper) AccessController
                     .doPrivileged(new PrivilegedAction() {
-                        public Object run() {
+                        @Override
+						public Object run() {
                             return new ProtectedFunctionMapper();
                         }
                     });
@@ -100,7 +101,8 @@ public final class ProtectedFunctionMapper extends javax.el.FunctionMapper
                 method = (java.lang.reflect.Method) AccessController
                         .doPrivileged(new PrivilegedExceptionAction() {
 
-                            public Object run() throws Exception {
+                            @Override
+							public Object run() throws Exception {
                                 return c.getDeclaredMethod(methodName, args);
                             }
                         });
@@ -145,7 +147,8 @@ public final class ProtectedFunctionMapper extends javax.el.FunctionMapper
         if (SecurityUtil.isPackageProtectionEnabled()) {
             funcMapper = (ProtectedFunctionMapper) AccessController
                     .doPrivileged(new PrivilegedAction() {
-                        public Object run() {
+                        @Override
+						public Object run() {
                             return new ProtectedFunctionMapper();
                         }
                     });
@@ -154,7 +157,8 @@ public final class ProtectedFunctionMapper extends javax.el.FunctionMapper
                 method = (java.lang.reflect.Method) AccessController
                         .doPrivileged(new PrivilegedExceptionAction() {
 
-                            public Object run() throws Exception {
+                            @Override
+							public Object run() throws Exception {
                                 return c.getDeclaredMethod(methodName, args);
                             }
                         });
@@ -187,7 +191,8 @@ public final class ProtectedFunctionMapper extends javax.el.FunctionMapper
      *            the short name of the function
      * @return the result of the method mapping. Null means no entry found.
      */
-    public Method resolveFunction(String prefix, String localName) {
+    @Override
+	public Method resolveFunction(String prefix, String localName) {
         if (this.fnmap != null) {
             return (Method) this.fnmap.get(prefix + ":" + localName);
         }

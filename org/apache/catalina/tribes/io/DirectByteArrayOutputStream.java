@@ -43,7 +43,8 @@ public class DirectByteArrayOutputStream extends OutputStream {
      *   been closed.
      * @todo Implement this java.io.OutputStream method
      */
-    public void write(int b) throws IOException {
+    @Override
+	public void write(int b) throws IOException {
         buffer.append((byte)b);
     }
     

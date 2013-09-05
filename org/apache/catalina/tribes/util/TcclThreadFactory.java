@@ -44,13 +44,15 @@ public class TcclThreadFactory implements ThreadFactory {
         namePrefix = "pool-" + poolNumber.getAndIncrement() + "-thread-";
     }
 
-    public Thread newThread(Runnable r) {
+    @Override
+	public Thread newThread(Runnable r) {
         final Thread t = new Thread(group, r, namePrefix +
                 threadNumber.getAndIncrement());
         
         if (IS_SECURITY_ENABLED) {
             AccessController.doPrivileged(new PrivilegedAction<Void>() {
-                public Void run() {
+                @Override
+				public Void run() {
                     t.setContextClassLoader(this.getClass().getClassLoader());
                     return null;
                 }

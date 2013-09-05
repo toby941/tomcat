@@ -123,7 +123,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         return (obj instanceof ValueExpressionImpl && obj.hashCode() == this
                 .hashCode());
     }
@@ -133,7 +134,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * 
      * @see javax.el.ValueExpression#getExpectedType()
      */
-    public Class getExpectedType() {
+    @Override
+	public Class getExpectedType() {
         return this.expectedType;
     }
 
@@ -147,7 +149,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * 
      * @see javax.el.Expression#getExpressionString()
      */
-    public String getExpressionString() {
+    @Override
+	public String getExpressionString() {
         return this.expr;
     }
 
@@ -167,7 +170,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * 
      * @see javax.el.ValueExpression#getType(javax.el.ELContext)
      */
-    public Class getType(ELContext context) throws PropertyNotFoundException,
+    @Override
+	public Class getType(ELContext context) throws PropertyNotFoundException,
             ELException {
         EvaluationContext ctx = new EvaluationContext(context, this.fnMapper,
                 this.varMapper);
@@ -179,7 +183,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * 
      * @see javax.el.ValueExpression#getValue(javax.el.ELContext)
      */
-    public Object getValue(ELContext context) throws PropertyNotFoundException,
+    @Override
+	public Object getValue(ELContext context) throws PropertyNotFoundException,
             ELException {
         EvaluationContext ctx = new EvaluationContext(context, this.fnMapper,
                 this.varMapper);
@@ -195,7 +200,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * 
      * @see java.lang.Object#hashCode()
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.getNode().hashCode();
     }
 
@@ -204,7 +210,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * 
      * @see javax.el.ValueExpression#isLiteralText()
      */
-    public boolean isLiteralText() {
+    @Override
+	public boolean isLiteralText() {
         try {
             return this.getNode() instanceof AstLiteralExpression;
         } catch (ELException ele) {
@@ -217,14 +224,16 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * 
      * @see javax.el.ValueExpression#isReadOnly(javax.el.ELContext)
      */
-    public boolean isReadOnly(ELContext context)
+    @Override
+	public boolean isReadOnly(ELContext context)
             throws PropertyNotFoundException, ELException {
         EvaluationContext ctx = new EvaluationContext(context, this.fnMapper,
                 this.varMapper);
         return this.getNode().isReadOnly(ctx);
     }
 
-    public void readExternal(ObjectInput in) throws IOException,
+    @Override
+	public void readExternal(ObjectInput in) throws IOException,
             ClassNotFoundException {
         this.expr = in.readUTF();
         String type = in.readUTF();
@@ -241,7 +250,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
      * @see javax.el.ValueExpression#setValue(javax.el.ELContext,
      *      java.lang.Object)
      */
-    public void setValue(ELContext context, Object value)
+    @Override
+	public void setValue(ELContext context, Object value)
             throws PropertyNotFoundException, PropertyNotWritableException,
             ELException {
         EvaluationContext ctx = new EvaluationContext(context, this.fnMapper,
@@ -249,7 +259,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
         this.getNode().setValue(ctx, value);
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(ObjectOutput out) throws IOException {
         out.writeUTF(this.expr);
         out.writeUTF((this.expectedType != null) ? this.expectedType.getName()
                 : "");
@@ -257,7 +268,8 @@ public final class ValueExpressionImpl extends ValueExpression implements
         out.writeObject(this.varMapper);
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "ValueExpression["+this.expr+"]";
     }
 }

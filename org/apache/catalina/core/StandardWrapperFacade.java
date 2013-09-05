@@ -45,7 +45,7 @@ public final class StandardWrapperFacade
     public StandardWrapperFacade(StandardWrapper config) {
 
         super();
-        this.config = (ServletConfig) config;
+        this.config = config;
 
     }
 
@@ -68,12 +68,14 @@ public final class StandardWrapperFacade
     // -------------------------------------------------- ServletConfig Methods
 
 
-    public String getServletName() {
+    @Override
+	public String getServletName() {
         return config.getServletName();
     }
 
 
-    public ServletContext getServletContext() {
+    @Override
+	public ServletContext getServletContext() {
         if (context == null) {
             context = config.getServletContext();
             if ((context != null) && (context instanceof ApplicationContext))
@@ -83,12 +85,14 @@ public final class StandardWrapperFacade
     }
 
 
-    public String getInitParameter(String name) {
+    @Override
+	public String getInitParameter(String name) {
         return config.getInitParameter(name);
     }
 
 
-    public Enumeration getInitParameterNames() {
+    @Override
+	public Enumeration getInitParameterNames() {
         return config.getInitParameterNames();
     }
 

@@ -21,6 +21,7 @@ import java.io.IOException;
 import org.apache.catalina.tribes.ChannelException;
 import org.apache.catalina.tribes.ChannelMessage;
 import org.apache.catalina.tribes.Member;
+import org.apache.catalina.tribes.transport.AbstractSender;
 import org.apache.catalina.tribes.transport.DataSender;
 import org.apache.catalina.tribes.transport.MultiPointSender;
 import org.apache.catalina.tribes.transport.PooledSender;
@@ -41,7 +42,8 @@ public class PooledParallelSender extends PooledSender implements MultiPointSend
         super();
     }
     
-    public void sendMessage(Member[] destination, ChannelMessage message) throws ChannelException {
+    @Override
+	public void sendMessage(Member[] destination, ChannelMessage message) throws ChannelException {
         if ( !connected ) throw new ChannelException("Sender not connected.");
         ParallelNioSender sender = (ParallelNioSender)getSender();
         if (sender == null) {
@@ -62,22 +64,25 @@ public class PooledParallelSender extends PooledSender implements MultiPointSend
         }
     }
 
-    public DataSender getNewDataSender() {
+    @Override
+	public DataSender getNewDataSender() {
         try {
             ParallelNioSender sender = new ParallelNioSender();
-            sender.transferProperties(this,sender);
+            AbstractSender.transferProperties(this,sender);
             return sender;
         } catch ( IOException x ) {
             throw new RuntimeException("Unable to open NIO selector.",x);
         }
     }
     
-    public synchronized void disconnect() {
+    @Override
+	public synchronized void disconnect() {
         this.connected = false;
         super.disconnect();
     }
 
-    public synchronized void connect() throws IOException {
+    @Override
+	public synchronized void connect() throws IOException {
         this.connected = true;
         super.connect();
     }

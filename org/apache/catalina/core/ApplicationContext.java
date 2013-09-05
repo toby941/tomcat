@@ -169,7 +169,8 @@ public class ApplicationContext
      *
      * @param name Name of the context attribute to return
      */
-    public Object getAttribute(String name) {
+    @Override
+	public Object getAttribute(String name) {
 
         return (attributes.get(name));
 
@@ -180,7 +181,8 @@ public class ApplicationContext
      * Return an enumeration of the names of the context attributes
      * associated with this context.
      */
-    public Enumeration getAttributeNames() {
+    @Override
+	public Enumeration getAttributeNames() {
 
         return new Enumerator(attributes.keySet(), true);
 
@@ -197,7 +199,8 @@ public class ApplicationContext
      *
      * @param uri Absolute URI of a resource on the server
      */
-    public ServletContext getContext(String uri) {
+    @Override
+	public ServletContext getContext(String uri) {
 
         // Validate the format of the specified argument
         if ((uri == null) || (!uri.startsWith("/")))
@@ -239,7 +242,8 @@ public class ApplicationContext
     /**
      * Return the main path associated with this context.
      */
-    public String getContextPath() {
+    @Override
+	public String getContextPath() {
         return context.getPath();
     }
     
@@ -250,7 +254,8 @@ public class ApplicationContext
      *
      * @param name Name of the initialization parameter to retrieve
      */
-    public String getInitParameter(final String name) {
+    @Override
+	public String getInitParameter(final String name) {
         return parameters.get(name);
     }
 
@@ -269,7 +274,8 @@ public class ApplicationContext
      * Return the names of the context's initialization parameters, or an
      * empty enumeration if the context has no initialization parameters.
      */
-    public Enumeration getInitParameterNames() {
+    @Override
+	public Enumeration getInitParameterNames() {
         return (new Enumerator(parameters.keySet()));
     }
 
@@ -277,7 +283,8 @@ public class ApplicationContext
     /**
      * Return the major version of the Java Servlet API that we implement.
      */
-    public int getMajorVersion() {
+    @Override
+	public int getMajorVersion() {
 
         return (Constants.MAJOR_VERSION);
 
@@ -287,7 +294,8 @@ public class ApplicationContext
     /**
      * Return the minor version of the Java Servlet API that we implement.
      */
-    public int getMinorVersion() {
+    @Override
+	public int getMinorVersion() {
 
         return (Constants.MINOR_VERSION);
 
@@ -300,7 +308,8 @@ public class ApplicationContext
      *
      * @param file Filename for which to identify a MIME type
      */
-    public String getMimeType(String file) {
+    @Override
+	public String getMimeType(String file) {
 
         if (file == null)
             return (null);
@@ -321,7 +330,8 @@ public class ApplicationContext
      *
      * @param name Name of the servlet for which a dispatcher is requested
      */
-    public RequestDispatcher getNamedDispatcher(String name) {
+    @Override
+	public RequestDispatcher getNamedDispatcher(String name) {
 
         // Validate the name argument
         if (name == null)
@@ -343,7 +353,8 @@ public class ApplicationContext
      *
      * @param path The path to the desired resource
      */
-    public String getRealPath(String path) {
+    @Override
+	public String getRealPath(String path) {
 
         if (!context.isFilesystemBased())
             return null;
@@ -365,7 +376,8 @@ public class ApplicationContext
      *
      * @param path The path to the desired resource.
      */
-    public RequestDispatcher getRequestDispatcher(String path) {
+    @Override
+	public RequestDispatcher getRequestDispatcher(String path) {
 
         // Validate the path argument
         if (path == null)
@@ -458,7 +470,8 @@ public class ApplicationContext
      * @exception MalformedURLException if the path is not given
      *  in the correct form
      */
-    public URL getResource(String path)
+    @Override
+	public URL getResource(String path)
         throws MalformedURLException {
 
         if (path == null)
@@ -519,7 +532,8 @@ public class ApplicationContext
      *
      * @param path The path to the desired resource.
      */
-    public InputStream getResourceAsStream(String path) {
+    @Override
+	public InputStream getResourceAsStream(String path) {
 
         if (path == null)
             return (null);
@@ -557,7 +571,8 @@ public class ApplicationContext
      *
      * @param path Collection path
      */
-    public Set getResourcePaths(String path) {
+    @Override
+	public Set getResourcePaths(String path) {
 
         // Validate the path argument
         if (path == null) {
@@ -604,7 +619,8 @@ public class ApplicationContext
     /**
      * Return the name and version of the servlet container.
      */
-    public String getServerInfo() {
+    @Override
+	public String getServerInfo() {
 
         return (ServerInfo.getServerInfo());
 
@@ -614,7 +630,9 @@ public class ApplicationContext
     /**
      * @deprecated As of Java Servlet API 2.1, with no direct replacement.
      */
-    public Servlet getServlet(String name) {
+    @Deprecated
+	@Override
+	public Servlet getServlet(String name) {
 
         return (null);
 
@@ -624,7 +642,8 @@ public class ApplicationContext
     /**
      * Return the display name of this web application.
      */
-    public String getServletContextName() {
+    @Override
+	public String getServletContextName() {
 
         return (context.getDisplayName());
 
@@ -634,7 +653,9 @@ public class ApplicationContext
     /**
      * @deprecated As of Java Servlet API 2.1, with no direct replacement.
      */
-    public Enumeration getServletNames() {
+    @Deprecated
+	@Override
+	public Enumeration getServletNames() {
         return (new Enumerator(empty));
     }
 
@@ -642,7 +663,9 @@ public class ApplicationContext
     /**
      * @deprecated As of Java Servlet API 2.1, with no direct replacement.
      */
-    public Enumeration getServlets() {
+    @Deprecated
+	@Override
+	public Enumeration getServlets() {
         return (new Enumerator(empty));
     }
 
@@ -652,7 +675,8 @@ public class ApplicationContext
      *
      * @param message Message to be written
      */
-    public void log(String message) {
+    @Override
+	public void log(String message) {
 
         context.getLogger().info(message);
 
@@ -668,7 +692,9 @@ public class ApplicationContext
      * @deprecated As of Java Servlet API 2.1, use
      *  <code>log(String, Throwable)</code> instead
      */
-    public void log(Exception exception, String message) {
+    @Deprecated
+	@Override
+	public void log(Exception exception, String message) {
         
         context.getLogger().error(message, exception);
 
@@ -681,7 +707,8 @@ public class ApplicationContext
      * @param message Message to be written
      * @param throwable Exception to be reported
      */
-    public void log(String message, Throwable throwable) {
+    @Override
+	public void log(String message, Throwable throwable) {
         
         context.getLogger().error(message, throwable);
 
@@ -693,7 +720,8 @@ public class ApplicationContext
      *
      * @param name Name of the context attribute to be removed
      */
-    public void removeAttribute(String name) {
+    @Override
+	public void removeAttribute(String name) {
 
         Object value = null;
         boolean found = false;
@@ -746,7 +774,8 @@ public class ApplicationContext
      * @param name Attribute name to be bound
      * @param value New attribute value to be bound
      */
-    public void setAttribute(String name, Object value) {
+    @Override
+	public void setAttribute(String name, Object value) {
 
         // Name cannot be null
         if (name == null)

@@ -56,7 +56,8 @@ public class DefaultAnnotationProcessor implements AnnotationProcessor {
     /**
      * Call postConstruct method on the specified instance.
      */
-    public void postConstruct(Object instance)
+    @Override
+	public void postConstruct(Object instance)
         throws IllegalAccessException, InvocationTargetException {
         
         Class<?> clazz = instance.getClass();
@@ -67,7 +68,8 @@ public class DefaultAnnotationProcessor implements AnnotationProcessor {
                 final Class<?> clazz2 = clazz;
                 methods = AccessController.doPrivileged(
                         new PrivilegedAction<Method[]>(){
-                    public Method[] run(){
+                    @Override
+					public Method[] run(){
                         return clazz2.getDeclaredMethods();
                     }
                 });
@@ -105,7 +107,8 @@ public class DefaultAnnotationProcessor implements AnnotationProcessor {
     /**
      * Call preDestroy method on the specified instance.
      */
-    public void preDestroy(Object instance)
+    @Override
+	public void preDestroy(Object instance)
         throws IllegalAccessException, InvocationTargetException {
         
         Class<?> clazz = instance.getClass();
@@ -117,7 +120,8 @@ public class DefaultAnnotationProcessor implements AnnotationProcessor {
             if (Globals.IS_SECURITY_ENABLED) {
                 methods = AccessController.doPrivileged(
                         new PrivilegedAction<Method[]>(){
-                            public Method[] run(){
+                            @Override
+							public Method[] run(){
                                 return clazz2.getDeclaredMethods();
                             }
                         });
@@ -156,7 +160,8 @@ public class DefaultAnnotationProcessor implements AnnotationProcessor {
     /**
      * Inject resources in specified instance.
      */
-    public void processAnnotations(Object instance)
+    @Override
+	public void processAnnotations(Object instance)
         throws IllegalAccessException, InvocationTargetException, NamingException {
         
         if (context == null) {
@@ -173,7 +178,8 @@ public class DefaultAnnotationProcessor implements AnnotationProcessor {
                 final Class<?> clazz2 = clazz;
                 fields = AccessController.doPrivileged(
                         new PrivilegedAction<Field[]>(){
-                    public Field[] run(){
+                    @Override
+					public Field[] run(){
                         return clazz2.getDeclaredFields();
                     }
                 });
@@ -218,7 +224,8 @@ public class DefaultAnnotationProcessor implements AnnotationProcessor {
                 final Class<?> clazz2 = clazz;
                 methods = AccessController.doPrivileged(
                         new PrivilegedAction<Method[]>(){
-                    public Method[] run(){
+                    @Override
+					public Method[] run(){
                         return clazz2.getDeclaredMethods();
                     }
                 });

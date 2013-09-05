@@ -929,7 +929,8 @@ public class JNDIRealm extends RealmBase {
      * @param credentials Password or other credentials to use in
      *  authenticating this username
      */
-    public Principal authenticate(String username, String credentials) {
+    @Override
+	public Principal authenticate(String username, String credentials) {
 
         DirContext context = null;
         Principal principal = null;
@@ -1831,7 +1832,8 @@ public class JNDIRealm extends RealmBase {
     /**
      * Return a short name for this Realm implementation.
      */
-    protected String getName() {
+    @Override
+	protected String getName() {
 
         return (name);
 
@@ -1841,7 +1843,8 @@ public class JNDIRealm extends RealmBase {
     /**
      * Return the password associated with the given principal's user name.
      */
-    protected String getPassword(String username) {
+    @Override
+	protected String getPassword(String username) {
 
         return (null);
 
@@ -1850,7 +1853,8 @@ public class JNDIRealm extends RealmBase {
     /**
      * Return the Principal associated with the given user name.
      */
-    protected Principal getPrincipal(String username) {
+    @Override
+	protected Principal getPrincipal(String username) {
 
         DirContext context = null;
         Principal principal = null;
@@ -2040,7 +2044,8 @@ public class JNDIRealm extends RealmBase {
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents it from being started
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Perform normal superclass initialization
         super.start();
@@ -2061,7 +2066,8 @@ public class JNDIRealm extends RealmBase {
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Perform normal superclass finalization
         super.stop();

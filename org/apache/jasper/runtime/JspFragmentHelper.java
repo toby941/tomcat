@@ -54,7 +54,8 @@ public abstract class JspFragmentHelper
         this.parentTag = parentTag;
     }
     
-    public JspContext getJspContext() {
+    @Override
+	public JspContext getJspContext() {
         return this.jspContext;
     }
     

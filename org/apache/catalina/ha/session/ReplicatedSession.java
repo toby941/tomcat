@@ -81,7 +81,8 @@ implements org.apache.catalina.ha.ClusterSession{
     }
 
 
-    public void removeAttribute(String name) {
+    @Override
+	public void removeAttribute(String name) {
         setIsDirty(true);
         super.removeAttribute(name);
     }
@@ -90,7 +91,8 @@ implements org.apache.catalina.ha.ClusterSession{
      * see parent description,
      * plus we also notify other nodes in the cluster
      */
-    public void removeAttribute(String name, boolean notify) {
+    @Override
+	public void removeAttribute(String name, boolean notify) {
         setIsDirty(true);
         super.removeAttribute(name,notify);
     }
@@ -99,7 +101,8 @@ implements org.apache.catalina.ha.ClusterSession{
     /**
      * Sets an attribute and notifies the other nodes in the cluster
      */
-    public void setAttribute(String name, Object value)
+    @Override
+	public void setAttribute(String name, Object value)
     {
         if ( value == null ) {
           removeAttribute(name);
@@ -111,7 +114,8 @@ implements org.apache.catalina.ha.ClusterSession{
         super.setAttribute(name,value);
     }
 
-    public void setMaxInactiveInterval(int interval) {
+    @Override
+	public void setMaxInactiveInterval(int interval) {
         setIsDirty(true);
         super.setMaxInactiveInterval(interval);
     }
@@ -136,19 +140,22 @@ implements org.apache.catalina.ha.ClusterSession{
      *
      * @param principal The new Principal, or <code>null</code> if none
      */
-    public void setPrincipal(Principal principal) {
+    @Override
+	public void setPrincipal(Principal principal) {
         super.setPrincipal(principal);
         setIsDirty(true);
     }
 
-    public void expire() {
+    @Override
+	public void expire() {
         SimpleTcpReplicationManager mgr =(SimpleTcpReplicationManager)getManager();
         mgr.sessionInvalidated(getIdInternal());
         setIsDirty(true);
         super.expire();
     }
 
-    public void invalidate() {
+    @Override
+	public void invalidate() {
         SimpleTcpReplicationManager mgr =(SimpleTcpReplicationManager)getManager();
         mgr.sessionInvalidated(getIdInternal());
         setIsDirty(true);
@@ -166,7 +173,8 @@ implements org.apache.catalina.ha.ClusterSession{
      * @exception ClassNotFoundException if an unknown class is specified
      * @exception IOException if an input/output error occurs
      */
-    public void readObjectData(ObjectInputStream stream)
+    @Override
+	public void readObjectData(ObjectInputStream stream)
         throws ClassNotFoundException, IOException {
 
         super.readObjectData(stream);
@@ -183,14 +191,16 @@ implements org.apache.catalina.ha.ClusterSession{
      *
      * @exception IOException if an input/output error occurs
      */
-    public void writeObjectData(ObjectOutputStream stream)
+    @Override
+	public void writeObjectData(ObjectOutputStream stream)
         throws IOException {
 
         super.writeObjectData(stream);
 
     }
     
-    public void setId(String id, boolean tellNew) {
+    @Override
+	public void setId(String id, boolean tellNew) {
 
         if ((this.id != null) && (manager != null))
             manager.remove(this);
@@ -213,7 +223,8 @@ implements org.apache.catalina.ha.ClusterSession{
      * returns true if this session is the primary session, if that is the
      * case, the manager can expire it upon timeout.
      */
-    public boolean isPrimarySession() {
+    @Override
+	public boolean isPrimarySession() {
         return isPrimarySession;
     }
 
@@ -221,7 +232,8 @@ implements org.apache.catalina.ha.ClusterSession{
      * Sets whether this is the primary session or not.
      * @param primarySession Flag value
      */
-    public void setPrimarySession(boolean primarySession) {
+    @Override
+	public void setPrimarySession(boolean primarySession) {
         this.isPrimarySession=primarySession;
     }
 
@@ -234,7 +246,7 @@ implements org.apache.catalina.ha.ClusterSession{
     protected void log(String message) {
 
         if ((mManager != null) && (mManager instanceof SimpleTcpReplicationManager)) {
-            ((SimpleTcpReplicationManager) mManager).log.debug("ReplicatedSession: " + message);
+            SimpleTcpReplicationManager.log.debug("ReplicatedSession: " + message);
         } else {
             System.out.println("ReplicatedSession: " + message);
         }
@@ -244,7 +256,7 @@ implements org.apache.catalina.ha.ClusterSession{
     protected void log(String message, Throwable x) {
 
         if ((mManager != null) && (mManager instanceof SimpleTcpReplicationManager)) {
-            ((SimpleTcpReplicationManager) mManager).log.error("ReplicatedSession: " + message,x);
+            SimpleTcpReplicationManager.log.error("ReplicatedSession: " + message,x);
         } else {
             System.out.println("ReplicatedSession: " + message);
             x.printStackTrace();
@@ -252,7 +264,8 @@ implements org.apache.catalina.ha.ClusterSession{
 
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buf = new StringBuffer("ReplicatedSession id=");
         buf.append(getIdInternal()).append(" ref=").append(super.toString()).append("\n");
         java.util.Enumeration e = getAttributeNames();
@@ -270,7 +283,8 @@ implements org.apache.catalina.ha.ClusterSession{
     public void setAccessCount(int accessCount) {
         this.accessCount.set(accessCount);
     }
-    public long getLastAccessedTime() {
+    @Override
+	public long getLastAccessedTime() {
         return lastAccessedTime;
     }
     public void setLastAccessedTime(long lastAccessedTime) {

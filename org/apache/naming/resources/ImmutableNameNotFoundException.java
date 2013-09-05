@@ -31,11 +31,15 @@ import javax.naming.NameNotFoundException;
 public class ImmutableNameNotFoundException
     extends NameNotFoundException {
 
-    public void appendRemainingComponent(String name) {}
-    public void appendRemainingName(Name name) {}
-    public void setRemainingName(Name name) {}
+    @Override
+	public void appendRemainingComponent(String name) {}
+    @Override
+	public void appendRemainingName(Name name) {}
+    @Override
+	public void setRemainingName(Name name) {}
     public void setResolverName(Name name) {}
-    public void setRootCause(Throwable e) {}
+    @Override
+	public void setRootCause(Throwable e) {}
 
     @Override
     public synchronized Throwable fillInStackTrace() {

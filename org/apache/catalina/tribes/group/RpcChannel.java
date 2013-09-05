@@ -90,7 +90,8 @@ public class RpcChannel implements ChannelListener{
                 if ( rpcOptions != NO_REPLY ) collector.wait(timeout);
             }
         } catch ( InterruptedException ix ) {
-            Thread.currentThread().interrupted();
+            Thread.currentThread();
+			Thread.interrupted();
             //throw new ChannelException(ix);
         }finally {
             responseMap.remove(key);
@@ -98,7 +99,8 @@ public class RpcChannel implements ChannelListener{
         return collector.getResponses();
     }
     
-    public void messageReceived(Serializable msg, Member sender) {
+    @Override
+	public void messageReceived(Serializable msg, Member sender) {
         RpcMessage rmsg = (RpcMessage)msg;
         RpcCollectorKey key = new RpcCollectorKey(rmsg.uuid);
         if ( rmsg.reply ) {
@@ -136,11 +138,13 @@ public class RpcChannel implements ChannelListener{
         channel.removeChannelListener(this);
     }
     
-    public void finalize() {
+    @Override
+	public void finalize() {
         breakdown();
     }
     
-    public boolean accept(Serializable msg, Member sender) {
+    @Override
+	public boolean accept(Serializable msg, Member sender) {
         if ( msg instanceof RpcMessage ) {
             RpcMessage rmsg = (RpcMessage)msg;
             return Arrays.equals(rmsg.rpcId,rpcId);
@@ -215,11 +219,13 @@ public class RpcChannel implements ChannelListener{
             }
         }
         
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return key.hashCode();
         }
         
-        public boolean equals(Object o) {
+        @Override
+		public boolean equals(Object o) {
             if ( o instanceof RpcCollector ) {
                 RpcCollector r = (RpcCollector)o;
                 return r.key.equals(this.key);
@@ -237,11 +243,13 @@ public class RpcChannel implements ChannelListener{
             this.id = id;
         }
         
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return id[0]+id[1]+id[2]+id[3];
         }
 
-        public boolean equals(Object o) {
+        @Override
+		public boolean equals(Object o) {
             if ( o instanceof RpcCollectorKey ) {
                 RpcCollectorKey r = (RpcCollectorKey)o;
                 return Arrays.equals(id,r.id);

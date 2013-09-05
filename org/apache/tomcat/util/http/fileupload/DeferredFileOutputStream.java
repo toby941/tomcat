@@ -107,7 +107,8 @@ public class DeferredFileOutputStream
      *
      * @exception IOException if an error occurs.
      */
-    protected OutputStream getStream() throws IOException
+    @Override
+	protected OutputStream getStream() throws IOException
     {
         return currentOutputStream;
     }
@@ -121,7 +122,8 @@ public class DeferredFileOutputStream
      *
      * @exception IOException if an error occurs.
      */
-    protected void thresholdReached() throws IOException
+    @Override
+	protected void thresholdReached() throws IOException
     {
         byte[] data = memoryOutputStream.toByteArray();
         FileOutputStream fos = new FileOutputStream(outputFile);

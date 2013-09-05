@@ -287,6 +287,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * request for this servlet will return an SC_SERVICE_UNAVAILABLE error. If
 	 * it is zero, the servlet is currently available.
 	 */
+	@Override
 	public long getAvailable() {
 
 		return (this.available);
@@ -303,6 +304,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param available
 	 *            The new available date/time
 	 */
+	@Override
 	public void setAvailable(long available) {
 
 		long oldAvailable = this.available;
@@ -335,6 +337,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * the corresponding version number, in the format
 	 * <code>&lt;description&gt;/&lt;version&gt;</code>.
 	 */
+	@Override
 	public String getInfo() {
 
 		return (info);
@@ -353,6 +356,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Return the context-relative URI of the JSP file for this servlet.
 	 */
+	@Override
 	public String getJspFile() {
 
 		return (this.jspFile);
@@ -365,6 +369,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param jspFile
 	 *            JSP file URI
 	 */
+	@Override
 	public void setJspFile(String jspFile) {
 
 		String oldJspFile = this.jspFile;
@@ -382,6 +387,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * Return the load-on-startup order value (negative value means load on
 	 * first call).
 	 */
+	@Override
 	public int getLoadOnStartup() {
 
 		if (isJspServlet && loadOnStartup < 0) {
@@ -402,6 +408,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param value
 	 *            New load-on-startup value
 	 */
+	@Override
 	public void setLoadOnStartup(int value) {
 
 		int oldLoadOnStartup = this.loadOnStartup;
@@ -465,6 +472,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param container
 	 *            Proposed parent Container
 	 */
+	@Override
 	public void setParent(Container container) {
 
 		if ((container != null) && !(container instanceof Context))
@@ -481,6 +489,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Return the run-as identity for this servlet.
 	 */
+	@Override
 	public String getRunAs() {
 
 		return (this.runAs);
@@ -493,6 +502,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param runAs
 	 *            New run-as identity value
 	 */
+	@Override
 	public void setRunAs(String runAs) {
 
 		String oldRunAs = this.runAs;
@@ -504,6 +514,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Return the fully qualified servlet class name for this servlet.
 	 */
+	@Override
 	public String getServletClass() {
 
 		return (this.servletClass);
@@ -516,6 +527,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param servletClass
 	 *            Servlet class name
 	 */
+	@Override
 	public void setServletClass(String servletClass) {
 
 		String oldServletClass = this.servletClass;
@@ -560,6 +572,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Is this servlet currently unavailable?
 	 */
+	@Override
 	public boolean isUnavailable() {
 
 		if (available == 0L)
@@ -581,6 +594,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * 
 	 * @return Array of names of the methods supported by the underlying servlet
 	 */
+	@Override
 	public String[] getServletMethods() throws ServletException {
 
 		Class servletClazz = loadServlet().getClass();
@@ -621,6 +635,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * invoked inside the classloading context of this container. Unexpected
 	 * throwables will be caught and logged.
 	 */
+	@Override
 	public void backgroundProcess() {
 		super.backgroundProcess();
 
@@ -660,6 +675,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param child
 	 *            Child container to be added
 	 */
+	@Override
 	public void addChild(Container child) {
 
 		throw new IllegalStateException(
@@ -675,6 +691,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param value
 	 *            Value of this initialization parameter to add
 	 */
+	@Override
 	public void addInitParameter(String name, String value) {
 
 		try {
@@ -693,6 +710,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param listener
 	 *            The new listener
 	 */
+	@Override
 	public void addInstanceListener(InstanceListener listener) {
 
 		instanceSupport.addInstanceListener(listener);
@@ -705,6 +723,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param mapping
 	 *            The new wrapper mapping
 	 */
+	@Override
 	public void addMapping(String mapping) {
 
 		try {
@@ -726,6 +745,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param link
 	 *            Role name used within the web application
 	 */
+	@Override
 	public void addSecurityReference(String name, String link) {
 
 		try {
@@ -741,6 +761,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Return the associated servlet instance.
 	 */
+	@Override
 	public Servlet getServlet() {
 		return instance;
 	}
@@ -759,6 +780,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @exception ServletException
 	 *                if a loading error occurs
 	 */
+	@Override
 	public Servlet allocate() throws ServletException {
 
 		// If we are currently unloading this servlet, throw an exception
@@ -850,6 +872,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @exception ServletException
 	 *                if a deallocation error occurs
 	 */
+	@Override
 	public void deallocate(Servlet servlet) throws ServletException {
 
 		// If not SingleThreadModel, no action is required
@@ -874,6 +897,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param name
 	 *            Name of the requested initialization parameter
 	 */
+	@Override
 	public String findInitParameter(String name) {
 
 		try {
@@ -889,6 +913,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * Return the names of all defined initialization parameters for this
 	 * servlet.
 	 */
+	@Override
 	public String[] findInitParameters() {
 
 		try {
@@ -904,6 +929,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Return the mappings associated with this wrapper.
 	 */
+	@Override
 	public String[] findMappings() {
 
 		try {
@@ -922,6 +948,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param name
 	 *            Security role reference used within this servlet
 	 */
+	@Override
 	public String findSecurityReference(String name) {
 
 		try {
@@ -937,6 +964,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * Return the set of security role reference names associated with this
 	 * servlet, if any; otherwise return a zero-length array.
 	 */
+	@Override
 	public String[] findSecurityReferences() {
 
 		try {
@@ -974,6 +1002,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @exception ServletException
 	 *                if some other loading problem occurs
 	 */
+	@Override
 	public synchronized void load() throws ServletException {
 		instance = loadServlet();
 	}
@@ -1059,6 +1088,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 					try {
 						classClass = (Class) AccessController
 								.doPrivileged(new PrivilegedExceptionAction() {
+									@Override
 									public Object run() throws Exception {
 										if (fclassLoader != null) {
 											return fclassLoader
@@ -1243,6 +1273,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param name
 	 *            Name of the initialization parameter to remove
 	 */
+	@Override
 	public void removeInitParameter(String name) {
 
 		try {
@@ -1261,6 +1292,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param listener
 	 *            The listener to remove
 	 */
+	@Override
 	public void removeInstanceListener(InstanceListener listener) {
 
 		instanceSupport.removeInstanceListener(listener);
@@ -1273,6 +1305,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param mapping
 	 *            The pattern to remove
 	 */
+	@Override
 	public void removeMapping(String mapping) {
 
 		try {
@@ -1291,6 +1324,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param name
 	 *            Security role used within this servlet to be removed
 	 */
+	@Override
 	public void removeSecurityReference(String name) {
 
 		try {
@@ -1306,6 +1340,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Return a String representation of this component.
 	 */
+	@Override
 	public String toString() {
 
 		StringBuffer sb = new StringBuffer();
@@ -1328,6 +1363,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 *            The exception that occurred, or <code>null</code> to mark this
 	 *            servlet as permanently unavailable
 	 */
+	@Override
 	public void unavailable(UnavailableException unavailable) {
 		getServletContext().log(
 				sm.getString("standardWrapper.unavailable", getName()));
@@ -1355,6 +1391,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @exception ServletException
 	 *                if an exception is thrown by the destroy() method
 	 */
+	@Override
 	public synchronized void unload() throws ServletException {
 
 		// Nothing to do if we have never loaded the instance
@@ -1484,6 +1521,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @param name
 	 *            Name of the initialization parameter to retrieve
 	 */
+	@Override
 	public String getInitParameter(String name) {
 
 		return (findInitParameter(name));
@@ -1494,6 +1532,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * Return the set of initialization parameter names defined for this
 	 * servlet. If none are defined, an empty Enumeration is returned.
 	 */
+	@Override
 	public Enumeration getInitParameterNames() {
 
 		try {
@@ -1508,6 +1547,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Return the servlet context with which this servlet is associated.
 	 */
+	@Override
 	public ServletContext getServletContext() {
 
 		if (parent == null)
@@ -1522,6 +1562,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Return the name of this servlet.
 	 */
+	@Override
 	public String getServletName() {
 
 		return (getName());
@@ -1571,6 +1612,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	/**
 	 * Increment the error count used for monitoring.
 	 */
+	@Override
 	public void incrementErrorCount() {
 		swValve.setErrorCount(swValve.getErrorCount() + 1);
 	}
@@ -1691,6 +1733,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @exception LifecycleException
 	 *                if a fatal error occurs during startup
 	 */
+	@Override
 	public void start() throws LifecycleException {
 
 		// Send j2ee.state.starting notification
@@ -1727,6 +1770,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * @exception LifecycleException
 	 *                if a fatal error occurs during shutdown
 	 */
+	@Override
 	public void stop() throws LifecycleException {
 
 		setAvailable(Long.MAX_VALUE);
@@ -1829,6 +1873,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * .management.NotificationListener, javax.management.NotificationFilter,
 	 * java.lang.Object)
 	 */
+	@Override
 	public void removeNotificationListener(NotificationListener listener,
 			NotificationFilter filter, Object object)
 			throws ListenerNotFoundException {
@@ -1848,6 +1893,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * 
 	 * @see javax.management.NotificationBroadcaster#getNotificationInfo()
 	 */
+	@Override
 	public MBeanNotificationInfo[] getNotificationInfo() {
 
 		if (notificationInfo == null) {
@@ -1885,6 +1931,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * .management.NotificationListener, javax.management.NotificationFilter,
 	 * java.lang.Object)
 	 */
+	@Override
 	public void addNotificationListener(NotificationListener listener,
 			NotificationFilter filter, Object object)
 			throws IllegalArgumentException {
@@ -1896,6 +1943,7 @@ public class StandardWrapper extends ContainerBase implements ServletConfig,
 	 * 
 	 * @see javax.management.NotificationBroadcaster#removeNotificationListener(javax.management.NotificationListener)
 	 */
+	@Override
 	public void removeNotificationListener(NotificationListener listener)
 			throws ListenerNotFoundException {
 		broadcaster.removeNotificationListener(listener);

@@ -79,7 +79,8 @@ public interface Cluster {
      * @param protocol The protocol used by the cluster
      * @deprecated
      */
-    public void setProtocol(String protocol);
+    @Deprecated
+	public void setProtocol(String protocol);
 
     /**
      * Get the protocol used by the cluster.
@@ -87,7 +88,8 @@ public interface Cluster {
      * @return The protocol
      * @deprecated
      */
-    public String getProtocol();
+    @Deprecated
+	public String getProtocol();
 
     // --------------------------------------------------------- Public Methods
 

@@ -55,7 +55,8 @@ public class BioReplicationTask extends AbstractRxTask {
     }
 
     // loop forever waiting for work to do
-    public synchronized void run()
+    @Override
+	public synchronized void run()
     {
         if ( socket == null ) return;
         try {
@@ -155,7 +156,8 @@ public class BioReplicationTask extends AbstractRxTask {
         }
     }
     
-    public void close() {
+    @Override
+	public void close() {
         setDoRun(false);
         try {socket.close();}catch ( Exception ignore){}
         try {reader.close();}catch ( Exception ignore){}

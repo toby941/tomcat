@@ -206,7 +206,8 @@ public class NioEndpoint extends AbstractEndpoint {
      */
     protected ConcurrentLinkedQueue<SocketProcessor> processorCache = new ConcurrentLinkedQueue<SocketProcessor>() {
         protected AtomicInteger size = new AtomicInteger(0);
-        public boolean offer(SocketProcessor sc) {
+        @Override
+		public boolean offer(SocketProcessor sc) {
             sc.reset(null,null);
             boolean offer = socketProperties.getProcessorCache()==-1?true:size.get()<socketProperties.getProcessorCache();
             //avoid over growing our cache or add after we have stopped
@@ -220,7 +221,8 @@ public class NioEndpoint extends AbstractEndpoint {
             else return false;
         }
         
-        public SocketProcessor poll() {
+        @Override
+		public SocketProcessor poll() {
             SocketProcessor result = super.poll();
             if ( result != null ) {
                 size.decrementAndGet();
@@ -228,7 +230,8 @@ public class NioEndpoint extends AbstractEndpoint {
             return result;
         }
         
-        public void clear() {
+        @Override
+		public void clear() {
             super.clear();
             size.set(0);
         }
@@ -240,7 +243,8 @@ public class NioEndpoint extends AbstractEndpoint {
      */
     protected ConcurrentLinkedQueue<KeyAttachment> keyCache = new ConcurrentLinkedQueue<KeyAttachment>() {
         protected AtomicInteger size = new AtomicInteger(0);
-        public boolean offer(KeyAttachment ka) {
+        @Override
+		public boolean offer(KeyAttachment ka) {
             ka.reset();
             boolean offer = socketProperties.getKeyCache()==-1?true:size.get()<socketProperties.getKeyCache();
             //avoid over growing our cache or add after we have stopped
@@ -254,7 +258,8 @@ public class NioEndpoint extends AbstractEndpoint {
             else return false;
         }
 
-        public KeyAttachment poll() {
+        @Override
+		public KeyAttachment poll() {
             KeyAttachment result = super.poll();
             if ( result != null ) {
                 size.decrementAndGet();
@@ -262,7 +267,8 @@ public class NioEndpoint extends AbstractEndpoint {
             return result;
         }
 
-        public void clear() {
+        @Override
+		public void clear() {
             super.clear();
             size.set(0);
         }
@@ -274,7 +280,8 @@ public class NioEndpoint extends AbstractEndpoint {
      */
     protected ConcurrentLinkedQueue<PollerEvent> eventCache = new ConcurrentLinkedQueue<PollerEvent>() {
         protected AtomicInteger size = new AtomicInteger(0);
-        public boolean offer(PollerEvent pe) {
+        @Override
+		public boolean offer(PollerEvent pe) {
             pe.reset();
             boolean offer = socketProperties.getEventCache()==-1?true:size.get()<socketProperties.getEventCache();
             //avoid over growing our cache or add after we have stopped
@@ -288,7 +295,8 @@ public class NioEndpoint extends AbstractEndpoint {
             else return false;
         }
 
-        public PollerEvent poll() {
+        @Override
+		public PollerEvent poll() {
             PollerEvent result = super.poll();
             if ( result != null ) {
                 size.decrementAndGet();
@@ -296,7 +304,8 @@ public class NioEndpoint extends AbstractEndpoint {
             return result;
         }
 
-        public void clear() {
+        @Override
+		public void clear() {
             super.clear();
             size.set(0);
         }
@@ -309,7 +318,8 @@ public class NioEndpoint extends AbstractEndpoint {
     protected ConcurrentLinkedQueue<NioChannel> nioChannels = new ConcurrentLinkedQueue<NioChannel>() {
         protected AtomicInteger size = new AtomicInteger(0);
         protected AtomicInteger bytes = new AtomicInteger(0);
-        public boolean offer(NioChannel socket) {
+        @Override
+		public boolean offer(NioChannel socket) {
             boolean offer = socketProperties.getBufferPool()==-1?true:size.get()<socketProperties.getBufferPool();
             offer = offer && (socketProperties.getBufferPoolSize()==-1?true:(bytes.get()+socket.getBufferSize())<socketProperties.getBufferPoolSize());
             //avoid over growing our cache or add after we have stopped
@@ -324,7 +334,8 @@ public class NioEndpoint extends AbstractEndpoint {
             else return false;
         }
         
-        public NioChannel poll() {
+        @Override
+		public NioChannel poll() {
             NioChannel result = super.poll();
             if ( result != null ) {
                 size.decrementAndGet();
@@ -333,7 +344,8 @@ public class NioEndpoint extends AbstractEndpoint {
             return result;
         }
         
-        public void clear() {
+        @Override
+		public void clear() {
             super.clear();
             size.set(0);
             bytes.set(0);
@@ -1292,7 +1304,8 @@ public class NioEndpoint extends AbstractEndpoint {
          * The background thread that listens for incoming TCP/IP connections and
          * hands them off to an appropriate processor.
          */
-        public void run() {
+        @Override
+		public void run() {
             // Loop until we receive a shutdown command
             while (running) {
                 // Loop if endpoint is paused
@@ -1371,7 +1384,8 @@ public class NioEndpoint extends AbstractEndpoint {
             reset(null, null, 0);
         }
     
-        public void run() {
+        @Override
+		public void run() {
             if ( interestOps == OP_REGISTER ) {
                 try {
                     socket.getIOChannel().register(socket.getPoller().getSelector(), SelectionKey.OP_READ, key);
@@ -1413,7 +1427,8 @@ public class NioEndpoint extends AbstractEndpoint {
             }//end if
         }//run
         
-        public String toString() {
+        @Override
+		public String toString() {
             return super.toString()+"[intOps="+this.interestOps+"]";
         }
     }
@@ -1500,7 +1515,7 @@ public class NioEndpoint extends AbstractEndpoint {
             boolean result = false;
 
             Runnable r = null;
-            while ( (r = (Runnable)events.poll()) != null ) {
+            while ( (r = events.poll()) != null ) {
                 result = true;
                 try {
                     r.run();
@@ -1560,7 +1575,8 @@ public class NioEndpoint extends AbstractEndpoint {
          * The background thread that listens for incoming TCP/IP connections and
          * hands them off to an appropriate processor.
          */
-        public void run() {
+        @Override
+		public void run() {
             // Loop until we receive a shutdown command
             while (running) {
                 try {
@@ -1734,7 +1750,7 @@ public class NioEndpoint extends AbstractEndpoint {
                 sc = attachment.getChannel();
                 sc.setSendFile(true);
                 //ssl channel is slightly different
-                WritableByteChannel wc =(WritableByteChannel) ((sc instanceof SecureNioChannel)?sc:sc.getIOChannel());
+                WritableByteChannel wc =(sc instanceof SecureNioChannel)?sc:sc.getIOChannel();
 
                 //we still have data in the buffer
                 if (sc.getOutboundRemaining()>0) {
@@ -2053,7 +2069,8 @@ public class NioEndpoint extends AbstractEndpoint {
          * The background thread that listens for incoming TCP/IP connections and
          * hands them off to an appropriate processor.
          */
-        public void run() {
+        @Override
+		public void run() {
 
             // Process requests until we receive a shutdown signal
             while (running) {
@@ -2137,9 +2154,12 @@ public class NioEndpoint extends AbstractEndpoint {
             }
         }
         
-        public ByteBuffer expand(ByteBuffer buffer, int remaining) {return buffer;}
-        public ByteBuffer getReadBuffer() {return readbuf;}
-        public ByteBuffer getWriteBuffer() {return writebuf;}
+        @Override
+		public ByteBuffer expand(ByteBuffer buffer, int remaining) {return buffer;}
+        @Override
+		public ByteBuffer getReadBuffer() {return readbuf;}
+        @Override
+		public ByteBuffer getWriteBuffer() {return writebuf;}
 
     }
 
@@ -2261,7 +2281,8 @@ public class NioEndpoint extends AbstractEndpoint {
             this.status = status;
         }
          
-        public void run() {
+        @Override
+		public void run() {
             synchronized (socket) {
                 NioEndpoint.this.activeSocketProcessors.addAndGet(1);
                 SelectionKey key = null;
@@ -2366,7 +2387,8 @@ public class NioEndpoint extends AbstractEndpoint {
             this.endpoint = ep;
         }
         
-        public boolean offer(Runnable o) {
+        @Override
+		public boolean offer(Runnable o) {
             //we can't do any checks
             if (parent==null) return super.offer(o);
             //we are maxed out on threads, simply queue the object
@@ -2393,7 +2415,8 @@ public class NioEndpoint extends AbstractEndpoint {
             this.namePrefix = namePrefix;
         }
 
-        public Thread newThread(Runnable r) {
+        @Override
+		public Thread newThread(Runnable r) {
             Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement());
             t.setDaemon(daemon);
             t.setPriority(getThreadPriority());

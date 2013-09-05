@@ -94,7 +94,8 @@ public class ServerLifecycleListener
      *
      * @param event The event that has occurred
      */
-    public void containerEvent(ContainerEvent event) {
+    @Override
+	public void containerEvent(ContainerEvent event) {
 
         try {
             String type = event.getType();
@@ -120,7 +121,8 @@ public class ServerLifecycleListener
      *
      * @param event The event that has occurred
      */
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
 
         Lifecycle lifecycle = event.getLifecycle();
         if (Lifecycle.START_EVENT.equals(event.getType())) {
@@ -209,7 +211,8 @@ public class ServerLifecycleListener
      *
      * @param event The event that has occurred
      */
-    public void propertyChange(PropertyChangeEvent event) {
+    @Override
+	public void propertyChange(PropertyChangeEvent event) {
 
         if (event.getSource() instanceof Container) {
             try {

@@ -268,7 +268,8 @@ public class JKStatusUpdateTask extends AbstractCatalinaTask {
      * @exception BuildException
      *                if an error occurs
      */
-    public void execute() throws BuildException {
+    @Override
+	public void execute() throws BuildException {
 
         super.execute();
         checkParameter();

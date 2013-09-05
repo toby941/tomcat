@@ -95,7 +95,8 @@ public class UTF8Reader
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public int read() throws IOException {
+    @Override
+	public int read() throws IOException {
 
         // decode character
         int c = fSurrogate;
@@ -230,7 +231,8 @@ public class UTF8Reader
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public int read(char ch[], int offset, int length) throws IOException {
+    @Override
+	public int read(char ch[], int offset, int length) throws IOException {
 
         // handle surrogate
         int out = offset;
@@ -511,7 +513,8 @@ public class UTF8Reader
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public long skip(long n) throws IOException {
+    @Override
+	public long skip(long n) throws IOException {
 
         long remaining = n;
         final char[] ch = new char[fBuffer.length];
@@ -540,14 +543,16 @@ public class UTF8Reader
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public boolean ready() throws IOException {
+    @Override
+	public boolean ready() throws IOException {
 	    return false;
     } // ready()
 
     /**
      * Tell whether this stream supports the mark() operation.
      */
-    public boolean markSupported() {
+    @Override
+	public boolean markSupported() {
 	    return false;
     } // markSupported()
 
@@ -564,7 +569,8 @@ public class UTF8Reader
      * @exception  IOException  If the stream does not support mark(),
      *                          or if some other I/O error occurs
      */
-    public void mark(int readAheadLimit) throws IOException {
+    @Override
+	public void mark(int readAheadLimit) throws IOException {
 	throw new IOException(
                 Localizer.getMessage("jsp.error.xml.operationNotSupported",
 				     "mark()", "UTF-8"));
@@ -583,7 +589,8 @@ public class UTF8Reader
      *                          or if the stream does not support reset(),
      *                          or if some other I/O error occurs
      */
-    public void reset() throws IOException {
+    @Override
+	public void reset() throws IOException {
         fOffset = 0;
         fSurrogate = -1;
     } // reset()
@@ -595,7 +602,8 @@ public class UTF8Reader
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public void close() throws IOException {
+    @Override
+	public void close() throws IOException {
         fInputStream.close();
     } // close()
 

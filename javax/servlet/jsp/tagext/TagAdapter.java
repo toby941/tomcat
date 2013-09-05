@@ -66,7 +66,8 @@ public class TagAdapter
      * @param pc ignored.
      * @throws UnsupportedOperationException Must not be called
      */
-    public void setPageContext(PageContext pc) {
+    @Override
+	public void setPageContext(PageContext pc) {
         throw new UnsupportedOperationException( 
             "Illegal to invoke setPageContext() on TagAdapter wrapper" );
     }
@@ -79,7 +80,8 @@ public class TagAdapter
      * @param parentTag ignored.
      * @throws UnsupportedOperationException Must not be called.
      */
-    public void setParent( Tag parentTag ) {
+    @Override
+	public void setParent( Tag parentTag ) {
         throw new UnsupportedOperationException( 
             "Illegal to invoke setParent() on TagAdapter wrapper" );
     }
@@ -95,7 +97,8 @@ public class TagAdapter
      *
      * @return The parent of the tag being adapted.
      */
-    public Tag getParent() {
+    @Override
+	public Tag getParent() {
 	if (!parentDetermined) {
 	    JspTag adapteeParent = simpleTagAdaptee.getParent();
 	    if (adapteeParent != null) {
@@ -130,7 +133,8 @@ public class TagAdapter
      * @throws UnsupportedOperationException Must not be called
      * @throws JspException never thrown
      */
-    public int doStartTag() throws JspException {
+    @Override
+	public int doStartTag() throws JspException {
         throw new UnsupportedOperationException( 
             "Illegal to invoke doStartTag() on TagAdapter wrapper" );
     }
@@ -142,7 +146,8 @@ public class TagAdapter
      * @throws UnsupportedOperationException Must not be called
      * @throws JspException never thrown
      */
-    public int doEndTag() throws JspException {
+    @Override
+	public int doEndTag() throws JspException {
         throw new UnsupportedOperationException( 
             "Illegal to invoke doEndTag() on TagAdapter wrapper" );
     }
@@ -152,7 +157,8 @@ public class TagAdapter
      *
      * @throws UnsupportedOperationException Must not be called
      */
-    public void release() {
+    @Override
+	public void release() {
         throw new UnsupportedOperationException( 
             "Illegal to invoke release() on TagAdapter wrapper" );
     }

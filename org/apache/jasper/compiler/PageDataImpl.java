@@ -81,7 +81,8 @@ class PageDataImpl extends PageData implements TagConstants {
      *
      * @return the input stream of the XML view
      */
-    public InputStream getInputStream() {
+    @Override
+	public InputStream getInputStream() {
 	// Turn StringBuffer into InputStream
         try {
             return new ByteArrayInputStream(buf.toString().getBytes("UTF-8"));
@@ -123,6 +124,7 @@ class PageDataImpl extends PageData implements TagConstants {
 	    this.jspIdPrefix = "jsp";
 	}
 
+	@Override
 	public void visit(Node.Root n) throws JasperException {
 	    visitBody(n);
 	    if (n == root) {
@@ -159,6 +161,7 @@ class PageDataImpl extends PageData implements TagConstants {
 	    }
 	}
 
+	@Override
 	public void visit(Node.JspRoot n) throws JasperException {
 	    addAttributes(n.getTaglibAttributes());
             addAttributes(n.getNonTaglibXmlnsAttributes());
@@ -171,6 +174,7 @@ class PageDataImpl extends PageData implements TagConstants {
 	 * Converts taglib directive into "xmlns:..." attribute of jsp:root
 	 * element.
 	 */
+	@Override
 	public void visit(Node.TaglibDirective n) throws JasperException {
 	    Attributes attrs = n.getAttributes();
 	    if (attrs != null) {
@@ -256,6 +260,7 @@ class PageDataImpl extends PageData implements TagConstants {
 	/*
 	 * Visits root node.
 	 */
+	@Override
 	public void visit(Node.Root n) throws JasperException {
 	    if (n == this.root) {
 		// top-level page
@@ -277,39 +282,48 @@ class PageDataImpl extends PageData implements TagConstants {
 	 * Any nested jsp:root elements (from pages included via an
 	 * include directive) are ignored.
 	 */
+	@Override
 	public void visit(Node.JspRoot n) throws JasperException {
 	    visitBody(n);
 	}
 
+	@Override
 	public void visit(Node.PageDirective n) throws JasperException {
 	    appendPageDirective(n);
 	}
 
+	@Override
 	public void visit(Node.IncludeDirective n) throws JasperException {
 	    // expand in place
 	    visitBody(n);
 	}
 
+	@Override
 	public void visit(Node.Comment n) throws JasperException {
 	    // Comments are ignored in XML view
 	}
 
+	@Override
 	public void visit(Node.Declaration n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.Expression n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.Scriptlet n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.JspElement n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.ELExpression n) throws JasperException {
 	    if (!n.getRoot().isXmlSyntax()) {
 		buf.append("<").append(JSP_TEXT_ACTION);
@@ -327,86 +341,106 @@ class PageDataImpl extends PageData implements TagConstants {
 	    buf.append("\n");
 	}
 
+	@Override
 	public void visit(Node.IncludeAction n) throws JasperException {
 	    appendTag(n);
 	}
     
+	@Override
 	public void visit(Node.ForwardAction n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.GetProperty n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.SetProperty n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.ParamAction n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.ParamsAction n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.FallBackAction n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.UseBean n) throws JasperException {
 	    appendTag(n);
 	}
 	
+	@Override
 	public void visit(Node.PlugIn n) throws JasperException {
 	    appendTag(n);
 	}
 
-        public void visit(Node.NamedAttribute n) throws JasperException {
+        @Override
+		public void visit(Node.NamedAttribute n) throws JasperException {
             appendTag(n);
         }
         
-        public void visit(Node.JspBody n) throws JasperException {
+        @Override
+		public void visit(Node.JspBody n) throws JasperException {
             appendTag(n);
         }
 
+	@Override
 	public void visit(Node.CustomTag n) throws JasperException {
 	    boolean resetDefaultNSSave = resetDefaultNS;
 	    appendTag(n, resetDefaultNS);
 	    resetDefaultNS = resetDefaultNSSave;
 	}
 
+	@Override
 	public void visit(Node.UninterpretedTag n) throws JasperException {
 	    boolean resetDefaultNSSave = resetDefaultNS;
 	    appendTag(n, resetDefaultNS);
 	    resetDefaultNS = resetDefaultNSSave;
 	}
 
+	@Override
 	public void visit(Node.JspText n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.DoBodyAction n) throws JasperException {
 	    appendTag(n);
 	}
 
-        public void visit(Node.InvokeAction n) throws JasperException {
+        @Override
+		public void visit(Node.InvokeAction n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.TagDirective n) throws JasperException {
 	    appendTagDirective(n);
 	}
 
+	@Override
 	public void visit(Node.AttributeDirective n) throws JasperException {
 	    appendTag(n);
 	}
 
+	@Override
 	public void visit(Node.VariableDirective n) throws JasperException {
 	    appendTag(n);
 	}
         
+	@Override
 	public void visit(Node.TemplateText n) throws JasperException {
 	    /*
 	     * If the template text came from a JSP page written in JSP syntax,

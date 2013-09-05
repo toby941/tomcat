@@ -248,7 +248,8 @@ public abstract class RequestFilterValve
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -270,7 +271,8 @@ public abstract class RequestFilterValve
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public abstract void invoke(Request request, Response response)
+    @Override
+	public abstract void invoke(Request request, Response response)
         throws IOException, ServletException;
 
 
@@ -405,7 +407,8 @@ public abstract class RequestFilterValve
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
         lifecycle.addLifecycleListener(listener);
     }
 
@@ -414,7 +417,8 @@ public abstract class RequestFilterValve
      * Get the lifecycle listeners associated with this lifecycle. If this
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
         return lifecycle.findLifecycleListeners();
     }
 
@@ -424,7 +428,8 @@ public abstract class RequestFilterValve
      *
      * @param listener The listener to add
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
         lifecycle.removeLifecycleListener(listener);
     }
 
@@ -437,7 +442,8 @@ public abstract class RequestFilterValve
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started) {
@@ -460,7 +466,8 @@ public abstract class RequestFilterValve
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
         // Validate and update our current component state
         if (!started) {
             return;

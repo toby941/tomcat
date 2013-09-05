@@ -539,7 +539,8 @@ public class InternalAprOutputBuffer
      * @return number of bytes written
      * @throws IOException an undelying I/O error occured
      */
-    public int doWrite(ByteChunk chunk, Response res) 
+    @Override
+	public int doWrite(ByteChunk chunk, Response res) 
         throws IOException {
 
         if (!committed) {
@@ -735,7 +736,8 @@ public class InternalAprOutputBuffer
         /**
          * Write chunk.
          */
-        public int doWrite(ByteChunk chunk, Response res) 
+        @Override
+		public int doWrite(ByteChunk chunk, Response res) 
             throws IOException {
 
             int len = chunk.getLength();

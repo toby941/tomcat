@@ -280,7 +280,8 @@ public class WebdavServlet
     /**
      * Initialize this servlet.
      */
-    public void init()
+    @Override
+	public void init()
         throws ServletException {
 
         super.init();
@@ -334,7 +335,8 @@ public class WebdavServlet
     /**
      * Handles the special WebDAV methods.
      */
-    protected void service(HttpServletRequest req, HttpServletResponse resp)
+    @Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
         final String path = getRelativePath(req);
@@ -401,7 +403,8 @@ public class WebdavServlet
      * and false if any of the conditions is not satisfied, in which case
      * request processing is stopped
      */
-    protected boolean checkIfHeaders(HttpServletRequest request,
+    @Override
+	protected boolean checkIfHeaders(HttpServletRequest request,
                                      HttpServletResponse response,
                                      ResourceAttributes resourceAttributes)
         throws IOException {
@@ -423,7 +426,8 @@ public class WebdavServlet
      *
      * @param request The servlet request we are processing
      */
-    protected String getRelativePath(HttpServletRequest request) {
+    @Override
+	protected String getRelativePath(HttpServletRequest request) {
         // Are we being processed by a RequestDispatcher.include()?
         if (request.getAttribute(Globals.INCLUDE_REQUEST_URI_ATTR) != null) {
             String result = (String) request.getAttribute(
@@ -465,7 +469,8 @@ public class WebdavServlet
      * @throws ServletException If an error occurs
      * @throws IOException If an IO error occurs
      */
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+    @Override
+	protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
         resp.addHeader("DAV", "1,2");
@@ -597,7 +602,7 @@ public class WebdavServlet
             if (slash != -1) {
                 String parentPath = path.substring(0, slash);
                 Vector currentLockNullResources =
-                    (Vector) lockNullResources.get(parentPath);
+                    lockNullResources.get(parentPath);
                 if (currentLockNullResources != null) {
                     Enumeration lockNullResourcesList =
                         currentLockNullResources.elements();
@@ -655,7 +660,7 @@ public class WebdavServlet
 
             while ((!stack.isEmpty()) && (depth >= 0)) {
 
-                String currentPath = (String) stack.pop();
+                String currentPath = stack.pop();
                 parseProperties(req, generatedXML, currentPath,
                                 type, properties);
 
@@ -692,7 +697,7 @@ public class WebdavServlet
                         lockPath =
                             lockPath.substring(0, lockPath.length() - 1);
                     Vector currentLockNullResources =
-                        (Vector) lockNullResources.get(lockPath);
+                        lockNullResources.get(lockPath);
                     if (currentLockNullResources != null) {
                         Enumeration lockNullResourcesList =
                             currentLockNullResources.elements();
@@ -825,7 +830,8 @@ public class WebdavServlet
     /**
      * DELETE Method.
      */
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
+    @Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
         if (readOnly) {
@@ -852,7 +858,8 @@ public class WebdavServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp)
+    @Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
 
         if (isLocked(req)) {
@@ -1268,7 +1275,7 @@ public class WebdavServlet
                 // Locking a single resource
 
                 // Retrieving an already existing lock on that resource
-                LockInfo presentLock = (LockInfo) resourceLocks.get(lock.path);
+                LockInfo presentLock = resourceLocks.get(lock.path);
                 if (presentLock != null) {
 
                     if ((presentLock.isExclusive()) || (lock.isExclusive())) {
@@ -1327,7 +1334,7 @@ public class WebdavServlet
 
             // Checking resource locks
 
-            LockInfo toRenew = (LockInfo) resourceLocks.get(path);
+            LockInfo toRenew = resourceLocks.get(path);
             Enumeration tokenList = null;
             if (toRenew != null) {
 
@@ -1413,7 +1420,7 @@ public class WebdavServlet
 
         // Checking resource locks
 
-        LockInfo lock = (LockInfo) resourceLocks.get(path);
+        LockInfo lock = resourceLocks.get(path);
         Enumeration tokenList = null;
         if (lock != null) {
 
@@ -1506,7 +1513,7 @@ public class WebdavServlet
 
         // Checking resource locks
 
-        LockInfo lock = (LockInfo) resourceLocks.get(path);
+        LockInfo lock = resourceLocks.get(path);
         Enumeration tokenList = null;
         if ((lock != null) && (lock.hasExpired())) {
             resourceLocks.remove(path);
@@ -2190,7 +2197,7 @@ public class WebdavServlet
 
             while (properties.hasMoreElements()) {
 
-                String property = (String) properties.nextElement();
+                String property = properties.nextElement();
 
                 if (property.equals("creationdate")) {
                     generatedXML.writeProperty
@@ -2337,7 +2344,7 @@ public class WebdavServlet
             return;
 
         // Retrieving the lock associated with the lock-null resource
-        LockInfo lock = (LockInfo) resourceLocks.get(path);
+        LockInfo lock = resourceLocks.get(path);
 
         if (lock == null)
             return;
@@ -2563,7 +2570,7 @@ public class WebdavServlet
     private boolean generateLockDiscovery
         (String path, XMLWriter generatedXML) {
 
-        LockInfo resourceLock = (LockInfo) resourceLocks.get(path);
+        LockInfo resourceLock = resourceLocks.get(path);
         Enumeration collectionLocksList = collectionLocks.elements();
 
         boolean wroteStart = false;
@@ -2701,7 +2708,8 @@ public class WebdavServlet
         /**
          * Get a String representation of this lock token.
          */
-        public String toString() {
+        @Override
+		public String toString() {
 
             String result =  "Type:" + type + "\n";
             result += "Scope:" + scope + "\n";
@@ -2800,7 +2808,8 @@ public class WebdavServlet
             context = theContext;
         }
      
-        public InputSource resolveEntity (String publicId, String systemId) {
+        @Override
+		public InputSource resolveEntity (String publicId, String systemId) {
             context.log(sm.getString("webdavservlet.enternalEntityIgnored",
                     publicId, systemId));
             return new InputSource(
@@ -3108,7 +3117,7 @@ class WebdavStatus {
         if (!mapStatusCodes.containsKey(intKey)) {
             return "";
         } else {
-            return (String) mapStatusCodes.get(intKey);
+            return mapStatusCodes.get(intKey);
         }
     }
 

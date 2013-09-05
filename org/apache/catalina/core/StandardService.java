@@ -132,7 +132,8 @@ public class StandardService
      * Return the <code>Container</code> that handles requests for all
      * <code>Connectors</code> associated with this Service.
      */
-    public Container getContainer() {
+    @Override
+	public Container getContainer() {
 
         return (this.container);
 
@@ -145,7 +146,8 @@ public class StandardService
      *
      * @param container The new Container
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         Container oldContainer = this.container;
         if ((oldContainer != null) && (oldContainer instanceof Engine))
@@ -192,7 +194,8 @@ public class StandardService
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -202,7 +205,8 @@ public class StandardService
     /**
      * Return the name of this Service.
      */
-    public String getName() {
+    @Override
+	public String getName() {
 
         return (this.name);
 
@@ -214,7 +218,8 @@ public class StandardService
      *
      * @param name The new service name
      */
-    public void setName(String name) {
+    @Override
+	public void setName(String name) {
 
         this.name = name;
 
@@ -224,7 +229,8 @@ public class StandardService
     /**
      * Return the <code>Server</code> with which we are associated (if any).
      */
-    public Server getServer() {
+    @Override
+	public Server getServer() {
 
         return (this.server);
 
@@ -236,7 +242,8 @@ public class StandardService
      *
      * @param server The server that owns this Service
      */
-    public void setServer(Server server) {
+    @Override
+	public void setServer(Server server) {
 
         this.server = server;
 
@@ -252,7 +259,8 @@ public class StandardService
      *
      * @param connector The Connector to be added
      */
-    public void addConnector(Connector connector) {
+    @Override
+	public void addConnector(Connector connector) {
 
         synchronized (connectors) {
             connector.setContainer(this.container);
@@ -312,7 +320,8 @@ public class StandardService
     /**
      * Find and return the set of Connectors associated with this Service.
      */
-    public Connector[] findConnectors() {
+    @Override
+	public Connector[] findConnectors() {
 
         return (connectors);
 
@@ -326,7 +335,8 @@ public class StandardService
      *
      * @param connector The Connector to be removed
      */
-    public void removeConnector(Connector connector) {
+    @Override
+	public void removeConnector(Connector connector) {
 
         synchronized (connectors) {
             int j = -1;
@@ -379,7 +389,8 @@ public class StandardService
     /**
      * Return a String representation of this component.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("StandardService[");
         sb.append(getName());
@@ -397,7 +408,8 @@ public class StandardService
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -408,7 +420,8 @@ public class StandardService
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -420,7 +433,8 @@ public class StandardService
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -430,7 +444,8 @@ public class StandardService
      * Adds a named executor to the service
      * @param ex Executor
      */
-    public void addExecutor(Executor ex) {
+    @Override
+	public void addExecutor(Executor ex) {
         synchronized (executors) {
             if (!executors.contains(ex)) {
                 executors.add(ex);
@@ -448,7 +463,8 @@ public class StandardService
      * Retrieves all executors
      * @return Executor[]
      */
-    public Executor[] findExecutors() {
+    @Override
+	public Executor[] findExecutors() {
         synchronized (executors) {
             Executor[] arr = new Executor[executors.size()];
             executors.toArray(arr);
@@ -461,7 +477,8 @@ public class StandardService
      * @param name String
      * @return Executor
      */
-    public Executor getExecutor(String name) {
+    @Override
+	public Executor getExecutor(String name) {
         synchronized (executors) {
             for (int i = 0; i < executors.size(); i++) {
                 if (name.equals(executors.get(i).getName()))
@@ -475,7 +492,8 @@ public class StandardService
      * Removes an executor from the service
      * @param ex Executor
      */
-    public void removeExecutor(Executor ex) {
+    @Override
+	public void removeExecutor(Executor ex) {
         synchronized (executors) {
             if ( executors.remove(ex) && started ) {
                 try {
@@ -498,7 +516,8 @@ public class StandardService
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started) {
@@ -561,7 +580,8 @@ public class StandardService
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Validate and update our current component state
         if (!started) {
@@ -653,7 +673,8 @@ public class StandardService
      * Invoke a pre-startup initialization. This is used to allow connectors
      * to bind to restricted ports under Unix operating environments.
      */
-    public void initialize()
+    @Override
+	public void initialize()
             throws LifecycleException
     {
         // Service shouldn't be used with embeded, so it doesn't matter
@@ -742,7 +763,8 @@ public class StandardService
         return domain;
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -750,13 +772,16 @@ public class StandardService
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 
 }

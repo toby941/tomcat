@@ -31,7 +31,8 @@ public final class SSIConfig implements SSICommand {
     /**
      * @see SSICommand
      */
-    public long process(SSIMediator ssiMediator, String commandName,
+    @Override
+	public long process(SSIMediator ssiMediator, String commandName,
             String[] paramNames, String[] paramValues, PrintWriter writer) {
         for (int i = 0; i < paramNames.length; i++) {
             String paramName = paramNames[i];

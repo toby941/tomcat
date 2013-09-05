@@ -85,7 +85,8 @@ final class StandardWrapperValve
      * @exception IOException if an input/output error occurred
      * @exception ServletException if a servlet error occurred
      */
-    public final void invoke(Request request, Response response)
+    @Override
+	public final void invoke(Request request, Response response)
         throws IOException, ServletException {
 
         // Initialize local variables we may need
@@ -347,7 +348,8 @@ final class StandardWrapperValve
      * @exception ServletException if a servlet error occurs, or is thrown
      *  by a subsequently invoked Valve, Filter, or Servlet
      */
-    public void event(Request request, Response response, CometEvent event)
+    @Override
+	public void event(Request request, Response response, CometEvent event)
         throws IOException, ServletException {
         
         // Initialize local variables we may need
@@ -565,7 +567,8 @@ final class StandardWrapperValve
 
     // Don't register in JMX
 
-    public ObjectName createObjectName(String domain, ObjectName parent)
+    @Override
+	public ObjectName createObjectName(String domain, ObjectName parent)
             throws MalformedObjectNameException
     {
         return null;

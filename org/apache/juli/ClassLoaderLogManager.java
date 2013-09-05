@@ -119,7 +119,8 @@ public class ClassLoaderLogManager extends LogManager {
      * 
      * @param logger The logger to be added
      */
-    public synchronized boolean addLogger(final Logger logger) {
+    @Override
+	public synchronized boolean addLogger(final Logger logger) {
 
         final String loggerName = logger.getName();
 
@@ -136,7 +137,8 @@ public class ClassLoaderLogManager extends LogManager {
         if (levelString != null) {
             try {
                 AccessController.doPrivileged(new PrivilegedAction() {
-                    public Object run() {
+                    @Override
+					public Object run() {
                         logger.setLevel(Level.parse(levelString.trim()));
                         return null;
                     }
@@ -218,7 +220,8 @@ public class ClassLoaderLogManager extends LogManager {
      * 
      * @param name The name of the logger to retrieve
      */
-    public synchronized Logger getLogger(final String name) {
+    @Override
+	public synchronized Logger getLogger(final String name) {
         ClassLoader classLoader = Thread.currentThread()
                 .getContextClassLoader();
         return getClassLoaderInfo(classLoader).loggers.get(name);
@@ -229,7 +232,8 @@ public class ClassLoaderLogManager extends LogManager {
      * Get an enumeration of the logger names currently defined in the 
      * classloader local configuration.
      */
-    public synchronized Enumeration<String> getLoggerNames() {
+    @Override
+	public synchronized Enumeration<String> getLoggerNames() {
         ClassLoader classLoader = Thread.currentThread()
                 .getContextClassLoader();
         return Collections.enumeration(getClassLoaderInfo(classLoader).loggers.keySet());
@@ -242,7 +246,8 @@ public class ClassLoaderLogManager extends LogManager {
      * 
      * @param name The property name
      */    
-    public String getProperty(String name) {
+    @Override
+	public String getProperty(String name) {
         ClassLoader classLoader = Thread.currentThread()
             .getContextClassLoader();
         String prefix = this.prefix.get();
@@ -278,7 +283,8 @@ public class ClassLoaderLogManager extends LogManager {
     }
     
     
-    public void readConfiguration()
+    @Override
+	public void readConfiguration()
         throws IOException, SecurityException {
         
         checkAccess();
@@ -287,7 +293,8 @@ public class ClassLoaderLogManager extends LogManager {
         
     }
         
-    public void readConfiguration(InputStream is)
+    @Override
+	public void readConfiguration(InputStream is)
         throws IOException, SecurityException {
         
         checkAccess();
@@ -368,7 +375,8 @@ public class ClassLoaderLogManager extends LogManager {
         if (info == null) {
             final ClassLoader classLoaderParam = classLoader;
             AccessController.doPrivileged(new PrivilegedAction() {
-                public Object run() {
+                @Override
+				public Object run() {
                     try {
                         readConfiguration(classLoaderParam);
                     } catch (IOException e) {
@@ -543,7 +551,8 @@ public class ClassLoaderLogManager extends LogManager {
     protected static void doSetParentLogger(final Logger logger,
             final Logger parent) {
         AccessController.doPrivileged(new PrivilegedAction() {
-            public Object run() {
+            @Override
+			public Object run() {
                 logger.setParent(parent);
                 return null;
             }

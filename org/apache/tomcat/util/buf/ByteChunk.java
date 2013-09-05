@@ -497,7 +497,8 @@ public final class ByteChunk implements Cloneable, Serializable {
     
     // -------------------- Conversion and getters --------------------
 
-    public String toString() {
+    @Override
+	public String toString() {
         if (null == buff) {
             return null;
         } else if (end-start == 0) {

@@ -154,7 +154,8 @@ public class WarWatcher {
      * File name filter for war files
      */
     protected class WarFilter implements java.io.FilenameFilter {
-        public boolean accept(File path, String name) {
+        @Override
+		public boolean accept(File path, String name) {
             if (name == null)
                 return false;
             return name.endsWith(".war");
@@ -217,11 +218,13 @@ public class WarWatcher {
             return war;
         }
 
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return war.getAbsolutePath().hashCode();
         }
 
-        public boolean equals(Object other) {
+        @Override
+		public boolean equals(Object other) {
             if (other instanceof WarInfo) {
                 WarInfo wo = (WarInfo) other;
                 return wo.getWar().equals(getWar());

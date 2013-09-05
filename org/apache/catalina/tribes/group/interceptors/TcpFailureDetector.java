@@ -83,7 +83,8 @@ public class TcpFailureDetector extends ChannelInterceptorBase {
     
     protected HashMap addSuspects = new HashMap();
     
-    public void sendMessage(Member[] destination, ChannelMessage msg, InterceptorPayload payload) throws ChannelException {
+    @Override
+	public void sendMessage(Member[] destination, ChannelMessage msg, InterceptorPayload payload) throws ChannelException {
         try {
             super.sendMessage(destination, msg, payload);
         }catch ( ChannelException cx ) {
@@ -98,7 +99,8 @@ public class TcpFailureDetector extends ChannelInterceptorBase {
         }
     }
 
-    public void messageReceived(ChannelMessage msg) {
+    @Override
+	public void messageReceived(ChannelMessage msg) {
         //catch incoming 
         boolean process = true;
         if ( okToProcess(msg.getOptions()) ) {
@@ -113,14 +115,15 @@ public class TcpFailureDetector extends ChannelInterceptorBase {
     }//messageReceived
     
     
-    public void memberAdded(Member member) {
+    @Override
+	public void memberAdded(Member member) {
         if ( membership == null ) setupMembership();
         boolean notify = false;
         synchronized (membership) {
             if (removeSuspects.containsKey(member)) {
                 //previously marked suspect, system below picked up the member again
                 removeSuspects.remove(member);
-            } else if (membership.getMember( (MemberImpl) member) == null){
+            } else if (membership.getMember( member) == null){
                 //if we add it here, then add it upwards too
                 //check to see if it is alive
                 if (memberAlive(member)) {
@@ -134,7 +137,8 @@ public class TcpFailureDetector extends ChannelInterceptorBase {
         if ( notify ) super.memberAdded(member);
     }
 
-    public void memberDisappeared(Member member) {
+    @Override
+	public void memberDisappeared(Member member) {
         if ( membership == null ) setupMembership();
         boolean notify = false;
         boolean shutdown = Arrays.equals(member.getCommand(),Member.SHUTDOWN_PAYLOAD);
@@ -173,26 +177,31 @@ public class TcpFailureDetector extends ChannelInterceptorBase {
         }
     }
     
-    public boolean hasMembers() {
+    @Override
+	public boolean hasMembers() {
         if ( membership == null ) setupMembership();
         return membership.hasMembers();
     }
 
-    public Member[] getMembers() {
+    @Override
+	public Member[] getMembers() {
         if ( membership == null ) setupMembership();
         return membership.getMembers();
     }
 
-    public Member getMember(Member mbr) {
+    @Override
+	public Member getMember(Member mbr) {
         if ( membership == null ) setupMembership();
         return membership.getMember(mbr);
     }
 
-    public Member getLocalMember(boolean incAlive) {
+    @Override
+	public Member getLocalMember(boolean incAlive) {
         return super.getLocalMember(incAlive);
     }
     
-    public void heartbeat() {
+    @Override
+	public void heartbeat() {
         super.heartbeat();
         checkMembers(false);
     }
@@ -256,7 +265,7 @@ public class TcpFailureDetector extends ChannelInterceptorBase {
         //if not, simply issue the memberDisappeared message
         MemberImpl[] keys = (MemberImpl[]) removeSuspects.keySet().toArray(new MemberImpl[removeSuspects.size()]);
         for (int i = 0; i < keys.length; i++) {
-            MemberImpl m = (MemberImpl) keys[i];
+            MemberImpl m = keys[i];
             if (membership.getMember(m) != null && (!memberAlive(m))) {
                 membership.removeMember(m);
                 super.memberDisappeared(m);
@@ -270,7 +279,7 @@ public class TcpFailureDetector extends ChannelInterceptorBase {
         //if they are, simply issue the memberAdded message
         keys = (MemberImpl[]) addSuspects.keySet().toArray(new MemberImpl[addSuspects.size()]);
         for (int i = 0; i < keys.length; i++) {
-            MemberImpl m = (MemberImpl) keys[i];
+            MemberImpl m = keys[i];
             if ( membership.getMember(m) == null && (memberAlive(m))) {
                 membership.memberAlive(m);
                 super.memberAdded(m);

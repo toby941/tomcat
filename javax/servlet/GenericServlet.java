@@ -74,7 +74,8 @@ public abstract class GenericServlet
      * 
      */
 
-    public void destroy() {
+    @Override
+	public void destroy() {
     }
     
     
@@ -96,7 +97,8 @@ public abstract class GenericServlet
      *
      */ 
 
-    public String getInitParameter(String name) {
+    @Override
+	public String getInitParameter(String name) {
 	return getServletConfig().getInitParameter(name);
     }
     
@@ -119,7 +121,8 @@ public abstract class GenericServlet
     *
     */
 
-    public Enumeration getInitParameterNames() {
+    @Override
+	public Enumeration getInitParameterNames() {
 	return getServletConfig().getInitParameterNames();
     }   
     
@@ -135,7 +138,8 @@ public abstract class GenericServlet
      *
      */
     
-    public ServletConfig getServletConfig() {
+    @Override
+	public ServletConfig getServletConfig() {
 	return config;
     }
     
@@ -156,7 +160,8 @@ public abstract class GenericServlet
      *
      */
 
-    public ServletContext getServletContext() {
+    @Override
+	public ServletContext getServletContext() {
 	return getServletConfig().getServletContext();
     }
 
@@ -177,7 +182,8 @@ public abstract class GenericServlet
      *
      */
     
-    public String getServletInfo() {
+    @Override
+	public String getServletInfo() {
 	return "";
     }
 
@@ -207,7 +213,8 @@ public abstract class GenericServlet
      *
      */
 
-    public void init(ServletConfig config) throws ServletException {
+    @Override
+	public void init(ServletConfig config) throws ServletException {
 	this.config = config;
 	this.init();
     }
@@ -303,7 +310,8 @@ public abstract class GenericServlet
      *
      */
 
-    public abstract void service(ServletRequest req, ServletResponse res)
+    @Override
+	public abstract void service(ServletRequest req, ServletResponse res)
 	throws ServletException, IOException;
     
 
@@ -318,7 +326,8 @@ public abstract class GenericServlet
      *
      */
 
-    public String getServletName() {
+    @Override
+	public String getServletName() {
         return config.getServletName();
     }
 }

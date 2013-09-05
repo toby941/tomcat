@@ -51,7 +51,8 @@ public class CoyotePrincipal
      */
     protected String name = null;
 
-    public String getName() {
+    @Override
+	public String getName() {
         return (this.name);
     }
 
@@ -63,7 +64,8 @@ public class CoyotePrincipal
      * Return a String representation of this object, which exposes only
      * information that should be public.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("CoyotePrincipal[");
         sb.append(this.name);

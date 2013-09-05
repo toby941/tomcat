@@ -48,8 +48,10 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
     
     //override optionflag
     protected int optionFlag = Channel.SEND_OPTIONS_BYTE_MESSAGE|Channel.SEND_OPTIONS_USE_ACK|Channel.SEND_OPTIONS_SYNCHRONIZED_ACK;
-    public int getOptionFlag() {return optionFlag;}
-    public void setOptionFlag(int flag) {optionFlag=flag;}
+    @Override
+	public int getOptionFlag() {return optionFlag;}
+    @Override
+	public void setOptionFlag(int flag) {optionFlag=flag;}
     
     private int startLevel = 0;
 
@@ -73,7 +75,8 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
      * @param options int - sender options, see class documentation
      * @return ClusterMessage[] - the replies from the members, if any.
      */
-    public void sendMessage(Member[] destination, ChannelMessage msg, InterceptorPayload payload) throws ChannelException {
+    @Override
+	public void sendMessage(Member[] destination, ChannelMessage msg, InterceptorPayload payload) throws ChannelException {
         if ( destination == null ) destination = membershipService.getMembers();
         clusterSender.sendMessage(msg,destination);
         if ( Logs.MESSAGES.isTraceEnabled() ) {
@@ -93,7 +96,8 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
      * SND_RX_SEQ - starts the replication receiver<BR>
      * @throws ChannelException if a startup error occurs or the service is already started.
      */
-    public void start(int svc) throws ChannelException {
+    @Override
+	public void start(int svc) throws ChannelException {
         this.internalStart(svc);
     }
 
@@ -108,7 +112,8 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
      * SND_RX_SEQ - stops the replication receiver<BR>
      * @throws ChannelException if a startup error occurs or the service is already started.
      */
-    public void stop(int svc) throws ChannelException {
+    @Override
+	public void stop(int svc) throws ChannelException {
         this.internalStop(svc);
     }    
 
@@ -224,17 +229,20 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
 
     }
     
-    public void memberAdded(Member member){
+    @Override
+	public void memberAdded(Member member){
         SenderState.getSenderState(member);
         super.memberAdded(member);
     }
     
-    public void memberDisappeared(Member member){
+    @Override
+	public void memberDisappeared(Member member){
         SenderState.removeSenderState(member);
         super.memberDisappeared(member);
     }
     
-    public void messageReceived(ChannelMessage msg) {
+    @Override
+	public void messageReceived(ChannelMessage msg) {
         if ( Logs.MESSAGES.isTraceEnabled() ) {
             Logs.MESSAGES.trace("ChannelCoordinator - Received msg:" + new UniqueId(msg.getUniqueId()) + " at " +new java.sql.Timestamp(System.currentTimeMillis())+ " from "+msg.getAddress().getName());
         }
@@ -273,7 +281,8 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
         this.membershipService.setMembershipListener(this);
     }
     
-    public void heartbeat() {
+    @Override
+	public void heartbeat() {
         if ( clusterSender!=null ) clusterSender.heartbeat();
         super.heartbeat();
     }
@@ -281,7 +290,8 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
     /**
      * has members
      */
-    public boolean hasMembers() {
+    @Override
+	public boolean hasMembers() {
         return this.getMembershipService().hasMembers();
     }
 
@@ -289,7 +299,8 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
      * Get all current cluster members
      * @return all members or empty array
      */
-    public Member[] getMembers() {
+    @Override
+	public Member[] getMembers() {
         return this.getMembershipService().getMembers();
     }
 
@@ -298,7 +309,8 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
      * @param mbr Member
      * @return Member
      */
-    public Member getMember(Member mbr){
+    @Override
+	public Member getMember(Member mbr){
         return this.getMembershipService().getMember(mbr);
     }
 
@@ -308,7 +320,8 @@ public class ChannelCoordinator extends ChannelInterceptorBase implements Messag
      *
      * @return Member
      */
-    public Member getLocalMember(boolean incAlive) {
+    @Override
+	public Member getLocalMember(boolean incAlive) {
         return this.getMembershipService().getLocalMember(incAlive);
     }
 

@@ -205,6 +205,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * @throws NullPointerException
 	 *             if the specified element is null
 	 */
+	@Override
 	public boolean add(E e) {
 		return super.add(e);
 	}
@@ -219,6 +220,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * @throws NullPointerException
 	 *             if the specified element is null
 	 */
+	@Override
 	public boolean offer(E e) {
 		if (e == null)
 			throw new NullPointerException();
@@ -245,6 +247,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * @throws NullPointerException
 	 *             {@inheritDoc}
 	 */
+	@Override
 	public void put(E e) throws InterruptedException {
 		if (e == null)
 			throw new NullPointerException();
@@ -275,6 +278,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * @throws NullPointerException
 	 *             {@inheritDoc}
 	 */
+	@Override
 	public boolean offer(E e, long timeout, TimeUnit unit)
 			throws InterruptedException {
 
@@ -303,6 +307,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 		}
 	}
 
+	@Override
 	public E poll() {
 		final ReentrantLock lock = this.lock;
 		lock.lock();
@@ -316,6 +321,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 		}
 	}
 
+	@Override
 	public E take() throws InterruptedException {
 		final ReentrantLock lock = this.lock;
 		lock.lockInterruptibly();
@@ -334,6 +340,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 		}
 	}
 
+	@Override
 	public E poll(long timeout, TimeUnit unit) throws InterruptedException {
 		long nanos = unit.toNanos(timeout);
 		final ReentrantLock lock = this.lock;
@@ -381,6 +388,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 		return list;
 	}
 
+	@Override
 	public E peek() {
 		final ReentrantLock lock = this.lock;
 		lock.lock();
@@ -398,6 +406,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * 
 	 * @return the number of elements in this queue
 	 */
+	@Override
 	public int size() {
 		// 使用互斥锁会导致死锁？此处或者size不需要绝对精确，故不使用互斥锁
 		// final ReentrantLock lock = this.lock;
@@ -424,6 +433,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * may be the case that another thread is about to insert or remove an
 	 * element.
 	 */
+	@Override
 	public int remainingCapacity() {
 		final ReentrantLock lock = this.lock;
 		lock.lock();
@@ -445,6 +455,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 *            element to be removed from this queue, if present
 	 * @return <tt>true</tt> if this queue changed as a result of the call
 	 */
+	@Override
 	public boolean remove(Object o) {
 		if (o == null)
 			return false;
@@ -478,6 +489,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 *            object to be checked for containment in this queue
 	 * @return <tt>true</tt> if this queue contains the specified element
 	 */
+	@Override
 	public boolean contains(Object o) {
 		if (o == null)
 			return false;
@@ -512,6 +524,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * 
 	 * @return an array containing all of the elements in this queue
 	 */
+	@Override
 	public Object[] toArray() {
 		final E[] items = this.items;
 		final ReentrantLock lock = this.lock;
@@ -571,6 +584,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * @throws NullPointerException
 	 *             if the specified array is null
 	 */
+	@Override
 	public <T> T[] toArray(T[] a) {
 		final E[] items = this.items;
 		final ReentrantLock lock = this.lock;
@@ -594,6 +608,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 		}
 	}
 
+	@Override
 	public String toString() {
 		final ReentrantLock lock = this.lock;
 		lock.lock();
@@ -608,6 +623,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * Atomically removes all of the elements from this queue. The queue will be
 	 * empty after this call returns.
 	 */
+	@Override
 	public void clear() {
 		final E[] items = this.items;
 		final ReentrantLock lock = this.lock;
@@ -638,6 +654,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * @throws IllegalArgumentException
 	 *             {@inheritDoc}
 	 */
+	@Override
 	public int drainTo(Collection<? super E> c) {
 		if (c == null)
 			throw new NullPointerException();
@@ -678,6 +695,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * @throws IllegalArgumentException
 	 *             {@inheritDoc}
 	 */
+	@Override
 	public int drainTo(Collection<? super E> c, int maxElements) {
 		if (c == null)
 			throw new NullPointerException();
@@ -720,6 +738,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 	 * 
 	 * @return an iterator over the elements in this queue in proper sequence
 	 */
+	@Override
 	public Iterator<E> iterator() {
 		final ReentrantLock lock = this.lock;
 		lock.lock();
@@ -764,6 +783,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 			}
 		}
 
+		@Override
 		public boolean hasNext() {
 			/*
 			 * No sync. We can return true by mistake here only if this iterator
@@ -787,6 +807,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 			}
 		}
 
+		@Override
 		public E next() {
 			final ReentrantLock lock = LimitArrayBlockingQueue.this.lock;
 			lock.lock();
@@ -803,6 +824,7 @@ public class LimitArrayBlockingQueue<E> extends AbstractQueue<E> implements
 			}
 		}
 
+		@Override
 		public void remove() {
 			final ReentrantLock lock = LimitArrayBlockingQueue.this.lock;
 			lock.lock();

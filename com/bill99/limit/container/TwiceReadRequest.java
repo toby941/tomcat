@@ -66,6 +66,7 @@ public class TwiceReadRequest extends Request {
 	public ServletInputStream getInputStream() throws IOException {
 		final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes());
 		ServletInputStream inputStream = new ServletInputStream() {
+			@Override
 			public int read() throws IOException {
 				return byteArrayInputStream.read();
 			}
@@ -82,6 +83,7 @@ public class TwiceReadRequest extends Request {
 	public InputStream getStream() {
 		final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(body.getBytes());
 		ServletInputStream inputStream = new ServletInputStream() {
+			@Override
 			public int read() throws IOException {
 				return byteArrayInputStream.read();
 			}

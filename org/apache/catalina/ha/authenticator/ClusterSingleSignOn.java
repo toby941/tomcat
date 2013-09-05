@@ -83,7 +83,8 @@ public class ClusterSingleSignOn
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -113,7 +114,8 @@ public class ClusterSingleSignOn
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
 	super.start();
 
@@ -167,7 +169,8 @@ public class ClusterSingleSignOn
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
 	super.stop();
 
@@ -184,7 +187,8 @@ public class ClusterSingleSignOn
     /**
      * Return a String rendering of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("ClusterSingleSignOn[");
         if (container == null )
@@ -209,7 +213,8 @@ public class ClusterSingleSignOn
      * @param ssoId Single sign on identifier
      * @param session Session to be associated
      */
-    protected void associate(String ssoId, Session session) {
+    @Override
+	protected void associate(String ssoId, Session session) {
 
 	if (cluster != null) {
 	    messageNumber++;
@@ -248,7 +253,8 @@ public class ClusterSingleSignOn
      * @param ssoId Single sign on identifier
      * @param session Session to be deregistered
      */
-    protected void deregister(String ssoId, Session session) {
+    @Override
+	protected void deregister(String ssoId, Session session) {
 
 	if (cluster != null) {
 	    messageNumber++;
@@ -285,7 +291,8 @@ public class ClusterSingleSignOn
      *
      * @param ssoId Single sign on identifier to deregister
      */
-    protected void deregister(String ssoId) {
+    @Override
+	protected void deregister(String ssoId) {
 
 	if (cluster != null) {
 	    messageNumber++;
@@ -322,7 +329,8 @@ public class ClusterSingleSignOn
      * @param username Username used to authenticate this user
      * @param password Password used to authenticate this user
      */
-    protected void register(String ssoId, Principal principal, String authType,
+    @Override
+	protected void register(String ssoId, Principal principal, String authType,
                   String username, String password) {
 
 	if (cluster != null) {
@@ -385,7 +393,8 @@ public class ClusterSingleSignOn
      * @param username  the username (if any) used for the authentication
      * @param password  the password (if any) used for the authentication
      */
-    protected void update(String ssoId, Principal principal, String authType,
+    @Override
+	protected void update(String ssoId, Principal principal, String authType,
                           String username, String password) {
 
 	if (cluster != null) {
@@ -429,7 +438,8 @@ public class ClusterSingleSignOn
      * @param ssoId Single sign on identifier from which to remove the session.
      * @param session the session to be removed.
      */
-    protected void removeSession(String ssoId, Session session) {
+    @Override
+	protected void removeSession(String ssoId, Session session) {
 
 	if (cluster != null) {
 	    messageNumber++;

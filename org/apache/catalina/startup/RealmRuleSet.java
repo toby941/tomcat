@@ -85,7 +85,8 @@ public class RealmRuleSet extends RuleSetBase {
      * @param digester Digester instance to which the new Rule instances
      *  should be added.
      */
-    public void addRuleInstances(Digester digester) {
+    @Override
+	public void addRuleInstances(Digester digester) {
 
         digester.addObjectCreate(prefix + "Realm",
                                  null, // MUST be specified in the element,

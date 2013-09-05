@@ -157,7 +157,8 @@ public class JAASMemoryLoginModule extends MemoryRealm implements LoginModule, R
      *
      * @exception LoginException if the abort fails
      */
-    public boolean abort() throws LoginException {
+    @Override
+	public boolean abort() throws LoginException {
 
         // If our authentication was not successful, just return false
         if (principal == null)
@@ -187,7 +188,8 @@ public class JAASMemoryLoginModule extends MemoryRealm implements LoginModule, R
      *
      * @exception LoginException if the commit fails
      */
-    public boolean commit() throws LoginException {
+    @Override
+	public boolean commit() throws LoginException {
         log.debug("commit " + principal);
 
         // If authentication was not successful, just return false
@@ -222,7 +224,8 @@ public class JAASMemoryLoginModule extends MemoryRealm implements LoginModule, R
      * @param request Request we are processing
      * @param context Context the Request is mapped to
      */
-    public SecurityConstraint [] findSecurityConstraints(Request request,
+    @Override
+	public SecurityConstraint [] findSecurityConstraints(Request request,
                                                      Context context) {
         ArrayList<SecurityConstraint> results = null;
         // Are there any defined security constraints?
@@ -276,7 +279,8 @@ public class JAASMemoryLoginModule extends MemoryRealm implements LoginModule, R
      * @param options Configuration information for this specific
      *  <code>LoginModule</code> instance
      */
-    public void initialize(Subject subject, CallbackHandler callbackHandler,
+    @Override
+	public void initialize(Subject subject, CallbackHandler callbackHandler,
                            Map sharedState, Map options) {
         log.debug("Init");
 
@@ -305,7 +309,8 @@ public class JAASMemoryLoginModule extends MemoryRealm implements LoginModule, R
      *
      * @exception LoginException if the authentication fails
      */
-    public boolean login() throws LoginException {
+    @Override
+	public boolean login() throws LoginException {
 
         // Set up our CallbackHandler requests
         if (callbackHandler == null)
@@ -384,7 +389,8 @@ public class JAASMemoryLoginModule extends MemoryRealm implements LoginModule, R
      *
      * @exception LoginException if logging out failed
      */
-    public boolean logout() throws LoginException {
+    @Override
+	public boolean logout() throws LoginException {
 
         subject.getPrincipals().remove(principal);
         committed = false;

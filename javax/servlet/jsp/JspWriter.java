@@ -386,7 +386,8 @@ abstract public class JspWriter extends java.io.Writer {
      * @exception  IOException  If an I/O error occurs
      */
 
-    abstract public void flush() throws IOException;
+    @Override
+	abstract public void flush() throws IOException;
 
     /**
      * Close the stream, flushing it first.
@@ -400,7 +401,8 @@ abstract public class JspWriter extends java.io.Writer {
      * @exception  IOException  If an I/O error occurs
      */
 
-    abstract public void close() throws IOException;
+    @Override
+	abstract public void close() throws IOException;
 
     /**
      * This method returns the size of the buffer used by the JspWriter.

@@ -46,7 +46,8 @@ public class BioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
      * @throws IOException
      * @todo Implement this org.apache.catalina.tribes.ChannelReceiver method
      */
-    public void start() throws IOException {
+    @Override
+	public void start() throws IOException {
         super.start();
         try {
             setPool(new RxTaskPool(getMaxThreads(),getMinThreads(),this));
@@ -68,7 +69,8 @@ public class BioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
         }
     }
     
-    public AbstractRxTask createRxTask() {
+    @Override
+	public AbstractRxTask createRxTask() {
         return getReplicationThread();
     }
     
@@ -83,7 +85,8 @@ public class BioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
      *
      * @todo Implement this org.apache.catalina.tribes.ChannelReceiver method
      */
-    public void stop() {
+    @Override
+	public void stop() {
         setListen(false);
         try {
             this.serverSocket.close();
@@ -104,7 +107,8 @@ public class BioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
     
     
     
-    public void run() {
+    @Override
+	public void run() {
         try {
             listen();
         } catch (Exception x) {

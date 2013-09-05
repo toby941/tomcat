@@ -83,11 +83,13 @@ public class MbeansSource extends ModelerSource implements MbeansSourceMBean
        this.type=type;
     }
 
-    public void setSource( Object source ) {
+    @Override
+	public void setSource( Object source ) {
         this.source=source;
     }
 
-    public Object getSource() {
+    @Override
+	public Object getSource() {
         return source;
     }
 
@@ -98,11 +100,13 @@ public class MbeansSource extends ModelerSource implements MbeansSourceMBean
     /** Return the list of mbeans created by this source.
      *  It can be used to implement runtime services.
      */
-    public List getMBeans() {
+    @Override
+	public List getMBeans() {
         return mbeans;
     }
 
-    public List loadDescriptors( Registry registry, String location,
+    @Override
+	public List loadDescriptors( Registry registry, String location,
                                  String type, Object source)
             throws Exception
     {
@@ -122,7 +126,8 @@ public class MbeansSource extends ModelerSource implements MbeansSourceMBean
         registry.invoke(mbeans, "stop", false);        
     }
     
-    public void init() throws Exception {
+    @Override
+	public void init() throws Exception {
         if( mbeans==null) execute();
         if( registry==null ) registry=Registry.getRegistry();
         
@@ -133,7 +138,8 @@ public class MbeansSource extends ModelerSource implements MbeansSourceMBean
         registry.invoke(mbeans, "destroy", false);                
     }
     
-    public void load() throws Exception {
+    @Override
+	public void load() throws Exception {
         execute(); // backward compat
     }
 
@@ -161,7 +167,7 @@ public class MbeansSource extends ModelerSource implements MbeansSourceMBean
                 firstMbeanN=descriptorsN;
             }
 
-            MBeanServer server=(MBeanServer)Registry.getServer();
+            MBeanServer server=Registry.getServer();
 
             // XXX Not very clean...  Just a workaround
             if( ! loaderLoaded ) {
@@ -267,7 +273,8 @@ public class MbeansSource extends ModelerSource implements MbeansSourceMBean
         }
     }
     
-    public void updateField( ObjectName oname, String name, 
+    @Override
+	public void updateField( ObjectName oname, String name, 
                              Object value )
     {
         if( loading ) return;
@@ -298,7 +305,8 @@ public class MbeansSource extends ModelerSource implements MbeansSourceMBean
     /** Store the mbeans. 
      * XXX add a background thread to store it periodically 
      */ 
-    public void save() {
+    @Override
+	public void save() {
         // XXX customize no often than ( based on standard descriptor ), etc.
         // It doesn't work very well if we call this on each set att - 
         // the triger will work for the first att, but all others will be delayed

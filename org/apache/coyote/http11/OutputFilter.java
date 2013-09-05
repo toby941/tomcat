@@ -37,7 +37,8 @@ public interface OutputFilter extends OutputBuffer {
      * 
      * @return number of bytes written by the filter
      */
-    public int doWrite(ByteChunk chunk, Response unused)
+    @Override
+	public int doWrite(ByteChunk chunk, Response unused)
         throws IOException;
 
 

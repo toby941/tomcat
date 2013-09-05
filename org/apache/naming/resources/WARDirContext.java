@@ -112,7 +112,8 @@ public class WARDirContext extends BaseDirContext {
      * @exception IllegalArgumentException if this would create a
      *  malformed URL
      */
-    public void setDocBase(String docBase) {
+    @Override
+	public void setDocBase(String docBase) {
 
 	// Validate the format of the proposed document root
 	if (docBase == null)
@@ -148,7 +149,8 @@ public class WARDirContext extends BaseDirContext {
     /**
      * Release any resources allocated for this directory context.
      */
-    public void release() {
+    @Override
+	public void release() {
 
         entries = null;
         if (base != null) {
@@ -175,7 +177,8 @@ public class WARDirContext extends BaseDirContext {
      * @return the object bound to name
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookup(String name)
+    @Override
+	public Object lookup(String name)
         throws NamingException {
         return lookup(new CompositeName(name));
     }
@@ -191,7 +194,8 @@ public class WARDirContext extends BaseDirContext {
      * @return the object bound to name
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookup(Name name)
+    @Override
+	public Object lookup(Name name)
         throws NamingException {
         if (name.isEmpty())
             return this;
@@ -221,7 +225,8 @@ public class WARDirContext extends BaseDirContext {
      * exist
      * @exception NamingException if a naming exception is encountered
      */
-    public void unbind(String name)
+    @Override
+	public void unbind(String name)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -238,7 +243,8 @@ public class WARDirContext extends BaseDirContext {
      * @exception NameAlreadyBoundException if newName is already bound
      * @exception NamingException if a naming exception is encountered
      */
-    public void rename(String oldName, String newName)
+    @Override
+	public void rename(String oldName, String newName)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -257,7 +263,8 @@ public class WARDirContext extends BaseDirContext {
      * this context. Each element of the enumeration is of type NameClassPair.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration list(String name)
+    @Override
+	public NamingEnumeration list(String name)
         throws NamingException {
         return list(new CompositeName(name));
     }
@@ -276,7 +283,8 @@ public class WARDirContext extends BaseDirContext {
      * this context. Each element of the enumeration is of type NameClassPair.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration list(Name name)
+    @Override
+	public NamingEnumeration list(Name name)
         throws NamingException {
         if (name.isEmpty())
             return new NamingContextEnumeration(list(entries).iterator());
@@ -301,7 +309,8 @@ public class WARDirContext extends BaseDirContext {
      * Each element of the enumeration is of type Binding.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration listBindings(String name)
+    @Override
+	public NamingEnumeration listBindings(String name)
         throws NamingException {
         return listBindings(new CompositeName(name));
     }
@@ -320,7 +329,8 @@ public class WARDirContext extends BaseDirContext {
      * Each element of the enumeration is of type Binding.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration listBindings(Name name)
+    @Override
+	public NamingEnumeration listBindings(Name name)
         throws NamingException {
         if (name.isEmpty())
             return new NamingContextBindingsEnumeration(list(entries).iterator(),
@@ -359,7 +369,8 @@ public class WARDirContext extends BaseDirContext {
      * @exception NotContextException if the name is bound but does not name 
      * a context, or does not name a context of the appropriate type
      */
-    public void destroySubcontext(String name)
+    @Override
+	public void destroySubcontext(String name)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -375,7 +386,8 @@ public class WARDirContext extends BaseDirContext {
      * (if any).
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookupLink(String name)
+    @Override
+	public Object lookupLink(String name)
         throws NamingException {
         // Note : Links are not supported
         return lookup(name);
@@ -399,7 +411,8 @@ public class WARDirContext extends BaseDirContext {
      * not have the notion of a full name
      * @exception NamingException if a naming exception is encountered
      */
-    public String getNameInNamespace()
+    @Override
+	public String getNameInNamespace()
         throws NamingException {
         return docBase;
     }
@@ -420,7 +433,8 @@ public class WARDirContext extends BaseDirContext {
      * indicates that none should be retrieved
      * @exception NamingException if a naming exception is encountered
      */
-    public Attributes getAttributes(String name, String[] attrIds)
+    @Override
+	public Attributes getAttributes(String name, String[] attrIds)
         throws NamingException {
         return getAttributes(new CompositeName(name), attrIds);
     }
@@ -434,7 +448,8 @@ public class WARDirContext extends BaseDirContext {
      * @param name the name of the object from which to retrieve attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public Attributes getAttributes(Name name, String[] attrIds)
+    @Override
+	public Attributes getAttributes(Name name, String[] attrIds)
         throws NamingException {
         
         Entry entry = null;
@@ -475,7 +490,8 @@ public class WARDirContext extends BaseDirContext {
      * completed successfully
      * @exception NamingException if a naming exception is encountered
      */
-    public void modifyAttributes(String name, int mod_op, Attributes attrs)
+    @Override
+	public void modifyAttributes(String name, int mod_op, Attributes attrs)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -495,7 +511,8 @@ public class WARDirContext extends BaseDirContext {
      * completed successfully
      * @exception NamingException if a naming exception is encountered
      */
-    public void modifyAttributes(String name, ModificationItem[] mods)
+    @Override
+	public void modifyAttributes(String name, ModificationItem[] mods)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -516,7 +533,8 @@ public class WARDirContext extends BaseDirContext {
      * of the binding are not supplied
      * @exception NamingException if a naming exception is encountered
      */
-    public void bind(String name, Object obj, Attributes attrs)
+    @Override
+	public void bind(String name, Object obj, Attributes attrs)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -540,7 +558,8 @@ public class WARDirContext extends BaseDirContext {
      * of the binding are not supplied
      * @exception NamingException if a naming exception is encountered
      */
-    public void rebind(String name, Object obj, Attributes attrs)
+    @Override
+	public void rebind(String name, Object obj, Attributes attrs)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -563,7 +582,8 @@ public class WARDirContext extends BaseDirContext {
      * the mandatory attributes required for creation
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext createSubcontext(String name, Attributes attrs)
+    @Override
+	public DirContext createSubcontext(String name, Attributes attrs)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -582,7 +602,8 @@ public class WARDirContext extends BaseDirContext {
      * @exception OperationNotSupportedException if schema not supported
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext getSchema(String name)
+    @Override
+	public DirContext getSchema(String name)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -599,7 +620,8 @@ public class WARDirContext extends BaseDirContext {
      * @exception OperationNotSupportedException if schema not supported
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext getSchemaClassDefinition(String name)
+    @Override
+	public DirContext getSchemaClassDefinition(String name)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -622,7 +644,8 @@ public class WARDirContext extends BaseDirContext {
      * context named by name.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(String name, Attributes matchingAttributes,
+    @Override
+	public NamingEnumeration search(String name, Attributes matchingAttributes,
                                     String[] attributesToReturn)
         throws NamingException {
         throw new OperationNotSupportedException();
@@ -644,7 +667,8 @@ public class WARDirContext extends BaseDirContext {
      * context named by name.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(String name, Attributes matchingAttributes)
+    @Override
+	public NamingEnumeration search(String name, Attributes matchingAttributes)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -669,7 +693,8 @@ public class WARDirContext extends BaseDirContext {
      * contain invalid settings
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(String name, String filter, 
+    @Override
+	public NamingEnumeration search(String name, String filter, 
                                     SearchControls cons)
         throws NamingException {
         throw new OperationNotSupportedException();
@@ -700,7 +725,8 @@ public class WARDirContext extends BaseDirContext {
      * represents an invalid search filter
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(String name, String filterExpr, 
+    @Override
+	public NamingEnumeration search(String name, String filterExpr, 
                                     Object[] filterArgs, SearchControls cons)
         throws NamingException {
         throw new OperationNotSupportedException();
@@ -859,7 +885,8 @@ public class WARDirContext extends BaseDirContext {
         // ----------------------------------------------------- Public Methods
         
         
-        public int compareTo(Object o) {
+        @Override
+		public int compareTo(Object o) {
             if (!(o instanceof Entry))
                 return (+1);
             return (name.compareTo(((Entry) o).getName()));
@@ -934,7 +961,8 @@ public class WARDirContext extends BaseDirContext {
          * 
          * @return InputStream
          */
-        public InputStream streamContent()
+        @Override
+		public InputStream streamContent()
             throws IOException {
             try {
                 if (binaryContent == null) {

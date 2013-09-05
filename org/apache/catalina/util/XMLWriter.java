@@ -90,7 +90,8 @@ public class XMLWriter {
      *
      * @return String containing the generated XML
      */
-    public String toString() {
+    @Override
+	public String toString() {
         return buffer.toString();
     }
 

@@ -79,7 +79,8 @@ public class JniHandler extends JkHandler {
 
     /** You must call initNative() inside the component init()
      */
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         // static field init, temp
     }
 
@@ -136,13 +137,15 @@ public class JniHandler extends JkHandler {
         msg.appendByteChunk( bc );
     }
 
-    public void pause() throws Exception {
+    @Override
+	public void pause() throws Exception {
         synchronized(this) {
             paused = true;
         }
     }
 
-    public void resume() throws Exception {
+    @Override
+	public void resume() throws Exception {
         synchronized(this) {
             paused = false;
             notifyAll();
@@ -152,7 +155,8 @@ public class JniHandler extends JkHandler {
 
     /** Create a msg context to be used with the shm channel
      */
-    public MsgContext createMsgContext() {
+    @Override
+	public MsgContext createMsgContext() {
         if( nativeJkHandlerP==0 || apr==null  )
             return null;
 
@@ -300,7 +304,8 @@ public class JniHandler extends JkHandler {
     /** Base implementation for invoke. Dispatch the action to the native
     * code, where invoke() is called on the wrapped jk_bean.
     */
-    public  int invoke(Msg msg, MsgContext ep )
+    @Override
+	public  int invoke(Msg msg, MsgContext ep )
         throws IOException
     {
         long xEnv=ep.getJniEnv();

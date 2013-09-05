@@ -77,7 +77,8 @@ public class SSLValve extends ValveBase {
             return null;
         return strcert0;
     } 
-    public void invoke(Request request, Response response)
+    @Override
+	public void invoke(Request request, Response response)
         throws IOException, ServletException {
 
         /* mod_header converts the '\n' into ' ' so we have to rebuild the client certificate */

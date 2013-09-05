@@ -90,7 +90,8 @@ public class FileMessage extends ClusterMessageBase implements ClusterMessage, S
         this.totalLength = totalLength;
     }
 
-    public String getUniqueId() {
+    @Override
+	public String getUniqueId() {
         StringBuffer result = new StringBuffer(getFileName());
         result.append("#-#");
         result.append(getMessageNumber());

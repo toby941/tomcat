@@ -47,7 +47,8 @@ public class BeanELResolver extends ELResolver {
         } else {
             CACHE_SIZE = AccessController.doPrivileged(
                     new PrivilegedAction<Integer>() {
-                    public Integer run() {
+                    @Override
+					public Integer run() {
                         return Integer.valueOf(
                                 System.getProperty(CACHE_SIZE_PROP, "1000"));
                     }
@@ -68,6 +69,7 @@ public class BeanELResolver extends ELResolver {
 		this.readOnly = readOnly;
 	}
 
+	@Override
 	public Object getValue(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -92,6 +94,7 @@ public class BeanELResolver extends ELResolver {
 		}
 	}
 
+	@Override
 	public Class<?> getType(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -105,6 +108,7 @@ public class BeanELResolver extends ELResolver {
 		return this.property(context, base, property).getPropertyType();
 	}
 
+	@Override
 	public void setValue(ELContext context, Object base, Object property,
 			Object value) throws NullPointerException,
 			PropertyNotFoundException, PropertyNotWritableException,
@@ -138,6 +142,7 @@ public class BeanELResolver extends ELResolver {
 		}
 	}
 
+	@Override
 	public boolean isReadOnly(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -152,6 +157,7 @@ public class BeanELResolver extends ELResolver {
 				|| this.property(context, base, property).isReadOnly();
 	}
 
+	@Override
 	public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
 		if (context == null) {
 			throw new NullPointerException();
@@ -176,6 +182,7 @@ public class BeanELResolver extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public Class<?> getCommonPropertyType(ELContext context, Object base) {
 		if (context == null) {
 			throw new NullPointerException();
@@ -308,7 +315,7 @@ public class BeanELResolver extends ELResolver {
 		Method mp = null;
 		for (int i = 0; i < inf.length; i++) {
 			try {
-				mp = inf[i].getMethod(m.getName(), (Class[]) m.getParameterTypes());
+				mp = inf[i].getMethod(m.getName(), m.getParameterTypes());
 				mp = getMethod(mp.getDeclaringClass(), mp);
 				if (mp != null) {
 					return mp;
@@ -319,7 +326,7 @@ public class BeanELResolver extends ELResolver {
 		Class sup = type.getSuperclass();
 		if (sup != null) {
 			try {
-				mp = sup.getMethod(m.getName(), (Class[]) m.getParameterTypes());
+				mp = sup.getMethod(m.getName(), m.getParameterTypes());
 				mp = getMethod(mp.getDeclaringClass(), mp);
 				if (mp != null) {
 					return mp;

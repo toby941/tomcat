@@ -146,7 +146,8 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
     /**
      * Return descriptive information about this implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -205,7 +206,8 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
      * @exception ServletException
      *                if a servlet error has occurred
      */
-    public void invoke(Request request, Response response) throws IOException,
+    @Override
+	public void invoke(Request request, Response response) throws IOException,
             ServletException {
 
          if (getEnabled() 
@@ -286,14 +288,16 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
     /**
      * @return Returns the cluster.
      */
-    public CatalinaCluster getCluster() {
+    @Override
+	public CatalinaCluster getCluster() {
         return cluster;
     }
     
     /**
      * @param cluster The cluster to set.
      */
-    public void setCluster(CatalinaCluster cluster) {
+    @Override
+	public void setCluster(CatalinaCluster cluster) {
         this.cluster = cluster;
     }
     
@@ -451,7 +455,8 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
      * 
      * @deprecated Use {@link Request#changeSessionId(String)}
      */
-    protected void setNewSessionCookie(Request request,
+    @Deprecated
+	protected void setNewSessionCookie(Request request,
                                        Response response, String sessionId) {
         if (response != null) {
             Context context = request.getContext();
@@ -509,7 +514,8 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
      * @param listener
      *            The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -519,7 +525,8 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
      * Get the lifecycle listeners associated with this lifecycle. If this
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -531,7 +538,8 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
      * @param listener
      *            The listener to add
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -546,7 +554,8 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
      *                if this component detects a fatal error that prevents this
      *                component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started)
@@ -592,7 +601,8 @@ public class JvmRouteBinderValve extends ValveBase implements ClusterValve, Life
      *                if this component detects a fatal error that needs to be
      *                reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Validate and update our current component state
         if (!started)

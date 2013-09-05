@@ -24,7 +24,6 @@ import org.apache.catalina.tribes.ChannelListener;
 import org.apache.catalina.tribes.Member;
 import org.apache.catalina.tribes.MembershipListener;
 import org.apache.catalina.tribes.group.RpcCallback;
-import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapOwner;
 
 /**
  * All-to-all replication for a hash map implementation. Each node in the cluster will carry an identical 
@@ -93,7 +92,8 @@ public class ReplicatedMap extends AbstractReplicatedMap implements RpcCallback,
 //------------------------------------------------------------------------------
 //              METHODS TO OVERRIDE
 //------------------------------------------------------------------------------
-    protected int getStateMessageType() {
+    @Override
+	protected int getStateMessageType() {
         return AbstractReplicatedMap.MapMessage.MSG_STATE_COPY;
     }
     
@@ -104,7 +104,8 @@ public class ReplicatedMap extends AbstractReplicatedMap implements RpcCallback,
      * @return Member - the backup node
      * @throws ChannelException
      */
-    protected Member[] publishEntryInfo(Object key, Object value) throws ChannelException {
+    @Override
+	protected Member[] publishEntryInfo(Object key, Object value) throws ChannelException {
         if  (! (key instanceof Serializable && value instanceof Serializable)  ) return new Member[0];
         //select a backup node
         Member[] backup = getMapMembers();

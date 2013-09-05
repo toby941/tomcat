@@ -476,7 +476,8 @@ public final class IntrospectionUtils {
      * 
      * @deprecated Use the explicit method
      */
-    public static String replaceProperties(String value, Object getter) {
+    @Deprecated
+	public static String replaceProperties(String value, Object getter) {
         if (getter instanceof Hashtable)
             return replaceProperties(value, (Hashtable) getter, null);
 
@@ -519,7 +520,7 @@ public final class IntrospectionUtils {
                 String n = value.substring(pos + 2, endName);
                 String v = null;
                 if (staticProp != null) {
-                    v = (String) ((Hashtable) staticProp).get(n);
+                    v = (String) staticProp.get(n);
                 }
                 if (v == null && dynamicProp != null) {
                     for (int i = 0; i < dynamicProp.length; i++) {
@@ -618,7 +619,8 @@ public final class IntrospectionUtils {
         final String lext = ext;
         if (dir.isDirectory()) {
             names = dir.list(new FilenameFilter() {
-                public boolean accept(File d, String name) {
+                @Override
+				public boolean accept(File d, String name) {
                     if (name.endsWith(lext)) {
                         return true;
                     }

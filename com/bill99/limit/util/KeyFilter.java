@@ -28,6 +28,7 @@ public class KeyFilter extends XMLFilterImpl {
 	/**
 	 * 只提取mapperkeys中的元素
 	 **/
+	@Override
 	public void startElement(String namespaceURI, String localName, String fullName, Attributes attributes) throws SAXException {
 
 		currentElement = fullName;
@@ -39,6 +40,7 @@ public class KeyFilter extends XMLFilterImpl {
 	/**
 	 * 只提取mapperkeys中的元素
 	 **/
+	@Override
 	public void endElement(String namespaceURI, String localName, String fullName) throws SAXException {
 		if (mapperkeys.contains(fullName)) {
 			super.endElement(namespaceURI, localName, fullName);
@@ -48,6 +50,7 @@ public class KeyFilter extends XMLFilterImpl {
 	/**
 	 * 读取元素内容
 	 **/
+	@Override
 	public void characters(char[] buffer, int start, int length) throws SAXException {
 		if (mapperkeys.contains(currentElement)) {
 			super.characters(buffer, start, length);

@@ -81,7 +81,8 @@ public class SetNextNamingRule extends Rule {
     /**
      * Process the end of this element.
      */
-    public void end() throws Exception {
+    @Override
+	public void end() throws Exception {
 
         // Identify the objects to be used
         Object child = digester.peek(0);
@@ -104,7 +105,8 @@ public class SetNextNamingRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SetNextRule[");
         sb.append("methodName=");

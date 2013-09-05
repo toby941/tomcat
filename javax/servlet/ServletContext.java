@@ -330,7 +330,8 @@ public interface ServletContext {
      *
      */
 
-    public Servlet getServlet(String name) throws ServletException;
+    @Deprecated
+	public Servlet getServlet(String name) throws ServletException;
     
   
   
@@ -350,7 +351,8 @@ public interface ServletContext {
      *
      */
     
-    public Enumeration getServlets();
+    @Deprecated
+	public Enumeration getServlets();
     
     
     
@@ -369,7 +371,8 @@ public interface ServletContext {
      *
      */
  
-    public Enumeration getServletNames();
+    @Deprecated
+	public Enumeration getServletNames();
     
   
   
@@ -404,7 +407,8 @@ public interface ServletContext {
      *
      */
 
-    public void log(Exception exception, String msg);
+    @Deprecated
+	public void log(Exception exception, String msg);
     
     
     

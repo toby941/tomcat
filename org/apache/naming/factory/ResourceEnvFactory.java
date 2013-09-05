@@ -58,7 +58,8 @@ public class ResourceEnvFactory
      * 
      * @param obj The reference object describing the DataSource
      */
-    public Object getObjectInstance(Object obj, Name name, Context nameCtx,
+    @Override
+	public Object getObjectInstance(Object obj, Name name, Context nameCtx,
                                     Hashtable environment)
         throws Exception {
         

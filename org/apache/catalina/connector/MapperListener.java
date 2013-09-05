@@ -184,7 +184,8 @@ public class MapperListener
     // ------------------------------------------- NotificationListener Methods
 
 
-    public void handleNotification(Notification notification,
+    @Override
+	public void handleNotification(Notification notification,
                                    java.lang.Object handback) {
 
         if (notification instanceof MBeanServerNotification) {
@@ -269,7 +270,8 @@ public class MapperListener
 
     // --------------------------------------------- Container Listener methods
 
-    public void containerEvent(ContainerEvent event) {
+    @Override
+	public void containerEvent(ContainerEvent event) {
 
         if (event.getType() == Host.ADD_ALIAS_EVENT) {
             mapper.addHostAlias(((Host) event.getSource()).getName(),

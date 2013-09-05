@@ -43,10 +43,12 @@ public final class UTF8Decoder extends B2CConverter {
 
     }
     
-    public void recycle() {
+    @Override
+	public void recycle() {
     }
 
-    public void convert(ByteChunk mb, CharChunk cb )
+    @Override
+	public void convert(ByteChunk mb, CharChunk cb )
 	throws IOException
     {
 	int bytesOff=mb.getOffset();
@@ -142,7 +144,8 @@ public final class UTF8Decoder extends B2CConverter {
     }
 
     private static int debug=1;
-    void log(String s ) {
+    @Override
+	void log(String s ) {
         if (log.isDebugEnabled())
             log.debug("UTF8Decoder: " + s );
     }

@@ -129,7 +129,8 @@ public class ReplicationValve
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -138,14 +139,16 @@ public class ReplicationValve
     /**
      * @return Returns the cluster.
      */
-    public CatalinaCluster getCluster() {
+    @Override
+	public CatalinaCluster getCluster() {
         return cluster;
     }
     
     /**
      * @param cluster The cluster to set.
      */
-    public void setCluster(CatalinaCluster cluster) {
+    @Override
+	public void setCluster(CatalinaCluster cluster) {
         this.cluster = cluster;
     }
  
@@ -321,7 +324,8 @@ public class ReplicationValve
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void invoke(Request request, Response response)
+    @Override
+	public void invoke(Request request, Response response)
         throws IOException, ServletException
     {
         long totalstart = 0;
@@ -396,7 +400,8 @@ public class ReplicationValve
     /**
      * Return a String rendering of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("ReplicationValve[");
         if (container != null)

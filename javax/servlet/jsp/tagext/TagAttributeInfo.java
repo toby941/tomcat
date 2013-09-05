@@ -170,7 +170,8 @@ public class TagAttributeInfo {
      * 
      * @return a String representation of this TagAttributeInfo
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer b = new StringBuffer(64);
         b.append("name = " + name + " ");
         b.append("type = " + type + " ");

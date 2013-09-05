@@ -37,6 +37,7 @@ import org.apache.tomcat.util.res.StringManager;
  * @author James Todd [gonzo@eng.sun.com]
  * @author Costin Manolache
  */
+@Deprecated
 public class DateTool {
 
     /** US locale - all HTTP dates are in english

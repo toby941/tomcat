@@ -91,7 +91,8 @@ class Validator {
             this.err = compiler.getErrorDispatcher();
         }
 
-        public void visit(Node.IncludeDirective n) throws JasperException {
+        @Override
+		public void visit(Node.IncludeDirective n) throws JasperException {
             // Since pageDirectiveSeen flag only applies to the Current page
             // save it here and restore it after the file is included.
             boolean pageEncodingSeenSave = pageEncodingSeen;
@@ -100,7 +101,8 @@ class Validator {
             pageEncodingSeen = pageEncodingSeenSave;
         }
 
-        public void visit(Node.PageDirective n) throws JasperException {
+        @Override
+		public void visit(Node.PageDirective n) throws JasperException {
 
             JspUtil.checkAttributes("Page directive", n, pageDirectiveAttrs,
                     err);
@@ -234,7 +236,8 @@ class Validator {
             pageInfo.addImports(n.getImports());
         }
 
-        public void visit(Node.TagDirective n) throws JasperException {
+        @Override
+		public void visit(Node.TagDirective n) throws JasperException {
             // Note: Most of the validation is done in TagFileProcessor
             // when it created a TagInfo object from the
             // tag file in which the directive appeared.
@@ -301,13 +304,15 @@ class Validator {
             pageInfo.addImports(n.getImports());
         }
 
-        public void visit(Node.AttributeDirective n) throws JasperException {
+        @Override
+		public void visit(Node.AttributeDirective n) throws JasperException {
             // Do nothing, since this attribute directive has already been
             // validated by TagFileProcessor when it created a TagInfo object
             // from the tag file in which the directive appeared
         }
 
-        public void visit(Node.VariableDirective n) throws JasperException {
+        @Override
+		public void visit(Node.VariableDirective n) throws JasperException {
             // Do nothing, since this variable directive has already been
             // validated by TagFileProcessor when it created a TagInfo object
             // from the tag file in which the directive appeared
@@ -504,7 +509,8 @@ class Validator {
             this.loader = compiler.getCompilationContext().getClassLoader();
         }
 
-        public void visit(Node.JspRoot n) throws JasperException {
+        @Override
+		public void visit(Node.JspRoot n) throws JasperException {
             JspUtil.checkAttributes("Jsp:root", n, jspRootAttrs, err);
             String version = n.getTextAttribute("version");
             if (!version.equals("1.2") && !version.equals("2.0") && !version.equals("2.1")) {
@@ -513,13 +519,15 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.IncludeDirective n) throws JasperException {
+        @Override
+		public void visit(Node.IncludeDirective n) throws JasperException {
             JspUtil.checkAttributes("Include directive", n,
                     includeDirectiveAttrs, err);
             visitBody(n);
         }
 
-        public void visit(Node.TaglibDirective n) throws JasperException {
+        @Override
+		public void visit(Node.TaglibDirective n) throws JasperException {
             JspUtil.checkAttributes("Taglib directive", n,
                     taglibDirectiveAttrs, err);
             // Either 'uri' or 'tagdir' attribute must be specified
@@ -535,7 +543,8 @@ class Validator {
             }
         }
 
-        public void visit(Node.ParamAction n) throws JasperException {
+        @Override
+		public void visit(Node.ParamAction n) throws JasperException {
             JspUtil.checkAttributes("Param action", n, paramActionAttrs, err);
             // make sure the value of the 'name' attribute is not a
             // request-time expression
@@ -546,7 +555,8 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.ParamsAction n) throws JasperException {
+        @Override
+		public void visit(Node.ParamsAction n) throws JasperException {
             // Make sure we've got at least one nested jsp:param
             Node.Nodes subElems = n.getBody();
             if (subElems == null) {
@@ -555,7 +565,8 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.IncludeAction n) throws JasperException {
+        @Override
+		public void visit(Node.IncludeAction n) throws JasperException {
             JspUtil.checkAttributes("Include action", n, includeActionAttrs,
                     err);
             n.setPage(getJspAttribute(null, "page", null, null, n
@@ -564,7 +575,8 @@ class Validator {
             visitBody(n);
         };
 
-        public void visit(Node.ForwardAction n) throws JasperException {
+        @Override
+		public void visit(Node.ForwardAction n) throws JasperException {
             JspUtil.checkAttributes("Forward", n, forwardActionAttrs, err);
             n.setPage(getJspAttribute(null, "page", null, null, n
                     .getAttributeValue("page"), java.lang.String.class, n,
@@ -572,11 +584,13 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.GetProperty n) throws JasperException {
+        @Override
+		public void visit(Node.GetProperty n) throws JasperException {
             JspUtil.checkAttributes("GetProperty", n, getPropertyAttrs, err);
         }
 
-        public void visit(Node.SetProperty n) throws JasperException {
+        @Override
+		public void visit(Node.SetProperty n) throws JasperException {
             JspUtil.checkAttributes("SetProperty", n, setPropertyAttrs, err);
             String property = n.getTextAttribute("property");
             String param = n.getTextAttribute("param");
@@ -598,7 +612,8 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.UseBean n) throws JasperException {
+        @Override
+		public void visit(Node.UseBean n) throws JasperException {
             JspUtil.checkAttributes("UseBean", n, useBeanAttrs, err);
 
             String name = n.getTextAttribute("id");
@@ -632,7 +647,8 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.PlugIn n) throws JasperException {
+        @Override
+		public void visit(Node.PlugIn n) throws JasperException {
             JspUtil.checkAttributes("Plugin", n, plugInAttrs, err);
 
             throwErrorIfExpression(n, "type", "jsp:plugin");
@@ -668,34 +684,40 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.NamedAttribute n) throws JasperException {
+        @Override
+		public void visit(Node.NamedAttribute n) throws JasperException {
             JspUtil.checkAttributes("Attribute", n, attributeAttrs, err);
             visitBody(n);
         }
 
-        public void visit(Node.JspBody n) throws JasperException {
+        @Override
+		public void visit(Node.JspBody n) throws JasperException {
             visitBody(n);
         }
 
-        public void visit(Node.Declaration n) throws JasperException {
+        @Override
+		public void visit(Node.Declaration n) throws JasperException {
             if (pageInfo.isScriptingInvalid()) {
                 err.jspError(n.getStart(), "jsp.error.no.scriptlets");
             }
         }
 
-        public void visit(Node.Expression n) throws JasperException {
+        @Override
+		public void visit(Node.Expression n) throws JasperException {
             if (pageInfo.isScriptingInvalid()) {
                 err.jspError(n.getStart(), "jsp.error.no.scriptlets");
             }
         }
 
-        public void visit(Node.Scriptlet n) throws JasperException {
+        @Override
+		public void visit(Node.Scriptlet n) throws JasperException {
             if (pageInfo.isScriptingInvalid()) {
                 err.jspError(n.getStart(), "jsp.error.no.scriptlets");
             }
         }
 
-        public void visit(Node.ELExpression n) throws JasperException {
+        @Override
+		public void visit(Node.ELExpression n) throws JasperException {
             // exit if we are ignoring EL all together
             if (pageInfo.isELIgnored())
                 return;
@@ -723,7 +745,8 @@ class Validator {
             n.setEL(el);
         }
 
-        public void visit(Node.UninterpretedTag n) throws JasperException {
+        @Override
+		public void visit(Node.UninterpretedTag n) throws JasperException {
             if (n.getNamedAttributeNodes().size() != 0) {
                 err.jspError(n, "jsp.error.namedAttribute.invalidUse");
             }
@@ -775,7 +798,8 @@ class Validator {
             return false;
         }
 
-        public void visit(Node.CustomTag n) throws JasperException {
+        @Override
+		public void visit(Node.CustomTag n) throws JasperException {
 
             TagInfo tagInfo = n.getTagInfo();
             if (tagInfo == null) {
@@ -865,7 +889,8 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.JspElement n) throws JasperException {
+        @Override
+		public void visit(Node.JspElement n) throws JasperException {
 
             Attributes attrs = n.getAttributes();
             if (attrs == null) {
@@ -915,7 +940,8 @@ class Validator {
             visitBody(n);
         }
 
-        public void visit(Node.JspOutput n) throws JasperException {
+        @Override
+		public void visit(Node.JspOutput n) throws JasperException {
             JspUtil.checkAttributes("jsp:output", n, jspOutputAttrs, err);
 
             if (n.getBody() != null) {
@@ -979,7 +1005,8 @@ class Validator {
             }
         }
 
-        public void visit(Node.InvokeAction n) throws JasperException {
+        @Override
+		public void visit(Node.InvokeAction n) throws JasperException {
 
             JspUtil.checkAttributes("Invoke", n, invokeAttrs, err);
 
@@ -996,7 +1023,8 @@ class Validator {
             }
         }
 
-        public void visit(Node.DoBodyAction n) throws JasperException {
+        @Override
+		public void visit(Node.DoBodyAction n) throws JasperException {
 
             JspUtil.checkAttributes("DoBody", n, doBodyAttrs, err);
 
@@ -1440,7 +1468,8 @@ class Validator {
         private static class NamedAttributeVisitor extends Node.Visitor {
             private boolean hasDynamicContent;
 
-            public void doVisit(Node n) throws JasperException {
+            @Override
+			public void doVisit(Node n) throws JasperException {
                 if (!(n instanceof Node.JspText)
                         && !(n instanceof Node.TemplateText)) {
                     hasDynamicContent = true;
@@ -1490,7 +1519,8 @@ class Validator {
                     this.n = n;
                 }
 
-                public void visit(ELNode.Function func) throws JasperException {
+                @Override
+				public void visit(ELNode.Function func) throws JasperException {
                     String prefix = func.getPrefix();
                     String function = func.getName();
                     String uri = null;
@@ -1607,7 +1637,7 @@ class Validator {
                 }
                 start = p + 1;
             }
-            return (String[]) params.toArray(new String[params.size()]);
+            return params.toArray(new String[params.size()]);
         }
 
         private FunctionMapper getFunctionMapper(ELNode.Nodes el)
@@ -1621,7 +1651,8 @@ class Validator {
                     fnmap.put(fnQName, method);
                 }
 
-                public Method resolveFunction(String prefix, String localName) {
+                @Override
+				public Method resolveFunction(String prefix, String localName) {
                     return this.fnmap.get(prefix + ":" + localName);
                 }
             }
@@ -1633,7 +1664,8 @@ class Validator {
                     this.fmapper = fmapper;
                 }
 
-                public void visit(ELNode.Function n) throws JasperException {
+                @Override
+				public void visit(ELNode.Function n) throws JasperException {
 
                     Class c = null;
                     Method method = null;
@@ -1688,7 +1720,8 @@ class Validator {
             this.err = compiler.getErrorDispatcher();
         }
 
-        public void visit(Node.CustomTag n) throws JasperException {
+        @Override
+		public void visit(Node.CustomTag n) throws JasperException {
             TagInfo tagInfo = n.getTagInfo();
             if (tagInfo == null) {
                 err.jspError(n, "jsp.error.missing.tagInfo", n.getQName());

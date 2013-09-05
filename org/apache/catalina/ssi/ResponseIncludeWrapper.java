@@ -108,7 +108,8 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      * @exception java.io.IOException
      *                if the outputstream already been called
      */
-    public PrintWriter getWriter() throws java.io.IOException {
+    @Override
+	public PrintWriter getWriter() throws java.io.IOException {
         if (servletOutputStream == null) {
             if (printWriter == null) {
                 setCharacterEncoding(getCharacterEncoding());
@@ -130,7 +131,8 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      * @exception java.io.IOException
      *                if the printwriter already been called
      */
-    public ServletOutputStream getOutputStream() throws java.io.IOException {
+    @Override
+	public ServletOutputStream getOutputStream() throws java.io.IOException {
         if (printWriter == null) {
             if (servletOutputStream == null) {
                 servletOutputStream = captureServletOutputStream;
@@ -175,7 +177,8 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      * @return the content type of the resource referenced by this
      *   <code>ResponseIncludeWrapper</code>, or <code>null</code> if not known.
      */
-    public String getContentType() {
+    @Override
+	public String getContentType() {
         if (contentType == null) {
             String url = request.getRequestURI();
             String mime = context.getMimeType(url);
@@ -197,7 +200,8 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
      *
      * @param mime a mime type
      */
-    public void setContentType(String mime) {
+    @Override
+	public void setContentType(String mime) {
         contentType = mime;
         if (contentType != null) {
             getResponse().setContentType(contentType);
@@ -205,7 +209,8 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
     }
 
 
-    public void addDateHeader(String name, long value) {
+    @Override
+	public void addDateHeader(String name, long value) {
         super.addDateHeader(name, value);
         String lname = name.toLowerCase();
         if (lname.equals(LAST_MODIFIED)) {
@@ -213,7 +218,8 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
         }
     }
 
-    public void addHeader(String name, String value) {
+    @Override
+	public void addHeader(String name, String value) {
         super.addHeader(name, value);
         String lname = name.toLowerCase();
         if (lname.equals(LAST_MODIFIED)) {
@@ -227,7 +233,8 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
         }
     }
 
-    public void setDateHeader(String name, long value) {
+    @Override
+	public void setDateHeader(String name, long value) {
         super.setDateHeader(name, value);
         String lname = name.toLowerCase();
         if (lname.equals(LAST_MODIFIED)) {
@@ -235,7 +242,8 @@ public class ResponseIncludeWrapper extends HttpServletResponseWrapper {
         }
     }
 
-    public void setHeader(String name, String value) {
+    @Override
+	public void setHeader(String name, String value) {
         super.setHeader(name, value);
         String lname = name.toLowerCase();
         if (lname.equals(LAST_MODIFIED)) {

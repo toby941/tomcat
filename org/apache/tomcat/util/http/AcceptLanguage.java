@@ -50,7 +50,7 @@ public class AcceptLanguage {
         Vector<Locale> l = new Vector<Locale>();
         extractLocales( languages,quality, l);
 
-        return (Locale)l.elementAt(0);
+        return l.elementAt(0);
     }
 
     public static Enumeration getLocales(String acceptLanguage) {

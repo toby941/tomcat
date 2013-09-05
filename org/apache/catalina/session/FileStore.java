@@ -130,7 +130,8 @@ public final class FileStore
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -146,7 +147,8 @@ public final class FileStore
     /**
      * Return the name for this Store, used for logging.
      */
-    public String getStoreName() {
+    @Override
+	public String getStoreName() {
         return(storeName);
     }
 
@@ -156,7 +158,8 @@ public final class FileStore
      *
      * @exception IOException if an input/output error occurs
      */
-    public int getSize() throws IOException {
+    @Override
+	public int getSize() throws IOException {
 
         // Acquire the list of files in our storage directory
         File file = directory();
@@ -185,7 +188,8 @@ public final class FileStore
      *
      * @exception IOException if an input/output error occurs
      */
-    public void clear()
+    @Override
+	public void clear()
         throws IOException {
 
         String[] keys = keys();
@@ -203,7 +207,8 @@ public final class FileStore
      *
      * @exception IOException if an input/output error occurred
      */
-    public String[] keys() throws IOException {
+    @Override
+	public String[] keys() throws IOException {
 
         // Acquire the list of files in our storage directory
         File file = directory();
@@ -241,7 +246,8 @@ public final class FileStore
      * @exception ClassNotFoundException if a deserialization error occurs
      * @exception IOException if an input/output error occurs
      */
-    public Session load(String id)
+    @Override
+	public Session load(String id)
         throws ClassNotFoundException, IOException {
 
         // Open an input stream to the specified pathname, if any
@@ -318,7 +324,8 @@ public final class FileStore
      *
      * @exception IOException if an input/output error occurs
      */
-    public void remove(String id) throws IOException {
+    @Override
+	public void remove(String id) throws IOException {
 
         File file = file(id);
         if (file == null) {
@@ -341,7 +348,8 @@ public final class FileStore
      *
      * @exception IOException if an input/output error occurs
      */
-    public void save(Session session) throws IOException {
+    @Override
+	public void save(Session session) throws IOException {
 
         // Open an output stream to the specified pathname, if any
         File file = file(session.getIdInternal());

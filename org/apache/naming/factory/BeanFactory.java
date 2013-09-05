@@ -107,7 +107,8 @@ public class BeanFactory
      * 
      * @param obj The reference object describing the Bean
      */
-    public Object getObjectInstance(Object obj, Name name, Context nameCtx,
+    @Override
+	public Object getObjectInstance(Object obj, Name name, Context nameCtx,
                                     Hashtable environment)
         throws NamingException {
 

@@ -91,7 +91,8 @@ public class ObjectParamRule extends Rule {
      *
      * @param attributes The attribute list for this element
      */
-    public void begin(String namespace, String name,
+    @Override
+	public void begin(String namespace, String name,
                       Attributes attributes) throws Exception {
         Object anAttribute = null;
         Object parameters[] = (Object[]) digester.peekParams();
@@ -111,7 +112,8 @@ public class ObjectParamRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer sb = new StringBuffer("ObjectParamRule[");
         sb.append("paramIndex=");
         sb.append(paramIndex);

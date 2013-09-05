@@ -324,14 +324,16 @@ public class McastServiceImpl
                     if (log.isDebugEnabled()) log.debug("Member has shutdown:" + m);
                     membership.removeMember(m);
                     t = new Thread() {
-                        public void run() {
+                        @Override
+						public void run() {
                             service.memberDisappeared(m);
                         }
                     };
                 } else if (membership.memberAlive(m)) {
                     if (log.isDebugEnabled()) log.debug("Mcast add member " + m);
                     t = new Thread() {
-                        public void run() {
+                        @Override
+						public void run() {
                             service.memberAdded(m);
                         }
                     };
@@ -356,7 +358,8 @@ public class McastServiceImpl
                     log.debug("Mcast expire  member " + expired[i]);
                 try {
                     Thread t = new Thread() {
-                        public void run() {
+                        @Override
+						public void run() {
                             service.memberDisappeared(member);
                         }
                     };
@@ -408,7 +411,8 @@ public class McastServiceImpl
             super();
             setName("Tribes-MembershipReceiver");
         }
-        public void run() {
+        @Override
+		public void run() {
             while ( doRunReceiver ) {
                 try {
                     receive();
@@ -439,7 +443,8 @@ public class McastServiceImpl
             setName("Tribes-MembershipSender");
 
         }
-        public void run() {
+        @Override
+		public void run() {
             while ( doRunSender ) {
                 try {
                     send(true);
@@ -494,7 +499,8 @@ public class McastServiceImpl
                 return false;
             }
         }
-        public void run() {
+        @Override
+		public void run() {
             boolean success = false;
             int attempt = 0;
             try {

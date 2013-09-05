@@ -19,7 +19,6 @@ package org.apache.catalina.tribes.transport;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * @author not attributable
@@ -87,7 +86,8 @@ public class RxTaskPool
                     worker = creator.createRxTask();
                     configureTask(worker);
                 } else {
-                    try { mutex.wait(); } catch ( java.lang.InterruptedException x ) {Thread.currentThread().interrupted();}
+                    try { mutex.wait(); } catch ( java.lang.InterruptedException x ) {Thread.currentThread();
+					Thread.interrupted();}
                 }
             }//while
             if ( worker != null ) used.add(worker);

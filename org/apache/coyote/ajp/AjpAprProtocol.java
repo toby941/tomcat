@@ -92,7 +92,8 @@ public class AjpAprProtocol extends AbstractProtocol
      */
     protected AprEndpoint endpoint = new AprEndpoint();
 
-    protected final AbstractEndpoint getEndpoint() {
+    @Override
+	protected final AbstractEndpoint getEndpoint() {
         return endpoint;
     }
 
@@ -120,14 +121,16 @@ public class AjpAprProtocol extends AbstractProtocol
     /** 
      * Pass config info
      */
-    public void setAttribute(String name, Object value) {
+    @Override
+	public void setAttribute(String name, Object value) {
         if (log.isTraceEnabled()) {
             log.trace(sm.getString("ajpprotocol.setattribute", name, value));
         }
         attributes.put(name, value);
     }
 
-    public Object getAttribute(String key) {
+    @Override
+	public Object getAttribute(String key) {
         if (log.isTraceEnabled()) {
             log.trace(sm.getString("ajpprotocol.getattribute", key));
         }
@@ -135,7 +138,8 @@ public class AjpAprProtocol extends AbstractProtocol
     }
 
 
-    public Iterator getAttributeNames() {
+    @Override
+	public Iterator getAttributeNames() {
         return attributes.keySet().iterator();
     }
 
@@ -143,19 +147,22 @@ public class AjpAprProtocol extends AbstractProtocol
     /**
      * The adapter, used to call the connector
      */
-    public void setAdapter(Adapter adapter) {
+    @Override
+	public void setAdapter(Adapter adapter) {
         this.adapter = adapter;
     }
 
 
-    public Adapter getAdapter() {
+    @Override
+	public Adapter getAdapter() {
         return adapter;
     }
 
 
     /** Start the protocol
      */
-    public void init() throws Exception {
+    @Override
+	public void init() throws Exception {
         endpoint.setName(getName());
         endpoint.setHandler(cHandler);
         endpoint.setUseSendfile(false);
@@ -172,7 +179,8 @@ public class AjpAprProtocol extends AbstractProtocol
     }
 
 
-    public void start() throws Exception {
+    @Override
+	public void start() throws Exception {
         if (this.domain != null ) {
             try {
                 tpOname = new ObjectName
@@ -198,7 +206,8 @@ public class AjpAprProtocol extends AbstractProtocol
             log.info(sm.getString("ajpprotocol.start", getName()));
     }
 
-    public void pause() throws Exception {
+    @Override
+	public void pause() throws Exception {
         try {
             endpoint.pause();
         } catch (Exception ex) {
@@ -209,7 +218,8 @@ public class AjpAprProtocol extends AbstractProtocol
             log.info(sm.getString("ajpprotocol.pause", getName()));
     }
 
-    public void resume() throws Exception {
+    @Override
+	public void resume() throws Exception {
         try {
             endpoint.resume();
         } catch (Exception ex) {
@@ -220,7 +230,8 @@ public class AjpAprProtocol extends AbstractProtocol
             log.info(sm.getString("ajpprotocol.resume", getName()));
     }
 
-    public void destroy() throws Exception {
+    @Override
+	public void destroy() throws Exception {
         if (log.isInfoEnabled())
             log.info(sm.getString("ajpprotocol.stop", getName()));
         endpoint.destroy();
@@ -346,7 +357,8 @@ public class AjpAprProtocol extends AbstractProtocol
         protected ConcurrentLinkedQueue<AjpAprProcessor> recycledProcessors = 
             new ConcurrentLinkedQueue<AjpAprProcessor>() {
             protected AtomicInteger size = new AtomicInteger(0);
-            public boolean offer(AjpAprProcessor processor) {
+            @Override
+			public boolean offer(AjpAprProcessor processor) {
                 boolean offer = (proto.processorCache == -1) ? true : (size.get() < proto.processorCache);
                 //avoid over growing our cache or add after we have stopped
                 boolean result = false;
@@ -360,7 +372,8 @@ public class AjpAprProtocol extends AbstractProtocol
                 return result;
             }
             
-            public AjpAprProcessor poll() {
+            @Override
+			public AjpAprProcessor poll() {
                 AjpAprProcessor result = super.poll();
                 if ( result != null ) {
                     size.decrementAndGet();
@@ -368,7 +381,8 @@ public class AjpAprProtocol extends AbstractProtocol
                 return result;
             }
             
-            public void clear() {
+            @Override
+			public void clear() {
                 AjpAprProcessor next = poll();
                 while ( next != null ) {
                     unregister(next);
@@ -384,11 +398,13 @@ public class AjpAprProtocol extends AbstractProtocol
         }
 
         // FIXME: Support for this could be added in AJP as well
-        public SocketState event(long socket, SocketStatus status) {
+        @Override
+		public SocketState event(long socket, SocketStatus status) {
             return SocketState.CLOSED;
         }
         
-        public SocketState process(long socket) {
+        @Override
+		public SocketState process(long socket) {
             AjpAprProcessor processor = recycledProcessors.poll();
             try {
 
@@ -504,7 +520,8 @@ public class AjpAprProtocol extends AbstractProtocol
         return domain;
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -512,13 +529,16 @@ public class AjpAprProtocol extends AbstractProtocol
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
     
  

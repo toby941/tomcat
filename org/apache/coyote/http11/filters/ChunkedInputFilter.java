@@ -140,7 +140,8 @@ public class ChunkedInputFilter implements InputFilter {
      * whichever is greater. If the filter does not do request body length
      * control, the returned value should be -1.
      */
-    public int doRead(ByteChunk chunk, Request req)
+    @Override
+	public int doRead(ByteChunk chunk, Request req)
         throws IOException {
 
         if (endChunk)
@@ -201,7 +202,8 @@ public class ChunkedInputFilter implements InputFilter {
     /**
      * Read the content length from the request.
      */
-    public void setRequest(Request request) {
+    @Override
+	public void setRequest(Request request) {
         this.request = request;
     }
 
@@ -209,7 +211,8 @@ public class ChunkedInputFilter implements InputFilter {
     /**
      * End the current request.
      */
-    public long end()
+    @Override
+	public long end()
         throws IOException {
 
         // Consume extra bytes : parse the stream until the end chunk is found
@@ -225,7 +228,8 @@ public class ChunkedInputFilter implements InputFilter {
     /**
      * Amount of bytes still available in a buffer.
      */
-    public int available() {
+    @Override
+	public int available() {
         return (lastValid - pos);
     }
     
@@ -233,7 +237,8 @@ public class ChunkedInputFilter implements InputFilter {
     /**
      * Set the next buffer in the filter pipeline.
      */
-    public void setBuffer(InputBuffer buffer) {
+    @Override
+	public void setBuffer(InputBuffer buffer) {
         this.buffer = buffer;
     }
 
@@ -241,7 +246,8 @@ public class ChunkedInputFilter implements InputFilter {
     /**
      * Make the filter ready to process the next request.
      */
-    public void recycle() {
+    @Override
+	public void recycle() {
         remaining = 0;
         pos = 0;
         lastValid = 0;
@@ -255,7 +261,8 @@ public class ChunkedInputFilter implements InputFilter {
      * Return the name of the associated encoding; Here, the value is 
      * "identity".
      */
-    public ByteChunk getEncodingName() {
+    @Override
+	public ByteChunk getEncodingName() {
         return ENCODING;
     }
 

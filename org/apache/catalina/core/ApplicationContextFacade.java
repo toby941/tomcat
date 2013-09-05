@@ -116,7 +116,8 @@ public final class ApplicationContextFacade
     // ------------------------------------------------- ServletContext Methods
 
 
-    public ServletContext getContext(String uripath) {
+    @Override
+	public ServletContext getContext(String uripath) {
         ServletContext theContext = null;
         if (SecurityUtil.isPackageProtectionEnabled()) {
             theContext = (ServletContext)
@@ -132,17 +133,20 @@ public final class ApplicationContextFacade
     }
 
 
-    public int getMajorVersion() {
+    @Override
+	public int getMajorVersion() {
         return context.getMajorVersion();
     }
 
 
-    public int getMinorVersion() {
+    @Override
+	public int getMinorVersion() {
         return context.getMinorVersion();
     }
 
 
-    public String getMimeType(String file) {
+    @Override
+	public String getMimeType(String file) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (String)doPrivileged("getMimeType", new Object[]{file});
         } else {
@@ -151,7 +155,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public Set getResourcePaths(String path) {
+    @Override
+	public Set getResourcePaths(String path) {
         if (SecurityUtil.isPackageProtectionEnabled()){
             return (Set)doPrivileged("getResourcePaths", new Object[]{path});
         } else {
@@ -160,7 +165,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public URL getResource(String path)
+    @Override
+	public URL getResource(String path)
         throws MalformedURLException {
         if (Globals.IS_SECURITY_ENABLED) {
             try {
@@ -178,7 +184,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public InputStream getResourceAsStream(String path) {
+    @Override
+	public InputStream getResourceAsStream(String path) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (InputStream) doPrivileged("getResourceAsStream", 
                                               new Object[]{path});
@@ -188,7 +195,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public RequestDispatcher getRequestDispatcher(final String path) {
+    @Override
+	public RequestDispatcher getRequestDispatcher(final String path) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (RequestDispatcher) doPrivileged("getRequestDispatcher", 
                                                     new Object[]{path});
@@ -198,7 +206,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public RequestDispatcher getNamedDispatcher(String name) {
+    @Override
+	public RequestDispatcher getNamedDispatcher(String name) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (RequestDispatcher) doPrivileged("getNamedDispatcher", 
                                                     new Object[]{name});
@@ -208,7 +217,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public Servlet getServlet(String name)
+    @Override
+	public Servlet getServlet(String name)
         throws ServletException {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             try {
@@ -226,7 +236,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public Enumeration getServlets() {
+    @Override
+	public Enumeration getServlets() {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (Enumeration) doPrivileged("getServlets", null);
         } else {
@@ -235,7 +246,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public Enumeration getServletNames() {
+    @Override
+	public Enumeration getServletNames() {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (Enumeration) doPrivileged("getServletNames", null);
         } else {
@@ -244,7 +256,8 @@ public final class ApplicationContextFacade
    }
 
 
-    public void log(String msg) {
+    @Override
+	public void log(String msg) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             doPrivileged("log", new Object[]{msg} );
         } else {
@@ -253,7 +266,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public void log(Exception exception, String msg) {
+    @Override
+	public void log(Exception exception, String msg) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             doPrivileged("log", new Class[]{Exception.class, String.class}, 
                          new Object[]{exception,msg});
@@ -263,7 +277,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public void log(String message, Throwable throwable) {
+    @Override
+	public void log(String message, Throwable throwable) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             doPrivileged("log", new Class[]{String.class, Throwable.class}, 
                          new Object[]{message, throwable});
@@ -273,7 +288,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public String getRealPath(String path) {
+    @Override
+	public String getRealPath(String path) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (String) doPrivileged("getRealPath", new Object[]{path});
         } else {
@@ -282,7 +298,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public String getServerInfo() {
+    @Override
+	public String getServerInfo() {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (String) doPrivileged("getServerInfo", null);
         } else {
@@ -291,7 +308,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public String getInitParameter(String name) {
+    @Override
+	public String getInitParameter(String name) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (String) doPrivileged("getInitParameter", 
                                          new Object[]{name});
@@ -301,7 +319,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public Enumeration getInitParameterNames() {
+    @Override
+	public Enumeration getInitParameterNames() {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (Enumeration) doPrivileged("getInitParameterNames", null);
         } else {
@@ -310,7 +329,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public Object getAttribute(String name) {
+    @Override
+	public Object getAttribute(String name) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return doPrivileged("getAttribute", new Object[]{name});
         } else {
@@ -319,7 +339,8 @@ public final class ApplicationContextFacade
      }
 
 
-    public Enumeration getAttributeNames() {
+    @Override
+	public Enumeration getAttributeNames() {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (Enumeration) doPrivileged("getAttributeNames", null);
         } else {
@@ -328,7 +349,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public void setAttribute(String name, Object object) {
+    @Override
+	public void setAttribute(String name, Object object) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             doPrivileged("setAttribute", new Object[]{name,object});
         } else {
@@ -337,7 +359,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public void removeAttribute(String name) {
+    @Override
+	public void removeAttribute(String name) {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             doPrivileged("removeAttribute", new Object[]{name});
         } else {
@@ -346,7 +369,8 @@ public final class ApplicationContextFacade
     }
 
 
-    public String getServletContextName() {
+    @Override
+	public String getServletContextName() {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (String) doPrivileged("getServletContextName", null);
         } else {
@@ -355,7 +379,8 @@ public final class ApplicationContextFacade
     }
 
        
-    public String getContextPath() {
+    @Override
+	public String getContextPath() {
         if (SecurityUtil.isPackageProtectionEnabled()) {
             return (String) doPrivileged("getContextPath", null);
         } else {
@@ -421,7 +446,7 @@ public final class ApplicationContextFacade
 
         try{
             Method method = context.getClass()
-                    .getMethod(methodName, (Class[])clazz);
+                    .getMethod(methodName, clazz);
             return executeMethod(method,context,params);
         } catch (Exception ex){
             try{
@@ -452,7 +477,8 @@ public final class ApplicationContextFacade
                                      
         if (SecurityUtil.isPackageProtectionEnabled()){
            return AccessController.doPrivileged(new PrivilegedExceptionAction(){
-                public Object run() throws IllegalAccessException, InvocationTargetException{
+                @Override
+				public Object run() throws IllegalAccessException, InvocationTargetException{
                     return method.invoke(context,  params);
                 }
             });

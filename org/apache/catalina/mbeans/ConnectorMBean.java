@@ -75,7 +75,8 @@ public class ConnectorMBean extends ClassNameMBean {
      * @exception ReflectionException if a Java reflection exception
      *  occurs when invoking the getter
      */
-    public Object getAttribute(String name) throws AttributeNotFoundException,
+    @Override
+	public Object getAttribute(String name) throws AttributeNotFoundException,
             MBeanException, ReflectionException {
 
         Object attribute = null;
@@ -112,7 +113,8 @@ public class ConnectorMBean extends ClassNameMBean {
      * @exception ReflectionException if a Java reflection exception
      *  occurs when invoking the getter
      */
-     public void setAttribute(Attribute attribute)
+     @Override
+	public void setAttribute(Attribute attribute)
             throws AttributeNotFoundException, MBeanException,
             ReflectionException {
 

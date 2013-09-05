@@ -46,7 +46,8 @@ public class SavedRequestInputFilter implements InputFilter {
     /**
      * Read bytes.
      */
-    public int doRead(ByteChunk chunk, org.apache.coyote.Request request)
+    @Override
+	public int doRead(ByteChunk chunk, org.apache.coyote.Request request)
             throws IOException {
         int writeLength = 0;
         
@@ -69,41 +70,47 @@ public class SavedRequestInputFilter implements InputFilter {
     /**
      * Set the content length on the request.
      */
-    public void setRequest(org.apache.coyote.Request request) {
+    @Override
+	public void setRequest(org.apache.coyote.Request request) {
         request.setContentLength(input.getLength());
     }
 
     /**
      * Make the filter ready to process the next request.
      */
-    public void recycle() {
+    @Override
+	public void recycle() {
         input = null;
     }
 
     /**
      * Return the name of the associated encoding; here, the value is null.
      */
-    public ByteChunk getEncodingName() {
+    @Override
+	public ByteChunk getEncodingName() {
         return null;
     }
 
     /**
      * Set the next buffer in the filter pipeline (has no effect).
      */
-    public void setBuffer(InputBuffer buffer) {
+    @Override
+	public void setBuffer(InputBuffer buffer) {
     }
 
     /**
      * Amount of bytes still available in a buffer.
      */
-    public int available() {
+    @Override
+	public int available() {
         return input.getLength();
     }
     
     /**
      * End the current request (has no effect).
      */
-    public long end() throws IOException {
+    @Override
+	public long end() throws IOException {
         return 0;
     }
 

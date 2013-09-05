@@ -46,6 +46,7 @@ import org.apache.tomcat.util.net.SocketStatus;
 
 import com.bill99.limit.container.TwiceReadRequest;
 import com.bill99.limit.service.token.TokenPoolManager;
+import com.bill99.limit.util.IOUtils;
 
 /**
  * Implementation of a request processor which delegates the processing to a
@@ -123,6 +124,7 @@ public class CoyoteAdapter implements Adapter {
 	 * 
 	 * @return false to indicate an error, expected or not
 	 */
+	@Override
 	public boolean event(org.apache.coyote.Request req, org.apache.coyote.Response res, SocketStatus status) {
 
 		Request request = (Request) req.getNote(ADAPTER_NOTES);
@@ -241,17 +243,18 @@ public class CoyoteAdapter implements Adapter {
 	/**
 	 * Service method.
 	 */
+	@Override
 	public void service(org.apache.coyote.Request req, org.apache.coyote.Response res) throws Exception {
 
 		Request request = (Request) req.getNote(ADAPTER_NOTES);
 		Response response = (Response) res.getNote(ADAPTER_NOTES);
 		if (request == null) {
 			// Create objects
-			request = (Request) connector.createRequest();
+			request = connector.createRequest();
 			request.setCoyoteRequest(req);
 			// 等待coyoteRequest注入后再进行wapper替换request操作
 			request = new TwiceReadRequest(request);
-			response = (Response) connector.createResponse();
+			response = connector.createResponse();
 			response.setCoyoteResponse(res);
 
 			// Link objects
@@ -275,6 +278,12 @@ public class CoyoteAdapter implements Adapter {
 		}
 
 		System.out.println("enter coyoteAdapter service");
+		while (request.getParameterNames().hasMoreElements()) {
+			String key = (String) request.getParameterNames().nextElement();
+			System.out.println(key + " :" + request.getParameter(key));
+		}
+
+		System.out.println(IOUtils.convertStreamToString(request.getInputStream()));
 
 		boolean comet = false;
 
@@ -340,6 +349,7 @@ public class CoyoteAdapter implements Adapter {
 
 	}
 
+	@Override
 	public void log(org.apache.coyote.Request req, org.apache.coyote.Response res, long time) {
 
 		Request request = (Request) req.getNote(ADAPTER_NOTES);

@@ -141,6 +141,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * 
 	 * @return configured realm, or a JAAS realm by default
 	 */
+	@Override
 	public Realm getRealm() {
 		Realm configured = super.getRealm();
 		// If no set realm has been called - default to JAAS
@@ -155,6 +156,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	/**
 	 * Return the default host.
 	 */
+	@Override
 	public String getDefaultHost() {
 
 		return (defaultHost);
@@ -167,6 +169,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * @param host
 	 *            The new default host
 	 */
+	@Override
 	public void setDefaultHost(String host) {
 
 		String oldDefaultHost = this.defaultHost;
@@ -179,6 +182,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 
 	}
 
+	@Override
 	public void setName(String name) {
 		if (domain != null) {
 			// keep name==domain, ignore override
@@ -197,6 +201,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * <p>
 	 * This property should not be changed once it is set.
 	 */
+	@Override
 	public void setJvmRoute(String routeId) {
 		jvmRouteId = routeId;
 	}
@@ -205,6 +210,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * Retrieve the cluster-wide unique identifier for this Engine. This value
 	 * is only useful in a load-balancing scenario.
 	 */
+	@Override
 	public String getJvmRoute() {
 		return jvmRouteId;
 	}
@@ -212,6 +218,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	/**
 	 * Return the <code>Service</code> with which we are associated (if any).
 	 */
+	@Override
 	public Service getService() {
 
 		return (this.service);
@@ -224,6 +231,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * @param service
 	 *            The service that owns this Engine
 	 */
+	@Override
 	public void setService(Service service) {
 		this.service = service;
 	}
@@ -259,6 +267,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * @param child
 	 *            Child container to be added
 	 */
+	@Override
 	public void addChild(Container child) {
 
 		if (!(child instanceof Host))
@@ -272,6 +281,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * the corresponding version number, in the format
 	 * <code>&lt;description&gt;/&lt;version&gt;</code>.
 	 */
+	@Override
 	public String getInfo() {
 
 		return (info);
@@ -285,6 +295,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * @param container
 	 *            Proposed parent Container
 	 */
+	@Override
 	public void setParent(Container container) {
 
 		throw new IllegalArgumentException(sm.getString("standardEngine.notParent"));
@@ -293,6 +304,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 
 	private boolean initialized = false;
 
+	@Override
 	public void init() {
 		if (initialized)
 			return;
@@ -367,6 +379,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 
 	}
 
+	@Override
 	public void destroy() throws LifecycleException {
 		if (!initialized)
 			return;
@@ -407,6 +420,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * @exception LifecycleException
 	 *                if a startup error occurs
 	 */
+	@Override
 	public void start() throws LifecycleException {
 		if (started) {
 			return;
@@ -445,6 +459,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 
 	}
 
+	@Override
 	public void stop() throws LifecycleException {
 		super.stop();
 		if (mbeans != null) {
@@ -459,6 +474,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	/**
 	 * Return a String representation of this component.
 	 */
+	@Override
 	public String toString() {
 
 		StringBuffer sb = new StringBuffer("StandardEngine[");
@@ -474,6 +490,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	 * host's ROOT context. If still none is found, return the default NoOp
 	 * access log.
 	 */
+	@Override
 	public void logAccess(Request request, Response response, long time, boolean useDefault) {
 
 		boolean logged = false;
@@ -536,6 +553,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 
 	// -------------------- JMX registration --------------------
 
+	@Override
 	public ObjectName preRegister(MBeanServer server, ObjectName name) throws Exception {
 		super.preRegister(server, name);
 
@@ -545,6 +563,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 	}
 
 	// FIXME Remove -- not used
+	@Override
 	public ObjectName getParentName() throws MalformedObjectNameException {
 		if (getService() == null) {
 			return null;
@@ -554,6 +573,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 		return serviceName;
 	}
 
+	@Override
 	public ObjectName createObjectName(String domain, ObjectName parent) throws Exception {
 		if (log.isDebugEnabled())
 			log.debug("Create ObjectName " + domain + " " + parent);
@@ -578,6 +598,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 
 	}
 
+	@Override
 	public String getDomain() {
 		if (domain != null) {
 			return domain;
@@ -586,6 +607,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 		}
 	}
 
+	@Override
 	public void setDomain(String domain) {
 		this.domain = domain;
 	}
@@ -630,6 +652,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 			engine.removePropertyChangeListener(this);
 		}
 
+		@Override
 		public void lifecycleEvent(LifecycleEvent event) {
 			if (disabled)
 				return;
@@ -645,6 +668,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 			}
 		}
 
+		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
 			if (disabled)
 				return;
@@ -656,6 +680,7 @@ public class StandardEngine extends ContainerBase implements Engine {
 			}
 		}
 
+		@Override
 		public void containerEvent(ContainerEvent event) {
 			// Only useful for hosts
 			if (disabled)

@@ -52,7 +52,8 @@ abstract public class AbstractRulesImpl implements Rules {
      * Return the Digester instance with which this Rules instance is
      * associated.
      */
-    public Digester getDigester() {
+    @Override
+	public Digester getDigester() {
         return digester;
     }
 
@@ -61,7 +62,8 @@ abstract public class AbstractRulesImpl implements Rules {
      *
      * @param digester The newly associated Digester instance
      */
-    public void setDigester(Digester digester) {
+    @Override
+	public void setDigester(Digester digester) {
         this.digester = digester;
     }
 
@@ -69,7 +71,8 @@ abstract public class AbstractRulesImpl implements Rules {
      * Return the namespace URI that will be applied to all subsequently
      * added <code>Rule</code> objects.
      */
-    public String getNamespaceURI() {
+    @Override
+	public String getNamespaceURI() {
         return namespaceURI;
     }
 
@@ -81,7 +84,8 @@ abstract public class AbstractRulesImpl implements Rules {
      *  subsequently added rules, or <code>null</code> for matching
      *  regardless of the current namespace URI
      */
-    public void setNamespaceURI(String namespaceURI) {
+    @Override
+	public void setNamespaceURI(String namespaceURI) {
         this.namespaceURI = namespaceURI;
     }
 
@@ -95,7 +99,8 @@ abstract public class AbstractRulesImpl implements Rules {
      * @param pattern Nesting pattern to be matched for this Rule
      * @param rule Rule instance to be registered
      */
-    public void add(String pattern, Rule rule) {
+    @Override
+	public void add(String pattern, Rule rule) {
         // set up rule
         if (this.digester != null) {
             rule.setDigester(this.digester);
@@ -122,7 +127,8 @@ abstract public class AbstractRulesImpl implements Rules {
     /**
      * Clear all existing Rule instance registrations.
      */
-    abstract public void clear();
+    @Override
+	abstract public void clear();
 
 
     /**
@@ -136,7 +142,9 @@ abstract public class AbstractRulesImpl implements Rules {
      *
      * @deprecated Call match(namespaceURI,pattern) instead.
      */
-    public List match(String pattern) {
+    @Deprecated
+	@Override
+	public List match(String pattern) {
         return match(namespaceURI, pattern);
     }
 
@@ -152,7 +160,8 @@ abstract public class AbstractRulesImpl implements Rules {
      *  or <code>null</code> to match regardless of namespace URI
      * @param pattern Nesting pattern to be matched
      */
-    abstract public List match(String namespaceURI, String pattern);
+    @Override
+	abstract public List match(String namespaceURI, String pattern);
 
 
     /**
@@ -162,6 +171,7 @@ abstract public class AbstractRulesImpl implements Rules {
      * in the order originally registered through the <code>add()</code>
      * method.
      */
-    abstract public List rules();
+    @Override
+	abstract public List rules();
 
 }

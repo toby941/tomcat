@@ -57,7 +57,8 @@ public class RequestFacade implements HttpServletRequest {
     private final class GetAttributePrivilegedAction
             implements PrivilegedAction {
         
-        public Object run() {
+        @Override
+		public Object run() {
             return request.getAttributeNames();
         }            
     }
@@ -66,7 +67,8 @@ public class RequestFacade implements HttpServletRequest {
     private final class GetParameterMapPrivilegedAction
             implements PrivilegedAction {
         
-        public Object run() {
+        @Override
+		public Object run() {
             return request.getParameterMap();
         }        
     }    
@@ -81,7 +83,8 @@ public class RequestFacade implements HttpServletRequest {
             this.path = path;
         }
         
-        public Object run() {   
+        @Override
+		public Object run() {   
             return request.getRequestDispatcher(path);
         }           
     }    
@@ -96,7 +99,8 @@ public class RequestFacade implements HttpServletRequest {
             this.name = name;
         }
 
-        public Object run() {       
+        @Override
+		public Object run() {       
             return request.getParameter(name);
         }           
     }    
@@ -105,7 +109,8 @@ public class RequestFacade implements HttpServletRequest {
     private final class GetParameterNamesPrivilegedAction
             implements PrivilegedAction {
         
-        public Object run() {          
+        @Override
+		public Object run() {          
             return request.getParameterNames();
         }           
     } 
@@ -120,7 +125,8 @@ public class RequestFacade implements HttpServletRequest {
             this.name = name;
         }
 
-        public Object run() {       
+        @Override
+		public Object run() {       
             return request.getParameterValues(name);
         }           
     }    
@@ -129,7 +135,8 @@ public class RequestFacade implements HttpServletRequest {
     private final class GetCookiesPrivilegedAction
             implements PrivilegedAction {
         
-        public Object run() {       
+        @Override
+		public Object run() {       
             return request.getCookies();
         }           
     }      
@@ -138,7 +145,8 @@ public class RequestFacade implements HttpServletRequest {
     private final class GetCharacterEncodingPrivilegedAction
             implements PrivilegedAction {
         
-        public Object run() {       
+        @Override
+		public Object run() {       
             return request.getCharacterEncoding();
         }           
     }   
@@ -153,7 +161,8 @@ public class RequestFacade implements HttpServletRequest {
             this.name = name;
         }
         
-        public Object run() {       
+        @Override
+		public Object run() {       
             return request.getHeaders(name);
         }           
     }    
@@ -162,7 +171,8 @@ public class RequestFacade implements HttpServletRequest {
     private final class GetHeaderNamesPrivilegedAction
             implements PrivilegedAction {
 
-        public Object run() {       
+        @Override
+		public Object run() {       
             return request.getHeaderNames();
         }           
     }  
@@ -171,7 +181,8 @@ public class RequestFacade implements HttpServletRequest {
     private final class GetLocalePrivilegedAction
             implements PrivilegedAction {
 
-        public Object run() {       
+        @Override
+		public Object run() {       
             return request.getLocale();
         }           
     }    
@@ -180,7 +191,8 @@ public class RequestFacade implements HttpServletRequest {
     private final class GetLocalesPrivilegedAction
             implements PrivilegedAction {
 
-        public Object run() {       
+        @Override
+		public Object run() {       
             return request.getLocales();
         }           
     }    
@@ -194,7 +206,8 @@ public class RequestFacade implements HttpServletRequest {
             this.create = create;
         }
                 
-        public Object run() {  
+        @Override
+		public Object run() {  
             return request.getSession(create);
         }           
     }
@@ -244,7 +257,8 @@ public class RequestFacade implements HttpServletRequest {
     /**
      * Prevent cloning the facade.
      */
-    protected Object clone()
+    @Override
+	protected Object clone()
         throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
@@ -253,7 +267,8 @@ public class RequestFacade implements HttpServletRequest {
     // ------------------------------------------------- ServletRequest Methods
 
 
-    public Object getAttribute(String name) {
+    @Override
+	public Object getAttribute(String name) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -264,7 +279,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public Enumeration getAttributeNames() {
+    @Override
+	public Enumeration getAttributeNames() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -280,7 +296,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getCharacterEncoding() {
+    @Override
+	public String getCharacterEncoding() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -296,7 +313,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public void setCharacterEncoding(String env)
+    @Override
+	public void setCharacterEncoding(String env)
             throws java.io.UnsupportedEncodingException {
 
         if (request == null) {
@@ -308,7 +326,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public int getContentLength() {
+    @Override
+	public int getContentLength() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -319,7 +338,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getContentType() {
+    @Override
+	public String getContentType() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -330,7 +350,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public ServletInputStream getInputStream() throws IOException {
+    @Override
+	public ServletInputStream getInputStream() throws IOException {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -341,7 +362,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getParameter(String name) {
+    @Override
+	public String getParameter(String name) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -357,7 +379,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public Enumeration getParameterNames() {
+    @Override
+	public Enumeration getParameterNames() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -373,7 +396,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String[] getParameterValues(String name) {
+    @Override
+	public String[] getParameterValues(String name) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -390,7 +414,7 @@ public class RequestFacade implements HttpServletRequest {
             ret = (String[]) AccessController.doPrivileged(
                 new GetParameterValuePrivilegedAction(name));
             if (ret != null) {
-                ret = (String[]) ret.clone();
+                ret = ret.clone();
             }
         } else {
             ret = request.getParameterValues(name);
@@ -400,7 +424,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public Map getParameterMap() {
+    @Override
+	public Map getParameterMap() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -416,7 +441,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getProtocol() {
+    @Override
+	public String getProtocol() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -427,7 +453,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getScheme() {
+    @Override
+	public String getScheme() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -438,7 +465,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getServerName() {
+    @Override
+	public String getServerName() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -449,7 +477,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public int getServerPort() {
+    @Override
+	public int getServerPort() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -460,7 +489,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public BufferedReader getReader() throws IOException {
+    @Override
+	public BufferedReader getReader() throws IOException {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -471,7 +501,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getRemoteAddr() {
+    @Override
+	public String getRemoteAddr() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -482,7 +513,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getRemoteHost() {
+    @Override
+	public String getRemoteHost() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -493,7 +525,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public void setAttribute(String name, Object o) {
+    @Override
+	public void setAttribute(String name, Object o) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -504,7 +537,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public void removeAttribute(String name) {
+    @Override
+	public void removeAttribute(String name) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -515,7 +549,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public Locale getLocale() {
+    @Override
+	public Locale getLocale() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -531,7 +566,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public Enumeration getLocales() {
+    @Override
+	public Enumeration getLocales() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -547,7 +583,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public boolean isSecure() {
+    @Override
+	public boolean isSecure() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -558,7 +595,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public RequestDispatcher getRequestDispatcher(String path) {
+    @Override
+	public RequestDispatcher getRequestDispatcher(String path) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -573,7 +611,8 @@ public class RequestFacade implements HttpServletRequest {
         }
     }
 
-    public String getRealPath(String path) {
+    @Override
+	public String getRealPath(String path) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -584,7 +623,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getAuthType() {
+    @Override
+	public String getAuthType() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -595,7 +635,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public Cookie[] getCookies() {
+    @Override
+	public Cookie[] getCookies() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -612,7 +653,7 @@ public class RequestFacade implements HttpServletRequest {
             ret = (Cookie[])AccessController.doPrivileged(
                 new GetCookiesPrivilegedAction());
             if (ret != null) {
-                ret = (Cookie[]) ret.clone();
+                ret = ret.clone();
             }
         } else {
             ret = request.getCookies();
@@ -622,7 +663,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public long getDateHeader(String name) {
+    @Override
+	public long getDateHeader(String name) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -633,7 +675,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getHeader(String name) {
+    @Override
+	public String getHeader(String name) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -644,7 +687,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public Enumeration getHeaders(String name) {
+    @Override
+	public Enumeration getHeaders(String name) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -660,7 +704,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public Enumeration getHeaderNames() {
+    @Override
+	public Enumeration getHeaderNames() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -676,7 +721,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public int getIntHeader(String name) {
+    @Override
+	public int getIntHeader(String name) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -687,7 +733,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getMethod() {
+    @Override
+	public String getMethod() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -698,7 +745,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getPathInfo() {
+    @Override
+	public String getPathInfo() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -709,7 +757,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getPathTranslated() {
+    @Override
+	public String getPathTranslated() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -720,7 +769,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getContextPath() {
+    @Override
+	public String getContextPath() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -731,7 +781,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getQueryString() {
+    @Override
+	public String getQueryString() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -742,7 +793,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getRemoteUser() {
+    @Override
+	public String getRemoteUser() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -753,7 +805,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public boolean isUserInRole(String role) {
+    @Override
+	public boolean isUserInRole(String role) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -764,7 +817,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public java.security.Principal getUserPrincipal() {
+    @Override
+	public java.security.Principal getUserPrincipal() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -775,7 +829,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getRequestedSessionId() {
+    @Override
+	public String getRequestedSessionId() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -786,7 +841,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getRequestURI() {
+    @Override
+	public String getRequestURI() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -797,7 +853,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public StringBuffer getRequestURL() {
+    @Override
+	public StringBuffer getRequestURL() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -808,7 +865,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getServletPath() {
+    @Override
+	public String getServletPath() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -819,7 +877,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public HttpSession getSession(boolean create) {
+    @Override
+	public HttpSession getSession(boolean create) {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -834,7 +893,8 @@ public class RequestFacade implements HttpServletRequest {
         }
     }
 
-    public HttpSession getSession() {
+    @Override
+	public HttpSession getSession() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -845,7 +905,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public boolean isRequestedSessionIdValid() {
+    @Override
+	public boolean isRequestedSessionIdValid() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -856,7 +917,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public boolean isRequestedSessionIdFromCookie() {
+    @Override
+	public boolean isRequestedSessionIdFromCookie() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -867,7 +929,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public boolean isRequestedSessionIdFromURL() {
+    @Override
+	public boolean isRequestedSessionIdFromURL() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -878,7 +941,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public boolean isRequestedSessionIdFromUrl() {
+    @Override
+	public boolean isRequestedSessionIdFromUrl() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -889,7 +953,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getLocalAddr() {
+    @Override
+	public String getLocalAddr() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -900,7 +965,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public String getLocalName() {
+    @Override
+	public String getLocalName() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -911,7 +977,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public int getLocalPort() {
+    @Override
+	public int getLocalPort() {
 
         if (request == null) {
             throw new IllegalStateException(
@@ -922,7 +989,8 @@ public class RequestFacade implements HttpServletRequest {
     }
 
 
-    public int getRemotePort() {
+    @Override
+	public int getRemotePort() {
 
         if (request == null) {
             throw new IllegalStateException(

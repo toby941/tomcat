@@ -92,7 +92,8 @@ public class StandardThreadExecutor implements Executor {
 
     
     // ---------------------------------------------- Public Methods
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
         lifecycle.fireLifecycleEvent(BEFORE_START_EVENT, null);
         TaskQueue taskqueue = new TaskQueue(maxQueueSize);
         TaskThreadFactory tf = new TaskThreadFactory(namePrefix);
@@ -106,12 +107,13 @@ public class StandardThreadExecutor implements Executor {
 				}
 			}
         };
-        taskqueue.setParent( (ThreadPoolExecutor) executor);
+        taskqueue.setParent( executor);
         submittedTasksCount = new AtomicInteger();
         lifecycle.fireLifecycleEvent(AFTER_START_EVENT, null);
     }
     
-    public void stop() throws LifecycleException{
+    @Override
+	public void stop() throws LifecycleException{
         lifecycle.fireLifecycleEvent(BEFORE_STOP_EVENT, null);
         lifecycle.fireLifecycleEvent(STOP_EVENT, null);
         if ( executor != null ) executor.shutdown();
@@ -140,7 +142,8 @@ public class StandardThreadExecutor implements Executor {
         } else throw new IllegalStateException("StandardThreadPool not started.");
     }
 
-    public void execute(Runnable command) {
+    @Override
+	public void execute(Runnable command) {
         if ( executor != null ) {
         	submittedTasksCount.incrementAndGet();
             try {
@@ -180,7 +183,8 @@ public class StandardThreadExecutor implements Executor {
         return minSpareThreads;
     }
 
-    public String getName() {
+    @Override
+	public String getName() {
         return name;
     }
 
@@ -234,7 +238,8 @@ public class StandardThreadExecutor implements Executor {
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
         lifecycle.addLifecycleListener(listener);
     }
 
@@ -243,7 +248,8 @@ public class StandardThreadExecutor implements Executor {
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
         return lifecycle.findLifecycleListeners();
     }
 
@@ -253,7 +259,8 @@ public class StandardThreadExecutor implements Executor {
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
         lifecycle.removeLifecycleListener(listener);
     }
 
@@ -312,7 +319,8 @@ public class StandardThreadExecutor implements Executor {
             return super.offer(o,timeout,unit); //forces the item onto the queue, to be used if the task is rejected
         }
 
-        public boolean offer(Runnable o) {
+        @Override
+		public boolean offer(Runnable o) {
             //we can't do any checks
             if (parent==null) return super.offer(o);
             int poolSize = parent.getPoolSize();
@@ -343,7 +351,8 @@ public class StandardThreadExecutor implements Executor {
             this.namePrefix = namePrefix;
         }
 
-        public Thread newThread(Runnable r) {
+        @Override
+		public Thread newThread(Runnable r) {
             Thread t = new Thread(group, r, namePrefix + threadNumber.getAndIncrement());
             t.setDaemon(daemon);
             t.setPriority(getThreadPriority());

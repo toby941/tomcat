@@ -136,7 +136,8 @@ public class HandlerRef
      * Retrieves the class name of the factory of the object to which this 
      * reference refers.
      */
-    public String getFactoryClassName() {
+    @Override
+	public String getFactoryClassName() {
         String factory = super.getFactoryClassName();
         if (factory != null) {
             return factory;
@@ -157,7 +158,8 @@ public class HandlerRef
     /**
      * Return a String rendering of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("HandlerRef[");
         sb.append("className=");

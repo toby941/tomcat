@@ -198,25 +198,29 @@ public final class EmbeddedServletOptions implements Options {
     /**
      * Are we keeping generated code around?
      */
-    public boolean getKeepGenerated() {
+    @Override
+	public boolean getKeepGenerated() {
         return keepGenerated;
     }
     
     /**
      * Should white spaces between directives or actions be trimmed?
      */
-    public boolean getTrimSpaces() {
+    @Override
+	public boolean getTrimSpaces() {
         return trimSpaces;
     }
     
-    public boolean isPoolingEnabled() {
+    @Override
+	public boolean isPoolingEnabled() {
         return isPoolingEnabled;
     }
     
     /**
      * Are we supporting HTML mapped servlets?
      */
-    public boolean getMappedFile() {
+    @Override
+	public boolean getMappedFile() {
         return mappedFile;
     }
     
@@ -224,7 +228,8 @@ public final class EmbeddedServletOptions implements Options {
      * Should errors be sent to client or thrown into stderr?
      * @deprecated
      */
-    @Deprecated
+    @Override
+	@Deprecated
     public boolean getSendErrorToClient() {
         return true;
     }
@@ -232,70 +237,80 @@ public final class EmbeddedServletOptions implements Options {
     /**
      * Should class files be compiled with debug information?
      */
-    public boolean getClassDebugInfo() {
+    @Override
+	public boolean getClassDebugInfo() {
         return classDebugInfo;
     }
     
     /**
      * Background JSP compile thread check intervall
      */
-    public int getCheckInterval() {
+    @Override
+	public int getCheckInterval() {
         return checkInterval;
     }
     
     /**
      * Modification test interval.
      */
-    public int getModificationTestInterval() {
+    @Override
+	public int getModificationTestInterval() {
         return modificationTestInterval;
     }
     
     /**
      * Re-compile on failure.
      */
-    public boolean getRecompileOnFail() {
+    @Override
+	public boolean getRecompileOnFail() {
         return recompileOnFail;
     }
     
     /**
      * Is Jasper being used in development mode?
      */
-    public boolean getDevelopment() {
+    @Override
+	public boolean getDevelopment() {
         return development;
     }
     
     /**
      * Is the generation of SMAP info for JSR45 debuggin suppressed?
      */
-    public boolean isSmapSuppressed() {
+    @Override
+	public boolean isSmapSuppressed() {
         return isSmapSuppressed;
     }
     
     /**
      * Should SMAP info for JSR45 debugging be dumped to a file?
      */
-    public boolean isSmapDumped() {
+    @Override
+	public boolean isSmapDumped() {
         return isSmapDumped;
     }
     
     /**
      * Are Text strings to be generated as char arrays?
      */
-    public boolean genStringAsCharArray() {
+    @Override
+	public boolean genStringAsCharArray() {
         return this.genStringAsCharArray;
     }
     
     /**
      * Class ID for use in the plugin tag when the browser is IE. 
      */
-    public String getIeClassId() {
+    @Override
+	public String getIeClassId() {
         return ieClassId;
     }
     
     /**
      * What is my scratch dir?
      */
-    public File getScratchDir() {
+    @Override
+	public File getScratchDir() {
         return scratchDir;
     }
     
@@ -303,46 +318,53 @@ public final class EmbeddedServletOptions implements Options {
      * What classpath should I use while compiling the servlets
      * generated from JSP files?
      */
-    public String getClassPath() {
+    @Override
+	public String getClassPath() {
         return classpath;
     }
     
     /**
      * Is generation of X-Powered-By response header enabled/disabled?
      */
-    public boolean isXpoweredBy() {
+    @Override
+	public boolean isXpoweredBy() {
         return xpoweredBy;
     }
     
     /**
      * Compiler to use.
      */
-    public String getCompiler() {
+    @Override
+	public String getCompiler() {
         return compiler;
     }
     
     /**
      * @see Options#getCompilerTargetVM
      */
-    public String getCompilerTargetVM() {
+    @Override
+	public String getCompilerTargetVM() {
         return compilerTargetVM;
     }
     
     /**
      * @see Options#getCompilerSourceVM
      */
-    public String getCompilerSourceVM() {
+    @Override
+	public String getCompilerSourceVM() {
         return compilerSourceVM;
     }
     
     /**
      * Java compiler class to use.
      */
-    public String getCompilerClassName() {
+    @Override
+	public String getCompilerClassName() {
         return compilerClassName;
     }
 
-    public boolean getErrorOnUseBeanInvalidClassAttribute() {
+    @Override
+	public boolean getErrorOnUseBeanInvalidClassAttribute() {
         return errorOnUseBeanInvalidClassAttribute;
     }
     
@@ -350,7 +372,8 @@ public final class EmbeddedServletOptions implements Options {
         errorOnUseBeanInvalidClassAttribute = b;
     }
     
-    public TldLocationsCache getTldLocationsCache() {
+    @Override
+	public TldLocationsCache getTldLocationsCache() {
         return tldLocationsCache;
     }
     
@@ -358,27 +381,33 @@ public final class EmbeddedServletOptions implements Options {
         tldLocationsCache = tldC;
     }
     
-    public String getJavaEncoding() {
+    @Override
+	public String getJavaEncoding() {
         return javaEncoding;
     }
     
-    public boolean getFork() {
+    @Override
+	public boolean getFork() {
         return fork;
     }
     
-    public JspConfig getJspConfig() {
+    @Override
+	public JspConfig getJspConfig() {
         return jspConfig;
     }
     
-    public TagPluginManager getTagPluginManager() {
+    @Override
+	public TagPluginManager getTagPluginManager() {
         return tagPluginManager;
     }
     
-    public boolean isCaching() {
+    @Override
+	public boolean isCaching() {
         return false;
     }
     
-    public Map getCache() {
+    @Override
+	public Map getCache() {
         return null;
     }
 
@@ -386,7 +415,8 @@ public final class EmbeddedServletOptions implements Options {
      * Should we include a source fragment in exception messages, which could be displayed
      * to the developer ?
      */
-    public boolean getDisplaySourceFragment() {
+    @Override
+	public boolean getDisplaySourceFragment() {
         return displaySourceFragment;
     }
 

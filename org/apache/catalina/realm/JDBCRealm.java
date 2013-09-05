@@ -340,7 +340,8 @@ public class JDBCRealm
      * @param credentials Password or other credentials to use in
      *  authenticating this username
      */
-    public synchronized Principal authenticate(String username, String credentials) {
+    @Override
+	public synchronized Principal authenticate(String username, String credentials) {
 
         // Number of tries is the numebr of attempts to connect to the database
         // during this login attempt (if we need to open the database)
@@ -524,7 +525,8 @@ public class JDBCRealm
     /**
      * Return a short name for this Realm implementation.
      */
-    protected String getName() {
+    @Override
+	protected String getName() {
 
         return (name);
 
@@ -534,7 +536,8 @@ public class JDBCRealm
     /**
      * Return the password associated with the given principal's user name.
      */
-    protected synchronized String getPassword(String username) {
+    @Override
+	protected synchronized String getPassword(String username) {
 
         // Look up the user's credentials
         String dbCredentials = null;
@@ -604,7 +607,8 @@ public class JDBCRealm
     /**
      * Return the Principal associated with the given user name.
      */
-    protected synchronized Principal getPrincipal(String username) {
+    @Override
+	protected synchronized Principal getPrincipal(String username) {
 
         return (new GenericPrincipal(this,
                                      username,
@@ -784,7 +788,8 @@ public class JDBCRealm
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents it from being started
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Perform normal superclass initialization
         super.start();
@@ -806,7 +811,8 @@ public class JDBCRealm
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Perform normal superclass finalization
         super.stop();

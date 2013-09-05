@@ -101,7 +101,8 @@ public abstract class ValveBase
     /**
      * Return the Container with which this Valve is associated, if any.
      */
-    public Container getContainer() {
+    @Override
+	public Container getContainer() {
 
         return (container);
 
@@ -113,7 +114,8 @@ public abstract class ValveBase
      *
      * @param container The new associated container
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         this.container = container;
 
@@ -123,7 +125,8 @@ public abstract class ValveBase
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -134,7 +137,8 @@ public abstract class ValveBase
      * Return the next Valve in this pipeline, or <code>null</code> if this
      * is the last Valve in the pipeline.
      */
-    public Valve getNext() {
+    @Override
+	public Valve getNext() {
 
         return (next);
 
@@ -146,7 +150,8 @@ public abstract class ValveBase
      *
      * @param valve The new next valve
      */
-    public void setNext(Valve valve) {
+    @Override
+	public void setNext(Valve valve) {
 
         this.next = valve;
 
@@ -161,7 +166,8 @@ public abstract class ValveBase
      * invoked inside the classloading context of this container. Unexpected
      * throwables will be caught and logged.
      */
-    public void backgroundProcess() {
+    @Override
+	public void backgroundProcess() {
     }
 
 
@@ -177,7 +183,8 @@ public abstract class ValveBase
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public abstract void invoke(Request request, Response response)
+    @Override
+	public abstract void invoke(Request request, Response response)
         throws IOException, ServletException;
 
 
@@ -194,7 +201,8 @@ public abstract class ValveBase
      * @exception ServletException if a servlet error occurs, or is thrown
      *  by a subsequently invoked Valve, Filter, or Servlet
      */
-    public void event(Request request, Response response, CometEvent event)
+    @Override
+	public void event(Request request, Response response, CometEvent event)
         throws IOException, ServletException {
         // Perform the request
         getNext().event(request, response, event);
@@ -204,7 +212,8 @@ public abstract class ValveBase
     /**
      * Return a String rendering of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer sb = new StringBuffer(this.getClass().getName());
         sb.append("[");
         if (container != null)
@@ -232,7 +241,8 @@ public abstract class ValveBase
         return domain;
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -242,13 +252,16 @@ public abstract class ValveBase
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 
     public ObjectName getController() {

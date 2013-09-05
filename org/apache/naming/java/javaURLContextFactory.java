@@ -78,7 +78,8 @@ public class javaURLContextFactory
     /**
      * Crete a new Context's instance.
      */
-    public Object getObjectInstance(Object obj, Name name, Context nameCtx,
+    @Override
+	public Object getObjectInstance(Object obj, Name name, Context nameCtx,
                                     Hashtable environment)
         throws NamingException {
         if ((ContextBindings.isThreadBound()) || 
@@ -93,7 +94,8 @@ public class javaURLContextFactory
     /**
      * Get a new (writable) initial context.
      */
-    public Context getInitialContext(Hashtable environment)
+    @Override
+	public Context getInitialContext(Hashtable environment)
         throws NamingException {
         if (ContextBindings.isThreadBound() || 
             (ContextBindings.isClassLoaderBound())) {

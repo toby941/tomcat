@@ -163,7 +163,8 @@ public class NodeCreateRule extends Rule {
          * @param length the number of characters to read from the array
          * @throws SAXException if the DOM implementation throws an exception
          */
-        public void characters(char[] ch, int start, int length)
+        @Override
+		public void characters(char[] ch, int start, int length)
             throws SAXException {
 
             try {
@@ -186,7 +187,8 @@ public class NodeCreateRule extends Rule {
          * @param qName the qualified (prefixed) name
          * @throws SAXException if the DOM implementation throws an exception
          */
-        public void endElement(String namespaceURI, String localName,
+        @Override
+		public void endElement(String namespaceURI, String localName,
                                String qName)
             throws SAXException {
             
@@ -217,7 +219,8 @@ public class NodeCreateRule extends Rule {
          *   supplied
          * @throws SAXException if the DOM implementation throws an exception
          */
-        public void processingInstruction(String target, String data)
+        @Override
+		public void processingInstruction(String target, String data)
             throws SAXException {
             
             try {
@@ -239,7 +242,8 @@ public class NodeCreateRule extends Rule {
          * @param atts the list of attributes
          * @throws SAXException if the DOM implementation throws an exception
          */
-        public void startElement(String namespaceURI, String localName,
+        @Override
+		public void startElement(String namespaceURI, String localName,
                                  String qName, Attributes atts)
             throws SAXException {
 
@@ -384,7 +388,8 @@ public class NodeCreateRule extends Rule {
      * @param attributes The attribute list of this element
      * @throws Exception indicates a JAXP configuration problem
      */
-    public void begin(String namespaceURI, String name, Attributes attributes)
+    @Override
+	public void begin(String namespaceURI, String name, Attributes attributes)
         throws Exception {
 
         XMLReader xmlReader = getDigester().getXMLReader();
@@ -419,7 +424,8 @@ public class NodeCreateRule extends Rule {
     /**
      * Pop the Node off the top of the stack.
      */
-    public void end() throws Exception {
+    @Override
+	public void end() throws Exception {
 
         Object top = digester.pop();
 

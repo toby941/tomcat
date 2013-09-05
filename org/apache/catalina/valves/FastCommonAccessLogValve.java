@@ -23,5 +23,6 @@ package org.apache.catalina.valves;
  * @deprecated
  */
 
+@Deprecated
 public final class FastCommonAccessLogValve extends AccessLogValve {
 }

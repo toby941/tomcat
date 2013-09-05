@@ -393,6 +393,7 @@ public class Catalina extends Embedded {
 	 * 
 	 * @deprecated Use initDirs()
 	 */
+	@Deprecated
 	public void setCatalinaBase() {
 		initDirs();
 	}
@@ -403,6 +404,7 @@ public class Catalina extends Embedded {
 	 * 
 	 * @deprecated Use initDirs()
 	 */
+	@Deprecated
 	public void setCatalinaHome() {
 		initDirs();
 	}
@@ -510,6 +512,7 @@ public class Catalina extends Embedded {
 
 	}
 
+	@Override
 	public void destroy() {
 
 	}
@@ -517,6 +520,7 @@ public class Catalina extends Embedded {
 	/**
 	 * Start a new server instance.
 	 */
+	@Override
 	public void start() {
 
 		if (getServer() == null) {
@@ -574,6 +578,7 @@ public class Catalina extends Embedded {
 	/**
 	 * Stop an existing server instance.
 	 */
+	@Override
 	public void stop() {
 
 		try {
@@ -632,6 +637,7 @@ public class Catalina extends Embedded {
 	 */
 	protected class CatalinaShutdownHook extends Thread {
 
+		@Override
 		public void run() {
 			try {
 				if (getServer() != null) {
@@ -673,6 +679,7 @@ final class SetParentClassLoaderRule extends Rule {
 
 	ClassLoader parentClassLoader = null;
 
+	@Override
 	public void begin(String namespace, String name, Attributes attributes) throws Exception {
 
 		if (digester.getLogger().isDebugEnabled())

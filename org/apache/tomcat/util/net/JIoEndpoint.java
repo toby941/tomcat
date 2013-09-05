@@ -382,6 +382,7 @@ public class JIoEndpoint extends AbstractEndpoint {
 		 * The background thread that listens for incoming TCP/IP connections
 		 * and hands them off to an appropriate processor.
 		 */
+		@Override
 		public void run() {
 
 			// Loop until we receive a shutdown command
@@ -438,6 +439,7 @@ public class JIoEndpoint extends AbstractEndpoint {
 			this.socket = socket;
 		}
 
+		@Override
 		public void run() {
 
 			// Process the request from this socket
@@ -518,6 +520,7 @@ public class JIoEndpoint extends AbstractEndpoint {
 		 * The background thread that listens for incoming TCP/IP connections
 		 * and hands them off to an appropriate processor.
 		 */
+		@Override
 		public void run() {
 
 			// Process requests until we receive a shutdown signal

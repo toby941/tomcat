@@ -89,7 +89,8 @@ public class LifecycleListenerRule extends Rule {
      *
      * @exception Exception if a processing error occurs
      */
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
 
         Container c = (Container) digester.peek();

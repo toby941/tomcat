@@ -176,7 +176,8 @@ public abstract class RealmBase
     /**
      * Return the Container with which this Realm has been associated.
      */
-    public Container getContainer() {
+    @Override
+	public Container getContainer() {
 
         return (container);
 
@@ -188,7 +189,8 @@ public abstract class RealmBase
      *
      * @param container The associated Container
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         Container oldContainer = this.container;
         this.container = container;
@@ -259,7 +261,8 @@ public abstract class RealmBase
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return info;
 
@@ -319,7 +322,8 @@ public abstract class RealmBase
      *
      * @param listener The listener to add
      */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
 
         support.addPropertyChangeListener(listener);
 
@@ -334,7 +338,8 @@ public abstract class RealmBase
      * @param credentials Password or other credentials to use in
      *  authenticating this username
      */
-    public Principal authenticate(String username, String credentials) {
+    @Override
+	public Principal authenticate(String username, String credentials) {
 
         String serverCredentials = getPassword(username);
 
@@ -370,7 +375,8 @@ public abstract class RealmBase
      * @param credentials Password or other credentials to use in
      *  authenticating this username
      */
-    public Principal authenticate(String username, byte[] credentials) {
+    @Override
+	public Principal authenticate(String username, byte[] credentials) {
 
         return (authenticate(username, credentials.toString()));
 
@@ -390,7 +396,8 @@ public abstract class RealmBase
      * @param md5a2 Second MD5 digest used to calculate the digest :
      * MD5(Method + ":" + uri)
      */
-    public Principal authenticate(String username, String clientDigest,
+    @Override
+	public Principal authenticate(String username, String clientDigest,
                                   String nonce, String nc, String cnonce,
                                   String qop, String realm,
                                   String md5a2) {
@@ -447,7 +454,8 @@ public abstract class RealmBase
      * @param certs Array of client certificates, with the first one in
      *  the array being the certificate of the client itself.
      */
-    public Principal authenticate(X509Certificate certs[]) {
+    @Override
+	public Principal authenticate(X509Certificate certs[]) {
 
         if ((certs == null) || (certs.length < 1))
             return (null);
@@ -481,7 +489,8 @@ public abstract class RealmBase
      * invoked inside the classloading context of this container. Unexpected
      * throwables will be caught and logged.
      */
-    public void backgroundProcess() {
+    @Override
+	public void backgroundProcess() {
     }
 
 
@@ -492,7 +501,8 @@ public abstract class RealmBase
      * @param request Request we are processing
      * @param context Context the Request is mapped to
      */
-    public SecurityConstraint [] findSecurityConstraints(Request request,
+    @Override
+	public SecurityConstraint [] findSecurityConstraints(Request request,
                                                          Context context) {
 
         ArrayList<SecurityConstraint> results = null;
@@ -756,7 +766,8 @@ public abstract class RealmBase
      *
      * @exception IOException if an input/output error occurs
      */
-    public boolean hasResourcePermission(Request request,
+    @Override
+	public boolean hasResourcePermission(Request request,
                                          Response response,
                                          SecurityConstraint []constraints,
                                          Context context)
@@ -868,7 +879,8 @@ public abstract class RealmBase
      * @param principal Principal for whom the role is to be checked
      * @param role Security role to be checked
      */
-    public boolean hasRole(Principal principal, String role) {
+    @Override
+	public boolean hasRole(Principal principal, String role) {
 
         // Should be overriten in JAASRealm - to avoid pretty inefficient conversions
         if ((principal == null) || (role == null) ||
@@ -905,7 +917,8 @@ public abstract class RealmBase
      *
      * @exception IOException if an input/output error occurs
      */
-    public boolean hasUserDataPermission(Request request,
+    @Override
+	public boolean hasUserDataPermission(Request request,
                                          Response response,
                                          SecurityConstraint []constraints)
         throws IOException {
@@ -988,7 +1001,8 @@ public abstract class RealmBase
      *
      * @param listener The listener to remove
      */
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
 
         support.removePropertyChangeListener(listener);
 
@@ -1003,7 +1017,8 @@ public abstract class RealmBase
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -1014,7 +1029,8 @@ public abstract class RealmBase
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -1026,7 +1042,8 @@ public abstract class RealmBase
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -1041,7 +1058,8 @@ public abstract class RealmBase
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started) {
@@ -1077,7 +1095,8 @@ public abstract class RealmBase
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop()
+    @Override
+	public void stop()
         throws LifecycleException {
 
         // Validate and update our current component state
@@ -1339,7 +1358,8 @@ public abstract class RealmBase
         realmPath = theRealmPath;
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -1352,13 +1372,16 @@ public abstract class RealmBase
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 
     protected boolean initialized=false;
@@ -1458,7 +1481,8 @@ public abstract class RealmBase
             this.name = name;
         }
         
-        public boolean equals(Object o)
+        @Override
+		public boolean equals(Object o)
         {
             boolean equals = false;
             if( o instanceof AllRolesMode )
@@ -1468,11 +1492,13 @@ public abstract class RealmBase
             }
             return equals;
         }
-        public int hashCode()
+        @Override
+		public int hashCode()
         {
             return name.hashCode();
         }
-        public String toString()
+        @Override
+		public String toString()
         {
             return name;
         }

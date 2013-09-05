@@ -56,7 +56,8 @@ public class CallParamRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #CallParamRule(int paramIndex)} instead.
      */
-    public CallParamRule(Digester digester, int paramIndex) {
+    @Deprecated
+	public CallParamRule(Digester digester, int paramIndex) {
 
         this(paramIndex);
 
@@ -74,7 +75,8 @@ public class CallParamRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #CallParamRule(int paramIndex, String attributeName)} instead.
      */
-    public CallParamRule(Digester digester, int paramIndex,
+    @Deprecated
+	public CallParamRule(Digester digester, int paramIndex,
                          String attributeName) {
 
         this(paramIndex, attributeName);
@@ -177,7 +179,8 @@ public class CallParamRule extends Rule {
      *
      * @param attributes The attribute list for this element
      */
-    public void begin(Attributes attributes) throws Exception {
+    @Override
+	public void begin(Attributes attributes) throws Exception {
 
         Object param = null;
         
@@ -217,7 +220,8 @@ public class CallParamRule extends Rule {
      *
      * @param bodyText The body text of this element
      */
-    public void body(String bodyText) throws Exception {
+    @Override
+	public void body(String bodyText) throws Exception {
 
         if (attributeName == null && !fromStack) {
             // We must wait to set the parameter until end
@@ -234,7 +238,8 @@ public class CallParamRule extends Rule {
     /**
      * Process any body texts now.
      */
-    public void end(String namespace, String name) {
+    @Override
+	public void end(String namespace, String name) {
         if (bodyTextStack != null && !bodyTextStack.empty()) {
             // what we do now is push one parameter onto the top set of parameters
             Object parameters[] = (Object[]) digester.peekParams();
@@ -245,7 +250,8 @@ public class CallParamRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("CallParamRule[");
         sb.append("paramIndex=");

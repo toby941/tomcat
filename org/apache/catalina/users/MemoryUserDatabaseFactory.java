@@ -70,7 +70,8 @@ public class MemoryUserDatabaseFactory implements ObjectFactory {
      * @param environment The possibly null environment that is used in
      *  creating this object
      */
-    public Object getObjectInstance(Object obj, Name name, Context nameCtx,
+    @Override
+	public Object getObjectInstance(Object obj, Name name, Context nameCtx,
                                     Hashtable environment)
         throws Exception {
 

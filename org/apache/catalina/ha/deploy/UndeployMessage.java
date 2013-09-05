@@ -43,27 +43,33 @@ public class UndeployMessage implements ClusterMessage,Serializable {
         this.contextPath = contextPath;
     }
 
-    public Member getAddress() {
+    @Override
+	public Member getAddress() {
         return address;
     }
 
-    public void setAddress(Member address) {
+    @Override
+	public void setAddress(Member address) {
         this.address = address;
     }
 
-    public long getTimestamp() {
+    @Override
+	public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    @Override
+	public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
-    public String getUniqueId() {
+    @Override
+	public String getUniqueId() {
         return uniqueId;
     }
 
-    public void setUniqueId(String uniqueId) {
+    @Override
+	public void setUniqueId(String uniqueId) {
         this.uniqueId = uniqueId;
     }
 

@@ -65,7 +65,8 @@ public class RecyclableNamingEnumeration
     /**
      * Retrieves the next element in the enumeration.
      */
-    public Object next()
+    @Override
+	public Object next()
         throws NamingException {
         return nextElement();
     }
@@ -74,7 +75,8 @@ public class RecyclableNamingEnumeration
     /**
      * Determines whether there are any more elements in the enumeration.
      */
-    public boolean hasMore()
+    @Override
+	public boolean hasMore()
         throws NamingException {
         return enumeration.hasMoreElements();
     }
@@ -83,17 +85,20 @@ public class RecyclableNamingEnumeration
     /**
      * Closes this enumeration.
      */
-    public void close()
+    @Override
+	public void close()
         throws NamingException {
     }
 
 
-    public boolean hasMoreElements() {
+    @Override
+	public boolean hasMoreElements() {
         return enumeration.hasMoreElements();
     }
 
 
-    public Object nextElement() {
+    @Override
+	public Object nextElement() {
         return enumeration.nextElement();
     }
 

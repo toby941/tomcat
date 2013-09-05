@@ -282,14 +282,16 @@ public class ChannelSocket extends JkHandler
     final int notifNote=4;
     boolean paused = false;
 
-    public void pause() throws Exception {
+    @Override
+	public void pause() throws Exception {
         synchronized(this) {
             paused = true;
             unLockSocket();
         }
     }
 
-    public void resume() throws Exception {
+    @Override
+	public void resume() throws Exception {
         synchronized(this) {
             paused = false;
             notify();
@@ -357,7 +359,8 @@ public class ChannelSocket extends JkHandler
     /**
      * jmx:managed-operation
      */
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         // Find a port.
         if (startPort == 0) {
             port = 0;
@@ -453,7 +456,8 @@ public class ChannelSocket extends JkHandler
         destroy();
     }
 
-    public void registerRequest(Request req, MsgContext ep, int count) {
+    @Override
+	public void registerRequest(Request req, MsgContext ep, int count) {
         if(this.domain != null) {
             try {
                 RequestInfo rp=req.getRequestProcessor();
@@ -497,7 +501,8 @@ public class ChannelSocket extends JkHandler
 	s.close();
     }
 
-    public void destroy() throws IOException {
+    @Override
+	public void destroy() throws IOException {
         running = false;
         try {
             /* If we disabled the channel return */
@@ -526,7 +531,8 @@ public class ChannelSocket extends JkHandler
         }
     }
 
-    public int send( Msg msg, MsgContext ep)
+    @Override
+	public int send( Msg msg, MsgContext ep)
         throws IOException    {
         msg.end(); // Write the packet header
         byte buf[]=msg.getBuffer();
@@ -540,7 +546,8 @@ public class ChannelSocket extends JkHandler
         return len;
     }
 
-    public int flush( Msg msg, MsgContext ep)
+    @Override
+	public int flush( Msg msg, MsgContext ep)
         throws IOException    {
         if( bufferSize > 0 ) {
             OutputStream os=(OutputStream)ep.getNote( osNote );
@@ -549,7 +556,8 @@ public class ChannelSocket extends JkHandler
         return 0;
     }
 
-    public int receive( Msg msg, MsgContext ep )
+    @Override
+	public int receive( Msg msg, MsgContext ep )
         throws IOException    {
         if (log.isDebugEnabled()) {
             log.debug("receive() ");
@@ -731,7 +739,7 @@ public class ChannelSocket extends JkHandler
                 log.error( "Error, closing connection", e);
             }
             try{
-                Request req = (Request)ep.getRequest();
+                Request req = ep.getRequest();
                 if( req != null ) {
                     ObjectName roname = (ObjectName)ep.getNote(JMXRequestNote);
                     if( roname != null ) {
@@ -746,7 +754,8 @@ public class ChannelSocket extends JkHandler
     }
 
     // XXX This should become handleNotification
-    public int invoke( Msg msg, MsgContext ep ) throws IOException {
+    @Override
+	public int invoke( Msg msg, MsgContext ep ) throws IOException {
         int type=ep.getType();
 
         switch( type ) {
@@ -781,12 +790,14 @@ public class ChannelSocket extends JkHandler
         return OK;
     }
     
-    public boolean isSameAddress(MsgContext ep) {
+    @Override
+	public boolean isSameAddress(MsgContext ep) {
         Socket s=(Socket)ep.getNote( socketNote );
         return isSameAddress( s.getLocalAddress(), s.getInetAddress());
     }
     
-    public String getChannelName() {
+    @Override
+	public String getChannelName() {
         String encodedAddr = "";
         if (inet != null && !"0.0.0.0".equals(inet.getHostAddress())) {
             encodedAddr = getAddress();
@@ -838,7 +849,8 @@ public class ChannelSocket extends JkHandler
 
     private NotificationBroadcasterSupport nSupport= null;
 
-    public void addNotificationListener(NotificationListener listener,
+    @Override
+	public void addNotificationListener(NotificationListener listener,
                                         NotificationFilter filter,
                                         Object handback)
             throws IllegalArgumentException
@@ -847,7 +859,8 @@ public class ChannelSocket extends JkHandler
         nSupport.addNotificationListener(listener, filter, handback);
     }
 
-    public void removeNotificationListener(NotificationListener listener)
+    @Override
+	public void removeNotificationListener(NotificationListener listener)
             throws ListenerNotFoundException
     {
         if( nSupport!=null)
@@ -860,7 +873,8 @@ public class ChannelSocket extends JkHandler
         this.notifInfo=info;
     }
 
-    public MBeanNotificationInfo[] getNotificationInfo() {
+    @Override
+	public MBeanNotificationInfo[] getNotificationInfo() {
         return notifInfo;
     }
 
@@ -871,10 +885,12 @@ public class ChannelSocket extends JkHandler
 	    this.wajp=wajp;
 	}
 	
+	@Override
 	public Object[] getInitData() {
 	    return null;
 	}
 	
+	@Override
 	public void runIt(Object thD[]) {
 	    wajp.acceptConnections();
 	}
@@ -890,10 +906,12 @@ public class ChannelSocket extends JkHandler
 	}
 
 
+	@Override
 	public Object[] getInitData() {
 	    return null;
 	}
 	
+	@Override
 	public void runIt(Object perTh[]) {
 	    wajp.processConnection(ep);
 	    ep = null;

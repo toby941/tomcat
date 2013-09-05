@@ -78,7 +78,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public Object getAttribute(String name) {
+    @Override
+	public Object getAttribute(String name) {
 	return this.request.getAttribute(name);
 	}
     
@@ -89,7 +90,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public Enumeration getAttributeNames() {
+    @Override
+	public Enumeration getAttributeNames() {
 	return this.request.getAttributeNames();
 	}    
     
@@ -100,7 +102,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public String getCharacterEncoding() {
+    @Override
+	public String getCharacterEncoding() {
 	return this.request.getCharacterEncoding();
 	}
 	
@@ -109,7 +112,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public void setCharacterEncoding(String enc) throws java.io.UnsupportedEncodingException {
+    @Override
+	public void setCharacterEncoding(String enc) throws java.io.UnsupportedEncodingException {
 	this.request.setCharacterEncoding(enc);
 	}
     
@@ -119,7 +123,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public int getContentLength() {
+    @Override
+	public int getContentLength() {
 	return this.request.getContentLength();
     }
     
@@ -130,7 +135,8 @@ public class ServletRequestWrapper implements ServletRequest {
       * The default behavior of this method is to return getContentType()
      * on the wrapped request object.
      */
-    public String getContentType() {
+    @Override
+	public String getContentType() {
 	return this.request.getContentType();
     }
     
@@ -142,7 +148,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public ServletInputStream getInputStream() throws IOException {
+    @Override
+	public ServletInputStream getInputStream() throws IOException {
 	return this.request.getInputStream();
 	}
      
@@ -154,7 +161,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public String getParameter(String name) {
+    @Override
+	public String getParameter(String name) {
 	return this.request.getParameter(name);
     }
     
@@ -162,7 +170,8 @@ public class ServletRequestWrapper implements ServletRequest {
       * The default behavior of this method is to return getParameterMap()
      * on the wrapped request object.
      */
-    public Map getParameterMap() {
+    @Override
+	public Map getParameterMap() {
 	return this.request.getParameterMap();
     }
     
@@ -174,7 +183,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
      
-    public Enumeration getParameterNames() {
+    @Override
+	public Enumeration getParameterNames() {
 	return this.request.getParameterNames();
     }
     
@@ -185,7 +195,8 @@ public class ServletRequestWrapper implements ServletRequest {
       * The default behavior of this method is to return getParameterValues(String name)
      * on the wrapped request object.
      */
-    public String[] getParameterValues(String name) {
+    @Override
+	public String[] getParameterValues(String name) {
 	return this.request.getParameterValues(name);
 	}
     
@@ -197,7 +208,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
     
-    public String getProtocol() {
+    @Override
+	public String getProtocol() {
 	return this.request.getProtocol();
 	}
     
@@ -210,7 +222,8 @@ public class ServletRequestWrapper implements ServletRequest {
      */
     
 
-    public String getScheme() {
+    @Override
+	public String getScheme() {
 	return this.request.getScheme();
 	}
     
@@ -221,7 +234,8 @@ public class ServletRequestWrapper implements ServletRequest {
       * The default behavior of this method is to return getServerName()
      * on the wrapped request object.
      */
-    public String getServerName() {
+    @Override
+	public String getServerName() {
 	return this.request.getServerName();
 	}
     
@@ -233,7 +247,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public int getServerPort() {
+    @Override
+	public int getServerPort() {
 	return this.request.getServerPort();
 	}
     
@@ -244,7 +259,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public BufferedReader getReader() throws IOException {
+    @Override
+	public BufferedReader getReader() throws IOException {
 	return this.request.getReader();
 	}
     
@@ -256,7 +272,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
     
-    public String getRemoteAddr() {
+    @Override
+	public String getRemoteAddr() {
 	return this.request.getRemoteAddr();
     }
     
@@ -268,7 +285,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public String getRemoteHost() {
+    @Override
+	public String getRemoteHost() {
 	return this.request.getRemoteHost();
     }
     
@@ -280,7 +298,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public void setAttribute(String name, Object o) {
+    @Override
+	public void setAttribute(String name, Object o) {
 	this.request.setAttribute(name, o);
     }
     
@@ -291,7 +310,8 @@ public class ServletRequestWrapper implements ServletRequest {
       * The default behavior of this method is to call removeAttribute(String name)
      * on the wrapped request object.
      */
-    public void removeAttribute(String name) {
+    @Override
+	public void removeAttribute(String name) {
 	this.request.removeAttribute(name);
     }
     
@@ -303,7 +323,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public Locale getLocale() {
+    @Override
+	public Locale getLocale() {
 	return this.request.getLocale();
     }
     
@@ -315,7 +336,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public Enumeration getLocales() {
+    @Override
+	public Enumeration getLocales() {
 	return this.request.getLocales();
     }
     
@@ -327,7 +349,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public boolean isSecure() {
+    @Override
+	public boolean isSecure() {
 	return this.request.isSecure();
     }
     
@@ -339,7 +362,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public RequestDispatcher getRequestDispatcher(String path) {
+    @Override
+	public RequestDispatcher getRequestDispatcher(String path) {
 	return this.request.getRequestDispatcher(path);
     }
     
@@ -351,7 +375,8 @@ public class ServletRequestWrapper implements ServletRequest {
      * on the wrapped request object.
      */
 
-    public String getRealPath(String path) {
+    @Override
+	public String getRealPath(String path) {
 	return this.request.getRealPath(path);
     }
     
@@ -361,7 +386,8 @@ public class ServletRequestWrapper implements ServletRequest {
      *
      * @since 2.4
      */    
-    public int getRemotePort(){
+    @Override
+	public int getRemotePort(){
         return this.request.getRemotePort();
     }
 
@@ -372,7 +398,8 @@ public class ServletRequestWrapper implements ServletRequest {
      *
      * @since 2.4
      */
-    public String getLocalName(){
+    @Override
+	public String getLocalName(){
         return this.request.getLocalName();
     }
 
@@ -382,7 +409,8 @@ public class ServletRequestWrapper implements ServletRequest {
      *
      * @since 2.4
      */       
-    public String getLocalAddr(){
+    @Override
+	public String getLocalAddr(){
         return this.request.getLocalAddr();
     }
 
@@ -393,7 +421,8 @@ public class ServletRequestWrapper implements ServletRequest {
      *
      * @since 2.4
      */
-    public int getLocalPort(){
+    @Override
+	public int getLocalPort(){
         return this.request.getLocalPort();
     }
     

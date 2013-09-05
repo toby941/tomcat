@@ -58,7 +58,8 @@ public abstract class AbstractGroup implements Group {
     /**
      * Return the description of this group.
      */
-    public String getDescription() {
+    @Override
+	public String getDescription() {
 
         return (this.description);
 
@@ -70,7 +71,8 @@ public abstract class AbstractGroup implements Group {
      *
      * @param description The new description
      */
-    public void setDescription(String description) {
+    @Override
+	public void setDescription(String description) {
 
         this.description = description;
 
@@ -81,7 +83,8 @@ public abstract class AbstractGroup implements Group {
      * Return the group name of this group, which must be unique
      * within the scope of a {@link UserDatabase}.
      */
-    public String getGroupname() {
+    @Override
+	public String getGroupname() {
 
         return (this.groupname);
 
@@ -94,7 +97,8 @@ public abstract class AbstractGroup implements Group {
      *
      * @param groupname The new group name
      */
-    public void setGroupname(String groupname) {
+    @Override
+	public void setGroupname(String groupname) {
 
         this.groupname = groupname;
 
@@ -104,20 +108,23 @@ public abstract class AbstractGroup implements Group {
     /**
      * Return the set of {@link Role}s assigned specifically to this group.
      */
-    public abstract Iterator getRoles();
+    @Override
+	public abstract Iterator getRoles();
 
 
     /**
      * Return the {@link UserDatabase} within which this Group is defined.
      */
-    public abstract UserDatabase getUserDatabase();
+    @Override
+	public abstract UserDatabase getUserDatabase();
 
 
     /**
      * Return an Iterator over the set of {@link org.apache.catalina.User}s that 
      * are members of this group.
      */
-    public abstract Iterator getUsers();
+    @Override
+	public abstract Iterator getUsers();
 
 
     // --------------------------------------------------------- Public Methods
@@ -128,7 +135,8 @@ public abstract class AbstractGroup implements Group {
      *
      * @param role The new role
      */
-    public abstract void addRole(Role role);
+    @Override
+	public abstract void addRole(Role role);
 
 
     /**
@@ -136,7 +144,8 @@ public abstract class AbstractGroup implements Group {
      *
      * @param role The role to check
      */
-    public abstract boolean isInRole(Role role);
+    @Override
+	public abstract boolean isInRole(Role role);
 
 
     /**
@@ -144,13 +153,15 @@ public abstract class AbstractGroup implements Group {
      *
      * @param role The old role
      */
-    public abstract void removeRole(Role role);
+    @Override
+	public abstract void removeRole(Role role);
 
 
     /**
      * Remove all {@link Role}s from those assigned to this group.
      */
-    public abstract void removeRoles();
+    @Override
+	public abstract void removeRoles();
 
 
     // ------------------------------------------------------ Principal Methods
@@ -159,7 +170,8 @@ public abstract class AbstractGroup implements Group {
     /**
      * Make the principal name the same as the group name.
      */
-    public String getName() {
+    @Override
+	public String getName() {
 
         return (getGroupname());
 

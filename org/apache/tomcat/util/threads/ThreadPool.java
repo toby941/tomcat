@@ -525,7 +525,8 @@ public class ThreadPool  {
     }
 
     /** @deprecated */
-    void log( String s ) {
+    @Deprecated
+	void log( String s ) {
 	log.info(s);
 	//loghelper.flush();
     }
@@ -556,7 +557,8 @@ public class ThreadPool  {
             this.interval=i;
         }
 
-        public void run() {
+        @Override
+		public void run() {
             while(true) {
                 try {
 
@@ -649,7 +651,8 @@ public class ThreadPool  {
             t.start();
         }
 
-        public void run() {
+        @Override
+		public void run() {
             boolean _shouldRun = false;
             boolean _shouldTerminate = false;
             ThreadPoolRunnable _toRun = null;

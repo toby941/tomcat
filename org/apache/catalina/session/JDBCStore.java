@@ -176,7 +176,8 @@ public class JDBCStore
     /**
      * Return the info for this Store.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
         return (info);
     }
 
@@ -212,7 +213,8 @@ public class JDBCStore
     /**
      * Return the name for this Store, used for logging.
      */
-    public String getStoreName() {
+    @Override
+	public String getStoreName() {
         return (storeName);
     }
 
@@ -440,7 +442,8 @@ public class JDBCStore
      *
      * @exception IOException if an input/output error occurred
      */
-    public String[] keys() throws IOException {
+    @Override
+	public String[] keys() throws IOException {
         ResultSet rst = null;
         String keys[] = null;
         synchronized (this) {
@@ -501,7 +504,8 @@ public class JDBCStore
      *
      * @exception IOException if an input/output error occurred
      */
-    public int getSize() throws IOException {
+    @Override
+	public int getSize() throws IOException {
         int size = 0;
         ResultSet rst = null;
 
@@ -558,7 +562,8 @@ public class JDBCStore
      * @exception ClassNotFoundException if an error occurs
      * @exception IOException if an input/output error occurred
      */
-    public Session load(String id)
+    @Override
+	public Session load(String id)
             throws ClassNotFoundException, IOException {
         ResultSet rst = null;
         StandardSession _session = null;
@@ -654,7 +659,8 @@ public class JDBCStore
      *
      * @exception IOException if an input/output error occurs
      */
-    public void remove(String id) throws IOException {
+    @Override
+	public void remove(String id) throws IOException {
 
         synchronized (this) {
             int numberOfTries = 2;
@@ -699,7 +705,8 @@ public class JDBCStore
      *
      * @exception IOException if an input/output error occurs
      */
-    public void clear() throws IOException {
+    @Override
+	public void clear() throws IOException {
 
         synchronized (this) {
             int numberOfTries = 2;
@@ -738,7 +745,8 @@ public class JDBCStore
      * @param session the session to be stored
      * @exception IOException if an input/output error occurs
      */
-    public void save(Session session) throws IOException {
+    @Override
+	public void save(Session session) throws IOException {
         ObjectOutputStream oos = null;
         ByteArrayOutputStream bos = null;
         ByteArrayInputStream bis = null;
@@ -961,7 +969,8 @@ public class JDBCStore
     /**
      * Called once when this Store is first started.
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
         super.start();
 
         // Open connection to the database
@@ -973,7 +982,8 @@ public class JDBCStore
      * Called once when this Store is stopping.
      *
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
         super.stop();
 
         // Close and release everything associated with our db.

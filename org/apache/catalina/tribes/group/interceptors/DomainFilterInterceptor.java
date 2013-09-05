@@ -39,13 +39,15 @@ public class DomainFilterInterceptor extends ChannelInterceptorBase {
     
     protected byte[] domain = new byte[0];
 
-    public void messageReceived(ChannelMessage msg) {
+    @Override
+	public void messageReceived(ChannelMessage msg) {
         //should we filter incoming based on domain?
         super.messageReceived(msg);
     }//messageReceived
 
 
-    public void memberAdded(Member member) {
+    @Override
+	public void memberAdded(Member member) {
         if ( membership == null ) setupMembership();
         boolean notify = false;
         synchronized (membership) {
@@ -55,7 +57,8 @@ public class DomainFilterInterceptor extends ChannelInterceptorBase {
         if ( notify ) super.memberAdded(member);
     }
 
-    public void memberDisappeared(Member member) {
+    @Override
+	public void memberDisappeared(Member member) {
         if ( membership == null ) setupMembership();
         boolean notify = false;
         synchronized (membership) {
@@ -65,22 +68,26 @@ public class DomainFilterInterceptor extends ChannelInterceptorBase {
         if ( notify ) super.memberDisappeared(member);
     }
 
-    public boolean hasMembers() {
+    @Override
+	public boolean hasMembers() {
         if ( membership == null ) setupMembership();
         return membership.hasMembers();
     }
 
-    public Member[] getMembers() {
+    @Override
+	public Member[] getMembers() {
         if ( membership == null ) setupMembership();
         return membership.getMembers();
     }
 
-    public Member getMember(Member mbr) {
+    @Override
+	public Member getMember(Member mbr) {
         if ( membership == null ) setupMembership();
         return membership.getMember(mbr);
     }
 
-    public Member getLocalMember(boolean incAlive) {
+    @Override
+	public Member getLocalMember(boolean incAlive) {
         return super.getLocalMember(incAlive);
     }
 

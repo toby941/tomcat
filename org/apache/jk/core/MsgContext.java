@@ -91,7 +91,8 @@ public class MsgContext implements ActionHook {
     /**
      * @deprecated
      */
-    public MsgContext() {
+    @Deprecated
+	public MsgContext() {
         this(8*1024);
     }
     
@@ -253,7 +254,8 @@ public class MsgContext implements ActionHook {
 
     // -------------------- Coyote Action implementation --------------------
     
-    public void action(ActionCode actionCode, Object param) {
+    @Override
+	public void action(ActionCode actionCode, Object param) {
         if( actionCode==ActionCode.ACTION_COMMIT ) {
             if( log.isDebugEnabled() ) log.debug("COMMIT " );
             Response res=(Response)param;

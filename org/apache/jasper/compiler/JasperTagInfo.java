@@ -52,7 +52,8 @@ class JasperTagInfo extends TagInfo {
 	return dynamicAttrsMapName;
     }
 
-    public boolean hasDynamicAttributes() {
+    @Override
+	public boolean hasDynamicAttributes() {
         return dynamicAttrsMapName != null;
     }
 }

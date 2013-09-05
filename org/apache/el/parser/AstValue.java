@@ -52,7 +52,8 @@ public final class AstValue extends SimpleNode {
         super(id);
     }
 
-    public Class getType(EvaluationContext ctx) throws ELException {
+    @Override
+	public Class getType(EvaluationContext ctx) throws ELException {
         Target t = getTarget(ctx);
         ctx.setPropertyResolved(false);
         Class<?> result = ctx.getELResolver().getType(ctx, t.base, t.property);
@@ -108,7 +109,8 @@ public final class AstValue extends SimpleNode {
         return t;
     }
 
-    public Object getValue(EvaluationContext ctx) throws ELException {
+    @Override
+	public Object getValue(EvaluationContext ctx) throws ELException {
         Object base = this.children[0].getValue(ctx);
         int propCount = this.jjtGetNumChildren();
         int i = 1;
@@ -131,7 +133,8 @@ public final class AstValue extends SimpleNode {
         return base;
     }
 
-    public boolean isReadOnly(EvaluationContext ctx) throws ELException {
+    @Override
+	public boolean isReadOnly(EvaluationContext ctx) throws ELException {
         Target t = getTarget(ctx);
         ctx.setPropertyResolved(false);
         boolean result =
@@ -143,7 +146,8 @@ public final class AstValue extends SimpleNode {
         return result;
     }
 
-    public void setValue(EvaluationContext ctx, Object value)
+    @Override
+	public void setValue(EvaluationContext ctx, Object value)
             throws ELException {
         Target t = getTarget(ctx);
         ctx.setPropertyResolved(false);
@@ -174,7 +178,8 @@ public final class AstValue extends SimpleNode {
     }
 
 
-    public MethodInfo getMethodInfo(EvaluationContext ctx, Class[] paramTypes)
+    @Override
+	public MethodInfo getMethodInfo(EvaluationContext ctx, Class[] paramTypes)
             throws ELException {
         Target t = getTarget(ctx);
         Method m = ReflectionUtil.getMethod(t.base, t.property, paramTypes);
@@ -182,13 +187,14 @@ public final class AstValue extends SimpleNode {
                 .getParameterTypes());
     }
 
-    public Object invoke(EvaluationContext ctx, Class[] paramTypes,
+    @Override
+	public Object invoke(EvaluationContext ctx, Class[] paramTypes,
             Object[] paramValues) throws ELException {
         Target t = getTarget(ctx);
         Method m = ReflectionUtil.getMethod(t.base, t.property, paramTypes);
         Object result = null;
         try {
-            result = m.invoke(t.base, (Object[]) paramValues);
+            result = m.invoke(t.base, paramValues);
         } catch (IllegalAccessException iae) {
             throw new ELException(iae);
         } catch (IllegalArgumentException iae) {

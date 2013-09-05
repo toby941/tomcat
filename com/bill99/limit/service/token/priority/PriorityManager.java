@@ -1,7 +1,11 @@
-﻿package com.bill99.limit.service.token.priority;
+package com.bill99.limit.service.token.priority;
 
 import org.apache.catalina.connector.Request;
 
+/**
+ * @author jun.bao
+ * @since  2013年9月4日 
+ */
 /**
  * 限流优先级获取统一入口
  * 

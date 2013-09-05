@@ -24,6 +24,7 @@ import java.util.Properties;
 /**
  * @deprecated
  */
+@Deprecated
 public class Apr {
     private static String aprInfo = null;
 

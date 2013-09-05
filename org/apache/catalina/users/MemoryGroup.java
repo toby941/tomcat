@@ -81,7 +81,8 @@ public class MemoryGroup extends AbstractGroup {
     /**
      * Return the set of {@link Role}s assigned specifically to this group.
      */
-    public Iterator getRoles() {
+    @Override
+	public Iterator getRoles() {
 
         synchronized (roles) {
             return (roles.iterator());
@@ -93,7 +94,8 @@ public class MemoryGroup extends AbstractGroup {
     /**
      * Return the {@link UserDatabase} within which this Group is defined.
      */
-    public UserDatabase getUserDatabase() {
+    @Override
+	public UserDatabase getUserDatabase() {
 
         return (this.database);
 
@@ -103,7 +105,8 @@ public class MemoryGroup extends AbstractGroup {
     /**
      * Return the set of {@link org.apache.catalina.User}s that are members of this group.
      */
-    public Iterator getUsers() {
+    @Override
+	public Iterator getUsers() {
 
         ArrayList results = new ArrayList();
         Iterator users = database.getUsers();
@@ -126,7 +129,8 @@ public class MemoryGroup extends AbstractGroup {
      *
      * @param role The new role
      */
-    public void addRole(Role role) {
+    @Override
+	public void addRole(Role role) {
 
         synchronized (roles) {
             if (!roles.contains(role)) {
@@ -142,7 +146,8 @@ public class MemoryGroup extends AbstractGroup {
      *
      * @param role The role to check
      */
-    public boolean isInRole(Role role) {
+    @Override
+	public boolean isInRole(Role role) {
 
         synchronized (roles) {
             return (roles.contains(role));
@@ -156,7 +161,8 @@ public class MemoryGroup extends AbstractGroup {
      *
      * @param role The old role
      */
-    public void removeRole(Role role) {
+    @Override
+	public void removeRole(Role role) {
 
         synchronized (roles) {
             roles.remove(role);
@@ -168,7 +174,8 @@ public class MemoryGroup extends AbstractGroup {
     /**
      * Remove all {@link Role}s from those assigned to this group.
      */
-    public void removeRoles() {
+    @Override
+	public void removeRoles() {
 
         synchronized (roles) {
             roles.clear();
@@ -180,7 +187,8 @@ public class MemoryGroup extends AbstractGroup {
     /**
      * <p>Return a String representation of this group in XML format.</p>
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("<group groupname=\"");
         sb.append(groupname);
@@ -200,7 +208,7 @@ public class MemoryGroup extends AbstractGroup {
                         sb.append(',');
                     }
                     n++;
-                    sb.append((String) ((Role) values.next()).getRolename());
+                    sb.append(((Role) values.next()).getRolename());
                 }
                 sb.append("\"");
             }

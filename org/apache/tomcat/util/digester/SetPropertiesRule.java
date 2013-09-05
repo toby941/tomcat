@@ -49,7 +49,8 @@ public class SetPropertiesRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #SetPropertiesRule()} instead.
      */
-    public SetPropertiesRule(Digester digester) {
+    @Deprecated
+	public SetPropertiesRule(Digester digester) {
 
         this();
 
@@ -152,7 +153,8 @@ public class SetPropertiesRule extends Rule {
      *
      * @param attributes The attribute list of this element
      */
-    public void begin(Attributes attributes) throws Exception {
+    @Override
+	public void begin(Attributes attributes) throws Exception {
         
         // Populate the corresponding properties of the top object
         Object top = digester.peek();
@@ -256,7 +258,8 @@ public class SetPropertiesRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SetPropertiesRule[");
         sb.append("]");

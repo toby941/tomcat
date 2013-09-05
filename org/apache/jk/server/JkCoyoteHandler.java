@@ -53,24 +53,28 @@ public class JkCoyoteHandler extends JkHandler implements ProtocolHandler {
     /** Set a property. Name is a "component.property". JMX should
      * be used instead.
      */
-    public void setProperty( String name, String value ) {
+    @Override
+	public void setProperty( String name, String value ) {
         if( log.isTraceEnabled())
             log.trace("setProperty " + name + " " + value );
         getJkMain().setProperty( name, value );
         properties.put( name, value );
     }
 
-    public String getProperty( String name ) {
+    @Override
+	public String getProperty( String name ) {
         return properties.getProperty(name) ;
     }
 
-    public Iterator getAttributeNames() {
+    @Override
+	public Iterator getAttributeNames() {
        return properties.keySet().iterator();
     }
 
     /** Pass config info
      */
-    public void setAttribute( String name, Object value ) {
+    @Override
+	public void setAttribute( String name, Object value ) {
         if( log.isDebugEnabled())
             log.debug("setAttribute " + name + " " + value );
         if( value instanceof String )
@@ -81,17 +85,20 @@ public class JkCoyoteHandler extends JkHandler implements ProtocolHandler {
      * Retrieve config info.
      * Primarily for use with the admin webapp.
      */   
-    public Object getAttribute( String name ) {
+    @Override
+	public Object getAttribute( String name ) {
         return getJkMain().getProperty(name);
     }
 
     /** The adapter, used to call the connector 
      */
-    public void setAdapter(Adapter adapter) {
+    @Override
+	public void setAdapter(Adapter adapter) {
         this.adapter=adapter;
     }
 
-    public Adapter getAdapter() {
+    @Override
+	public Adapter getAdapter() {
         return adapter;
     }
 
@@ -108,7 +115,8 @@ public class JkCoyoteHandler extends JkHandler implements ProtocolHandler {
     
     /** Start the protocol
      */
-    public void init() {
+    @Override
+	public void init() {
         if( started ) return;
 
         started=true;
@@ -129,7 +137,8 @@ public class JkCoyoteHandler extends JkHandler implements ProtocolHandler {
         }
     }
 
-    public void start() {
+    @Override
+	public void start() {
         try {
             if( oname != null && getJkMain().getDomain() == null) {
                 try {
@@ -147,21 +156,24 @@ public class JkCoyoteHandler extends JkHandler implements ProtocolHandler {
         }
     }
 
-    public void pause() throws Exception {
+    @Override
+	public void pause() throws Exception {
         if(!paused) {
             paused = true;
             getJkMain().pause();
         }
     }
 
-    public void resume() throws Exception {
+    @Override
+	public void resume() throws Exception {
         if(paused) {
             paused = false;
             getJkMain().resume();
         }
     }
 
-    public void destroy() {
+    @Override
+	public void destroy() {
         if( !started ) return;
 
         started = false;
@@ -171,7 +183,8 @@ public class JkCoyoteHandler extends JkHandler implements ProtocolHandler {
     
     // -------------------- Jk handler implementation --------------------
     // Jk Handler mehod
-    public int invoke( Msg msg, MsgContext ep ) 
+    @Override
+	public int invoke( Msg msg, MsgContext ep ) 
         throws IOException {
         if( ep.isLogTimeEnabled() ) 
             ep.setLong( MsgContext.TIMER_PRE_REQUEST, System.currentTimeMillis());
@@ -209,7 +222,8 @@ public class JkCoyoteHandler extends JkHandler implements ProtocolHandler {
     }
 
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName oname) throws Exception
     {
         // override - we must be registered as "container"

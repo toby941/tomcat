@@ -200,7 +200,8 @@ final class Mark {
         return null;
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
 	return getFile()+"("+line+","+col+")";
     }
 
@@ -223,7 +224,8 @@ final class Mark {
         return "("+line+","+col+")";
     }
 
-    public boolean equals(Object other) {
+    @Override
+	public boolean equals(Object other) {
 	if (other instanceof Mark) {
 	    Mark m = (Mark) other;
 	    return this.reader == m.reader && this.fileId == m.fileId 

@@ -28,6 +28,7 @@ public final class VariableResolverImpl implements VariableResolver {
 		this.ctx = ctx;
 	}
 
+	@Override
 	public Object resolveVariable(String pName) throws ELException {
 		return this.ctx.getELResolver().getValue(this.ctx, null, pName);
 	}

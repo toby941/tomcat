@@ -129,7 +129,8 @@ public class JspWriterImpl extends JspWriter {
     private String getLocalizeMessage(final String message){
         if (SecurityUtil.isPackageProtectionEnabled()){
             return (String)AccessController.doPrivileged(new PrivilegedAction(){
-                public Object run(){
+                @Override
+				public Object run(){
                     return Localizer.getMessage(message); 
                 }
             });
@@ -141,7 +142,8 @@ public class JspWriterImpl extends JspWriter {
     /**
      * Discard the output buffer.
      */
-    public final void clear() throws IOException {
+    @Override
+	public final void clear() throws IOException {
         if ((bufferSize == 0) && (out != null))
             // clear() is illegal after any unbuffered output (JSP.5.5)
             throw new IllegalStateException(
@@ -153,7 +155,8 @@ public class JspWriterImpl extends JspWriter {
         nextChar = 0;
     }
     
-    public void clearBuffer() throws IOException {
+    @Override
+	public void clearBuffer() throws IOException {
         if (bufferSize == 0)
             throw new IllegalStateException(
                     getLocalizeMessage("jsp.error.ise_on_clear"));
@@ -169,7 +172,8 @@ public class JspWriterImpl extends JspWriter {
      * Flush the stream.
      *
      */
-    public void flush()  throws IOException {
+    @Override
+	public void flush()  throws IOException {
         flushBuffer();
         if (out != null) {
             out.flush();
@@ -180,7 +184,8 @@ public class JspWriterImpl extends JspWriter {
      * Close the stream.
      *
      */
-    public void close() throws IOException {
+    @Override
+	public void close() throws IOException {
         if (response == null || closed)
             // multiple calls to close is OK
             return;
@@ -194,7 +199,8 @@ public class JspWriterImpl extends JspWriter {
     /**
      * @return the number of bytes unused in the buffer
      */
-    public int getRemaining() {
+    @Override
+	public int getRemaining() {
         return bufferSize - nextChar;
     }
     
@@ -208,7 +214,8 @@ public class JspWriterImpl extends JspWriter {
     /**
      * Write a single character.
      */
-    public void write(int c) throws IOException {
+    @Override
+	public void write(int c) throws IOException {
         ensureOpen();
         if (bufferSize == 0) {
             initOut();
@@ -247,7 +254,8 @@ public class JspWriterImpl extends JspWriter {
      * @param  off   Offset from which to start reading characters
      * @param  len   Number of characters to write
      */
-    public void write(char cbuf[], int off, int len) 
+    @Override
+	public void write(char cbuf[], int off, int len) 
     throws IOException 
     {
         ensureOpen();
@@ -297,7 +305,8 @@ public class JspWriterImpl extends JspWriter {
      * Write an array of characters.  This method cannot be inherited from the
      * Writer class because it must suppress I/O exceptions.
      */
-    public void write(char buf[]) throws IOException {
+    @Override
+	public void write(char buf[]) throws IOException {
         write(buf, 0, buf.length);
     }
     
@@ -308,7 +317,8 @@ public class JspWriterImpl extends JspWriter {
      * @param  off   Offset from which to start reading characters
      * @param  len   Number of characters to be written
      */
-    public void write(String s, int off, int len) throws IOException {
+    @Override
+	public void write(String s, int off, int len) throws IOException {
         ensureOpen();
         if (bufferSize == 0) {
             initOut();
@@ -333,7 +343,8 @@ public class JspWriterImpl extends JspWriter {
      * Write a string.  This method cannot be inherited from the Writer class
      * because it must suppress I/O exceptions.
      */
-    public void write(String s) throws IOException {
+    @Override
+	public void write(String s) throws IOException {
         // Simple fix for Bugzilla 35410
         // Calling the other write function so as to init the buffer anyways
         if(s == null) {
@@ -354,7 +365,8 @@ public class JspWriterImpl extends JspWriter {
      * @exception  IOException  If an I/O error occurs
      */
     
-    public void newLine() throws IOException {
+    @Override
+	public void newLine() throws IOException {
         write(lineSeparator);
     }
     
@@ -370,7 +382,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @param      b   The <code>boolean</code> to be printed
      */
-    public void print(boolean b) throws IOException {
+    @Override
+	public void print(boolean b) throws IOException {
         write(b ? "true" : "false");
     }
     
@@ -382,7 +395,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @param      c   The <code>char</code> to be printed
      */
-    public void print(char c) throws IOException {
+    @Override
+	public void print(char c) throws IOException {
         write(String.valueOf(c));
     }
     
@@ -395,7 +409,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @param      i   The <code>int</code> to be printed
      */
-    public void print(int i) throws IOException {
+    @Override
+	public void print(int i) throws IOException {
         write(String.valueOf(i));
     }
     
@@ -408,7 +423,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @param      l   The <code>long</code> to be printed
      */
-    public void print(long l) throws IOException {
+    @Override
+	public void print(long l) throws IOException {
         write(String.valueOf(l));
     }
     
@@ -421,7 +437,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @param      f   The <code>float</code> to be printed
      */
-    public void print(float f) throws IOException {
+    @Override
+	public void print(float f) throws IOException {
         write(String.valueOf(f));
     }
     
@@ -434,7 +451,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @param      d   The <code>double</code> to be printed
      */
-    public void print(double d) throws IOException {
+    @Override
+	public void print(double d) throws IOException {
         write(String.valueOf(d));
     }
     
@@ -448,7 +466,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @throws  NullPointerException  If <code>s</code> is <code>null</code>
      */
-    public void print(char s[]) throws IOException {
+    @Override
+	public void print(char s[]) throws IOException {
         write(s);
     }
     
@@ -461,7 +480,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @param      s   The <code>String</code> to be printed
      */
-    public void print(String s) throws IOException {
+    @Override
+	public void print(String s) throws IOException {
         if (s == null) {
             s = "null";
         }
@@ -477,7 +497,8 @@ public class JspWriterImpl extends JspWriter {
      *
      * @param      obj   The <code>Object</code> to be printed
      */
-    public void print(Object obj) throws IOException {
+    @Override
+	public void print(Object obj) throws IOException {
         write(String.valueOf(obj));
     }
     
@@ -493,7 +514,8 @@ public class JspWriterImpl extends JspWriter {
      * println() writes  to the sink directly instead of through the
      * write method...  
      */
-    public void println() throws IOException {
+    @Override
+	public void println() throws IOException {
         newLine();
     }
     
@@ -502,7 +524,8 @@ public class JspWriterImpl extends JspWriter {
      * as though it invokes <code>{@link #print(boolean)}</code> and then
      * <code>{@link #println()}</code>.
      */
-    public void println(boolean x) throws IOException {
+    @Override
+	public void println(boolean x) throws IOException {
         print(x);
         println();
     }
@@ -512,7 +535,8 @@ public class JspWriterImpl extends JspWriter {
      * though it invokes <code>{@link #print(char)}</code> and then <code>{@link
      * #println()}</code>.
      */
-    public void println(char x) throws IOException {
+    @Override
+	public void println(char x) throws IOException {
         print(x);
         println();
     }
@@ -522,7 +546,8 @@ public class JspWriterImpl extends JspWriter {
      * though it invokes <code>{@link #print(int)}</code> and then <code>{@link
      * #println()}</code>.
      */
-    public void println(int x) throws IOException {
+    @Override
+	public void println(int x) throws IOException {
         print(x);
         println();
     }
@@ -532,7 +557,8 @@ public class JspWriterImpl extends JspWriter {
      * as though it invokes <code>{@link #print(long)}</code> and then
      * <code>{@link #println()}</code>.
      */
-    public void println(long x) throws IOException {
+    @Override
+	public void println(long x) throws IOException {
         print(x);
         println();
     }
@@ -542,7 +568,8 @@ public class JspWriterImpl extends JspWriter {
      * behaves as though it invokes <code>{@link #print(float)}</code> and then
      * <code>{@link #println()}</code>.
      */
-    public void println(float x) throws IOException {
+    @Override
+	public void println(float x) throws IOException {
         print(x);
         println();
     }
@@ -552,7 +579,8 @@ public class JspWriterImpl extends JspWriter {
      * line.  This method behaves as though it invokes <code>{@link
      * #print(double)}</code> and then <code>{@link #println()}</code>.
      */
-    public void println(double x) throws IOException {
+    @Override
+	public void println(double x) throws IOException {
         print(x);
         println();
     }
@@ -562,7 +590,8 @@ public class JspWriterImpl extends JspWriter {
      * behaves as though it invokes <code>{@link #print(char[])}</code> and then
      * <code>{@link #println()}</code>.
      */
-    public void println(char x[]) throws IOException {
+    @Override
+	public void println(char x[]) throws IOException {
         print(x);
         println();
     }
@@ -572,7 +601,8 @@ public class JspWriterImpl extends JspWriter {
      * though it invokes <code>{@link #print(String)}</code> and then
      * <code>{@link #println()}</code>.
      */
-    public void println(String x) throws IOException {
+    @Override
+	public void println(String x) throws IOException {
         print(x);
         println();
     }
@@ -582,7 +612,8 @@ public class JspWriterImpl extends JspWriter {
      * though it invokes <code>{@link #print(Object)}</code> and then
      * <code>{@link #println()}</code>.
      */
-    public void println(Object x) throws IOException {
+    @Override
+	public void println(Object x) throws IOException {
         print(x);
         println();
     }

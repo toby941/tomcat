@@ -1306,7 +1306,8 @@ public class AprEndpoint extends AbstractEndpoint {
          * The background thread that listens for incoming TCP/IP connections and
          * hands them off to an appropriate processor.
          */
-        public void run() {
+        @Override
+		public void run() {
 
             // Loop until we receive a shutdown command
             while (running) {
@@ -1421,7 +1422,8 @@ public class AprEndpoint extends AbstractEndpoint {
         /**
          * Destroy the poller.
          */
-        public void destroy() {
+        @Override
+		public void destroy() {
             // Close all sockets in the add queue
             for (int i = 0; i < addCount; i++) {
                 if (comet) {
@@ -1485,7 +1487,8 @@ public class AprEndpoint extends AbstractEndpoint {
          * The background thread that listens for incoming TCP/IP connections and
          * hands them off to an appropriate processor.
          */
-        public void run() {
+        @Override
+		public void run() {
 
             long maintainTime = 0;
             // Loop until we receive a shutdown command
@@ -1732,7 +1735,8 @@ public class AprEndpoint extends AbstractEndpoint {
          * The background thread that listens for incoming TCP/IP connections and
          * hands them off to an appropriate processor.
          */
-        public void run() {
+        @Override
+		public void run() {
 
             // Process requests until we receive a shutdown signal
             while (running) {
@@ -1854,7 +1858,8 @@ public class AprEndpoint extends AbstractEndpoint {
         /**
          * Destroy the poller.
          */
-        public void destroy() {
+        @Override
+		public void destroy() {
             // Close any socket remaining in the add queue
             addCount = 0;
             for (int i = (addS.size() - 1); i >= 0; i--) {
@@ -1958,7 +1963,8 @@ public class AprEndpoint extends AbstractEndpoint {
          * The background thread that listens for incoming TCP/IP connections and
          * hands them off to an appropriate processor.
          */
-        public void run() {
+        @Override
+		public void run() {
 
             long maintainTime = 0;
             // Loop until we receive a shutdown command
@@ -2224,7 +2230,8 @@ public class AprEndpoint extends AbstractEndpoint {
             this.socket = socket;
         }
 
-        public void run() {
+        @Override
+		public void run() {
 
             if (!deferAccept) {
                 if (setSocketOptions(socket)) {
@@ -2264,7 +2271,8 @@ public class AprEndpoint extends AbstractEndpoint {
             this.socket = socket;
         }
 
-        public void run() {
+        @Override
+		public void run() {
 
             // Process the request from this socket
             if (handler.process(socket) == Handler.SocketState.CLOSED) {
@@ -2295,7 +2303,8 @@ public class AprEndpoint extends AbstractEndpoint {
             this.status = status;
         }
 
-        public void run() {
+        @Override
+		public void run() {
 
             // Process the request from this socket
             if (handler.event(socket, status) == Handler.SocketState.CLOSED) {

@@ -111,7 +111,8 @@ public class MessageDestination {
     /**
      * Return a String representation of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("MessageDestination[");
         sb.append("name=");

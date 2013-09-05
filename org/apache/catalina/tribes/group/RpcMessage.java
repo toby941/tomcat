@@ -51,7 +51,8 @@ public class RpcMessage implements Externalizable {
         this.message = message;
     }
 
-    public void readExternal(ObjectInput in) throws IOException,ClassNotFoundException {
+    @Override
+	public void readExternal(ObjectInput in) throws IOException,ClassNotFoundException {
         reply = in.readBoolean();
         int length = in.readInt();
         uuid = new byte[length];
@@ -62,7 +63,8 @@ public class RpcMessage implements Externalizable {
         message = (Serializable)in.readObject();
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(ObjectOutput out) throws IOException {
         out.writeBoolean(reply);
         out.writeInt(uuid.length);
         out.write(uuid, 0, uuid.length);
@@ -71,7 +73,8 @@ public class RpcMessage implements Externalizable {
         out.writeObject(message);
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buf = new StringBuffer("RpcMessage[");
         buf.append(super.toString());
         buf.append("] rpcId=");
@@ -93,7 +96,8 @@ public class RpcMessage implements Externalizable {
             reply = true;
         }
 
-        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        @Override
+		public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
             reply = true;
             int length = in.readInt();
             uuid = new byte[length];
@@ -103,7 +107,8 @@ public class RpcMessage implements Externalizable {
             in.read(rpcId, 0, length);
         }
 
-        public void writeExternal(ObjectOutput out) throws IOException {
+        @Override
+		public void writeExternal(ObjectOutput out) throws IOException {
             out.writeInt(uuid.length);
             out.write(uuid, 0, uuid.length);
             out.writeInt(rpcId.length);

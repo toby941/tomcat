@@ -257,7 +257,7 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             try {
             //send a ping, wait for all nodes to reply
             Response[] resp = rpcChannel.send(channel.getMembers(), 
-                                              msg, rpcChannel.ALL_REPLY, 
+                                              msg, RpcChannel.ALL_REPLY, 
                                               (channelSendOptions),
                                               (int) accessTimeout);
             for (int i = 0; i < resp.length; i++) {
@@ -314,7 +314,7 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
                                         false, null, null, null, channel.getLocalMember(false), null);
         if ( rpc) {
             Response[] resp = rpcChannel.send(members, msg,
-                    rpcChannel.FIRST_REPLY, (channelSendOptions), rpcTimeout);
+                    RpcChannel.FIRST_REPLY, (channelSendOptions), rpcTimeout);
             if (resp.length > 0) {
                 for (int i = 0; i < resp.length; i++) {
                     mapMemberAdded(resp[i].getSource());
@@ -332,7 +332,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         finalize();
     }
 
-    public void finalize() {
+    @Override
+	public void finalize() {
         try {broadcast(MapMessage.MSG_STOP,false); }catch ( Exception ignore){}
         //cleanup
         if (this.rpcChannel != null) {
@@ -350,11 +351,13 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         this.externalLoaders = null;
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return Arrays.hashCode(this.mapContextName);
     }
     
-    public boolean equals(Object o) {
+    @Override
+	public boolean equals(Object o) {
         if ( o == null ) return false;
         if ( !(o instanceof AbstractReplicatedMap)) return false;
         if ( !(o.getClass().equals(this.getClass())) ) return false;
@@ -471,7 +474,7 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             if (backup != null) {
                 MapMessage msg = new MapMessage(mapContextName, getStateMessageType(), false,
                                                 null, null, null, null, null);
-                Response[] resp = rpcChannel.send(new Member[] {backup}, msg, rpcChannel.FIRST_REPLY, channelSendOptions, rpcTimeout);
+                Response[] resp = rpcChannel.send(new Member[] {backup}, msg, RpcChannel.FIRST_REPLY, channelSendOptions, rpcTimeout);
                 if (resp.length > 0) {
                     synchronized (stateMutex) {
                         msg = (MapMessage) resp[0].getMessage();
@@ -500,25 +503,26 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
      * @param msg Serializable
      * @return Serializable - null if no reply should be sent
      */
-    public Serializable replyRequest(Serializable msg, final Member sender) {
+    @Override
+	public Serializable replyRequest(Serializable msg, final Member sender) {
         if (! (msg instanceof MapMessage))return null;
         MapMessage mapmsg = (MapMessage) msg;
 
         //map init request
-        if (mapmsg.getMsgType() == mapmsg.MSG_INIT) {
+        if (mapmsg.getMsgType() == MapMessage.MSG_INIT) {
             mapmsg.setPrimary(channel.getLocalMember(false));
             return mapmsg;
         }
         
         //map start request
-        if (mapmsg.getMsgType() == mapmsg.MSG_START) {
+        if (mapmsg.getMsgType() == MapMessage.MSG_START) {
             mapmsg.setPrimary(channel.getLocalMember(false));
             mapMemberAdded(sender);
             return mapmsg;
         }
 
         //backup request
-        if (mapmsg.getMsgType() == mapmsg.MSG_RETRIEVE_BACKUP) {
+        if (mapmsg.getMsgType() == MapMessage.MSG_RETRIEVE_BACKUP) {
             MapEntry entry = (MapEntry)super.get(mapmsg.getKey());
             if (entry == null || (!entry.isSerializable()) )return null;
             mapmsg.setValue( (Serializable) entry.getValue());
@@ -526,7 +530,7 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         }
 
         //state transfer request
-        if (mapmsg.getMsgType() == mapmsg.MSG_STATE || mapmsg.getMsgType() == mapmsg.MSG_STATE_COPY) {
+        if (mapmsg.getMsgType() == MapMessage.MSG_STATE || mapmsg.getMsgType() == MapMessage.MSG_STATE_COPY) {
             synchronized (stateMutex) { //make sure we dont do two things at the same time
                 ArrayList list = new ArrayList();
                 Iterator i = super.entrySet().iterator();
@@ -534,7 +538,7 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
                     Map.Entry e = (Map.Entry) i.next();
                     MapEntry entry = (MapEntry) super.get(e.getKey());
                     if ( entry != null && entry.isSerializable() ) {
-                        boolean copy = (mapmsg.getMsgType() == mapmsg.MSG_STATE_COPY);
+                        boolean copy = (mapmsg.getMsgType() == MapMessage.MSG_STATE_COPY);
                         MapMessage me = new MapMessage(mapContextName, 
                                                        copy?MapMessage.MSG_COPY:MapMessage.MSG_PROXY,
                             false, (Serializable) entry.getKey(), copy?(Serializable) entry.getValue():null, null, entry.getPrimary(),entry.getBackupNodes());
@@ -557,7 +561,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
      * @param msg Serializable
      * @param sender Member
      */
-    public void leftOver(Serializable msg, Member sender) {
+    @Override
+	public void leftOver(Serializable msg, Member sender) {
         //left over membership messages
         if (! (msg instanceof MapMessage))return;
 
@@ -576,7 +581,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         }
     }
 
-    public void messageReceived(Serializable msg, Member sender) {
+    @Override
+	public void messageReceived(Serializable msg, Member sender) {
         if (! (msg instanceof MapMessage)) return;
 
         MapMessage mapmsg = (MapMessage) msg;
@@ -667,7 +673,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         } //end if
     }
 
-    public boolean accept(Serializable msg, Member sender) {
+    @Override
+	public boolean accept(Serializable msg, Member sender) {
         boolean result = false;
         if (msg instanceof MapMessage) {
             if ( log.isTraceEnabled() ) log.trace("Map["+mapname+"] accepting...."+msg);
@@ -727,11 +734,13 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         return (Member[])result.toArray(new Member[result.size()]);
     }
 
-    public void memberAdded(Member member) {
+    @Override
+	public void memberAdded(Member member) {
         //do nothing
     }
 
-    public void memberDisappeared(Member member) {
+    @Override
+	public void memberDisappeared(Member member) {
         boolean removed = false;
         synchronized (mapMembers) {
             removed = (mapMembers.remove(member) != null );
@@ -810,7 +819,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
 
     protected abstract Member[] publishEntryInfo(Object key, Object value) throws ChannelException;
     
-    public void heartbeat() {
+    @Override
+	public void heartbeat() {
         try {
             ping(accessTimeout);
         }catch ( Exception x ) {
@@ -828,7 +838,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
      * @param key Object
      * @return Object
      */
-    public Object remove(Object key) {
+    @Override
+	public Object remove(Object key) {
         return remove(key,true);
     }
     public Object remove(Object key, boolean notify) {
@@ -849,7 +860,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         return (MapEntry)super.get(key);
     }
     
-    public Object get(Object key) {
+    @Override
+	public Object get(Object key) {
         MapEntry entry = (MapEntry)super.get(key);
         if (log.isTraceEnabled()) log.trace("Requesting id:"+key+" entry:"+entry);
         if ( entry == null ) return null;
@@ -936,11 +948,13 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
          * @param key Object
          * @return boolean
          */
-        public boolean containsKey(Object key) {
+        @Override
+		public boolean containsKey(Object key) {
             return super.containsKey(key);
         }
     
-        public Object put(Object key, Object value) {
+        @Override
+		public Object put(Object key, Object value) {
             return put(key,value,true);
         }
     
@@ -971,7 +985,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
          * Copies all values from one map to this instance
          * @param m Map
          */
-        public void putAll(Map m) {
+        @Override
+		public void putAll(Map m) {
             Iterator i = m.entrySet().iterator();
             while ( i.hasNext() ) {
                 Map.Entry entry = (Map.Entry)i.next();
@@ -979,7 +994,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             }
         }
         
-        public void clear() {
+        @Override
+		public void clear() {
             clear(true);
         }
     
@@ -994,7 +1010,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             }
         }
     
-        public boolean containsValue(Object value) {
+        @Override
+		public boolean containsValue(Object value) {
             if ( value == null ) {
                 return super.containsValue(value);
             } else {
@@ -1008,7 +1025,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             }//end if
         }
     
-        public Object clone() {
+        @Override
+		public Object clone() {
             throw new UnsupportedOperationException("This operation is not valid on a replicated map");
         }
     
@@ -1030,7 +1048,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             return super.size();
         }
     
-        public Set entrySet() {
+        @Override
+		public Set entrySet() {
             LinkedHashSet set = new LinkedHashSet(super.size());
             Iterator i = super.entrySet().iterator();
             while ( i.hasNext() ) {
@@ -1044,7 +1063,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             return Collections.unmodifiableSet(set);
         }
     
-        public Set keySet() {
+        @Override
+		public Set keySet() {
             //todo implement
             //should only return keys where this is active.
             LinkedHashSet set = new LinkedHashSet(super.size());
@@ -1060,7 +1080,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         }
     
     
-        public int size() {
+        @Override
+		public int size() {
             //todo, implement a counter variable instead
             //only count active members in this node
             int counter = 0;
@@ -1079,11 +1100,13 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             return false;
         }
     
-        public boolean isEmpty() {
+        @Override
+		public boolean isEmpty() {
             return size()==0;
         }
     
-        public Collection values() {
+        @Override
+		public Collection values() {
             ArrayList values = new ArrayList();
             Iterator i = super.entrySet().iterator();
             while ( i.hasNext() ) {
@@ -1165,17 +1188,20 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             return primary;
         }
 
-        public Object getValue() {
+        @Override
+		public Object getValue() {
             return value;
         }
 
-        public Object setValue(Object value) {
+        @Override
+		public Object setValue(Object value) {
             Object old = this.value;
             this.value = value;
             return old;
         }
 
-        public Object getKey() {
+        @Override
+		public Object getKey() {
             return key;
         }
         
@@ -1185,11 +1211,13 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             return old;
         }
 
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return key.hashCode();
         }
 
-        public boolean equals(Object o) {
+        @Override
+		public boolean equals(Object o) {
             return key.equals(o);
         }
 
@@ -1219,7 +1247,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
             }
         }
         
-        public String toString() {
+        @Override
+		public String toString() {
             StringBuffer buf = new StringBuffer("MapEntry[key:");
             buf.append(getKey()).append("; ");
             buf.append("value:").append(getValue()).append("; ");
@@ -1258,7 +1287,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
         private Member[] nodes;
         private Member primary;
         
-        public String toString() {
+        @Override
+		public String toString() {
             StringBuffer buf = new StringBuffer("MapMessage[context=");
             buf.append(new String(mapId));
             buf.append("; type=");
@@ -1428,7 +1458,8 @@ public abstract class AbstractReplicatedMap extends ConcurrentHashMap implements
          * shallow clone
          * @return Object
          */
-        public Object clone() {
+        @Override
+		public Object clone() {
             MapMessage msg = new MapMessage(this.mapId, this.msgtype, this.diff, this.key, this.value, this.diffvalue, this.primary, this.nodes);
             msg.keydata = this.keydata;
             msg.valuedata = this.valuedata;

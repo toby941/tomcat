@@ -58,7 +58,8 @@ public class CopyParentClassLoaderRule extends Rule {
      *
      * @exception Exception if a processing error occurs
      */
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
 
         if (digester.getLogger().isDebugEnabled())

@@ -68,7 +68,8 @@ public class PathCallParamRule extends Rule {
      * @param attributes The attribute list for this element
 
      */
-    public void begin(String namespace, String name, Attributes attributes) throws Exception {
+    @Override
+	public void begin(String namespace, String name, Attributes attributes) throws Exception {
 
         String param = getDigester().getMatch();
         
@@ -82,7 +83,8 @@ public class PathCallParamRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("PathCallParamRule[");
         sb.append("paramIndex=");

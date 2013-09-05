@@ -122,7 +122,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * <code>Channel -> A -> C -> B -> ChannelCoordinator</code><br>
      * @param interceptor ChannelInterceptorBase
      */
-    public void addInterceptor(ChannelInterceptor interceptor) {
+    @Override
+	public void addInterceptor(ChannelInterceptor interceptor) {
         if ( interceptors == null ) {
             interceptors = interceptor;
             interceptors.setNext(coordinator);
@@ -145,7 +146,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Invoke this method from the application on a periodic basis if
      * you have turned off internal heartbeats <code>channel.setHeartbeat(false)</code>
      */
-    public void heartbeat() {
+    @Override
+	public void heartbeat() {
         super.heartbeat();
         Iterator i = membershipListeners.iterator();
         while ( i.hasNext() ) {
@@ -171,7 +173,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * @throws ChannelException - if an error occurs processing the message
      * @see org.apache.catalina.tribes.Channel
      */
-    public UniqueId send(Member[] destination, Serializable msg, int options) throws ChannelException {
+    @Override
+	public UniqueId send(Member[] destination, Serializable msg, int options) throws ChannelException {
         return send(destination,msg,options,null);
     }
 
@@ -187,7 +190,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * @throws ChannelException - if an error occurs processing the message
      * @see org.apache.catalina.tribes.Channel
      */
-    public UniqueId send(Member[] destination, Serializable msg, int options, ErrorHandler handler) throws ChannelException {
+    @Override
+	public UniqueId send(Member[] destination, Serializable msg, int options, ErrorHandler handler) throws ChannelException {
         if ( msg == null ) throw new ChannelException("Cant send a NULL message");
         XByteBuffer buffer = null;
         try {
@@ -237,7 +241,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * but its an extreme case, and you're probably better off doing that logic between the applications itself.
      * @param msg ChannelMessage
      */
-    public void messageReceived(ChannelMessage msg) {
+    @Override
+	public void messageReceived(ChannelMessage msg) {
         if ( msg == null ) return;
         try {
             if ( Logs.MESSAGES.isTraceEnabled() ) {
@@ -313,7 +318,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * and the channel will broadcast it to the membership listeners
      * @param member Member - the new member
      */
-    public void memberAdded(Member member) {
+    @Override
+	public void memberAdded(Member member) {
         //notify upwards
         for (int i=0; i<membershipListeners.size(); i++ ) {
             MembershipListener membershipListener = (MembershipListener)membershipListeners.get(i);
@@ -326,7 +332,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * and the channel will broadcast it to the membership listeners
      * @param member Member - the member that left or crashed
      */
-    public void memberDisappeared(Member member) {
+    @Override
+	public void memberDisappeared(Member member) {
         //notify upwards
         for (int i=0; i<membershipListeners.size(); i++ ) {
             MembershipListener membershipListener = (MembershipListener)membershipListeners.get(i);
@@ -401,7 +408,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * @throws ChannelException
      * @see org.apache.catalina.tribes.Channel#start(int)
      */
-    public synchronized void start(int svc) throws ChannelException {
+    @Override
+	public synchronized void start(int svc) throws ChannelException {
         setupDefaultStack();
         if (optionCheck) checkOptionFlags();
         super.start(svc);
@@ -417,7 +425,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * @throws ChannelException
      * @see org.apache.catalina.tribes.Channel#stop(int)
      */
-    public synchronized void stop(int svc) throws ChannelException {
+    @Override
+	public synchronized void stop(int svc) throws ChannelException {
         if (hbthread != null) {
             hbthread.stopHeartbeat();
             hbthread = null;
@@ -438,7 +447,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Returns the channel receiver component
      * @return ChannelReceiver
      */
-    public ChannelReceiver getChannelReceiver() {
+    @Override
+	public ChannelReceiver getChannelReceiver() {
         return coordinator.getClusterReceiver();
     }
 
@@ -446,7 +456,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Returns the channel sender component
      * @return ChannelSender
      */
-    public ChannelSender getChannelSender() {
+    @Override
+	public ChannelSender getChannelSender() {
         return coordinator.getClusterSender();
     }
 
@@ -454,7 +465,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Returns the membership service component
      * @return MembershipService
      */
-    public MembershipService getMembershipService() {
+    @Override
+	public MembershipService getMembershipService() {
         return coordinator.getMembershipService();
     }
 
@@ -462,7 +474,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Sets the channel receiver component
      * @param clusterReceiver ChannelReceiver
      */
-    public void setChannelReceiver(ChannelReceiver clusterReceiver) {
+    @Override
+	public void setChannelReceiver(ChannelReceiver clusterReceiver) {
         coordinator.setClusterReceiver(clusterReceiver);
     }
 
@@ -470,7 +483,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Sets the channel sender component
      * @param clusterSender ChannelSender
      */
-    public void setChannelSender(ChannelSender clusterSender) {
+    @Override
+	public void setChannelSender(ChannelSender clusterSender) {
         coordinator.setClusterSender(clusterSender);
     }
 
@@ -478,7 +492,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Sets the membership component
      * @param membershipService MembershipService
      */
-    public void setMembershipService(MembershipService membershipService) {
+    @Override
+	public void setMembershipService(MembershipService membershipService) {
         coordinator.setMembershipService(membershipService);
     }
 
@@ -487,7 +502,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Membership listeners are uniquely identified using the equals(Object) method
      * @param membershipListener MembershipListener
      */
-    public void addMembershipListener(MembershipListener membershipListener) {
+    @Override
+	public void addMembershipListener(MembershipListener membershipListener) {
         if (!this.membershipListeners.contains(membershipListener) )
             this.membershipListeners.add(membershipListener);
     }
@@ -498,7 +514,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * @param membershipListener MembershipListener
      */
 
-    public void removeMembershipListener(MembershipListener membershipListener) {
+    @Override
+	public void removeMembershipListener(MembershipListener membershipListener) {
         membershipListeners.remove(membershipListener);
     }
 
@@ -507,7 +524,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Channel listeners are uniquely identified using the equals(Object) method
      * @param channelListener ChannelListener
      */
-    public void addChannelListener(ChannelListener channelListener) {
+    @Override
+	public void addChannelListener(ChannelListener channelListener) {
         if (!this.channelListeners.contains(channelListener) ) {
             this.channelListeners.add(channelListener);
         } else {
@@ -521,7 +539,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Channel listeners are uniquely identified using the equals(Object) method
      * @param channelListener ChannelListener
      */
-    public void removeChannelListener(ChannelListener channelListener) {
+    @Override
+	public void removeChannelListener(ChannelListener channelListener) {
         channelListeners.remove(channelListener);
     }
 
@@ -529,7 +548,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * Returns an iterator of all the interceptors in this stack
      * @return Iterator
      */
-    public Iterator getInterceptors() {
+    @Override
+	public Iterator getInterceptors() {
         return new InterceptorIterator(this.getNext(),this.coordinator);
     }
 
@@ -559,7 +579,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
      * thread to invoke <code>Channel.heartbeat()</code> every <code>getHeartbeatSleeptime</code> milliseconds
      * @param heartbeat boolean
      */
-    public void setHeartbeat(boolean heartbeat) {
+    @Override
+	public void setHeartbeat(boolean heartbeat) {
         this.heartbeat = heartbeat;
     }
 
@@ -604,11 +625,13 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
             this.start = start;
         }
 
-        public boolean hasNext() {
+        @Override
+		public boolean hasNext() {
             return start!=null && start != end;
         }
 
-        public Object next() {
+        @Override
+		public Object next() {
             Object result = null;
             if ( hasNext() ) {
                 result = start;
@@ -617,7 +640,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
             return result;
         }
 
-        public void remove() {
+        @Override
+		public void remove() {
             //empty operation
         }
     }
@@ -654,7 +678,8 @@ public class GroupChannel extends ChannelInterceptorBase implements ManagedChann
             interrupt();
         }
 
-        public void run() {
+        @Override
+		public void run() {
             while (doRun) {
                 try {
                     Thread.sleep(sleepTime);

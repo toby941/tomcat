@@ -67,7 +67,8 @@ public abstract class PersistentManagerBase
         PrivilegedStoreClear() {            
         }
 
-        public Object run() throws Exception{
+        @Override
+		public Object run() throws Exception{
            store.clear();
            return null;
         }                       
@@ -82,7 +83,8 @@ public abstract class PersistentManagerBase
             this.id = id;
         }
 
-        public Object run() throws Exception{
+        @Override
+		public Object run() throws Exception{
            store.remove(id);
            return null;
         }                       
@@ -97,7 +99,8 @@ public abstract class PersistentManagerBase
             this.id = id;
         }
 
-        public Object run() throws Exception{
+        @Override
+		public Object run() throws Exception{
            return store.load(id);
         }                       
     }   
@@ -111,7 +114,8 @@ public abstract class PersistentManagerBase
             this.session = session;
         }
 
-        public Object run() throws Exception{
+        @Override
+		public Object run() throws Exception{
            store.save(session);
            return null;
         }                       
@@ -123,7 +127,8 @@ public abstract class PersistentManagerBase
         PrivilegedStoreKeys() {     
         }
 
-        public Object run() throws Exception{
+        @Override
+		public Object run() throws Exception{
            return store.keys();
         }                       
     }
@@ -332,7 +337,8 @@ public abstract class PersistentManagerBase
 	 * @param container
 	 *            The associated Container
 	 */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         // De-register from the old Container (if any)
         if ((this.container != null) && (this.container instanceof Context))
@@ -356,7 +362,8 @@ public abstract class PersistentManagerBase
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -413,19 +420,22 @@ public abstract class PersistentManagerBase
      *
      * @return The count
      */
-    public int getRejectedSessions() {
+    @Override
+	public int getRejectedSessions() {
         return rejectedSessions;
     }
 
     
-    public void setRejectedSessions(int rejectedSessions) {
+    @Override
+	public void setRejectedSessions(int rejectedSessions) {
         this.rejectedSessions = rejectedSessions;
     }
 
     /**
      * Return the descriptive short name of this Manager implementation.
      */
-    public String getName() {
+    @Override
+	public String getName() {
 
         return (name);
 
@@ -544,6 +554,7 @@ public abstract class PersistentManagerBase
     /**
      * Implements the Manager interface, direct call to processExpires and processPersistenceChecks
      */
+	@Override
 	public void processExpires() {
 		
         long timeNow = System.currentTimeMillis();
@@ -596,7 +607,8 @@ public abstract class PersistentManagerBase
      * @exception IOException if an input/output error occurs while
      *  processing this request
      */
-    public Session findSession(String id) throws IOException {
+    @Override
+	public Session findSession(String id) throws IOException {
 
         Session session = super.findSession(id);
         // OK, at this point, we're not sure if another thread is trying to
@@ -645,7 +657,8 @@ public abstract class PersistentManagerBase
      * class. In order to use it, a subclass must specifically call it,
      * for example in the start() and/or processPersistenceChecks() methods.
      */
-    public void load() {
+    @Override
+	public void load() {
 
         // Initialize our internal data structures
         sessions.clear();
@@ -696,7 +709,8 @@ public abstract class PersistentManagerBase
      *
      * @param session Session to be removed
      */
-    public void remove(Session session) {
+    @Override
+	public void remove(Session session) {
 
         super.remove (session);
 
@@ -739,7 +753,8 @@ public abstract class PersistentManagerBase
      * class. In order to use it, a subclass must specifically call it,
      * for example in the stop() and/or processPersistenceChecks() methods.
      */
-    public void unload() {
+    @Override
+	public void unload() {
 
         if (store == null)
             return;
@@ -931,7 +946,8 @@ public abstract class PersistentManagerBase
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -942,7 +958,8 @@ public abstract class PersistentManagerBase
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -954,7 +971,8 @@ public abstract class PersistentManagerBase
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -969,7 +987,8 @@ public abstract class PersistentManagerBase
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started) {
@@ -1005,7 +1024,8 @@ public abstract class PersistentManagerBase
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-   public void stop() throws LifecycleException {
+   @Override
+public void stop() throws LifecycleException {
 
         if (log.isDebugEnabled())
             log.debug("Stopping");
@@ -1052,7 +1072,8 @@ public abstract class PersistentManagerBase
      *
      * @param event The property change event that has occurred
      */
-    public void propertyChange(PropertyChangeEvent event) {
+    @Override
+	public void propertyChange(PropertyChangeEvent event) {
 
         // Validate the source of this event
         if (!(event.getSource() instanceof Context))

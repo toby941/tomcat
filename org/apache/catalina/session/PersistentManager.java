@@ -59,7 +59,8 @@ public final class PersistentManager extends PersistentManagerBase {
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -68,7 +69,8 @@ public final class PersistentManager extends PersistentManagerBase {
     /**
      * Return the descriptive short name of this Manager implementation.
      */
-    public String getName() {
+    @Override
+	public String getName() {
 
         return (name);
 

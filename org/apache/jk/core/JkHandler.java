@@ -137,7 +137,8 @@ public class JkHandler implements MBeanRegistration, NotificationListener {
 
     }
 
-    public void handleNotification(Notification notification, Object handback)
+    @Override
+	public void handleNotification(Notification notification, Object handback)
     {
 //        BaseNotification bNot=(BaseNotification)notification;
 //        int code=bNot.getCode();
@@ -159,7 +160,8 @@ public class JkHandler implements MBeanRegistration, NotificationListener {
         return domain;
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName oname) throws Exception {
         this.oname=oname;
         mserver=server;
@@ -183,13 +185,16 @@ public class JkHandler implements MBeanRegistration, NotificationListener {
         return oname;
     }
     
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 
     public void pause() throws Exception {

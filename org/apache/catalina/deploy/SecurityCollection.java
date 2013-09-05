@@ -315,7 +315,8 @@ public class SecurityCollection implements Serializable {
     /**
      * Return a String representation of this security collection.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SecurityCollection[");
         sb.append(name);

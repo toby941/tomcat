@@ -258,7 +258,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
             this.s = s;
         }
 
-        public Void run(){
+        @Override
+		public Void run(){
             doSetRandomFile(s);
             return null;
         }
@@ -294,7 +295,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
     /**
      * Return the Container with which this Manager is associated.
      */
-    public Container getContainer() {
+    @Override
+	public Container getContainer() {
 
         return (this.container);
 
@@ -306,7 +308,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param container The newly associated Container
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         Container oldContainer = this.container;
         this.container = container;
@@ -360,7 +363,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * Return the distributable flag for the sessions supported by
      * this Manager.
      */
-    public boolean getDistributable() {
+    @Override
+	public boolean getDistributable() {
 
         return (this.distributable);
 
@@ -374,7 +378,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param distributable The new distributable flag
      */
-    public void setDistributable(boolean distributable) {
+    @Override
+	public void setDistributable(boolean distributable) {
 
         boolean oldDistributable = this.distributable;
         this.distributable = distributable;
@@ -447,7 +452,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -458,7 +464,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * Return the default maximum inactive interval (in seconds)
      * for Sessions created by this Manager.
      */
-    public int getMaxInactiveInterval() {
+    @Override
+	public int getMaxInactiveInterval() {
 
         return (this.maxInactiveInterval);
 
@@ -471,7 +478,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param interval The new default value
      */
-    public void setMaxInactiveInterval(int interval) {
+    @Override
+	public void setMaxInactiveInterval(int interval) {
 
         int oldMaxInactiveInterval = this.maxInactiveInterval;
         this.maxInactiveInterval = interval;
@@ -488,7 +496,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @return The session id length
      */
-    public int getSessionIdLength() {
+    @Override
+	public int getSessionIdLength() {
 
         return (this.sessionIdLength);
 
@@ -501,7 +510,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param idLength The session id length
      */
-    public void setSessionIdLength(int idLength) {
+    @Override
+	public void setSessionIdLength(int idLength) {
 
         int oldSessionIdLength = this.sessionIdLength;
         this.sessionIdLength = idLength;
@@ -660,7 +670,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @return Number of sessions that have expired
      */
-    public int getExpiredSessions() {
+    @Override
+	public int getExpiredSessions() {
         return expiredSessions;
     }
 
@@ -670,7 +681,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param expiredSessions Number of sessions that have expired
      */
-    public void setExpiredSessions(int expiredSessions) {
+    @Override
+	public void setExpiredSessions(int expiredSessions) {
         this.expiredSessions = expiredSessions;
     }
 
@@ -716,7 +728,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
     /**
      * Implements the Manager interface, direct call to processExpires
      */
-    public void backgroundProcess() {
+    @Override
+	public void backgroundProcess() {
         count = (count + 1) % processExpiresFrequency;
         if (count == 0)
             processExpires();
@@ -808,7 +821,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param session Session to be added
      */
-    public void add(Session session) {
+    @Override
+	public void add(Session session) {
 
         sessions.put(session.getIdInternal(), session);
         int size = sessions.size();
@@ -827,7 +841,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param listener The listener to add
      */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
 
         support.addPropertyChangeListener(listener);
 
@@ -845,7 +860,9 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *  instantiated for any reason
      * @deprecated
      */
-    public Session createSession() {
+    @Deprecated
+	@Override
+	public Session createSession() {
         return createSession(null);
     }
     
@@ -863,7 +880,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * @exception IllegalStateException if a new session cannot be
      *  instantiated for any reason
      */
-    public Session createSession(String sessionId) {
+    @Override
+	public Session createSession(String sessionId) {
         
         // Recycle or create a Session instance
         Session session = createEmptySession();
@@ -921,7 +939,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * The PersistentManager manager does not need to create session data
      * because it reads it from the Store.
      */
-    public Session createEmptySession() {
+    @Override
+	public Session createEmptySession() {
         return (getNewSession());
     }
 
@@ -937,11 +956,12 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * @exception IOException if an input/output error occurs while
      *  processing this request
      */
-    public Session findSession(String id) throws IOException {
+    @Override
+	public Session findSession(String id) throws IOException {
 
         if (id == null)
             return (null);
-        return (Session) sessions.get(id);
+        return sessions.get(id);
 
     }
 
@@ -950,7 +970,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * Return the set of active Sessions associated with this Manager.
      * If this Manager has no active Sessions, a zero-length array is returned.
      */
-    public Session[] findSessions() {
+    @Override
+	public Session[] findSessions() {
 
         return sessions.values().toArray(new Session[0]);
 
@@ -962,7 +983,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param session Session to be removed
      */
-    public void remove(Session session) {
+    @Override
+	public void remove(Session session) {
 
         sessions.remove(session.getIdInternal());
 
@@ -974,7 +996,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @param listener The listener to remove
      */
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
 
         support.removePropertyChangeListener(listener);
 
@@ -987,7 +1010,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * 
      * @param session   The session to change the session ID for
      */
-    public void changeSessionId(Session session) {
+    @Override
+	public void changeSessionId(Session session) {
         String oldId = session.getIdInternal();
         session.setId(generateSessionId(), false);
         String newId = session.getIdInternal();
@@ -1119,7 +1143,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
     // -------------------------------------------------------- Package Methods
 
 
-    public void setSessionCounter(int sessionCounter) {
+    @Override
+	public void setSessionCounter(int sessionCounter) {
         this.sessionCounter = sessionCounter;
     }
 
@@ -1129,7 +1154,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @return sessions created
      */
-    public int getSessionCounter() {
+    @Override
+	public int getSessionCounter() {
         return sessionCounter;
     }
 
@@ -1155,7 +1181,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @return number of sessions active
      */
-    public int getActiveSessions() {
+    @Override
+	public int getActiveSessions() {
         return sessions.size();
     }
 
@@ -1165,12 +1192,14 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      *
      * @return The highest number of concurrent active sessions
      */
-    public int getMaxActive() {
+    @Override
+	public int getMaxActive() {
         return maxActive;
     }
 
 
-    public void setMaxActive(int maxActive) {
+    @Override
+	public void setMaxActive(int maxActive) {
         synchronized (maxActiveUpdateLock) {
             this.maxActive = maxActive;
         }
@@ -1184,7 +1213,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * @return Longest time (in seconds) that an expired session had been
      * alive.
      */
-    public int getSessionMaxAliveTime() {
+    @Override
+	public int getSessionMaxAliveTime() {
         return sessionMaxAliveTime;
     }
 
@@ -1196,7 +1226,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * @param sessionMaxAliveTime Longest time (in seconds) that an expired
      * session had been alive.
      */
-    public void setSessionMaxAliveTime(int sessionMaxAliveTime) {
+    @Override
+	public void setSessionMaxAliveTime(int sessionMaxAliveTime) {
         this.sessionMaxAliveTime = sessionMaxAliveTime;
     }
 
@@ -1208,7 +1239,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * @return Average time (in seconds) that expired sessions had been
      * alive.
      */
-    public int getSessionAverageAliveTime() {
+    @Override
+	public int getSessionAverageAliveTime() {
         return sessionAverageAliveTime;
     }
 
@@ -1220,7 +1252,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * @param sessionAverageAliveTime Average time (in seconds) that expired
      * sessions had been alive.
      */
-    public void setSessionAverageAliveTime(int sessionAverageAliveTime) {
+    @Override
+	public void setSessionAverageAliveTime(int sessionAverageAliveTime) {
         this.sessionAverageAliveTime = sessionAverageAliveTime;
     }
 
@@ -1332,7 +1365,7 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * @return The attribute value, if found, null otherwise
      */
     public String getSessionAttribute( String sessionId, String key ) {
-        Session s = (Session) sessions.get(sessionId);
+        Session s = sessions.get(sessionId);
         if( s==null ) {
             if(log.isInfoEnabled())
                 log.info("Session not found " + sessionId);
@@ -1357,7 +1390,7 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
      * specified id exists, or if the session does not have any attributes
      */
     public HashMap getSession(String sessionId) {
-        Session s = (Session) sessions.get(sessionId);
+        Session s = sessions.get(sessionId);
         if (s == null) {
             if (log.isInfoEnabled()) {
                 log.info("Session not found " + sessionId);
@@ -1381,7 +1414,7 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
 
 
     public void expireSession( String sessionId ) {
-        Session s=(Session)sessions.get(sessionId);
+        Session s=sessions.get(sessionId);
         if( s==null ) {
             if(log.isInfoEnabled())
                 log.info("Session not found " + sessionId);
@@ -1391,14 +1424,14 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
     }
 
     public long getLastAccessedTimestamp( String sessionId ) {
-        Session s=(Session)sessions.get(sessionId);
+        Session s=sessions.get(sessionId);
         if(s== null)
             return -1 ;
         return s.getLastAccessedTime();
     }
   
     public String getLastAccessedTime( String sessionId ) {
-        Session s=(Session)sessions.get(sessionId);
+        Session s=sessions.get(sessionId);
         if( s==null ) {
             if(log.isInfoEnabled())
                 log.info("Session not found " + sessionId);
@@ -1408,7 +1441,7 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
     }
 
     public String getCreationTime( String sessionId ) {
-        Session s=(Session)sessions.get(sessionId);
+        Session s=sessions.get(sessionId);
         if( s==null ) {
             if(log.isInfoEnabled())
                 log.info("Session not found " + sessionId);
@@ -1418,7 +1451,7 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
     }
 
     public long getCreationTimestamp( String sessionId ) {
-        Session s=(Session)sessions.get(sessionId);
+        Session s=sessions.get(sessionId);
         if(s== null)
             return -1 ;
         return s.getCreationTime();
@@ -1437,7 +1470,8 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
         return domain;
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -1445,13 +1479,16 @@ public abstract class ManagerBase implements Manager, MBeanRegistration {
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 
     // ----------------------------------------------------------- Inner classes

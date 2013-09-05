@@ -122,11 +122,13 @@ public abstract class ClusterManagerBase extends ManagerBase implements Lifecycl
      * @return The object input stream
      * @throws IOException
      */
-    public ReplicationStream getReplicationStream(byte[] data) throws IOException {
+    @Override
+	public ReplicationStream getReplicationStream(byte[] data) throws IOException {
         return getReplicationStream(data,0,data.length);
     }
 
-    public ReplicationStream getReplicationStream(byte[] data, int offset, int length) throws IOException {
+    @Override
+	public ReplicationStream getReplicationStream(byte[] data, int offset, int length) throws IOException {
         ByteArrayInputStream fis = new ByteArrayInputStream(data, offset, length);
         return new ReplicationStream(fis, getClassLoaders());
     }    

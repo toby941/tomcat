@@ -458,7 +458,8 @@ public class ManagedBean implements java.io.Serializable
     /**
      * Return a string representation of this managed bean.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("ManagedBean[");
         sb.append("name=");

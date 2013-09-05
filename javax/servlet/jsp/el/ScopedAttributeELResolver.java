@@ -42,6 +42,7 @@ public class ScopedAttributeELResolver extends ELResolver {
 		super();
 	}
 
+	@Override
 	public Object getValue(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -61,6 +62,7 @@ public class ScopedAttributeELResolver extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public Class<Object> getType(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -75,6 +77,7 @@ public class ScopedAttributeELResolver extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public void setValue(ELContext context, Object base, Object property,
 			Object value) throws NullPointerException,
 			PropertyNotFoundException, PropertyNotWritableException,
@@ -99,6 +102,7 @@ public class ScopedAttributeELResolver extends ELResolver {
 		}
 	}
 
+	@Override
 	public boolean isReadOnly(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -112,6 +116,7 @@ public class ScopedAttributeELResolver extends ELResolver {
 		return false;
 	}
 
+	@Override
 	public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
 
 		PageContext ctxt = (PageContext) context.getContext(JspContext.class);
@@ -194,6 +199,7 @@ public class ScopedAttributeELResolver extends ELResolver {
 		}
 	}
 
+	@Override
 	public Class<String> getCommonPropertyType(ELContext context, Object base) {
 		if (base == null) {
 			return String.class;

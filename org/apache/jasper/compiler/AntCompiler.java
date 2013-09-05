@@ -87,12 +87,14 @@ public class AntCompiler extends Compiler {
         
         protected StringBuffer reportBuf = new StringBuffer();
         
-        protected void printMessage(final String message,
+        @Override
+		protected void printMessage(final String message,
                 final PrintStream stream,
                 final int priority) {
         }
         
-        protected void log(String message) {
+        @Override
+		protected void log(String message) {
             reportBuf.append(message);
             reportBuf.append(System.getProperty("line.separator"));
         }
@@ -110,7 +112,8 @@ public class AntCompiler extends Compiler {
     /** 
      * Compile the servlet from .java file to .class file
      */
-    protected void generateClass(String[] smap)
+    @Override
+	protected void generateClass(String[] smap)
         throws FileNotFoundException, JasperException, Exception {
         
         long t1 = 0;
@@ -383,108 +386,134 @@ public class AntCompiler extends Compiler {
         // ---------------------------------------------------- PrintStream Methods
 
 
-        public void flush() {
+        @Override
+		public void flush() {
             findStream().flush();
         }
 
-        public void close() {
+        @Override
+		public void close() {
             findStream().close();
         }
 
-        public boolean checkError() {
+        @Override
+		public boolean checkError() {
             return findStream().checkError();
         }
 
-        protected void setError() {
+        @Override
+		protected void setError() {
             //findStream().setError();
         }
 
-        public void write(int b) {
+        @Override
+		public void write(int b) {
             findStream().write(b);
         }
 
-        public void write(byte[] b)
+        @Override
+		public void write(byte[] b)
             throws IOException {
             findStream().write(b);
         }
 
-        public void write(byte[] buf, int off, int len) {
+        @Override
+		public void write(byte[] buf, int off, int len) {
             findStream().write(buf, off, len);
         }
 
-        public void print(boolean b) {
+        @Override
+		public void print(boolean b) {
             findStream().print(b);
         }
 
-        public void print(char c) {
+        @Override
+		public void print(char c) {
             findStream().print(c);
         }
 
-        public void print(int i) {
+        @Override
+		public void print(int i) {
             findStream().print(i);
         }
 
-        public void print(long l) {
+        @Override
+		public void print(long l) {
             findStream().print(l);
         }
 
-        public void print(float f) {
+        @Override
+		public void print(float f) {
             findStream().print(f);
         }
 
-        public void print(double d) {
+        @Override
+		public void print(double d) {
             findStream().print(d);
         }
 
-        public void print(char[] s) {
+        @Override
+		public void print(char[] s) {
             findStream().print(s);
         }
 
-        public void print(String s) {
+        @Override
+		public void print(String s) {
             findStream().print(s);
         }
 
-        public void print(Object obj) {
+        @Override
+		public void print(Object obj) {
             findStream().print(obj);
         }
 
-        public void println() {
+        @Override
+		public void println() {
             findStream().println();
         }
 
-        public void println(boolean x) {
+        @Override
+		public void println(boolean x) {
             findStream().println(x);
         }
 
-        public void println(char x) {
+        @Override
+		public void println(char x) {
             findStream().println(x);
         }
 
-        public void println(int x) {
+        @Override
+		public void println(int x) {
             findStream().println(x);
         }
 
-        public void println(long x) {
+        @Override
+		public void println(long x) {
             findStream().println(x);
         }
 
-        public void println(float x) {
+        @Override
+		public void println(float x) {
             findStream().println(x);
         }
 
-        public void println(double x) {
+        @Override
+		public void println(double x) {
             findStream().println(x);
         }
 
-        public void println(char[] x) {
+        @Override
+		public void println(char[] x) {
             findStream().println(x);
         }
 
-        public void println(String x) {
+        @Override
+		public void println(String x) {
             findStream().println(x);
         }
 
-        public void println(Object x) {
+        @Override
+		public void println(Object x) {
             findStream().println(x);
         }
 

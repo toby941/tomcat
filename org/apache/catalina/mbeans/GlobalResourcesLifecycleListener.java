@@ -74,7 +74,8 @@ public class GlobalResourcesLifecycleListener
      *
      * @param event The event that has occurred
      */
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
 
         if (Lifecycle.START_EVENT.equals(event.getType())) {
             component = event.getLifecycle();

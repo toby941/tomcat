@@ -83,7 +83,8 @@ public class ByteMessage implements Serializable, Externalizable {
      * @param in ObjectInput
      * @throws IOException
      */
-    public void readExternal(ObjectInput in ) throws IOException {
+    @Override
+	public void readExternal(ObjectInput in ) throws IOException {
         int length = in.readInt();
         message = new byte[length];
         in.readFully(message);
@@ -94,7 +95,8 @@ public class ByteMessage implements Serializable, Externalizable {
      * @param out ObjectOutput
      * @throws IOException
      */
-    public void writeExternal(ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(ObjectOutput out) throws IOException {
         out.writeInt(message!=null?message.length:0);
         if ( message!=null ) out.write(message,0,message.length);
     }

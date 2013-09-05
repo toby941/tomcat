@@ -56,7 +56,8 @@ public class FactoryCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #FactoryCreateRule(String className)} instead.
      */
-    public FactoryCreateRule(Digester digester, String className) {
+    @Deprecated
+	public FactoryCreateRule(Digester digester, String className) {
 
         this(className);
 
@@ -74,7 +75,8 @@ public class FactoryCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #FactoryCreateRule(Class clazz)} instead.
      */
-    public FactoryCreateRule(Digester digester, Class clazz) {
+    @Deprecated
+	public FactoryCreateRule(Digester digester, Class clazz) {
 
         this(clazz);
 
@@ -95,7 +97,8 @@ public class FactoryCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #FactoryCreateRule(String className, String attributeName)} instead.
      */
-    public FactoryCreateRule(Digester digester,
+    @Deprecated
+	public FactoryCreateRule(Digester digester,
                              String className, String attributeName) {
 
         this(className, attributeName);
@@ -117,7 +120,8 @@ public class FactoryCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #FactoryCreateRule(Class clazz, String attributeName)} instead.
      */
-    public FactoryCreateRule(Digester digester,
+    @Deprecated
+	public FactoryCreateRule(Digester digester,
                              Class clazz, String attributeName) {
 
         this(clazz, attributeName);
@@ -135,7 +139,8 @@ public class FactoryCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #FactoryCreateRule(ObjectCreationFactory creationFactory)} instead.
      */
-    public FactoryCreateRule(Digester digester,
+    @Deprecated
+	public FactoryCreateRule(Digester digester,
                              ObjectCreationFactory creationFactory) {
 
         this(creationFactory);
@@ -354,7 +359,8 @@ public class FactoryCreateRule extends Rule {
      *
      * @param attributes The attribute list of this element
      */
-    public void begin(String namespace, String name, Attributes attributes) throws Exception {
+    @Override
+	public void begin(String namespace, String name, Attributes attributes) throws Exception {
         
         if (ignoreCreateExceptions) {
         
@@ -399,7 +405,8 @@ public class FactoryCreateRule extends Rule {
     /**
      * Process the end of this element.
      */
-    public void end(String namespace, String name) throws Exception {
+    @Override
+	public void end(String namespace, String name) throws Exception {
         
         // check if object was created 
         // this only happens if an exception was thrown and we're ignoring them
@@ -430,7 +437,8 @@ public class FactoryCreateRule extends Rule {
     /**
      * Clean up after parsing is complete.
      */
-    public void finish() throws Exception {
+    @Override
+	public void finish() throws Exception {
 
         if (attributeName != null) {
             creationFactory = null;
@@ -442,7 +450,8 @@ public class FactoryCreateRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("FactoryCreateRule[");
         sb.append("className=");

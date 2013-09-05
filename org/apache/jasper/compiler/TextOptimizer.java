@@ -40,7 +40,8 @@ public class TextOptimizer {
             pageInfo = compiler.getPageInfo();
         }
 
-        public void doVisit(Node n) throws JasperException {
+        @Override
+		public void doVisit(Node n) throws JasperException {
             collectText();
         }
 
@@ -48,30 +49,37 @@ public class TextOptimizer {
          * The following directis are ignored in text concatenation
          */
 
-        public void visit(Node.PageDirective n) throws JasperException {
+        @Override
+		public void visit(Node.PageDirective n) throws JasperException {
         }
 
-        public void visit(Node.TagDirective n) throws JasperException {
+        @Override
+		public void visit(Node.TagDirective n) throws JasperException {
         }
 
-        public void visit(Node.TaglibDirective n) throws JasperException {
+        @Override
+		public void visit(Node.TaglibDirective n) throws JasperException {
         }
 
-        public void visit(Node.AttributeDirective n) throws JasperException {
+        @Override
+		public void visit(Node.AttributeDirective n) throws JasperException {
         }
 
-        public void visit(Node.VariableDirective n) throws JasperException {
+        @Override
+		public void visit(Node.VariableDirective n) throws JasperException {
         }
 
         /*
          * Don't concatenate text across body boundaries
          */
-        public void visitBody(Node n) throws JasperException {
+        @Override
+		public void visitBody(Node n) throws JasperException {
             super.visitBody(n);
             collectText();
         }
 
-        public void visit(Node.TemplateText n) throws JasperException {
+        @Override
+		public void visit(Node.TemplateText n) throws JasperException {
             if ((options.getTrimSpaces() || pageInfo.isTrimDirectiveWhitespaces()) 
                     && n.isAllSpace()) {
                 n.setText(emptyText);

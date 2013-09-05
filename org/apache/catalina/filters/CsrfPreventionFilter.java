@@ -131,7 +131,8 @@ public class CsrfPreventionFilter extends FilterBase {
     }
 
 
-    public void doFilter(ServletRequest request, ServletResponse response,
+    @Override
+	public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
 
         ServletResponse wResponse = null;

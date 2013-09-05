@@ -64,7 +64,8 @@ public class ClusterSessionListener extends ClusterListener {
      * @param myobj
      *            ClusterMessage - the message received from the cluster
      */
-    public void messageReceived(ClusterMessage myobj) {
+    @Override
+	public void messageReceived(ClusterMessage myobj) {
         if (myobj != null && myobj instanceof SessionMessage) {
             SessionMessage msg = (SessionMessage) myobj;
             String ctxname = msg.getContextName();
@@ -117,7 +118,8 @@ public class ClusterSessionListener extends ClusterListener {
      *         invoked. If false is returned, the messageReceived method will
      *         not be invoked.
      */
-    public boolean accept(ClusterMessage msg) {
+    @Override
+	public boolean accept(ClusterMessage msg) {
         return (msg instanceof SessionMessage);
     }
 }

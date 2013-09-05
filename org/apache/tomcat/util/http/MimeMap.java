@@ -145,8 +145,8 @@ public class MimeMap implements FileNameMap {
     }
 
     public String getContentType(String extn) {
-        String type = (String)map.get(extn.toLowerCase());
-        if( type == null ) type=(String)defaultMap.get( extn );
+        String type = map.get(extn.toLowerCase());
+        if( type == null ) type=defaultMap.get( extn );
         return type;
     }
 
@@ -176,7 +176,8 @@ public class MimeMap implements FileNameMap {
         }
     }
     
-    public String getContentTypeFor(String fileName) {
+    @Override
+	public String getContentTypeFor(String fileName) {
         String extn=getExtension( fileName );
         if (extn!=null) {
             return getContentType(extn);

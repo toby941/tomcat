@@ -52,11 +52,13 @@ class MultiMapValuesEnumeration implements Enumeration {
 	pos++;
     }
     
-    public boolean hasMoreElements() {
+    @Override
+	public boolean hasMoreElements() {
 	return next!=null;
     }
 
-    public Object nextElement() {
+    @Override
+	public Object nextElement() {
 	MessageBytes current=next;
 	findNext();
 	return current.toString();

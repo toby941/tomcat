@@ -46,14 +46,17 @@ public class MemoryProtocolHandler
     /**
      * Pass config info.
      */
-    public void setAttribute(String name, Object value) {
+    @Override
+	public void setAttribute(String name, Object value) {
     }
 
-    public Object getAttribute(String name) {
+    @Override
+	public Object getAttribute(String name) {
         return null;
     }
 
-    public Iterator getAttributeNames() { return null ; }
+    @Override
+	public Iterator getAttributeNames() { return null ; }
     /**
      * Associated adapter.
      */
@@ -62,11 +65,13 @@ public class MemoryProtocolHandler
     /**
      * The adapter, used to call the connector.
      */
-    public void setAdapter(Adapter adapter) {
+    @Override
+	public void setAdapter(Adapter adapter) {
         this.adapter = adapter;
     }
 
-    public Adapter getAdapter() {
+    @Override
+	public Adapter getAdapter() {
         return (adapter);
     }
 
@@ -77,7 +82,8 @@ public class MemoryProtocolHandler
     /**
      * Init the protocol.
      */
-    public void init()
+    @Override
+	public void init()
         throws Exception {
     }
 
@@ -85,20 +91,24 @@ public class MemoryProtocolHandler
     /**
      * Start the protocol.
      */
-    public void start()
+    @Override
+	public void start()
         throws Exception {
     }
 
 
-    public void pause() 
+    @Override
+	public void pause() 
         throws Exception {
     }
 
-    public void resume() 
+    @Override
+	public void resume() 
         throws Exception {
     }
 
-    public void destroy()
+    @Override
+	public void destroy()
         throws Exception {
     }
 
@@ -135,7 +145,8 @@ public class MemoryProtocolHandler
             this.input = input;
         }
 
-        public int doRead(ByteChunk chunk, Request request) 
+        @Override
+		public int doRead(ByteChunk chunk, Request request) 
             throws IOException {
             return input.substract(chunk);
         }
@@ -155,7 +166,8 @@ public class MemoryProtocolHandler
             this.output = output;
         }
 
-        public int doWrite(ByteChunk chunk, Response response) 
+        @Override
+		public int doWrite(ByteChunk chunk, Response response) 
             throws IOException {
             output.append(chunk);
             return chunk.getLength();

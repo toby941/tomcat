@@ -68,7 +68,8 @@ extends ServletException {
      *
      */
 
-    public UnavailableException(Servlet servlet, String msg) {
+    @Deprecated
+	public UnavailableException(Servlet servlet, String msg) {
 	super(msg);
 	this.servlet = servlet;
 	permanent = true;
@@ -91,7 +92,8 @@ extends ServletException {
      *
      */
     
-    public UnavailableException(int seconds, Servlet servlet, String msg) {
+    @Deprecated
+	public UnavailableException(int seconds, Servlet servlet, String msg) {
 	super(msg);
 	this.servlet = servlet;
 	if (seconds <= 0)
@@ -179,7 +181,8 @@ extends ServletException {
      *
      */
      
-    public Servlet getServlet() {
+    @Deprecated
+	public Servlet getServlet() {
 	return servlet;
     }
 

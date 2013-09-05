@@ -23,7 +23,8 @@ import org.apache.jasper.compiler.tagplugin.TagPluginContext;
 
 public class Catch implements TagPlugin {
     
-    public void doTag(TagPluginContext ctxt) {
+    @Override
+	public void doTag(TagPluginContext ctxt) {
         
         //flag for the existence of the var attribute
         boolean hasVar = ctxt.isAttributeSpecified("var");

@@ -62,7 +62,8 @@ public class NioReplicationTask extends AbstractRxTask {
     }
 
     // loop forever waiting for work to do
-    public synchronized void run() { 
+    @Override
+	public synchronized void run() { 
         if ( buffer == null ) {
             if ( (getOptions() & OPTION_DIRECT_BUFFER) == OPTION_DIRECT_BUFFER) {
                 buffer = ByteBuffer.allocateDirect(getRxBufSize());
@@ -223,7 +224,8 @@ public class NioReplicationTask extends AbstractRxTask {
         reader.finish();
         //register our OP_READ interest
         Runnable r = new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 try {
                     if (key.isValid()) {
                         // cycle the selector so this key is active again
@@ -257,7 +259,8 @@ public class NioReplicationTask extends AbstractRxTask {
             reader.finish();
         }
         Runnable cx = new Runnable() {
-            public void run() {
+            @Override
+			public void run() {
                 if ( log.isTraceEnabled() ) 
                     log.trace("Cancelling key:"+key);
 

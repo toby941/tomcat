@@ -96,7 +96,8 @@ public class TagHandlerPool {
      * @param capacity Tag handler pool capacity
      * @deprecated Use static getTagHandlerPool
      */
-    public TagHandlerPool(int capacity) {
+    @Deprecated
+	public TagHandlerPool(int capacity) {
 	this.handlers = new Tag[capacity];
 	this.current = -1;
     }

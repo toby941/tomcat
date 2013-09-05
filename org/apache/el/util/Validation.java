@@ -42,7 +42,8 @@ public class Validation {
         if (IS_SECURITY_ENABLED) {
             SKIP_IDENTIFIER_CHECK = AccessController.doPrivileged(
                     new PrivilegedAction<Boolean>(){
-                        public Boolean run() {
+                        @Override
+						public Boolean run() {
                             return Boolean.valueOf(System.getProperty(
                                     "org.apache.el.parser.SKIP_IDENTIFIER_CHECK",
                                     "true"));

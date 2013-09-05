@@ -103,7 +103,8 @@ public class DataSourceLinkFactory extends ResourceLinkFactory {
         }
         
 
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        @Override
+		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             
             if ("getConnection".equals(method.getName()) && (args==null || args.length==0)) {
                 args = new String[] {username,password};

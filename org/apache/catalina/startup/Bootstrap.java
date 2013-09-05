@@ -178,7 +178,7 @@ public final class Bootstrap {
         MBeanServer mBeanServer = null;
         if (MBeanServerFactory.findMBeanServer(null).size() > 0) {
             mBeanServer =
-                (MBeanServer) MBeanServerFactory.findMBeanServer(null).get(0);
+                MBeanServerFactory.findMBeanServer(null).get(0);
         } else {
             mBeanServer = ManagementFactory.getPlatformMBeanServer();
         }

@@ -24,8 +24,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.security.auth.login.LoginContext;
-import javax.security.auth.login.LoginException;
-
 import org.apache.catalina.Realm;
 
 
@@ -114,7 +112,7 @@ public class GenericPrincipal implements Principal {
         this.userPrincipal = userPrincipal;
         if (roles != null) {
             this.roles = new String[roles.size()];
-            this.roles = (String[]) roles.toArray(this.roles);
+            this.roles = roles.toArray(this.roles);
             if (this.roles.length > 1)
                 Arrays.sort(this.roles);
         }
@@ -130,7 +128,8 @@ public class GenericPrincipal implements Principal {
      */
     protected String name = null;
 
-    public String getName() {
+    @Override
+	public String getName() {
         return (this.name);
     }
 
@@ -217,7 +216,8 @@ public class GenericPrincipal implements Principal {
      * Return a String representation of this object, which exposes only
      * information that should be public.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("GenericPrincipal[");
         sb.append(this.name);

@@ -200,7 +200,8 @@ public class AprImpl extends JkHandler { // This will be o.a.t.util.handler.TcHa
 
     // -------------------- Initialization -------------------- 
 
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         try {
             initialized=true;
             loadNative();

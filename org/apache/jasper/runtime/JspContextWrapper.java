@@ -92,12 +92,14 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		syncBeginTagFile();
 	}
 
+	@Override
 	public void initialize(Servlet servlet, ServletRequest request,
 			ServletResponse response, String errorPageURL,
 			boolean needsSession, int bufferSize, boolean autoFlush)
 			throws IOException, IllegalStateException, IllegalArgumentException {
 	}
 
+	@Override
 	public Object getAttribute(String name) {
 
 		if (name == null) {
@@ -108,6 +110,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		return pageAttributes.get(name);
 	}
 
+	@Override
 	public Object getAttribute(String name, int scope) {
 
 		if (name == null) {
@@ -122,6 +125,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		return invokingJspCtxt.getAttribute(name, scope);
 	}
 
+	@Override
 	public void setAttribute(String name, Object value) {
 
 		if (name == null) {
@@ -136,6 +140,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		}
 	}
 
+	@Override
 	public void setAttribute(String name, Object value, int scope) {
 
 		if (name == null) {
@@ -154,6 +159,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		}
 	}
 
+	@Override
 	public Object findAttribute(String name) {
 
 		if (name == null) {
@@ -177,6 +183,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		return o;
 	}
 
+	@Override
 	public void removeAttribute(String name) {
 
 		if (name == null) {
@@ -192,6 +199,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		invokingJspCtxt.removeAttribute(name, APPLICATION_SCOPE);
 	}
 
+	@Override
 	public void removeAttribute(String name, int scope) {
 
 		if (name == null) {
@@ -206,6 +214,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		}
 	}
 
+	@Override
 	public int getAttributesScope(String name) {
 
 		if (name == null) {
@@ -220,6 +229,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		}
 	}
 
+	@Override
 	public Enumeration<String> getAttributeNamesInScope(int scope) {
 		if (scope == PAGE_SCOPE) {
 			return new Enumerator(pageAttributes.keySet().iterator());
@@ -228,77 +238,95 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		return invokingJspCtxt.getAttributeNamesInScope(scope);
 	}
 
+	@Override
 	public void release() {
 		invokingJspCtxt.release();
 	}
 
+	@Override
 	public JspWriter getOut() {
 		return invokingJspCtxt.getOut();
 	}
 
+	@Override
 	public HttpSession getSession() {
 		return invokingJspCtxt.getSession();
 	}
 
+	@Override
 	public Object getPage() {
 		return invokingJspCtxt.getPage();
 	}
 
+	@Override
 	public ServletRequest getRequest() {
 		return invokingJspCtxt.getRequest();
 	}
 
+	@Override
 	public ServletResponse getResponse() {
 		return invokingJspCtxt.getResponse();
 	}
 
+	@Override
 	public Exception getException() {
 		return invokingJspCtxt.getException();
 	}
 
+	@Override
 	public ServletConfig getServletConfig() {
 		return invokingJspCtxt.getServletConfig();
 	}
 
+	@Override
 	public ServletContext getServletContext() {
 		return invokingJspCtxt.getServletContext();
 	}
 
+	@Override
 	public void forward(String relativeUrlPath) throws ServletException,
 			IOException {
 		invokingJspCtxt.forward(relativeUrlPath);
 	}
 
+	@Override
 	public void include(String relativeUrlPath) throws ServletException,
 			IOException {
 		invokingJspCtxt.include(relativeUrlPath);
 	}
 
+	@Override
 	public void include(String relativeUrlPath, boolean flush)
 			throws ServletException, IOException {
 		invokingJspCtxt.include(relativeUrlPath, false);
 	}
 
+	@Override
 	public VariableResolver getVariableResolver() {
 		return this;
 	}
 
+	@Override
 	public BodyContent pushBody() {
 		return invokingJspCtxt.pushBody();
 	}
 
+	@Override
 	public JspWriter pushBody(Writer writer) {
 		return invokingJspCtxt.pushBody(writer);
 	}
 
+	@Override
 	public JspWriter popBody() {
 		return invokingJspCtxt.popBody();
 	}
 
+	@Override
 	public ExpressionEvaluator getExpressionEvaluator() {
 		return invokingJspCtxt.getExpressionEvaluator();
 	}
 
+	@Override
 	public void handlePageException(Exception ex) throws IOException,
 			ServletException {
 		// Should never be called since handleException() called with a
@@ -306,6 +334,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 		handlePageException((Throwable) ex);
 	}
 
+	@Override
 	public void handlePageException(Throwable t) throws IOException,
 			ServletException {
 		invokingJspCtxt.handlePageException(t);
@@ -314,6 +343,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 	/**
 	 * VariableResolver interface
 	 */
+	@Override
 	public Object resolveVariable(String pName) throws ELException {
 		ELContext ctx = this.getELContext();
 		return ctx.getELResolver().getValue(ctx, null, pName);
@@ -443,6 +473,7 @@ public class JspContextWrapper extends PageContext implements VariableResolver {
 
 	//private ELContextImpl elContext;
 
+	@Override
 	public ELContext getELContext() {
         // instead decorate!!!
         

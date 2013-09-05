@@ -69,7 +69,8 @@ public final class CustomObjectInputStream
      * @exception ClassNotFoundException if this class cannot be found
      * @exception IOException if an input/output error occurs
      */
-    public Class resolveClass(ObjectStreamClass classDesc)
+    @Override
+	public Class resolveClass(ObjectStreamClass classDesc)
         throws ClassNotFoundException, IOException {
         try {
             return Class.forName(classDesc.getName(), false, classLoader);
@@ -91,7 +92,8 @@ public final class CustomObjectInputStream
      * class descriptor. Do this using the class loader assigned to this
      * Context.
      */
-    protected Class resolveProxyClass(String[] interfaces)
+    @Override
+	protected Class resolveProxyClass(String[] interfaces)
         throws IOException, ClassNotFoundException {
 
         Class[] cinterfaces = new Class[interfaces.length];

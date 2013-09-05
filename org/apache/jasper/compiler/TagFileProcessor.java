@@ -146,7 +146,8 @@ class TagFileProcessor {
             variableVector = new Vector();
         }
 
-        public void visit(Node.TagDirective n) throws JasperException {
+        @Override
+		public void visit(Node.TagDirective n) throws JasperException {
 
             JspUtil.checkAttributes("Tag directive", n, tagDirectiveAttrs, err);
 
@@ -188,7 +189,8 @@ class TagFileProcessor {
             return result;
         }
 
-        public void visit(Node.AttributeDirective n) throws JasperException {
+        @Override
+		public void visit(Node.AttributeDirective n) throws JasperException {
 
             JspUtil.checkAttributes("Attribute directive", n,
                     attributeDirectiveAttrs, err);
@@ -287,7 +289,8 @@ class TagFileProcessor {
             checkUniqueName(attrName, ATTR_NAME, n, tagAttributeInfo);
         }
 
-        public void visit(Node.VariableDirective n) throws JasperException {
+        @Override
+		public void visit(Node.VariableDirective n) throws JasperException {
 
             JspUtil.checkAttributes("Variable directive", n,
                     variableDirectiveAttrs, err);
@@ -509,7 +512,8 @@ class TagFileProcessor {
      *                  ParserController, String, String, URL, TagLibraryInfo)}
      *             See https://issues.apache.org/bugzilla/show_bug.cgi?id=46471
      */
-    public static TagInfo parseTagFileDirectives(ParserController pc,
+    @Deprecated
+	public static TagInfo parseTagFileDirectives(ParserController pc,
             String name, String path, TagLibraryInfo tagLibInfo)
             throws JasperException {
         return parseTagFileDirectives(pc, name, path,
@@ -668,7 +672,8 @@ class TagFileProcessor {
             this.pageInfo = compiler.getPageInfo();
         }
 
-        public void visit(Node.CustomTag n) throws JasperException {
+        @Override
+		public void visit(Node.CustomTag n) throws JasperException {
             TagFileInfo tagFileInfo = n.getTagFileInfo();
             if (tagFileInfo != null) {
                 String tagFilePath = tagFileInfo.getPath();

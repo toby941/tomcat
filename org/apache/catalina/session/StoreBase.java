@@ -82,7 +82,8 @@ public abstract class StoreBase
     /**
      * Return the info for this Store.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
         return(info);
     }
 
@@ -100,7 +101,8 @@ public abstract class StoreBase
      *
      * @param manager The newly associated Manager
      */
-    public void setManager(Manager manager) {
+    @Override
+	public void setManager(Manager manager) {
         Manager oldManager = this.manager;
         this.manager = manager;
         support.firePropertyChange("manager", oldManager, this.manager);
@@ -109,7 +111,8 @@ public abstract class StoreBase
     /**
      * Return the Manager with which the Store is associated.
      */
-    public Manager getManager() {
+    @Override
+	public Manager getManager() {
         return(this.manager);
     }
 
@@ -121,7 +124,8 @@ public abstract class StoreBase
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
         lifecycle.addLifecycleListener(listener);
     }
 
@@ -130,7 +134,8 @@ public abstract class StoreBase
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -142,7 +147,8 @@ public abstract class StoreBase
      *
      * @param listener The listener to add
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
         lifecycle.removeLifecycleListener(listener);
     }
 
@@ -151,7 +157,8 @@ public abstract class StoreBase
      *
      * @param listener a value of type 'PropertyChangeListener'
      */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
 
@@ -160,7 +167,8 @@ public abstract class StoreBase
      *
      * @param listener The listener to remove
      */
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
+    @Override
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
         support.removePropertyChangeListener(listener);
     }
 
@@ -234,7 +242,8 @@ public abstract class StoreBase
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
         // Validate and update our current component state
         if (started)
             throw new LifecycleException
@@ -253,7 +262,8 @@ public abstract class StoreBase
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
         // Validate and update our current component state
         if (!started)
             throw new LifecycleException

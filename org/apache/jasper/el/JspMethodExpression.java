@@ -44,7 +44,8 @@ public final class JspMethodExpression extends MethodExpression implements
         this.mark = mark;
     }
 
-    public MethodInfo getMethodInfo(ELContext context)
+    @Override
+	public MethodInfo getMethodInfo(ELContext context)
             throws NullPointerException, PropertyNotFoundException,
             MethodNotFoundException, ELException {
         try {
@@ -61,7 +62,8 @@ public final class JspMethodExpression extends MethodExpression implements
         }
     }
 
-    public Object invoke(ELContext context, Object[] params)
+    @Override
+	public Object invoke(ELContext context, Object[] params)
             throws NullPointerException, PropertyNotFoundException,
             MethodNotFoundException, ELException {
         try {
@@ -78,28 +80,34 @@ public final class JspMethodExpression extends MethodExpression implements
         }
     }
 
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         return this.target.equals(obj);
     }
 
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.target.hashCode();
     }
 
-    public String getExpressionString() {
+    @Override
+	public String getExpressionString() {
         return this.target.getExpressionString();
     }
 
-    public boolean isLiteralText() {
+    @Override
+	public boolean isLiteralText() {
         return this.target.isLiteralText();
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(ObjectOutput out) throws IOException {
         out.writeUTF(this.mark);
         out.writeObject(this.target);
     }
 
-    public void readExternal(ObjectInput in) throws IOException,
+    @Override
+	public void readExternal(ObjectInput in) throws IOException,
             ClassNotFoundException {
         this.mark = in.readUTF();
         this.target = (MethodExpression) in.readObject();

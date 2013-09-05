@@ -162,7 +162,8 @@ public class NSConfig  extends BaseJkConfig {
     /** Initialize defaults for properties that are not set
 	explicitely
     */
-    protected void initProperties() {
+    @Override
+	protected void initProperties() {
         super.initProperties();
 
 	objConfig=getConfigFile( objConfig, configHome, NS_CONFIG);
@@ -176,11 +177,13 @@ public class NSConfig  extends BaseJkConfig {
     }
 
     // -------------------- Generate config --------------------
-    protected PrintWriter getWriter() throws IOException {
+    @Override
+	protected PrintWriter getWriter() throws IOException {
 	String abObjConfig = objConfig.getAbsolutePath();
 	return new PrintWriter(new FileWriter(abObjConfig,append));
     }
-    protected boolean generateJkHead(PrintWriter mod_jk) {
+    @Override
+	protected boolean generateJkHead(PrintWriter mod_jk) {
 	log.info("Generating netscape web server config = "+objConfig );
 	
 	generateNsapiHead( mod_jk );
@@ -215,7 +218,8 @@ public class NSConfig  extends BaseJkConfig {
         objfile.println();
     }
 
-    protected void generateJkTail(PrintWriter objfile)
+    @Override
+	protected void generateJkTail(PrintWriter objfile)
     {
         objfile.println();
         objfile.println("#######################################################");		    
@@ -243,7 +247,8 @@ public class NSConfig  extends BaseJkConfig {
     /** Forward all requests for a context to tomcat.
 	The default.
      */
-    protected void generateStupidMappings(Context context, PrintWriter objfile )
+    @Override
+	protected void generateStupidMappings(Context context, PrintWriter objfile )
     {
         String ctxPath  = context.getPath();
 	String nPath=("".equals(ctxPath)) ? "/" : ctxPath;
@@ -263,7 +268,8 @@ public class NSConfig  extends BaseJkConfig {
     // -------------------- Netscape serves static mode --------------------
     // This is not going to work for all apps. We fall back to stupid mode.
     
-    protected void generateContextMappings(Context context, PrintWriter objfile )
+    @Override
+	protected void generateContextMappings(Context context, PrintWriter objfile )
     {
         String ctxPath  = context.getPath();
 	String nPath=("".equals(ctxPath)) ? "/" : ctxPath;
@@ -318,7 +324,8 @@ public class NSConfig  extends BaseJkConfig {
 
     /** Add a fulling specified Netscape mapping.
      */
-    protected boolean addMapping( String fullPath, PrintWriter objfile ) {
+    @Override
+	protected boolean addMapping( String fullPath, PrintWriter objfile ) {
         if( log.isDebugEnabled() )
             log.debug( "Adding map for " + fullPath );
         objfile.println("NameTrans fn=\"assign-name\" from=\"" +

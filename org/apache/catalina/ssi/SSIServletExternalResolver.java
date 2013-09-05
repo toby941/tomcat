@@ -71,7 +71,8 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
     }
 
 
-    public void log(String message, Throwable throwable) {
+    @Override
+	public void log(String message, Throwable throwable) {
         //We can't assume that Servlet.log( message, null )
         //is the same as Servlet.log( message ), since API
         //doesn't seem to say so.
@@ -83,7 +84,8 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
     }
 
 
-    public void addVariableNames(Collection variableNames) {
+    @Override
+	public void addVariableNames(Collection variableNames) {
         for (int i = 0; i < VARIABLE_NAMES.length; i++) {
             String variableName = VARIABLE_NAMES[i];
             String variableValue = getVariableValue(variableName);
@@ -129,14 +131,16 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
     }
 
 
-    public void setVariableValue(String name, String value) {
+    @Override
+	public void setVariableValue(String name, String value) {
         if (!isNameReserved(name)) {
             req.setAttribute(name, value);
         }
     }
 
 
-    public String getVariableValue(String name) {
+    @Override
+	public String getVariableValue(String name) {
         String retVal = null;
         Object object = getReqAttributeIgnoreCase(name);
         if (object != null) {
@@ -329,7 +333,8 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
             return retVal;
     }
 
-    public Date getCurrentDate() {
+    @Override
+	public Date getCurrentDate() {
         return new Date();
     }
 
@@ -478,7 +483,8 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
     }
 
 
-    public long getFileLastModified(String path, boolean virtual)
+    @Override
+	public long getFileLastModified(String path, boolean virtual)
             throws IOException {
         long lastModified = 0;
         try {
@@ -491,7 +497,8 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
     }
 
 
-    public long getFileSize(String path, boolean virtual) throws IOException {
+    @Override
+	public long getFileSize(String path, boolean virtual) throws IOException {
         long fileSize = -1;
         try {
             URLConnection urlConnection = getURLConnection(path, virtual);
@@ -506,7 +513,8 @@ public class SSIServletExternalResolver implements SSIExternalResolver {
     //We are making lots of unnecessary copies of the included data here. If
     //someone ever complains that this is slow, we should connect the included
     // stream to the print writer that SSICommand uses.
-    public String getFileText(String originalPath, boolean virtual)
+    @Override
+	public String getFileText(String originalPath, boolean virtual)
             throws IOException {
         try {
             ServletContextAndPath csAndP = getServletContextAndPath(

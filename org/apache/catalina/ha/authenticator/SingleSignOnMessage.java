@@ -63,7 +63,8 @@ public class SingleSignOnMessage implements ClusterMessage, Serializable {
      * if the message was being relayed from a host other than the one
      * that originally sent it.
      */
-    public Member getAddress() {
+    @Override
+	public Member getAddress() {
 	return address;
     }
 
@@ -73,7 +74,8 @@ public class SingleSignOnMessage implements ClusterMessage, Serializable {
      *
      * @param member Member
      */
-    public void setAddress(Member member) {
+    @Override
+	public void setAddress(Member member) {
 	this.address = member;
     }
 
@@ -82,7 +84,8 @@ public class SingleSignOnMessage implements ClusterMessage, Serializable {
      *
      * @return long
      */
-    public long getTimestamp() {
+    @Override
+	public long getTimestamp() {
         return timestamp;
     }
 
@@ -92,7 +95,8 @@ public class SingleSignOnMessage implements ClusterMessage, Serializable {
      *
      * @param timestamp The timestamp
      */
-    public void setTimestamp(long timestamp) {
+    @Override
+	public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -102,7 +106,8 @@ public class SingleSignOnMessage implements ClusterMessage, Serializable {
      *
      * @return String
      */
-    public String getUniqueId() {
+    @Override
+	public String getUniqueId() {
 	if (this.uniqueId != null)
 	    return this.uniqueId;
 	StringBuffer result = new StringBuffer(getSsoId());
@@ -111,7 +116,8 @@ public class SingleSignOnMessage implements ClusterMessage, Serializable {
 	return result.toString();
     }
 
-    public void setUniqueId(String uniqueId) {
+    @Override
+	public void setUniqueId(String uniqueId) {
         this.uniqueId = uniqueId;
     }
 
@@ -184,7 +190,8 @@ public class SingleSignOnMessage implements ClusterMessage, Serializable {
     /**
      * Return a String rendering of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SingleSignOnMessage[action=");
 	sb.append(getAction()).append(", ssoId=").append(getSsoId());

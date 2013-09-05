@@ -842,6 +842,7 @@ public class Request implements HttpServletRequest {
 	 * @param name
 	 *            Name of the request attribute to return
 	 */
+	@Override
 	public Object getAttribute(String name) {
 
 		if (name.equals(Globals.DISPATCHER_TYPE_ATTR)) {
@@ -921,6 +922,7 @@ public class Request implements HttpServletRequest {
 	 * Connector implementations may return some, all or none of these
 	 * attributes and may also support additional attributes.
 	 */
+	@Override
 	public Enumeration getAttributeNames() {
 		if (isSecure() && !sslAttributesParsed) {
 			getAttribute(Globals.CERTIFICATES_ATTR);
@@ -931,6 +933,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the character encoding for this Request.
 	 */
+	@Override
 	public String getCharacterEncoding() {
 		return (coyoteRequest.getCharacterEncoding());
 	}
@@ -938,6 +941,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the content length for this Request.
 	 */
+	@Override
 	public int getContentLength() {
 		return (coyoteRequest.getContentLength());
 	}
@@ -945,6 +949,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the content type for this Request.
 	 */
+	@Override
 	public String getContentType() {
 		return (coyoteRequest.getContentType());
 	}
@@ -960,6 +965,7 @@ public class Request implements HttpServletRequest {
 	 * @exception IOException
 	 *                if an input/output error occurs
 	 */
+	@Override
 	public ServletInputStream getInputStream() throws IOException {
 
 		if (usingReader)
@@ -979,6 +985,7 @@ public class Request implements HttpServletRequest {
 	 * encountered. If the request did not specify a preferred language, the
 	 * server's default Locale is returned.
 	 */
+	@Override
 	public Locale getLocale() {
 
 		if (!localesParsed)
@@ -998,6 +1005,7 @@ public class Request implements HttpServletRequest {
 	 * were encountered. If the request did not specify a preferred language,
 	 * the server's default Locale is returned.
 	 */
+	@Override
 	public Enumeration getLocales() {
 
 		if (!localesParsed)
@@ -1019,6 +1027,7 @@ public class Request implements HttpServletRequest {
 	 * @param name
 	 *            Name of the desired request parameter
 	 */
+	@Override
 	public String getParameter(String name) {
 
 		if (!parametersParsed)
@@ -1037,6 +1046,7 @@ public class Request implements HttpServletRequest {
 	 * @return A <code>Map</code> containing parameter names as keys and
 	 *         parameter values as map values.
 	 */
+	@Override
 	public Map getParameterMap() {
 
 		if (parameterMap.isLocked())
@@ -1058,6 +1068,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the names of all defined request parameters for this request.
 	 */
+	@Override
 	public Enumeration getParameterNames() {
 
 		if (!parametersParsed)
@@ -1074,6 +1085,7 @@ public class Request implements HttpServletRequest {
 	 * @param name
 	 *            Name of the desired request parameter
 	 */
+	@Override
 	public String[] getParameterValues(String name) {
 
 		if (!parametersParsed)
@@ -1086,6 +1098,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the protocol and version used to make this Request.
 	 */
+	@Override
 	public String getProtocol() {
 		return coyoteRequest.protocol().toString();
 	}
@@ -1101,6 +1114,7 @@ public class Request implements HttpServletRequest {
 	 * @exception IOException
 	 *                if an input/output error occurs
 	 */
+	@Override
 	public BufferedReader getReader() throws IOException {
 
 		if (usingInputStream)
@@ -1124,6 +1138,8 @@ public class Request implements HttpServletRequest {
 	 * @deprecated As of version 2.1 of the Java Servlet API, use
 	 *             <code>ServletContext.getRealPath()</code>.
 	 */
+	@Deprecated
+	@Override
 	public String getRealPath(String path) {
 
 		if (context == null)
@@ -1144,6 +1160,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the remote IP address making this Request.
 	 */
+	@Override
 	public String getRemoteAddr() {
 		if (remoteAddr == null) {
 			coyoteRequest.action(ActionCode.ACTION_REQ_HOST_ADDR_ATTRIBUTE, coyoteRequest);
@@ -1155,6 +1172,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the remote host name making this Request.
 	 */
+	@Override
 	public String getRemoteHost() {
 		if (remoteHost == null) {
 			if (!connector.getEnableLookups()) {
@@ -1171,6 +1189,7 @@ public class Request implements HttpServletRequest {
 	 * Returns the Internet Protocol (IP) source port of the client or last
 	 * proxy that sent the request.
 	 */
+	@Override
 	public int getRemotePort() {
 		if (remotePort == -1) {
 			coyoteRequest.action(ActionCode.ACTION_REQ_REMOTEPORT_ATTRIBUTE, coyoteRequest);
@@ -1183,6 +1202,7 @@ public class Request implements HttpServletRequest {
 	 * Returns the host name of the Internet Protocol (IP) interface on which
 	 * the request was received.
 	 */
+	@Override
 	public String getLocalName() {
 		if (localName == null) {
 			coyoteRequest.action(ActionCode.ACTION_REQ_LOCAL_NAME_ATTRIBUTE, coyoteRequest);
@@ -1195,6 +1215,7 @@ public class Request implements HttpServletRequest {
 	 * Returns the Internet Protocol (IP) address of the interface on which the
 	 * request was received.
 	 */
+	@Override
 	public String getLocalAddr() {
 		if (localAddr == null) {
 			coyoteRequest.action(ActionCode.ACTION_REQ_LOCAL_ADDR_ATTRIBUTE, coyoteRequest);
@@ -1207,6 +1228,7 @@ public class Request implements HttpServletRequest {
 	 * Returns the Internet Protocol (IP) port number of the interface on which
 	 * the request was received.
 	 */
+	@Override
 	public int getLocalPort() {
 		if (localPort == -1) {
 			coyoteRequest.action(ActionCode.ACTION_REQ_LOCALPORT_ATTRIBUTE, coyoteRequest);
@@ -1222,6 +1244,7 @@ public class Request implements HttpServletRequest {
 	 * @param path
 	 *            Path of the resource to be wrapped
 	 */
+	@Override
 	public RequestDispatcher getRequestDispatcher(String path) {
 
 		if (context == null)
@@ -1263,6 +1286,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the scheme used to make this Request.
 	 */
+	@Override
 	public String getScheme() {
 		return (coyoteRequest.scheme().toString());
 	}
@@ -1270,6 +1294,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the server name responding to this Request.
 	 */
+	@Override
 	public String getServerName() {
 		return (coyoteRequest.serverName().toString());
 	}
@@ -1277,6 +1302,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the server port responding to this Request.
 	 */
+	@Override
 	public int getServerPort() {
 		return (coyoteRequest.getServerPort());
 	}
@@ -1284,6 +1310,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Was this request received on a secure connection?
 	 */
+	@Override
 	public boolean isSecure() {
 		return (secure);
 	}
@@ -1294,6 +1321,7 @@ public class Request implements HttpServletRequest {
 	 * @param name
 	 *            Name of the request attribute to remove
 	 */
+	@Override
 	public void removeAttribute(String name) {
 		Object value = null;
 		boolean found = false;
@@ -1346,6 +1374,7 @@ public class Request implements HttpServletRequest {
 	 * @param value
 	 *            The associated value
 	 */
+	@Override
 	public void setAttribute(String name, Object value) {
 
 		// Name cannot be null
@@ -1446,6 +1475,7 @@ public class Request implements HttpServletRequest {
 	 * 
 	 * @since Servlet 2.3
 	 */
+	@Override
 	public void setCharacterEncoding(String enc) throws UnsupportedEncodingException {
 
 		if (usingReader)
@@ -1736,6 +1766,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the authentication type used for this Request.
 	 */
+	@Override
 	public String getAuthType() {
 		return (authType);
 	}
@@ -1744,6 +1775,7 @@ public class Request implements HttpServletRequest {
 	 * Return the portion of the request URI used to select the Context of the
 	 * Request.
 	 */
+	@Override
 	public String getContextPath() {
 		return (mappingData.contextPath.toString());
 	}
@@ -1760,6 +1792,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the set of Cookies received with this Request.
 	 */
+	@Override
 	public Cookie[] getCookies() {
 
 		if (!cookiesParsed)
@@ -1789,6 +1822,7 @@ public class Request implements HttpServletRequest {
 	 *                if the specified header value cannot be converted to a
 	 *                date
 	 */
+	@Override
 	public long getDateHeader(String name) {
 
 		String value = getHeader(name);
@@ -1811,6 +1845,7 @@ public class Request implements HttpServletRequest {
 	 * @param name
 	 *            Name of the requested header
 	 */
+	@Override
 	public String getHeader(String name) {
 		return coyoteRequest.getHeader(name);
 	}
@@ -1822,6 +1857,7 @@ public class Request implements HttpServletRequest {
 	 * @param name
 	 *            Name of the requested header
 	 */
+	@Override
 	public Enumeration getHeaders(String name) {
 		return coyoteRequest.getMimeHeaders().values(name);
 	}
@@ -1829,6 +1865,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the names of all headers received with this request.
 	 */
+	@Override
 	public Enumeration getHeaderNames() {
 		return coyoteRequest.getMimeHeaders().names();
 	}
@@ -1844,6 +1881,7 @@ public class Request implements HttpServletRequest {
 	 *                if the specified header value cannot be converted to an
 	 *                integer
 	 */
+	@Override
 	public int getIntHeader(String name) {
 
 		String value = getHeader(name);
@@ -1858,6 +1896,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the HTTP request method used in this Request.
 	 */
+	@Override
 	public String getMethod() {
 		return coyoteRequest.method().toString();
 	}
@@ -1865,6 +1904,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the path information associated with this Request.
 	 */
+	@Override
 	public String getPathInfo() {
 		return (mappingData.pathInfo.toString());
 	}
@@ -1882,6 +1922,7 @@ public class Request implements HttpServletRequest {
 	 * Return the extra path information for this request, translated to a real
 	 * path.
 	 */
+	@Override
 	public String getPathTranslated() {
 
 		if (context == null)
@@ -1898,6 +1939,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the query string associated with this request.
 	 */
+	@Override
 	public String getQueryString() {
 		String queryString = coyoteRequest.queryString().toString();
 		if (!ALLOW_EMPTY_QUERY_STRING && "".equals(queryString)) {
@@ -1911,6 +1953,7 @@ public class Request implements HttpServletRequest {
 	 * Return the name of the remote user that has been authenticated for this
 	 * Request.
 	 */
+	@Override
 	public String getRemoteUser() {
 
 		if (userPrincipal != null) {
@@ -1933,6 +1976,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the session identifier included in this request, if any.
 	 */
+	@Override
 	public String getRequestedSessionId() {
 		return (requestedSessionId);
 	}
@@ -1940,6 +1984,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the request URI for this request.
 	 */
+	@Override
 	public String getRequestURI() {
 		return coyoteRequest.requestURI().toString();
 	}
@@ -1959,6 +2004,7 @@ public class Request implements HttpServletRequest {
 	 * @return A <code>StringBuffer</code> object containing the reconstructed
 	 *         URL
 	 */
+	@Override
 	public StringBuffer getRequestURL() {
 
 		StringBuffer url = new StringBuffer();
@@ -1984,6 +2030,7 @@ public class Request implements HttpServletRequest {
 	 * Return the portion of the request URI used to select the servlet that
 	 * will process this request.
 	 */
+	@Override
 	public String getServletPath() {
 		return (mappingData.wrapperPath.toString());
 	}
@@ -2001,6 +2048,7 @@ public class Request implements HttpServletRequest {
 	 * Return the session associated with this Request, creating one if
 	 * necessary.
 	 */
+	@Override
 	public HttpSession getSession() {
 		Session session = doGetSession(true);
 		if (session != null) {
@@ -2017,6 +2065,7 @@ public class Request implements HttpServletRequest {
 	 * @param create
 	 *            Create a new session if one does not exist
 	 */
+	@Override
 	public HttpSession getSession(boolean create) {
 		Session session = doGetSession(create);
 		if (session != null) {
@@ -2030,6 +2079,7 @@ public class Request implements HttpServletRequest {
 	 * Return <code>true</code> if the session identifier included in this
 	 * request came from a cookie.
 	 */
+	@Override
 	public boolean isRequestedSessionIdFromCookie() {
 
 		if (requestedSessionId != null)
@@ -2043,6 +2093,7 @@ public class Request implements HttpServletRequest {
 	 * Return <code>true</code> if the session identifier included in this
 	 * request came from the request URI.
 	 */
+	@Override
 	public boolean isRequestedSessionIdFromURL() {
 
 		if (requestedSessionId != null)
@@ -2059,6 +2110,8 @@ public class Request implements HttpServletRequest {
 	 * @deprecated As of Version 2.1 of the Java Servlet API, use
 	 *             <code>isRequestedSessionIdFromURL()</code> instead.
 	 */
+	@Deprecated
+	@Override
 	public boolean isRequestedSessionIdFromUrl() {
 		return (isRequestedSessionIdFromURL());
 	}
@@ -2067,6 +2120,7 @@ public class Request implements HttpServletRequest {
 	 * Return <code>true</code> if the session identifier included in this
 	 * request identifies a valid session.
 	 */
+	@Override
 	public boolean isRequestedSessionIdValid() {
 
 		if (requestedSessionId == null)
@@ -2096,6 +2150,7 @@ public class Request implements HttpServletRequest {
 	 * @param role
 	 *            Role name to be validated
 	 */
+	@Override
 	public boolean isUserInRole(String role) {
 
 		// Have we got an authenticated principal at all?
@@ -2131,6 +2186,7 @@ public class Request implements HttpServletRequest {
 	/**
 	 * Return the principal that has been authenticated for this Request.
 	 */
+	@Override
 	public Principal getUserPrincipal() {
 		if (userPrincipal instanceof GenericPrincipal) {
 			return ((GenericPrincipal) userPrincipal).getUserPrincipal();

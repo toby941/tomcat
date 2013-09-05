@@ -246,7 +246,8 @@ public class ContextConfig
      *
      * @param event The lifecycle event that has occurred
      */
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
 
         // Identify the context we are associated with
         try {
@@ -259,9 +260,9 @@ public class ContextConfig
         // Process the event that has occurred
         if (event.getType().equals(Lifecycle.START_EVENT)) {
             start();
-        } else if (event.getType().equals(StandardContext.BEFORE_START_EVENT)) {
+        } else if (event.getType().equals(Lifecycle.BEFORE_START_EVENT)) {
             beforeStart();
-        } else if (event.getType().equals(StandardContext.AFTER_START_EVENT)) {
+        } else if (event.getType().equals(Lifecycle.AFTER_START_EVENT)) {
             // Restore docBase for management tools
             if (originalDocBase != null) {
                 String docBase = context.getDocBase();
@@ -1377,15 +1378,18 @@ public class ContextConfig
     protected class ContextErrorHandler
         implements ErrorHandler {
 
-        public void error(SAXParseException exception) {
+        @Override
+		public void error(SAXParseException exception) {
             parseException = exception;
         }
 
-        public void fatalError(SAXParseException exception) {
+        @Override
+		public void fatalError(SAXParseException exception) {
             parseException = exception;
         }
 
-        public void warning(SAXParseException exception) {
+        @Override
+		public void warning(SAXParseException exception) {
             parseException = exception;
         }
 

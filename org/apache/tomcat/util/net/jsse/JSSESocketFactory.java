@@ -141,7 +141,8 @@ public class JSSESocketFactory
     public JSSESocketFactory () {
     }
 
-    public ServerSocket createSocket (int port)
+    @Override
+	public ServerSocket createSocket (int port)
         throws IOException
     {
         if (!initialized) init();
@@ -150,7 +151,8 @@ public class JSSESocketFactory
         return socket;
     }
     
-    public ServerSocket createSocket (int port, int backlog)
+    @Override
+	public ServerSocket createSocket (int port, int backlog)
         throws IOException
     {
         if (!initialized) init();
@@ -159,7 +161,8 @@ public class JSSESocketFactory
         return socket;
     }
     
-    public ServerSocket createSocket (int port, int backlog,
+    @Override
+	public ServerSocket createSocket (int port, int backlog,
                                       InetAddress ifAddress)
         throws IOException
     {   
@@ -170,7 +173,8 @@ public class JSSESocketFactory
         return socket;
     }
     
-    public Socket acceptSocket(ServerSocket socket)
+    @Override
+	public Socket acceptSocket(ServerSocket socket)
         throws IOException
     {
         SSLSocket asock = null;
@@ -183,7 +187,8 @@ public class JSSESocketFactory
         return asock;
     }
     
-    public void handshake(Socket sock) throws IOException {
+    @Override
+	public void handshake(Socket sock) throws IOException {
         ((SSLSocket)sock).startHandshake();
 
         if (!allowUnsafeLegacyRenegotiation && !RFC_5746_SUPPORTED) {

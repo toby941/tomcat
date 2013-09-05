@@ -66,7 +66,8 @@ public class NamingContextBindingsEnumeration
     /**
      * Retrieves the next element in the enumeration.
      */
-    public Object next()
+    @Override
+	public Object next()
         throws NamingException {
         return nextElementInternal();
     }
@@ -75,7 +76,8 @@ public class NamingContextBindingsEnumeration
     /**
      * Determines whether there are any more elements in the enumeration.
      */
-    public boolean hasMore()
+    @Override
+	public boolean hasMore()
         throws NamingException {
         return iterator.hasNext();
     }
@@ -84,17 +86,20 @@ public class NamingContextBindingsEnumeration
     /**
      * Closes this enumeration.
      */
-    public void close()
+    @Override
+	public void close()
         throws NamingException {
     }
 
 
-    public boolean hasMoreElements() {
+    @Override
+	public boolean hasMoreElements() {
         return iterator.hasNext();
     }
 
 
-    public Object nextElement() {
+    @Override
+	public Object nextElement() {
         try {
             return nextElementInternal();
         } catch (NamingException e) {

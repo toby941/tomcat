@@ -522,7 +522,8 @@ public class ResourceAttributes implements Attributes {
      * @param lastModified New last modified date value
      * @deprecated
      */
-    public void setLastModified(Date lastModified) {
+    @Deprecated
+	public void setLastModified(Date lastModified) {
         setLastModifiedDate(lastModified);
     }
 
@@ -752,7 +753,8 @@ public class ResourceAttributes implements Attributes {
      * @return strong ETag if available, else weak ETag.
      * @deprecated
      */
-    public String getETag(boolean strong) {
+    @Deprecated
+	public String getETag(boolean strong) {
         return getETag();
     }
 
@@ -785,7 +787,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Get attribute.
      */
-    public Attribute get(String attrID) {
+    @Override
+	public Attribute get(String attrID) {
         if (attributes == null) {
             if (attrID.equals(CREATION_DATE)) {
                 Date creationDate = getCreationDate();
@@ -842,7 +845,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Put attribute.
      */
-    public Attribute put(Attribute attribute) {
+    @Override
+	public Attribute put(Attribute attribute) {
         if (attributes == null) {
             try {
                 return put(attribute.getID(), attribute.get());
@@ -858,7 +862,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Put attribute.
      */
-    public Attribute put(String attrID, Object val) {
+    @Override
+	public Attribute put(String attrID, Object val) {
         if (attributes == null) {
             return null; // No reason to implement this
         } else {
@@ -870,7 +875,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Remove attribute.
      */
-    public Attribute remove(String attrID) {
+    @Override
+	public Attribute remove(String attrID) {
         if (attributes == null) {
             return null; // No reason to implement this
         } else {
@@ -882,7 +888,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Get all attributes.
      */
-    public NamingEnumeration getAll() {
+    @Override
+	public NamingEnumeration getAll() {
         if (attributes == null) {
             Vector attributes = new Vector();
             Date creationDate = getCreationDate();
@@ -929,7 +936,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Get all attribute IDs.
      */
-    public NamingEnumeration getIDs() {
+    @Override
+	public NamingEnumeration getIDs() {
         if (attributes == null) {
             Vector attributeIDs = new Vector();
             Date creationDate = getCreationDate();
@@ -970,7 +978,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Retrieves the number of attributes in the attribute set.
      */
-    public int size() {
+    @Override
+	public int size() {
         if (attributes == null) {
             int size = 0;
             if (getCreationDate() != null) size += 2;
@@ -989,7 +998,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Clone the attributes object (WARNING: fake cloning).
      */
-    public Object clone() {
+    @Override
+	public Object clone() {
         return this;
     }
     
@@ -997,7 +1007,8 @@ public class ResourceAttributes implements Attributes {
     /**
      * Case sensitivity.
      */
-    public boolean isCaseIgnored() {
+    @Override
+	public boolean isCaseIgnored() {
         return false;
     }
     

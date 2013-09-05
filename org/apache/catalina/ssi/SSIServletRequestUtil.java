@@ -65,7 +65,8 @@ public class SSIServletRequestUtil {
      *            Path to be normalized
      * @deprecated
      */
-    public static String normalize(String path) {
+    @Deprecated
+	public static String normalize(String path) {
         return RequestUtil.normalize(path);
     }
 }

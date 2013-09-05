@@ -55,7 +55,8 @@ public class BodyTagSupport extends TagSupport implements BodyTag {
      * @see BodyTag#doStartTag
      */
  
-    public int doStartTag() throws JspException {
+    @Override
+	public int doStartTag() throws JspException {
         return EVAL_BODY_BUFFERED;
     }
 
@@ -68,7 +69,8 @@ public class BodyTagSupport extends TagSupport implements BodyTag {
      * @see Tag#doEndTag
      */
 
-    public int doEndTag() throws JspException {
+    @Override
+	public int doEndTag() throws JspException {
 	return super.doEndTag();
     }
 
@@ -84,7 +86,8 @@ public class BodyTagSupport extends TagSupport implements BodyTag {
      * @see BodyTag#setBodyContent
      */
 
-    public void setBodyContent(BodyContent b) {
+    @Override
+	public void setBodyContent(BodyContent b) {
 	this.bodyContent = b;
     }
 
@@ -99,7 +102,8 @@ public class BodyTagSupport extends TagSupport implements BodyTag {
      * @see BodyTag#doInitBody
      */
 
-    public void doInitBody() throws JspException {
+    @Override
+	public void doInitBody() throws JspException {
     }
 
 
@@ -113,7 +117,8 @@ public class BodyTagSupport extends TagSupport implements BodyTag {
      * @see BodyTag#doAfterBody
      */
 
-    public int doAfterBody() throws JspException {
+    @Override
+	public int doAfterBody() throws JspException {
  	return SKIP_BODY;
     }
 
@@ -124,7 +129,8 @@ public class BodyTagSupport extends TagSupport implements BodyTag {
      * @see Tag#release
      */
 
-    public void release() {
+    @Override
+	public void release() {
 	bodyContent = null;
 
 	super.release();

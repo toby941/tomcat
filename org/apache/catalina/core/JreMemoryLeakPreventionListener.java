@@ -237,6 +237,7 @@ public class JreMemoryLeakPreventionListener implements LifecycleListener {
 		this.classesToInitialize = classesToInitialize;
 	}
 
+	@Override
 	public void lifecycleEvent(LifecycleEvent event) {
 		// Initialise these classes when Tomcat starts
 		if (Lifecycle.INIT_EVENT.equals(event.getType())) {

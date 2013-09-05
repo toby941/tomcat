@@ -52,7 +52,8 @@ public class FailedRequestFilter extends FilterBase implements CometFilter {
         return log;
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response,
+    @Override
+	public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain) throws IOException, ServletException {
         if (!isGoodRequest(request)) {
             ((HttpServletResponse) response)
@@ -62,7 +63,8 @@ public class FailedRequestFilter extends FilterBase implements CometFilter {
         chain.doFilter(request, response);
     }
 
-    public void doFilterEvent(CometEvent event, CometFilterChain chain)
+    @Override
+	public void doFilterEvent(CometEvent event, CometFilterChain chain)
             throws IOException, ServletException {
         if (event.getEventType() == CometEvent.EventType.BEGIN
                 && !isGoodRequest(event.getHttpServletRequest())) {

@@ -72,7 +72,8 @@ public final class MessageBytes implements Cloneable, Serializable {
      * @deprecated Use static newInstance() in order to allow
      *   future hooks.
      */
-    public MessageBytes() {
+    @Deprecated
+	public MessageBytes() {
     }
 
     /** Construct a new MessageBytes instance
@@ -202,7 +203,8 @@ public final class MessageBytes implements Cloneable, Serializable {
 
     /** Compute the string value
      */
-    public String toString() {
+    @Override
+	public String toString() {
         if( hasStrValue ) return strValue;
         
         switch (type) {
@@ -419,7 +421,8 @@ public final class MessageBytes implements Cloneable, Serializable {
     
 
     // -------------------- Hash code  --------------------
-    public  int hashCode() {
+    @Override
+	public  int hashCode() {
 	if( hasHashCode ) return hashCode;
 	int code = 0;
 
@@ -553,7 +556,8 @@ public final class MessageBytes implements Cloneable, Serializable {
      *  be done in headers. The second parameter allows us to pass a date format
      * instance to avoid synchronization problems.
      */
-    public void setTime(long t, DateFormat df) {
+    @Deprecated
+	public void setTime(long t, DateFormat df) {
 	// XXX replace it with a byte[] tool
 	recycle();
 	if( dateValue==null)
@@ -572,7 +576,8 @@ public final class MessageBytes implements Cloneable, Serializable {
     /**
      * @deprecated
      */
-    public void setTime(long t) {
+    @Deprecated
+	public void setTime(long t) {
 	setTime( t, null );
     }
 
@@ -666,7 +671,8 @@ public final class MessageBytes implements Cloneable, Serializable {
      *  @deprecated The buffer are general purpose, caching for headers should
      *  be done in headers
      */
-    public  long getTime()
+    @Deprecated
+	public  long getTime()
     {
      	if( hasDateValue ) {
 	    if( dateValue==null) return -1;

@@ -78,7 +78,8 @@ public class NioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
 //        return interestOpsMutex;
 //    }
 
-    public void stop() {
+    @Override
+	public void stop() {
         this.stopListening();
         super.stop();
     }
@@ -88,7 +89,8 @@ public class NioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
      * @throws Exception
      * @see org.apache.catalina.tribes.ClusterReceiver#start()
      */
-    public void start() throws IOException {
+    @Override
+	public void start() throws IOException {
         super.start();
         try {
             setPool(new RxTaskPool(getMaxThreads(),getMinThreads(),this));
@@ -110,7 +112,8 @@ public class NioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
         }
     }
     
-    public AbstractRxTask createRxTask() {
+    @Override
+	public AbstractRxTask createRxTask() {
         NioReplicationTask thread = new NioReplicationTask(this,this);
         thread.setUseBufferPool(this.getUseBufferPool());
         thread.setRxBufSize(getRxBufSize());
@@ -200,7 +203,7 @@ public class NioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
                     ObjectReader ka = (ObjectReader) key.attachment();
                     if ( ka != null ) {
                         long delta = now - ka.getLastAccess();
-                        if (delta > (long) getTimeout() && (!ka.isAccessed())) {
+                        if (delta > getTimeout() && (!ka.isAccessed())) {
                             log.warn("Channel key is registered, but has had no interest ops for the last "+getTimeout()+" ms. (cancelled:"+ka.isCancelled()+"):"+key+" last access:"+new java.sql.Timestamp(ka.getLastAccess()));
 //                            System.out.println("Interest:"+key.interestOps());
 //                            System.out.println("Ready Ops:"+key.readyOps());
@@ -348,7 +351,8 @@ public class NioReceiver extends ReceiverBase implements Runnable, ChannelReceiv
     /**
      * Start thread and listen
      */
-    public void run() {
+    @Override
+	public void run() {
         try {
             listen();
         } catch (Exception x) {

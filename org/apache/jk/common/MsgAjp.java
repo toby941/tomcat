@@ -76,7 +76,8 @@ public class MsgAjp extends Msg {
      * No arg constructor.
      * @deprecated Use the buffer size constructor.
      */
-    public MsgAjp() {
+    @Deprecated
+	public MsgAjp() {
         this(AjpConstants.MAX_PACKET_SIZE);
     }
 
@@ -85,7 +86,8 @@ public class MsgAjp extends Msg {
      * the web server.  Set the write position to just after the header
      * (but leave the length unwritten, because it is as yet unknown).
      */
-    public void reset() {
+    @Override
+	public void reset() {
         len = 4;
         pos = 4;
     }
@@ -95,7 +97,8 @@ public class MsgAjp extends Msg {
      * accumulating data and write the length of the data payload into
      * the header.  
      */
-    public void end() {
+    @Override
+	public void end() {
         len=pos;
         int dLen=len-4;
 
@@ -105,11 +108,13 @@ public class MsgAjp extends Msg {
         buf[3] = (byte)(dLen & 0xFF);
     }
 
-    public byte[] getBuffer() {
+    @Override
+	public byte[] getBuffer() {
         return buf;
     }
 
-    public int getLen() {
+    @Override
+	public int getLen() {
         return len;
     }
     
@@ -120,16 +125,19 @@ public class MsgAjp extends Msg {
      *
      * @param val The integer to write.
      */
-    public void appendInt( int val ) {
+    @Override
+	public void appendInt( int val ) {
         buf[pos++]   = (byte) ((val >>>  8) & 0xFF);
         buf[pos++] = (byte) (val & 0xFF);
     }
 
-    public void appendByte( int val ) {
+    @Override
+	public void appendByte( int val ) {
         buf[pos++] = (byte)val;
     }
 	
-    public void appendLongInt( int val ) {
+    @Override
+	public void appendLongInt( int val ) {
         buf[pos++]   = (byte) ((val >>>  24) & 0xFF);
         buf[pos++] = (byte) ((val >>>  16) & 0xFF);
         buf[pos++] = (byte) ((val >>>   8) & 0xFF);
@@ -144,7 +152,8 @@ public class MsgAjp extends Msg {
      * code, where it saves a round of copying.  A null string is
      * encoded as a string with length 0.  
      */
-    public void appendBytes(MessageBytes mb) throws IOException {
+    @Override
+	public void appendBytes(MessageBytes mb) throws IOException {
         if(mb==null || mb.isNull() ) {
             appendInt( 0);
             appendByte(0);
@@ -161,7 +170,8 @@ public class MsgAjp extends Msg {
         }
     }
 
-    public void appendByteChunk(ByteChunk bc) throws IOException {
+    @Override
+	public void appendByteChunk(ByteChunk bc) throws IOException {
         if(bc==null) {
             log.error("appendByteChunk() null");
             appendInt( 0);
@@ -248,7 +258,8 @@ public class MsgAjp extends Msg {
      * @param off The offset into the array at which to start copying
      * @param numBytes The number of bytes to copy.  
      */
-    public void appendBytes( byte b[], int off, int numBytes ) {
+    @Override
+	public void appendBytes( byte b[], int off, int numBytes ) {
         appendInt( numBytes );
         cpBytes( b, off, numBytes );
         appendByte(0);
@@ -277,31 +288,36 @@ public class MsgAjp extends Msg {
      * high-order byte first, and, as far as I can tell, in
      * little-endian order within each byte.  
      */
-    public int getInt() {
+    @Override
+	public int getInt() {
         int b1 = buf[pos++] & 0xFF;  // No swap, Java order
         int b2 = buf[pos++] & 0xFF;
 
         return  (b1<<8) + b2;
     }
 
-    public int peekInt() {
+    @Override
+	public int peekInt() {
         int b1 = buf[pos] & 0xFF;  // No swap, Java order
         int b2 = buf[pos+1] & 0xFF;
 
         return  (b1<<8) + b2;
     }
 
-    public byte getByte() {
+    @Override
+	public byte getByte() {
         byte res = buf[pos++];
         return res;
     }
 
-    public byte peekByte() {
+    @Override
+	public byte peekByte() {
         byte res = buf[pos];
         return res;
     }
 
-    public void getBytes(MessageBytes mb) {
+    @Override
+	public void getBytes(MessageBytes mb) {
         int length = getInt();
         if( (length == 0xFFFF) || (length == -1) ) {
             mb.recycle();
@@ -320,7 +336,8 @@ public class MsgAjp extends Msg {
      *
      * @return The number of bytes copied.
      */
-    public int getBytes(byte dest[]) {
+    @Override
+	public int getBytes(byte dest[]) {
         int length = getInt();
         if( length > buf.length ) {
             // XXX Should be if(pos + length > buff.legth)?
@@ -344,7 +361,8 @@ public class MsgAjp extends Msg {
      * high-order byte first, and, as far as I can tell, in
      * little-endian order within each byte.
      */
-    public int getLongInt() {
+    @Override
+	public int getLongInt() {
         int b1 = buf[pos++] & 0xFF;  // No swap, Java order
         b1 <<= 8;
         b1 |= (buf[pos++] & 0xFF);
@@ -355,11 +373,13 @@ public class MsgAjp extends Msg {
         return  b1;
     }
 
-    public int getHeaderLength() {
+    @Override
+	public int getHeaderLength() {
         return 4;
     }
 
-    public int processHeader() {
+    @Override
+	public int processHeader() {
         pos = 0;
         int mark = getInt();
         len      = getInt();
@@ -376,7 +396,8 @@ public class MsgAjp extends Msg {
         return len;
     }
     
-    public void dump(String msg) {
+    @Override
+	public void dump(String msg) {
         if( log.isDebugEnabled() ) 
             log.debug( msg + ": " + buf + " " + pos +"/" + (len + 4));
         int max=pos;

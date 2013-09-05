@@ -105,7 +105,8 @@ public final class ClientAbortException extends IOException {
     /**
      * Returns the message associated with this exception, if any.
      */
-    public String getMessage() {
+    @Override
+	public String getMessage() {
 
         return (message);
 
@@ -115,7 +116,8 @@ public final class ClientAbortException extends IOException {
     /**
      * Returns the cause that caused this exception, if any.
      */
-    public Throwable getCause() {
+    @Override
+	public Throwable getCause() {
         
         return (throwable);
         
@@ -125,7 +127,8 @@ public final class ClientAbortException extends IOException {
     /**
      * Return a formatted string that describes this exception.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("ClientAbortException:  ");
         if (message != null) {

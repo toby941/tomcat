@@ -34,7 +34,8 @@ public interface TcpConnectionHandler {
      *  @deprecated This has nothing to do with TcpHandling,
      *  was used as a workaround
      */
-    public void setServer(Object manager);
+    @Deprecated
+	public void setServer(Object manager);
 
     
     /** Used to pass config informations to the handler.
@@ -42,7 +43,8 @@ public interface TcpConnectionHandler {
      *  @deprecated This has nothing to do with Tcp,
      *    was used as a workaround.
      */
-    public void setAttribute(String name, Object value );
+    @Deprecated
+	public void setAttribute(String name, Object value );
     
     /** Called before the call to processConnection.
      *  If the thread is reused, init() should be called once per thread.

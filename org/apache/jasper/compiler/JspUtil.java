@@ -587,7 +587,8 @@ public class JspUtil {
      * @param err an error dispatcher to use
      * @deprecated now delegated to the org.apache.el Package
      */
-    public static void validateExpressions(Mark where,
+    @Deprecated
+	public static void validateExpressions(Mark where,
                                            String expressions,
                                            Class expectedType,
                                            FunctionMapper functionMapper,
@@ -614,7 +615,8 @@ public class JspUtil {
      * (not thread-safe)
      * @deprecated
      */
-    public static void resetTemporaryVariableName() {
+    @Deprecated
+	public static void resetTemporaryVariableName() {
         tempSequenceNumber = 0;
     }
 
@@ -623,7 +625,8 @@ public class JspUtil {
      * (not thread-safe)
      * @deprecated
      */
-    public static String nextTemporaryVariableName() {
+    @Deprecated
+	public static String nextTemporaryVariableName() {
         return Constants.TEMP_VARIABLE_NAME_PREFIX + (tempSequenceNumber++);
     }
 
@@ -868,7 +871,8 @@ public class JspUtil {
      *             ErrorDispatcher)}
      *             See https://issues.apache.org/bugzilla/show_bug.cgi?id=46471
      */
-    public static String getTagHandlerClassName(String path,
+    @Deprecated
+	public static String getTagHandlerClassName(String path,
                         ErrorDispatcher err)
                 throws JasperException {
         return getTagHandlerClassName(path, null, err);

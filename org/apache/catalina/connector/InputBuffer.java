@@ -257,7 +257,8 @@ public class InputBuffer extends Reader
      * 
      * @throws IOException An underlying IOException occurred
      */
-    public void close()
+    @Override
+	public void close()
         throws IOException {
         closed = true;
     }
@@ -290,7 +291,8 @@ public class InputBuffer extends Reader
      * 
      * @throws IOException An underlying IOException occurred
      */
-    public int realReadBytes(byte cbuf[], int off, int len)
+    @Override
+	public int realReadBytes(byte cbuf[], int off, int len)
 	throws IOException {
 
         if (closed)
@@ -337,7 +339,8 @@ public class InputBuffer extends Reader
      * been read before, they are ignored. If a mark was set, then the
      * mark is lost.
      */
-    public void realWriteChars(char c[], int off, int len) 
+    @Override
+	public void realWriteChars(char c[], int off, int len) 
         throws IOException {
         markPos = -1;
         cb.setOffset(0);
@@ -350,7 +353,8 @@ public class InputBuffer extends Reader
     }
 
 
-    public int realReadChars(char cbuf[], int off, int len)
+    @Override
+	public int realReadChars(char cbuf[], int off, int len)
         throws IOException {
 
         if (!gotEnc)
@@ -379,7 +383,8 @@ public class InputBuffer extends Reader
     }
 
 
-    public int read()
+    @Override
+	public int read()
         throws IOException {
 
         if (closed)
@@ -389,7 +394,8 @@ public class InputBuffer extends Reader
     }
 
 
-    public int read(char[] cbuf)
+    @Override
+	public int read(char[] cbuf)
         throws IOException {
 
         if (closed)
@@ -399,7 +405,8 @@ public class InputBuffer extends Reader
     }
 
 
-    public int read(char[] cbuf, int off, int len)
+    @Override
+	public int read(char[] cbuf, int off, int len)
         throws IOException {
 
         if (closed)
@@ -409,7 +416,8 @@ public class InputBuffer extends Reader
     }
 
 
-    public long skip(long n)
+    @Override
+	public long skip(long n)
         throws IOException {
 
 
@@ -445,7 +453,8 @@ public class InputBuffer extends Reader
     }
 
 
-    public boolean ready()
+    @Override
+	public boolean ready()
         throws IOException {
 
         if (closed)
@@ -455,12 +464,14 @@ public class InputBuffer extends Reader
     }
 
 
-    public boolean markSupported() {
+    @Override
+	public boolean markSupported() {
         return true;
     }
 
 
-    public void mark(int readAheadLimit)
+    @Override
+	public void mark(int readAheadLimit)
         throws IOException {
 
         if (closed)
@@ -483,7 +494,8 @@ public class InputBuffer extends Reader
     }
 
 
-    public void reset()
+    @Override
+	public void reset()
         throws IOException {
 
         if (closed)
@@ -528,7 +540,8 @@ public class InputBuffer extends Reader
                     conv = (B2CConverter)AccessController.doPrivileged(
                             new PrivilegedExceptionAction(){
 
-                                public Object run() throws IOException{
+                                @Override
+								public Object run() throws IOException{
                                     return new B2CConverter(enc);
                                 }
 

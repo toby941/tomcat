@@ -186,7 +186,8 @@ public class JAASRealm
      * setter for the <code>appName</code> member variable
      * @deprecated JAAS should use the <code>Engine</code> (domain) name and webpp/host overrides
      */
-    public void setAppName(String name) {
+    @Deprecated
+	public void setAppName(String name) {
         appName = name;
     }
     
@@ -218,7 +219,8 @@ public class JAASRealm
 	return useContextClassLoader;
     } 
 
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
         super.setContainer(container);
 
         if( appName==null  ) {
@@ -330,7 +332,8 @@ public class JAASRealm
      * @param credentials Password or other credentials to use in
      *  authenticating this username
      */
-    public Principal authenticate(String username, String credentials) {
+    @Override
+	public Principal authenticate(String username, String credentials) {
         return authenticate(username,
                 new JAASCallbackHandler(this, username, credentials));
     }
@@ -350,7 +353,8 @@ public class JAASRealm
      * @param md5a2         Second MD5 digest used to calculate the digest
      *                          MD5(Method + ":" + uri)
      */
-    public Principal authenticate(String username, String clientDigest,
+    @Override
+	public Principal authenticate(String username, String clientDigest,
             String nonce, String nc, String cnonce, String qop,
             String realmName, String md5a2) {
         return authenticate(username,
@@ -456,7 +460,8 @@ public class JAASRealm
     /**
      * Return a short name for this <code>Realm</code> implementation.
      */
-    protected String getName() {
+    @Override
+	protected String getName() {
 
         return (name);
 
@@ -468,7 +473,8 @@ public class JAASRealm
      * always returns null as the JAASRealm has no way of obtaining this
      * information.
      */
-    protected String getPassword(String username) {
+    @Override
+	protected String getPassword(String username) {
 
         return (null);
 
@@ -478,7 +484,8 @@ public class JAASRealm
     /**
      * Return the <code>Principal</code> associated with the given user name.
      */
-    protected Principal getPrincipal(String username) {
+    @Override
+	protected Principal getPrincipal(String username) {
 
         return authenticate(username,
                 new JAASCallbackHandler(this, username, null, null, null, null,
@@ -492,7 +499,8 @@ public class JAASRealm
      * @deprecated
      * Use {@link JAASRealm#createPrincipal(String, Subject, LoginContext)}
      */
-    protected Principal createPrincipal(String username, Subject subject) {
+    @Deprecated
+	protected Principal createPrincipal(String username, Subject subject) {
         // Prepare to scan the Principals for this Subject
 
         List<String> roles = new ArrayList<String>();
@@ -602,7 +610,8 @@ public class JAASRealm
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents it from being started
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Perform normal superclass initialization
         super.start();
@@ -620,7 +629,8 @@ public class JAASRealm
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Perform normal superclass finalization
         super.stop();

@@ -64,7 +64,8 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
     /** 
      * Compile the servlet from .java file to .class file
      */
-    protected void generateClass(String[] smap)
+    @Override
+	protected void generateClass(String[] smap)
         throws FileNotFoundException, JasperException, Exception {
 
         long t1 = 0;
@@ -93,11 +94,13 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
                 this.sourceFile = sourceFile;
             }
 
-            public char[] getFileName() {
+            @Override
+			public char[] getFileName() {
                 return sourceFile.toCharArray();
             }
             
-            public char[] getContents() {
+            @Override
+			public char[] getContents() {
                 char[] result = null;
                 FileInputStream is = null;
                 try {
@@ -129,7 +132,8 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
                 return result;
             }
             
-            public char[] getMainTypeName() {
+            @Override
+			public char[] getMainTypeName() {
                 int dot = className.lastIndexOf('.');
                 if (dot > 0) {
                     return className.substring(dot + 1).toCharArray();
@@ -137,7 +141,8 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
                 return className.toCharArray();
             }
             
-            public char[][] getPackageName() {
+            @Override
+			public char[][] getPackageName() {
                 StringTokenizer izer = 
                     new StringTokenizer(className, ".");
                 char[][] result = new char[izer.countTokens()-1][];
@@ -148,14 +153,16 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
                 return result;
             }
 
-            public boolean ignoreOptionalProblems() {
+            @Override
+			public boolean ignoreOptionalProblems() {
                 return false;
             }
         }
 
         final INameEnvironment env = new INameEnvironment() {
 
-                public NameEnvironmentAnswer 
+                @Override
+				public NameEnvironmentAnswer 
                     findType(char[][] compoundTypeName) {
                     String result = "";
                     String sep = "";
@@ -167,7 +174,8 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
                     return findType(result);
                 }
 
-                public NameEnvironmentAnswer 
+                @Override
+				public NameEnvironmentAnswer 
                     findType(char[] typeName, 
                              char[][] packageName) {
                         String result = "";
@@ -239,7 +247,8 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
                     return is == null;
                 }
 
-                public boolean isPackage(char[][] parentPackageName, 
+                @Override
+				public boolean isPackage(char[][] parentPackageName, 
                                          char[] packageName) {
                     String result = "";
                     String sep = "";
@@ -262,7 +271,8 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
                     return isPackage(result);
                 }
 
-                public void cleanup() {
+                @Override
+				public void cleanup() {
                 }
 
             };
@@ -368,7 +378,8 @@ public class JDTCompiler extends org.apache.jasper.compiler.Compiler {
             new DefaultProblemFactory(Locale.getDefault());
         
         final ICompilerRequestor requestor = new ICompilerRequestor() {
-                public void acceptResult(CompilationResult result) {
+                @Override
+				public void acceptResult(CompilationResult result) {
                     try {
                         if (result.hasProblems()) {
                             IProblem[] problems = result.getProblems();

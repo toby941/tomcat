@@ -47,6 +47,7 @@ public class HttpRequestPoolExecutor extends ThreadPoolExecutor {
 		public LogAlarmPolicy() {
 		}
 
+		@Override
 		public void rejectedExecution(Runnable r, ThreadPoolExecutor e) {
 			HttpCallable alertCallable = (HttpCallable) r;
 			Map<String, String> alarmInfo = alertCallable.getPostMap();

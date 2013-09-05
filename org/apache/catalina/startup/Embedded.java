@@ -309,7 +309,8 @@ public class Embedded  extends StandardService implements Lifecycle {
      *
      * @exception IllegalStateException if no engines have been added yet
      */
-    public synchronized void addConnector(Connector connector) {
+    @Override
+	public synchronized void addConnector(Connector connector) {
 
         if( log.isDebugEnabled() ) {
             log.debug("Adding connector (" + connector.getInfo() + ")");
@@ -576,7 +577,8 @@ public class Embedded  extends StandardService implements Lifecycle {
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -653,7 +655,7 @@ public class Embedded  extends StandardService implements Lifecycle {
         while (true) {
             int n = -1;
             for (int i = 0; i < connectors.length; i++) {
-                if (connectors[i].getContainer() == (Container) engine) {
+                if (connectors[i].getContainer() == engine) {
                     n = i;
                     break;
                 }
@@ -762,7 +764,8 @@ public class Embedded  extends StandardService implements Lifecycle {
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -773,7 +776,8 @@ public class Embedded  extends StandardService implements Lifecycle {
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -785,7 +789,8 @@ public class Embedded  extends StandardService implements Lifecycle {
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -800,7 +805,8 @@ public class Embedded  extends StandardService implements Lifecycle {
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         if( log.isInfoEnabled() )
             log.info("Starting tomcat server");
@@ -843,7 +849,8 @@ public class Embedded  extends StandardService implements Lifecycle {
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         if( log.isDebugEnabled() )
             log.debug("Stopping embedded server");

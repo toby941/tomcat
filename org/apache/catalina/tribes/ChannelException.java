@@ -80,7 +80,8 @@ public class ChannelException extends Exception {
      * @return String
      * @see java.lang.Exception#getMessage()
      */
-    public String getMessage() {
+    @Override
+	public String getMessage() {
         StringBuffer buf = new StringBuffer(super.getMessage());
         if (faultyMembers==null || faultyMembers.size() == 0 ) {
             buf.append("; No faulty members identified.");
@@ -161,15 +162,18 @@ public class ChannelException extends Exception {
             return cause;
         }
         
-        public String toString() {
+        @Override
+		public String toString() {
             return "FaultyMember:"+member.toString();
         }
         
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return (member!=null)?member.hashCode():0;
         }
         
-        public boolean equals(Object o) {
+        @Override
+		public boolean equals(Object o) {
             if (member==null || (!(o instanceof FaultyMember)) || (((FaultyMember)o).member==null)) return false;
             return member.equals(((FaultyMember)o).member);
         }

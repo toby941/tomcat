@@ -76,7 +76,8 @@ public class RequestDumperValve
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -96,7 +97,8 @@ public class RequestDumperValve
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void invoke(Request request, Response response)
+    @Override
+	public void invoke(Request request, Response response)
         throws IOException, ServletException {
 
         Log log = container.getLogger();
@@ -183,7 +185,8 @@ public class RequestDumperValve
     /**
      * Return a String rendering of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("RequestDumperValve[");
         if (container != null)

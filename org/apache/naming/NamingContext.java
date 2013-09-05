@@ -135,7 +135,8 @@ public class NamingContext implements Context {
      * @return the object bound to name
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookup(Name name)
+    @Override
+	public Object lookup(Name name)
         throws NamingException {
         return lookup(name, true);
     }
@@ -148,7 +149,8 @@ public class NamingContext implements Context {
      * @return the object bound to name
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookup(String name)
+    @Override
+	public Object lookup(String name)
         throws NamingException {
         return lookup(new CompositeName(name), true);
     }
@@ -166,7 +168,8 @@ public class NamingContext implements Context {
      * mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public void bind(Name name, Object obj)
+    @Override
+	public void bind(Name name, Object obj)
         throws NamingException {
         bind(name, obj, false);
     }
@@ -182,7 +185,8 @@ public class NamingContext implements Context {
      * mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public void bind(String name, Object obj)
+    @Override
+	public void bind(String name, Object obj)
         throws NamingException {
         bind(new CompositeName(name), obj);
     }
@@ -203,7 +207,8 @@ public class NamingContext implements Context {
      * mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public void rebind(Name name, Object obj)
+    @Override
+	public void rebind(Name name, Object obj)
         throws NamingException {
         bind(name, obj, true);
     }
@@ -218,7 +223,8 @@ public class NamingContext implements Context {
      * mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public void rebind(String name, Object obj)
+    @Override
+	public void rebind(String name, Object obj)
         throws NamingException {
         rebind(new CompositeName(name), obj);
     }
@@ -238,7 +244,8 @@ public class NamingContext implements Context {
      * exist
      * @exception NamingException if a naming exception is encountered
      */
-    public void unbind(Name name)
+    @Override
+	public void unbind(Name name)
         throws NamingException {
         checkWritable();
         
@@ -277,7 +284,8 @@ public class NamingContext implements Context {
      * exist
      * @exception NamingException if a naming exception is encountered
      */
-    public void unbind(String name)
+    @Override
+	public void unbind(String name)
         throws NamingException {
         unbind(new CompositeName(name));
     }
@@ -294,7 +302,8 @@ public class NamingContext implements Context {
      * @exception NameAlreadyBoundException if newName is already bound
      * @exception NamingException if a naming exception is encountered
      */
-    public void rename(Name oldName, Name newName)
+    @Override
+	public void rename(Name oldName, Name newName)
         throws NamingException {
         Object value = lookup(oldName);
         bind(newName, value);
@@ -311,7 +320,8 @@ public class NamingContext implements Context {
      * @exception NameAlreadyBoundException if newName is already bound
      * @exception NamingException if a naming exception is encountered
      */
-    public void rename(String oldName, String newName)
+    @Override
+	public void rename(String oldName, String newName)
         throws NamingException {
         rename(new CompositeName(oldName), new CompositeName(newName));
     }
@@ -330,7 +340,8 @@ public class NamingContext implements Context {
      * this context. Each element of the enumeration is of type NameClassPair.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration list(Name name)
+    @Override
+	public NamingEnumeration list(Name name)
         throws NamingException {
         // Removing empty parts
         while ((!name.isEmpty()) && (name.get(0).length() == 0))
@@ -363,7 +374,8 @@ public class NamingContext implements Context {
      * this context. Each element of the enumeration is of type NameClassPair.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration list(String name)
+    @Override
+	public NamingEnumeration list(String name)
         throws NamingException {
         return list(new CompositeName(name));
     }
@@ -382,7 +394,8 @@ public class NamingContext implements Context {
      * Each element of the enumeration is of type Binding.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration listBindings(Name name)
+    @Override
+	public NamingEnumeration listBindings(Name name)
         throws NamingException {
         // Removing empty parts
         while ((!name.isEmpty()) && (name.get(0).length() == 0))
@@ -415,7 +428,8 @@ public class NamingContext implements Context {
      * Each element of the enumeration is of type Binding.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration listBindings(String name)
+    @Override
+	public NamingEnumeration listBindings(String name)
         throws NamingException {
         return listBindings(new CompositeName(name));
     }
@@ -446,7 +460,8 @@ public class NamingContext implements Context {
      * @exception NotContextException if the name is bound but does not name 
      * a context, or does not name a context of the appropriate type
      */
-    public void destroySubcontext(Name name)
+    @Override
+	public void destroySubcontext(Name name)
         throws NamingException {
         
         checkWritable();
@@ -493,7 +508,8 @@ public class NamingContext implements Context {
      * @exception NotContextException if the name is bound but does not name 
      * a context, or does not name a context of the appropriate type
      */
-    public void destroySubcontext(String name)
+    @Override
+	public void destroySubcontext(String name)
         throws NamingException {
         destroySubcontext(new CompositeName(name));
     }
@@ -512,7 +528,8 @@ public class NamingContext implements Context {
      * requires specification of mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public Context createSubcontext(Name name)
+    @Override
+	public Context createSubcontext(Name name)
         throws NamingException {
         checkWritable();
         
@@ -533,7 +550,8 @@ public class NamingContext implements Context {
      * requires specification of mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public Context createSubcontext(String name)
+    @Override
+	public Context createSubcontext(String name)
         throws NamingException {
         return createSubcontext(new CompositeName(name));
     }
@@ -549,7 +567,8 @@ public class NamingContext implements Context {
      * (if any).
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookupLink(Name name)
+    @Override
+	public Object lookupLink(Name name)
         throws NamingException {
         return lookup(name, false);
     }
@@ -564,7 +583,8 @@ public class NamingContext implements Context {
      * (if any).
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookupLink(String name)
+    @Override
+	public Object lookupLink(String name)
         throws NamingException {
         return lookup(new CompositeName(name), false);
     }
@@ -584,7 +604,8 @@ public class NamingContext implements Context {
      * components
      * @exception NamingException if a naming exception is encountered
      */
-    public NameParser getNameParser(Name name)
+    @Override
+	public NameParser getNameParser(Name name)
         throws NamingException {
 
         while ((!name.isEmpty()) && (name.get(0).length() == 0))
@@ -615,7 +636,8 @@ public class NamingContext implements Context {
      * components
      * @exception NamingException if a naming exception is encountered
      */
-    public NameParser getNameParser(String name)
+    @Override
+	public NameParser getNameParser(String name)
         throws NamingException {
         return getNameParser(new CompositeName(name));
     }
@@ -636,7 +658,8 @@ public class NamingContext implements Context {
      * @return the composition of prefix and name
      * @exception NamingException if a naming exception is encountered
      */
-    public Name composeName(Name name, Name prefix)
+    @Override
+	public Name composeName(Name name, Name prefix)
         throws NamingException {
         prefix = (Name) prefix.clone();
         return prefix.addAll(name);
@@ -651,7 +674,8 @@ public class NamingContext implements Context {
      * @return the composition of prefix and name
      * @exception NamingException if a naming exception is encountered
      */
-    public String composeName(String name, String prefix)
+    @Override
+	public String composeName(String name, String prefix)
         throws NamingException {
         return prefix + "/" + name;
     }
@@ -666,7 +690,8 @@ public class NamingContext implements Context {
      * @param propVal the value of the property to add; may not be null
      * @exception NamingException if a naming exception is encountered
      */
-    public Object addToEnvironment(String propName, Object propVal)
+    @Override
+	public Object addToEnvironment(String propName, Object propVal)
         throws NamingException {
         return env.put(propName, propVal);
     }
@@ -679,7 +704,8 @@ public class NamingContext implements Context {
      * may not be null
      * @exception NamingException if a naming exception is encountered
      */
-    public Object removeFromEnvironment(String propName)
+    @Override
+	public Object removeFromEnvironment(String propName)
         throws NamingException {
         return env.remove(propName);
     }
@@ -695,7 +721,8 @@ public class NamingContext implements Context {
      * @return the environment of this context; never null
      * @exception NamingException if a naming exception is encountered
      */
-    public Hashtable getEnvironment()
+    @Override
+	public Hashtable getEnvironment()
         throws NamingException {
         return env;
     }
@@ -711,7 +738,8 @@ public class NamingContext implements Context {
      * 
      * @exception NamingException if a naming exception is encountered
      */
-    public void close()
+    @Override
+	public void close()
         throws NamingException {
         env.clear();
     }
@@ -734,7 +762,8 @@ public class NamingContext implements Context {
      * not have the notion of a full name
      * @exception NamingException if a naming exception is encountered
      */
-    public String getNameInNamespace()
+    @Override
+	public String getNameInNamespace()
         throws NamingException {
         throw  new OperationNotSupportedException
             (sm.getString("namingContext.noAbsoluteName"));

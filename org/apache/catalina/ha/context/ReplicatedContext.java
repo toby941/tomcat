@@ -26,18 +26,12 @@ import org.apache.catalina.core.ApplicationContext;
 import org.apache.catalina.Globals;
 import javax.servlet.ServletContext;
 import java.util.AbstractMap;
-import org.apache.catalina.tribes.tipis.AbstractReplicatedMap;
-import java.util.ArrayList;
-import java.util.Iterator;
-import javax.servlet.ServletContextAttributeListener;
-import javax.servlet.ServletContextAttributeEvent;
 import org.apache.catalina.LifecycleEvent;
 import org.apache.catalina.LifecycleListener;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 import org.apache.catalina.util.Enumerator;
 import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapOwner;
-import org.apache.catalina.ha.session.DeltaSession;
 
 /**
  * @author Filip Hanik
@@ -49,7 +43,8 @@ public class ReplicatedContext extends StandardContext implements LifecycleListe
     protected boolean startComplete = false;
     protected static long DEFAULT_REPL_TIMEOUT = 15000;//15 seconds
     
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
         if ( event.getType() == AFTER_START_EVENT ) 
             startComplete = true;
     }
@@ -86,7 +81,7 @@ public class ReplicatedContext extends StandardContext implements LifecycleListe
     public synchronized void stop() throws LifecycleException
     {
         if ( !this.started ) return;
-        AbstractMap map = (AbstractMap)((ReplApplContext)this.context).getAttributeMap();
+        AbstractMap map = ((ReplApplContext)this.context).getAttributeMap();
         if ( map!=null && map instanceof ReplicatedMap) {
             ((ReplicatedMap)map).breakdown();
         }
@@ -125,7 +120,8 @@ public class ReplicatedContext extends StandardContext implements LifecycleListe
         }
     }
     
-    public ServletContext getServletContext() {
+    @Override
+	public ServletContext getServletContext() {
         if (context == null) {
             context = new ReplApplContext(getBasePath(), this);
             if (getAltDDName() != null)
@@ -148,7 +144,8 @@ public class ReplicatedContext extends StandardContext implements LifecycleListe
             return (ReplicatedContext)getContext();
         }
         
-        protected ServletContext getFacade() {
+        @Override
+		protected ServletContext getFacade() {
              return super.getFacade();
         }
         
@@ -159,27 +156,31 @@ public class ReplicatedContext extends StandardContext implements LifecycleListe
             this.attributes = map;
         }
         
-        public void removeAttribute(String name) {
+        @Override
+		public void removeAttribute(String name) {
             tomcatAttributes.remove(name);
             //do nothing
             super.removeAttribute(name);
         }
         
-        public void setAttribute(String name, Object value) {
+        @Override
+		public void setAttribute(String name, Object value) {
             if ( (!getParent().startComplete) || "org.apache.jasper.runtime.JspApplicationContextImpl".equals(name) ){
                 tomcatAttributes.put(name,value);
             } else
                 super.setAttribute(name,value);
         }
         
-        public Object getAttribute(String name) {
+        @Override
+		public Object getAttribute(String name) {
             if (tomcatAttributes.containsKey(name) )
                 return tomcatAttributes.get(name);
             else 
                 return super.getAttribute(name);
         }
         
-        public Enumeration getAttributeNames() {
+        @Override
+		public Enumeration getAttributeNames() {
             return new MultiEnumeration(new Enumeration[] {super.getAttributeNames(),new Enumerator(tomcatAttributes.keySet(), true)});
         }
         
@@ -190,13 +191,15 @@ public class ReplicatedContext extends StandardContext implements LifecycleListe
         public MultiEnumeration(Enumeration[] lists) {
             e = lists;
         }
-        public boolean hasMoreElements() {
+        @Override
+		public boolean hasMoreElements() {
             for ( int i=0; i<e.length; i++ ) {
                 if ( e[i].hasMoreElements() ) return true;
             }
             return false;
         }
-        public Object nextElement() {
+        @Override
+		public Object nextElement() {
             for ( int i=0; i<e.length; i++ ) {
                 if ( e[i].hasMoreElements() ) return e[i].nextElement();
             }
@@ -205,7 +208,8 @@ public class ReplicatedContext extends StandardContext implements LifecycleListe
         }
     }
     
-    public void objectMadePrimay(Object key, Object value) {
+    @Override
+	public void objectMadePrimay(Object key, Object value) {
         //noop
     }
 

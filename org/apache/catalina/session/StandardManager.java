@@ -73,7 +73,8 @@ public class StandardManager
         PrivilegedDoLoad() {
         }
 
-        public Object run() throws Exception{
+        @Override
+		public Object run() throws Exception{
            doLoad();
            return null;
         }
@@ -85,7 +86,8 @@ public class StandardManager
         PrivilegedDoUnload() {
         }
 
-        public Object run() throws Exception{
+        @Override
+		public Object run() throws Exception{
             doUnload();
             return null;
         }
@@ -159,7 +161,8 @@ public class StandardManager
      *
      * @param container The associated Container
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         // De-register from the old Container (if any)
         if ((this.container != null) && (this.container instanceof Context))
@@ -183,7 +186,8 @@ public class StandardManager
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -205,12 +209,14 @@ public class StandardManager
      *
      * @return The count
      */
-    public int getRejectedSessions() {
+    @Override
+	public int getRejectedSessions() {
         return rejectedSessions;
     }
 
 
-    public void setRejectedSessions(int rejectedSessions) {
+    @Override
+	public void setRejectedSessions(int rejectedSessions) {
         this.rejectedSessions = rejectedSessions;
     }
 
@@ -235,7 +241,8 @@ public class StandardManager
     /**
      * Return the descriptive short name of this Manager implementation.
      */
-    public String getName() {
+    @Override
+	public String getName() {
 
         return (name);
 
@@ -279,7 +286,8 @@ public class StandardManager
      * @exception IllegalStateException if a new session cannot be
      *  instantiated for any reason
      */
-    public Session createSession(String sessionId) {
+    @Override
+	public Session createSession(String sessionId) {
 
         if ((maxActiveSessions >= 0) &&
             (sessions.size() >= maxActiveSessions)) {
@@ -303,7 +311,8 @@ public class StandardManager
      *  found during the reload
      * @exception IOException if an input/output error occurs
      */
-    public void load() throws ClassNotFoundException, IOException {
+    @Override
+	public void load() throws ClassNotFoundException, IOException {
         if (SecurityUtil.isPackageProtectionEnabled()){
             try{
                 AccessController.doPrivileged( new PrivilegedDoLoad() );
@@ -453,7 +462,8 @@ public class StandardManager
      *
      * @exception IOException if an input/output error occurs
      */
-    public void unload() throws IOException {
+    @Override
+	public void unload() throws IOException {
         if (SecurityUtil.isPackageProtectionEnabled()){
             try{
                 AccessController.doPrivileged( new PrivilegedDoUnload() );
@@ -525,7 +535,7 @@ public class StandardManager
                     StandardSession session =
                         (StandardSession) elements.next();
                     list.add(session);
-                    ((StandardSession) session).passivate();
+                    session.passivate();
                     session.writeObjectData(oos);
                 }
             } catch (IOException e) {
@@ -588,7 +598,8 @@ public class StandardManager
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -599,7 +610,8 @@ public class StandardManager
      * Get the lifecycle listeners associated with this lifecycle. If this
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -611,7 +623,8 @@ public class StandardManager
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -625,7 +638,8 @@ public class StandardManager
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         if( ! initialized )
             init();
@@ -662,7 +676,8 @@ public class StandardManager
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         if (log.isDebugEnabled())
             log.debug("Stopping");
@@ -715,7 +730,8 @@ public class StandardManager
      *
      * @param event The property change event that has occurred
      */
-    public void propertyChange(PropertyChangeEvent event) {
+    @Override
+	public void propertyChange(PropertyChangeEvent event) {
 
         // Validate the source of this event
         if (!(event.getSource() instanceof Context))

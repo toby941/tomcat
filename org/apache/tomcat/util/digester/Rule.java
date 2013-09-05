@@ -40,7 +40,8 @@ public abstract class Rule {
      * @param digester The digester with which this rule is associated
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. Use {@link #Rule()} instead.
      */
-    public Rule(Digester digester) {
+    @Deprecated
+	public Rule(Digester digester) {
 
         super();
         setDigester(digester);
@@ -125,7 +126,8 @@ public abstract class Rule {
      *   method with <code>namespace</code> and <code>name</code>
      *   parameters instead.
      */
-    public void begin(Attributes attributes) throws Exception {
+    @Deprecated
+	public void begin(Attributes attributes) throws Exception {
 
         ;	// The default implementation does nothing
 
@@ -165,7 +167,8 @@ public abstract class Rule {
      *   with <code>namespace</code> and <code>name</code> parameters
      *   instead.
      */
-    public void body(String text) throws Exception {
+    @Deprecated
+	public void body(String text) throws Exception {
 
         ;	// The default implementation does nothing
 
@@ -202,7 +205,8 @@ public abstract class Rule {
      * @deprecated Use the {@link #end(String,String) end} method with 
      *   <code>namespace</code> and <code>name</code> parameters instead.
      */
-    public void end() throws Exception {
+    @Deprecated
+	public void end() throws Exception {
 
         ;	// The default implementation does nothing
 

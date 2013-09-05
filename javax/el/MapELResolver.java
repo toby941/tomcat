@@ -40,6 +40,7 @@ public class MapELResolver extends ELResolver {
 		this.readOnly = readOnly;
 	}
 
+	@Override
 	public Object getValue(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -54,6 +55,7 @@ public class MapELResolver extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public Class<?> getType(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -68,6 +70,7 @@ public class MapELResolver extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public void setValue(ELContext context, Object base, Object property,
 			Object value) throws NullPointerException,
 			PropertyNotFoundException, PropertyNotWritableException,
@@ -93,6 +96,7 @@ public class MapELResolver extends ELResolver {
 		}
 	}
 
+	@Override
 	public boolean isReadOnly(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -107,6 +111,7 @@ public class MapELResolver extends ELResolver {
 		return this.readOnly;
 	}
 
+	@Override
 	public Iterator<FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
 		if (base instanceof Map) {
 			Iterator itr = ((Map) base).keySet().iterator();
@@ -130,6 +135,7 @@ public class MapELResolver extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public Class<?> getCommonPropertyType(ELContext context, Object base) {
 		if (base instanceof Map) {
 			return Object.class;

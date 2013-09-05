@@ -43,7 +43,8 @@ public class MultipointBioSender extends AbstractSender implements MultiPointSen
     protected long selectTimeout = 1000; 
     protected HashMap bioSenders = new HashMap();
 
-    public synchronized void sendMessage(Member[] destination, ChannelMessage msg) throws ChannelException {
+    @Override
+	public synchronized void sendMessage(Member[] destination, ChannelMessage msg) throws ChannelException {
         byte[] data = XByteBuffer.createDataPackage((ChannelData)msg);
         BioSender[] senders = setupForSend(destination);
         ChannelException cx = null;
@@ -68,7 +69,7 @@ public class MultipointBioSender extends AbstractSender implements MultiPointSen
                 BioSender sender = (BioSender) bioSenders.get(destination[i]);
                 if (sender == null) {
                     sender = new BioSender();
-                    sender.transferProperties(this,sender);
+                    AbstractSender.transferProperties(this,sender);
                     sender.setDestination(destination[i]);
                     bioSenders.put(destination[i], sender);
                 }
@@ -84,7 +85,8 @@ public class MultipointBioSender extends AbstractSender implements MultiPointSen
         else return result;
     }
 
-    public void connect() throws IOException {
+    @Override
+	public void connect() throws IOException {
         //do nothing, we connect on demand
         setConnected(true);
     }
@@ -107,28 +109,33 @@ public class MultipointBioSender extends AbstractSender implements MultiPointSen
         if ( x != null ) throw x;
     }
 
-    public void add(Member member) {
+    @Override
+	public void add(Member member) {
 
     }
 
-    public void remove(Member member) {
+    @Override
+	public void remove(Member member) {
         //disconnect senders
         BioSender sender = (BioSender)bioSenders.remove(member);
         if ( sender != null ) sender.disconnect();
     }
 
 
-    public synchronized void disconnect() {
+    @Override
+	public synchronized void disconnect() {
         try {close(); }catch (Exception x){}
         setConnected(false);
     }
 
-    public void finalize() {
+    @Override
+	public void finalize() {
         try {disconnect(); }catch ( Exception ignore){}
     }
 
 
-    public boolean keepalive() {
+    @Override
+	public boolean keepalive() {
         //throw new UnsupportedOperationException("Method ParallelBioSender.checkKeepAlive() not implemented");
         boolean result = false;
         Map.Entry[] entries = (Map.Entry[])bioSenders.entrySet().toArray(new Map.Entry[bioSenders.size()]);

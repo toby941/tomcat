@@ -36,7 +36,8 @@ import org.apache.jasper.Constants;
 public final class ELContextImpl extends ELContext {
 
     private final static FunctionMapper NullFunctionMapper = new FunctionMapper() {
-        public Method resolveFunction(String prefix, String localName) {
+        @Override
+		public Method resolveFunction(String prefix, String localName) {
             return null;
         }
     };
@@ -45,14 +46,16 @@ public final class ELContextImpl extends ELContext {
 
         private Map<String, ValueExpression> vars;
 
-        public ValueExpression resolveVariable(String variable) {
+        @Override
+		public ValueExpression resolveVariable(String variable) {
             if (vars == null) {
                 return null;
             }
             return vars.get(variable);
         }
 
-        public ValueExpression setVariable(String variable,
+        @Override
+		public ValueExpression setVariable(String variable,
                 ValueExpression expression) {
             if (vars == null)
                 vars = new HashMap<String, ValueExpression>();
@@ -71,7 +74,8 @@ public final class ELContextImpl extends ELContext {
         this(ELResolverImpl.getDefaultResolver());
         if (Constants.IS_SECURITY_ENABLED) {
             functionMapper = new FunctionMapper() {
-                public Method resolveFunction(String prefix, String localName) {
+                @Override
+				public Method resolveFunction(String prefix, String localName) {
                     return null;
                 }
             };
@@ -84,15 +88,18 @@ public final class ELContextImpl extends ELContext {
         this.resolver = resolver;
     }
 
-    public ELResolver getELResolver() {
+    @Override
+	public ELResolver getELResolver() {
         return this.resolver;
     }
 
-    public FunctionMapper getFunctionMapper() {
+    @Override
+	public FunctionMapper getFunctionMapper() {
         return this.functionMapper;
     }
 
-    public VariableMapper getVariableMapper() {
+    @Override
+	public VariableMapper getVariableMapper() {
         if (this.variableMapper == null) {
             this.variableMapper = new VariableMapperImpl();
         }

@@ -136,7 +136,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
     }
 
     /*--Logic---------------------------------------------------*/
-    public void start() throws Exception {
+    @Override
+	public void start() throws Exception {
         if (started)
             return;
         Container hcontainer = getCluster().getContainer();
@@ -195,7 +196,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
      * 
      * @see org.apache.catalina.ha.ClusterDeployer#stop()
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
         started = false;
         getCluster().removeClusterListener(this);
         count = 0;
@@ -220,7 +222,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
      * @param msg
      *            ClusterMessage - the message received from the cluster
      */
-    public void messageReceived(ClusterMessage msg) {
+    @Override
+	public void messageReceived(ClusterMessage msg) {
         try {
             if (msg instanceof FileMessage && msg != null) {
                 FileMessage fmsg = (FileMessage) msg;
@@ -330,7 +333,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
      *         invoked. If false is returned, the messageReceived method will
      *         not be invoked.
      */
-    public boolean accept(ClusterMessage msg) {
+    @Override
+	public boolean accept(ClusterMessage msg) {
         return (msg instanceof FileMessage) || (msg instanceof UndeployMessage);
     }
 
@@ -363,7 +367,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
      *                if an input/output error was encountered during
      *                installation
      */
-    public void install(String contextPath, URL war) throws IOException {
+    @Override
+	public void install(String contextPath, URL war) throws IOException {
         Member[] members = getCluster().getMembers();
         Member localMember = getCluster().getLocalMember();
         FileMessageFactory factory = FileMessageFactory.getInstance(new File(
@@ -410,7 +415,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
      * @exception IOException
      *                if an input/output error occurs during removal
      */
-    public void remove(String contextPath, boolean undeploy) throws IOException {
+    @Override
+	public void remove(String contextPath, boolean undeploy) throws IOException {
         if (log.isInfoEnabled())
             log.info("Cluster wide remove of web app " + contextPath);
         Member localMember = getCluster().getLocalMember();
@@ -447,7 +453,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
      * 
      * @see org.apache.catalina.ha.deploy.FileChangeListener#fileModified(java.io.File)
      */
-    public void fileModified(File newWar) {
+    @Override
+	public void fileModified(File newWar) {
         try {
             File deployWar = new File(getDeployDir(), newWar.getName());
             copy(newWar, deployWar);
@@ -471,7 +478,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
      * 
      * @see org.apache.catalina.ha.deploy.FileChangeListener#fileRemoved(java.io.File)
      */
-    public void fileRemoved(File removeWar) {
+    @Override
+	public void fileRemoved(File removeWar) {
         try {
             String contextName = getContextName(removeWar);
             if (log.isInfoEnabled())
@@ -602,7 +610,8 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
      * 
      * @see org.apache.catalina.ha.ClusterDeployer#backgroundProcess()
      */
-    public void backgroundProcess() {
+    @Override
+	public void backgroundProcess() {
         if (started) {
             count = (count + 1) % processDeployFrequency;
             if (count == 0 && watchEnabled) {
@@ -653,19 +662,23 @@ public class FarmWarDeployer extends ClusterListener implements ClusterDeployer,
     }
 
     /*--Instance Getters/Setters--------------------------------*/
-    public CatalinaCluster getCluster() {
+    @Override
+	public CatalinaCluster getCluster() {
         return cluster;
     }
 
-    public void setCluster(CatalinaCluster cluster) {
+    @Override
+	public void setCluster(CatalinaCluster cluster) {
         this.cluster = cluster;
     }
 
-    public boolean equals(Object listener) {
+    @Override
+	public boolean equals(Object listener) {
         return super.equals(listener);
     }
 
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode();
     }
 

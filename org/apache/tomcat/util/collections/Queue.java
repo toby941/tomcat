@@ -28,6 +28,7 @@ import java.util.Vector;
  * 
  * @deprecated
  */
+@Deprecated
 public class Queue {
     private Vector vector = new Vector();
     private boolean stopWaiting=false;

@@ -546,7 +546,8 @@ public interface ServletRequest {
      *
      */
 
-    public String getRealPath(String path);
+    @Deprecated
+	public String getRealPath(String path);
     
     
     /**

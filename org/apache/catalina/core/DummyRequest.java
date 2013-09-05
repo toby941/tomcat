@@ -78,15 +78,18 @@ public class DummyRequest
     protected FilterChain filterChain = null;
     
     private static Enumeration dummyEnum = new Enumeration(){
-        public boolean hasMoreElements(){
+        @Override
+		public boolean hasMoreElements(){
             return false;
         }
-        public Object nextElement(){
+        @Override
+		public Object nextElement(){
             return null;
         }
     };
 
-    public String getContextPath() {
+    @Override
+	public String getContextPath() {
         return (contextPath);
     }
 
@@ -114,7 +117,8 @@ public class DummyRequest
         this.filterChain = filterChain;
     }
 
-    public String getQueryString() {
+    @Override
+	public String getQueryString() {
         return queryString;
     }
 
@@ -122,7 +126,8 @@ public class DummyRequest
         queryString = query;
     }
 
-    public String getPathInfo() {
+    @Override
+	public String getPathInfo() {
         return pathInfo;
     }
 
@@ -138,7 +143,8 @@ public class DummyRequest
         return null;
     }
 
-    public String getServletPath() {
+    @Override
+	public String getServletPath() {
         return servletPath;
     }
 
@@ -189,29 +195,49 @@ public class DummyRequest
     public void setScheme(String scheme) {}
     public void setServerName(String name) {}
     public void setServerPort(int port) {}
-    public Object getAttribute(String name) { return null; }
-    public Enumeration getAttributeNames() { return null; }
-    public String getCharacterEncoding() { return null; }
-    public int getContentLength() { return -1; }
+    @Override
+	public Object getAttribute(String name) { return null; }
+    @Override
+	public Enumeration getAttributeNames() { return null; }
+    @Override
+	public String getCharacterEncoding() { return null; }
+    @Override
+	public int getContentLength() { return -1; }
     public void setContentLength(int length) {}
-    public String getContentType() { return null; }
-    public ServletInputStream getInputStream() throws IOException {
+    @Override
+	public String getContentType() { return null; }
+    @Override
+	public ServletInputStream getInputStream() throws IOException {
         return null;
     }
-    public Locale getLocale() { return null; }
-    public Enumeration getLocales() { return null; }
-    public String getProtocol() { return null; }
-    public BufferedReader getReader() throws IOException { return null; }
-    public String getRealPath(String path) { return null; }
-    public String getRemoteAddr() { return null; }
-    public String getRemoteHost() { return null; }
-    public String getScheme() { return null; }
-    public String getServerName() { return null; }
-    public int getServerPort() { return -1; }
-    public boolean isSecure() { return false; }
-    public void removeAttribute(String name) {}
-    public void setAttribute(String name, Object value) {}
-    public void setCharacterEncoding(String enc)
+    @Override
+	public Locale getLocale() { return null; }
+    @Override
+	public Enumeration getLocales() { return null; }
+    @Override
+	public String getProtocol() { return null; }
+    @Override
+	public BufferedReader getReader() throws IOException { return null; }
+    @Override
+	public String getRealPath(String path) { return null; }
+    @Override
+	public String getRemoteAddr() { return null; }
+    @Override
+	public String getRemoteHost() { return null; }
+    @Override
+	public String getScheme() { return null; }
+    @Override
+	public String getServerName() { return null; }
+    @Override
+	public int getServerPort() { return -1; }
+    @Override
+	public boolean isSecure() { return false; }
+    @Override
+	public void removeAttribute(String name) {}
+    @Override
+	public void setAttribute(String name, Object value) {}
+    @Override
+	public void setCharacterEncoding(String enc)
         throws UnsupportedEncodingException {}
     public void addCookie(Cookie cookie) {}
     public void addHeader(String name, String value) {}
@@ -230,39 +256,69 @@ public class DummyRequest
     public void setRequestURI(String uri) {}
     public void setSecure(boolean secure) {}
     public void setUserPrincipal(Principal principal) {}
-    public String getParameter(String name) { return null; }
-    public Map getParameterMap() { return null; }
-    public Enumeration getParameterNames() { return dummyEnum; }
-    public String[] getParameterValues(String name) { return null; }
-    public RequestDispatcher getRequestDispatcher(String path) {
+    @Override
+	public String getParameter(String name) { return null; }
+    @Override
+	public Map getParameterMap() { return null; }
+    @Override
+	public Enumeration getParameterNames() { return dummyEnum; }
+    @Override
+	public String[] getParameterValues(String name) { return null; }
+    @Override
+	public RequestDispatcher getRequestDispatcher(String path) {
         return null;
     }
-    public String getAuthType() { return null; }
-    public Cookie[] getCookies() { return null; }
-    public long getDateHeader(String name) { return -1; }
-    public String getHeader(String name) { return null; }
-    public Enumeration getHeaders(String name) { return null; }
-    public Enumeration getHeaderNames() { return null; }
-    public int getIntHeader(String name) { return -1; }
-    public String getMethod() { return null; }
-    public String getPathTranslated() { return null; }
-    public String getRemoteUser() { return null; }
-    public String getRequestedSessionId() { return null; }
-    public String getRequestURI() { return null; }
+    @Override
+	public String getAuthType() { return null; }
+    @Override
+	public Cookie[] getCookies() { return null; }
+    @Override
+	public long getDateHeader(String name) { return -1; }
+    @Override
+	public String getHeader(String name) { return null; }
+    @Override
+	public Enumeration getHeaders(String name) { return null; }
+    @Override
+	public Enumeration getHeaderNames() { return null; }
+    @Override
+	public int getIntHeader(String name) { return -1; }
+    @Override
+	public String getMethod() { return null; }
+    @Override
+	public String getPathTranslated() { return null; }
+    @Override
+	public String getRemoteUser() { return null; }
+    @Override
+	public String getRequestedSessionId() { return null; }
+    @Override
+	public String getRequestURI() { return null; }
     public void setDecodedRequestURI(String uri) {}
-    public StringBuffer getRequestURL() { return null; }
-    public HttpSession getSession() { return null; }
-    public HttpSession getSession(boolean create) { return null; }
-    public boolean isRequestedSessionIdFromCookie() { return false; }
-    public boolean isRequestedSessionIdFromURL() { return false; }
-    public boolean isRequestedSessionIdFromUrl() { return false; }
-    public boolean isRequestedSessionIdValid() { return false; }
-    public boolean isUserInRole(String role) { return false; }
-    public Principal getUserPrincipal() { return null; }
-    public String getLocalAddr() { return null; }    
-    public String getLocalName() { return null; }
-    public int getLocalPort() { return -1; }
-    public int getRemotePort() { return -1; }
+    @Override
+	public StringBuffer getRequestURL() { return null; }
+    @Override
+	public HttpSession getSession() { return null; }
+    @Override
+	public HttpSession getSession(boolean create) { return null; }
+    @Override
+	public boolean isRequestedSessionIdFromCookie() { return false; }
+    @Override
+	public boolean isRequestedSessionIdFromURL() { return false; }
+    @Override
+	public boolean isRequestedSessionIdFromUrl() { return false; }
+    @Override
+	public boolean isRequestedSessionIdValid() { return false; }
+    @Override
+	public boolean isUserInRole(String role) { return false; }
+    @Override
+	public Principal getUserPrincipal() { return null; }
+    @Override
+	public String getLocalAddr() { return null; }    
+    @Override
+	public String getLocalName() { return null; }
+    @Override
+	public int getLocalPort() { return -1; }
+    @Override
+	public int getRemotePort() { return -1; }
     
 }
 

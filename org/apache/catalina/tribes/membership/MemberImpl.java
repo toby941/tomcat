@@ -139,13 +139,16 @@ public class MemberImpl implements Member, java.io.Externalizable {
         setPayload(payload);
     }
     
-    public boolean isReady() {
+    @Override
+	public boolean isReady() {
         return SenderState.getSenderState(this).isReady();
     }
-    public boolean isSuspect() {
+    @Override
+	public boolean isSuspect() {
         return SenderState.getSenderState(this).isSuspect();
     }
-    public boolean isFailing() {
+    @Override
+	public boolean isFailing() {
         return SenderState.getSenderState(this).isFailing();
     }
 
@@ -208,7 +211,7 @@ public class MemberImpl implements Member, java.io.Externalizable {
                 //you'd be surprised, but System.currentTimeMillis
                 //shows up on the profiler
                 long alive=System.currentTimeMillis()-getServiceStartTime();
-                XByteBuffer.toBytes( (long) alive, dataPkg, TRIBES_MBR_BEGIN.length+4);
+                XByteBuffer.toBytes( alive, dataPkg, TRIBES_MBR_BEGIN.length+4);
             }
             return dataPkg;
         }
@@ -247,7 +250,7 @@ public class MemberImpl implements Member, java.io.Externalizable {
         pos += 4;
         
         //alive data
-        XByteBuffer.toBytes((long)alive,data,pos);
+        XByteBuffer.toBytes(alive,data,pos);
         pos += 8;
         //port
         XByteBuffer.toBytes(port,data,pos);
@@ -411,7 +414,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
      * Return the name of this object
      * @return a unique name to the cluster
      */
-    public String getName() {
+    @Override
+	public String getName() {
         return "tcp://"+getHostname()+":"+getPort();
     }
     
@@ -419,7 +423,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
      * Return the listen port of this member
      * @return - tcp listen port
      */
-    public int getPort()  {
+    @Override
+	public int getPort()  {
         return this.port;
     }
 
@@ -427,7 +432,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
      * Return the TCP listen host for this member
      * @return IP address or host name
      */
-    public byte[] getHost()  {
+    @Override
+	public byte[] getHost()  {
         return host;
     }
     
@@ -452,7 +458,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
      * broadcasting its membership to the cluster.
      * @return nr of milliseconds since this member started.
      */
-    public long getMemberAliveTime() {
+    @Override
+	public long getMemberAliveTime() {
        return memberAliveTime;
     }
 
@@ -460,23 +467,28 @@ public class MemberImpl implements Member, java.io.Externalizable {
         return serviceStartTime;
     }
 
-    public byte[] getUniqueId() {
+    @Override
+	public byte[] getUniqueId() {
         return uniqueId;
     }
 
-    public byte[] getPayload() {
+    @Override
+	public byte[] getPayload() {
         return payload;
     }
 
-    public byte[] getCommand() {
+    @Override
+	public byte[] getCommand() {
         return command;
     }
 
-    public byte[] getDomain() {
+    @Override
+	public byte[] getDomain() {
         return domain;
     }
 
-    public int getSecurePort() {
+    @Override
+	public int getSecurePort() {
         return securePort;
     }
 
@@ -489,7 +501,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
     /**
      * String representation of this object
      */
-    public String toString()  {
+    @Override
+	public String toString()  {
         StringBuffer buf = new StringBuffer("org.apache.catalina.tribes.membership.MemberImpl[");
         buf.append(getName()).append(",");
         buf.append(getHostname()).append(",");
@@ -523,7 +536,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
      * @see java.lang.Object#hashCode()
      * @return The hash code
      */
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return getHost()[0]+getHost()[1]+getHost()[2]+getHost()[3];
     }
 
@@ -531,7 +545,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
      * Returns true if the param o is a McastMember with the same name
      * @param o
      */
-    public boolean equals(Object o) {
+    @Override
+	public boolean equals(Object o) {
         if ( o instanceof MemberImpl )    {
             return Arrays.equals(this.getHost(),((MemberImpl)o).getHost()) &&
                    this.getPort() == ((MemberImpl)o).getPort() &&
@@ -592,7 +607,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
         this.securePort = securePort;
     }
 
-    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         int length = in.readInt();
         byte[] message = new byte[length];
         in.read(message);
@@ -600,7 +616,8 @@ public class MemberImpl implements Member, java.io.Externalizable {
         
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(ObjectOutput out) throws IOException {
         byte[] data = this.getData();
         out.writeInt(data.length);
         out.write(data);

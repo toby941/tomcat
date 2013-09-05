@@ -196,7 +196,8 @@ public class StandardHost
      * Return the application root for this Host.  This can be an absolute
      * pathname, a relative pathname, or a URL.
      */
-    public String getAppBase() {
+    @Override
+	public String getAppBase() {
 
         return (this.appBase);
 
@@ -209,7 +210,8 @@ public class StandardHost
      *
      * @param appBase The new application root
      */
-    public void setAppBase(String appBase) {
+    @Override
+	public void setAppBase(String appBase) {
 
         String oldAppBase = this.appBase;
         this.appBase = appBase;
@@ -222,7 +224,8 @@ public class StandardHost
      * Return the value of the auto deploy flag.  If true, it indicates that 
      * this host's child webapps will be dynamically deployed.
      */
-    public boolean getAutoDeploy() {
+    @Override
+	public boolean getAutoDeploy() {
 
         return (this.autoDeploy);
 
@@ -234,7 +237,8 @@ public class StandardHost
      * 
      * @param autoDeploy The new auto deploy flag
      */
-    public void setAutoDeploy(boolean autoDeploy) {
+    @Override
+	public void setAutoDeploy(boolean autoDeploy) {
 
         boolean oldAutoDeploy = this.autoDeploy;
         this.autoDeploy = autoDeploy;
@@ -248,7 +252,8 @@ public class StandardHost
      * Return the Java class name of the context configuration class
      * for new web applications.
      */
-    public String getConfigClass() {
+    @Override
+	public String getConfigClass() {
 
         return (this.configClass);
 
@@ -261,7 +266,8 @@ public class StandardHost
      *
      * @param configClass The new context configuration class
      */
-    public void setConfigClass(String configClass) {
+    @Override
+	public void setConfigClass(String configClass) {
 
         String oldConfigClass = this.configClass;
         this.configClass = configClass;
@@ -303,7 +309,8 @@ public class StandardHost
      * that this host's child webapps should be discovred and automatically 
      * deployed at startup time.
      */
-    public boolean getDeployOnStartup() {
+    @Override
+	public boolean getDeployOnStartup() {
 
         return (this.deployOnStartup);
 
@@ -315,7 +322,8 @@ public class StandardHost
      * 
      * @param deployOnStartup The new deploy on startup flag
      */
-    public void setDeployOnStartup(boolean deployOnStartup) {
+    @Override
+	public void setDeployOnStartup(boolean deployOnStartup) {
 
         boolean oldDeployOnStartup = this.deployOnStartup;
         this.deployOnStartup = deployOnStartup;
@@ -399,7 +407,8 @@ public class StandardHost
      * Return the canonical, fully qualified, name of the virtual host
      * this Container represents.
      */
-    public String getName() {
+    @Override
+	public String getName() {
 
         return (name);
 
@@ -414,7 +423,8 @@ public class StandardHost
      *
      * @exception IllegalArgumentException if name is null
      */
-    public void setName(String name) {
+    @Override
+	public void setName(String name) {
 
         if (name == null)
             throw new IllegalArgumentException
@@ -453,7 +463,8 @@ public class StandardHost
      * parsing xml instances.
      * @param xmlValidation true to enable xml instance validation
      */
-    public void setXmlValidation(boolean xmlValidation){
+    @Override
+	public void setXmlValidation(boolean xmlValidation){
         
         this.xmlValidation = xmlValidation;
 
@@ -464,7 +475,8 @@ public class StandardHost
      * @return true if validation is enabled.
      *
      */
-    public boolean getXmlValidation(){
+    @Override
+	public boolean getXmlValidation(){
         return xmlValidation;
     }
 
@@ -473,7 +485,8 @@ public class StandardHost
      * @return true if namespace awarenes is enabled.
      *
      */
-    public boolean getXmlNamespaceAware(){
+    @Override
+	public boolean getXmlNamespaceAware(){
         return xmlNamespaceAware;
     }
 
@@ -483,7 +496,8 @@ public class StandardHost
      * parsing xml instances.
      * @param xmlNamespaceAware true to enable namespace awareness
      */
-    public void setXmlNamespaceAware(boolean xmlNamespaceAware){
+    @Override
+	public void setXmlNamespaceAware(boolean xmlNamespaceAware){
         this.xmlNamespaceAware=xmlNamespaceAware;
     }    
     
@@ -510,7 +524,8 @@ public class StandardHost
      * the host's {@link #appBase} that will be ignored by the automatic
      * deployment process.
      */
-    public String getDeployIgnore() {
+    @Override
+	public String getDeployIgnore() {
         if (deployIgnore == null) {
             return null;
         } 
@@ -523,7 +538,8 @@ public class StandardHost
      * directories in the host's {@link #appBase} that will be ignored by the
      * automatic deployment process.
      */
-    public Pattern getDeployIgnorePattern() {
+    @Override
+	public Pattern getDeployIgnorePattern() {
         return this.deployIgnore;
     }
 
@@ -533,7 +549,8 @@ public class StandardHost
      * the host's {@link #appBase} that will be ignored by the automatic
      * deployment process.
      */
-    public void setDeployIgnore(String deployIgnore) {
+    @Override
+	public void setDeployIgnore(String deployIgnore) {
         String oldDeployIgnore;
         if (this.deployIgnore == null) {
             oldDeployIgnore = null;
@@ -559,7 +576,8 @@ public class StandardHost
      *
      * @param alias The alias to be added
      */
-    public void addAlias(String alias) {
+    @Override
+	public void addAlias(String alias) {
 
         alias = alias.toLowerCase();
 
@@ -588,7 +606,8 @@ public class StandardHost
      *
      * @param child Child container to be added
      */
-    public void addChild(Container child) {
+    @Override
+	public void addChild(Container child) {
 
         if (child instanceof Lifecycle) {
             ((Lifecycle) child).addLifecycleListener(
@@ -609,7 +628,8 @@ public class StandardHost
      */
     private class MemoryLeakTrackingListener implements LifecycleListener {
 
-        public void lifecycleEvent(LifecycleEvent event) {
+        @Override
+		public void lifecycleEvent(LifecycleEvent event) {
             if (event.getType().equals(Lifecycle.AFTER_START_EVENT)) {
                 if (event.getSource() instanceof Context) {
                     Context context = ((Context) event.getSource());
@@ -650,7 +670,8 @@ public class StandardHost
      * Return the set of alias names for this Host.  If none are defined,
      * a zero length array is returned.
      */
-    public String[] findAliases() {
+    @Override
+	public String[] findAliases() {
 
         synchronized (aliasesLock) {
             return (this.aliases);
@@ -664,7 +685,8 @@ public class StandardHost
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -677,7 +699,8 @@ public class StandardHost
      *
      * @param uri Request URI to be mapped
      */
-    public Context map(String uri) {
+    @Override
+	public Context map(String uri) {
 
         if (log.isDebugEnabled())
             log.debug("Mapping request URI '" + uri + "'");
@@ -725,7 +748,8 @@ public class StandardHost
      *
      * @param alias Alias name to be removed
      */
-    public void removeAlias(String alias) {
+    @Override
+	public void removeAlias(String alias) {
 
         alias = alias.toLowerCase();
 
@@ -762,7 +786,8 @@ public class StandardHost
     /**
      * Return a String representation of this component.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer();
         if (getParent() != null) {
@@ -783,7 +808,8 @@ public class StandardHost
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents it from being started
      */
-    public synchronized void start() throws LifecycleException {
+    @Override
+	public synchronized void start() throws LifecycleException {
         if( started ) {
             return;
         }
@@ -871,7 +897,8 @@ public class StandardHost
 
     private boolean initialized=false;
     
-    public void init() {
+    @Override
+	public void init() {
         if( initialized ) return;
         initialized=true;
         
@@ -914,7 +941,8 @@ public class StandardHost
         }
     }
 
-    public void destroy() throws Exception {
+    @Override
+	public void destroy() throws Exception {
         // destroy our child containers, if any
         Container children[] = findChildren();
         super.destroy();
@@ -925,7 +953,8 @@ public class StandardHost
       
     }
     
-    public ObjectName preRegister(MBeanServer server, ObjectName oname ) 
+    @Override
+	public ObjectName preRegister(MBeanServer server, ObjectName oname ) 
         throws Exception
     {
         ObjectName res=super.preRegister(server, oname);
@@ -935,7 +964,8 @@ public class StandardHost
         return res;        
     }
     
-    public ObjectName createObjectName(String domain, ObjectName parent)
+    @Override
+	public ObjectName createObjectName(String domain, ObjectName parent)
         throws Exception
     {
         if( log.isDebugEnabled())

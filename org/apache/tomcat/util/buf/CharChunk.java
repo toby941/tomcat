@@ -483,7 +483,8 @@ public final class CharChunk implements Cloneable, Serializable, CharSequence {
     
     // -------------------- Conversion and getters --------------------
 
-    public String toString() {
+    @Override
+	public String toString() {
         if (null == buff) {
             return null;
         } else if (end-start == 0) {
@@ -694,11 +695,13 @@ public final class CharChunk implements Cloneable, Serializable, CharSequence {
 
     // Char sequence impl
     
-    public char charAt(int index) {
+    @Override
+	public char charAt(int index) {
         return buff[index + start];
     }
     
-    public CharSequence subSequence(int start, int end) {
+    @Override
+	public CharSequence subSequence(int start, int end) {
         try {
             CharChunk result = (CharChunk) this.clone();
             result.setOffset(this.start + start);
@@ -710,7 +713,8 @@ public final class CharChunk implements Cloneable, Serializable, CharSequence {
         }
     }
     
-    public int length() {
+    @Override
+	public int length() {
         return end - start;
     }
     

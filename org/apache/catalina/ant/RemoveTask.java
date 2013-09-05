@@ -32,6 +32,7 @@ import org.apache.tools.ant.BuildException;
  * @version $Id: RemoveTask.java 939336 2010-04-29 15:00:41Z kkolinko $
  * @deprecated Replaced by UndeployTask
  */
+@Deprecated
 public class RemoveTask extends AbstractCatalinaTask {
 
 
@@ -60,7 +61,8 @@ public class RemoveTask extends AbstractCatalinaTask {
      *
      * @exception BuildException if an error occurs
      */
-    public void execute() throws BuildException {
+    @Override
+	public void execute() throws BuildException {
 
         super.execute();
         if (path == null) {

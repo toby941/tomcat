@@ -117,7 +117,8 @@ public interface HttpServletResponse extends ServletResponse {
      * 			the unchanged URL otherwise.
      */
 
-    public String encodeUrl(String url);
+    @Deprecated
+	public String encodeUrl(String url);
     
     /**
      * @deprecated	As of version 2.1, use 
@@ -128,7 +129,8 @@ public interface HttpServletResponse extends ServletResponse {
      * 			the unchanged URL otherwise.
      */
 
-    public String encodeRedirectUrl(String url);
+    @Deprecated
+	public String encodeRedirectUrl(String url);
 
     /**
      * Sends an error response to the client using the specified status code and
@@ -319,7 +321,8 @@ public interface HttpServletResponse extends ServletResponse {
      * @param	sm	the status message
      */
 
-    public void setStatus(int sc, String sm);
+    @Deprecated
+	public void setStatus(int sc, String sm);
 
     
     /*

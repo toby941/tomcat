@@ -36,6 +36,7 @@ import org.apache.jasper.Constants;
 
 public final class ELResolverImpl extends ELResolver {
 	/** @deprecated - Use getDefaultResolver(). Needs to be made private */
+	@Deprecated
 	public final static ELResolver DefaultResolver = new CompositeELResolver();
 
 	static {
@@ -52,6 +53,7 @@ public final class ELResolverImpl extends ELResolver {
 		this.variableResolver = variableResolver;
 	}
 
+	@Override
 	public Object getValue(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -76,6 +78,7 @@ public final class ELResolverImpl extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public Class<?> getType(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -101,6 +104,7 @@ public final class ELResolverImpl extends ELResolver {
 		return null;
 	}
 
+	@Override
 	public void setValue(ELContext context, Object base, Object property,
 			Object value) throws NullPointerException,
 			PropertyNotFoundException, PropertyNotWritableException,
@@ -120,6 +124,7 @@ public final class ELResolverImpl extends ELResolver {
 		}
 	}
 
+	@Override
 	public boolean isReadOnly(ELContext context, Object base, Object property)
 			throws NullPointerException, PropertyNotFoundException, ELException {
 		if (context == null) {
@@ -134,10 +139,12 @@ public final class ELResolverImpl extends ELResolver {
 		return getDefaultResolver().isReadOnly(context, base, property);
 	}
 
+	@Override
 	public Iterator<java.beans.FeatureDescriptor> getFeatureDescriptors(ELContext context, Object base) {
 		return getDefaultResolver().getFeatureDescriptors(context, base);
 	}
 
+	@Override
 	public Class<?> getCommonPropertyType(ELContext context, Object base) {
 		if (base == null) {
 			return String.class;

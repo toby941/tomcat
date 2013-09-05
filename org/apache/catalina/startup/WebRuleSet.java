@@ -118,7 +118,8 @@ public class WebRuleSet extends RuleSetBase {
      * @param digester Digester instance to which the new Rule instances
      *  should be added.
      */
-    public void addRuleInstances(Digester digester) {
+    @Override
+	public void addRuleInstances(Digester digester) {
         sessionConfig = new SetSessionConfig();
         jspConfig = new SetJspConfig();
         loginConfig = new SetLoginConfig();
@@ -508,7 +509,8 @@ final class SetLoginConfig extends Rule {
     public SetLoginConfig() {
     }
 
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
         if (isLoginConfigSet){
             throw new IllegalArgumentException(
@@ -529,7 +531,8 @@ final class SetJspConfig extends Rule {
     public SetJspConfig() {
     }
 
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
         if (isJspConfigSet){
             throw new IllegalArgumentException(
@@ -550,7 +553,8 @@ final class SetSessionConfig extends Rule {
     public SetSessionConfig() {
     }
 
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
         if (isSessionConfigSet){
             throw new IllegalArgumentException(
@@ -572,7 +576,8 @@ final class SetAuthConstraintRule extends Rule {
     public SetAuthConstraintRule() {
     }
 
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
         SecurityConstraint securityConstraint =
             (SecurityConstraint) digester.peek();
@@ -596,7 +601,8 @@ final class SetDistributableRule extends Rule {
     public SetDistributableRule() {
     }
 
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
         Context context = (Context) digester.peek();
         context.setDistributable(true);
@@ -622,7 +628,8 @@ final class SetPublicIdRule extends Rule {
 
     private String method = null;
 
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
 
         Object top = digester.peek();
@@ -660,7 +667,8 @@ final class WrapperCreateRule extends Rule {
     public WrapperCreateRule() {
     }
 
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
         Context context =
             (Context) digester.peek(digester.getCount() - 1);
@@ -670,7 +678,8 @@ final class WrapperCreateRule extends Rule {
             digester.getLogger().debug("new " + wrapper.getClass().getName());
     }
 
-    public void end(String namespace, String name)
+    @Override
+	public void end(String namespace, String name)
         throws Exception {
         Wrapper wrapper = (Wrapper) digester.pop();
         if (digester.getLogger().isDebugEnabled())
@@ -690,7 +699,8 @@ final class CallParamMultiRule extends CallParamRule {
         super(paramIndex);
     }
 
-    public void end(String namespace, String name) {
+    @Override
+	public void end(String namespace, String name) {
         if (bodyTextStack != null && !bodyTextStack.empty()) {
             // what we do now is push one parameter onto the top set of parameters
             Object parameters[] = (Object[]) digester.peekParams();
@@ -719,7 +729,8 @@ final class CallMethodMultiRule extends CallMethodRule {
         this.multiParamIndex = multiParamIndex;
     }
 
-    public void end() throws Exception {
+    @Override
+	public void end() throws Exception {
 
         // Retrieve or construct the parameter values array
         Object parameters[] = null;
@@ -806,7 +817,8 @@ final class IgnoreAnnotationsRule extends Rule {
     public IgnoreAnnotationsRule() {
     }
 
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
         Context context = (Context) digester.peek(digester.getCount() - 1);
         String value = attributes.getValue("metadata-complete");
@@ -833,7 +845,8 @@ final class SoapHeaderRule extends Rule {
     public SoapHeaderRule() {
     }
 
-    public void body(String text)
+    @Override
+	public void body(String text)
         throws Exception {
         String namespaceuri = null;
         String localpart = text;
@@ -857,7 +870,8 @@ final class ServiceQnameRule extends Rule {
     public ServiceQnameRule() {
     }
 
-    public void body(String text)
+    @Override
+	public void body(String text)
         throws Exception {
         String namespaceuri = null;
         String localpart = text;
@@ -882,7 +896,8 @@ final class SecurityRoleRefCreateRule extends Rule {
     public SecurityRoleRefCreateRule() {
     }
     
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
             throws Exception {
         SecurityRoleRef securityRoleRef = new SecurityRoleRef();
         digester.push(securityRoleRef);
@@ -890,7 +905,8 @@ final class SecurityRoleRefCreateRule extends Rule {
             digester.getLogger().debug("new SecurityRoleRef");
     }
 
-    public void end(String namespace, String name)
+    @Override
+	public void end(String namespace, String name)
             throws Exception {
         SecurityRoleRef securityRoleRef = (SecurityRoleRef) digester.pop();
         Wrapper wrapper = (Wrapper) digester.peek();

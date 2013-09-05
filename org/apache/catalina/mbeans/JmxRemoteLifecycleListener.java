@@ -171,7 +171,8 @@ public class JmxRemoteLifecycleListener implements LifecycleListener {
     }
     
 
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
         // When the server starts, configure JMX/RMI
         if (Lifecycle.START_EVENT == event.getType()) {
             // Configure using standard jmx system properties 
@@ -297,7 +298,8 @@ public class JmxRemoteLifecycleListener implements LifecycleListener {
             factory = theFactory;
         }
 
-        public Socket createSocket(String host, int port) throws IOException {
+        @Override
+		public Socket createSocket(String host, int port) throws IOException {
             if (factory == null) {
                 return new Socket(FORCED_HOST, port);
             } else {

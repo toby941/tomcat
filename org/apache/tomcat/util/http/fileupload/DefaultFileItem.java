@@ -159,7 +159,8 @@ public class DefaultFileItem
      *
      * @exception IOException if an error occurs.
      */
-    public InputStream getInputStream()
+    @Override
+	public InputStream getInputStream()
         throws IOException
     {
         if (!dfos.isInMemory())
@@ -182,7 +183,8 @@ public class DefaultFileItem
      * @return The content type passed by the browser or <code>null</code> if
      *         not defined.
      */
-    public String getContentType()
+    @Override
+	public String getContentType()
     {
         return contentType;
     }
@@ -193,7 +195,8 @@ public class DefaultFileItem
      *
      * @return The original filename in the client's filesystem.
      */
-    public String getName()
+    @Override
+	public String getName()
     {
         return fileName;
     }
@@ -209,7 +212,8 @@ public class DefaultFileItem
      * @return <code>true</code> if the file contents will be read
      *         from memory; <code>false</code> otherwise.
      */
-    public boolean isInMemory()
+    @Override
+	public boolean isInMemory()
     {
         return (dfos.isInMemory());
     }
@@ -220,7 +224,8 @@ public class DefaultFileItem
      *
      * @return The size of the file, in bytes.
      */
-    public long getSize()
+    @Override
+	public long getSize()
     {
         if (cachedContent != null)
         {
@@ -244,7 +249,8 @@ public class DefaultFileItem
      *
      * @return The contents of the file as an array of bytes.
      */
-    public byte[] get()
+    @Override
+	public byte[] get()
     {
         if (dfos.isInMemory())
         {
@@ -298,7 +304,8 @@ public class DefaultFileItem
      * @exception UnsupportedEncodingException if the requested character
      *                                         encoding is not available.
      */
-    public String getString(String encoding)
+    @Override
+	public String getString(String encoding)
         throws UnsupportedEncodingException
     {
         return new String(get(), encoding);
@@ -312,7 +319,8 @@ public class DefaultFileItem
      *
      * @return The contents of the file, as a string.
      */
-    public String getString()
+    @Override
+	public String getString()
     {
         return new String(get());
     }
@@ -338,7 +346,8 @@ public class DefaultFileItem
      *
      * @exception Exception if an error occurs.
      */
-    public void write(File file) throws Exception
+    @Override
+	public void write(File file) throws Exception
     {
         if (isInMemory())
         {
@@ -424,7 +433,8 @@ public class DefaultFileItem
      * collected, this method can be used to ensure that this is done at an
      * earlier time, thus preserving system resources.
      */
-    public void delete()
+    @Override
+	public void delete()
     {
         cachedContent = null;
         File outputFile = getStoreLocation();
@@ -444,7 +454,8 @@ public class DefaultFileItem
      * @see #setFieldName(java.lang.String)
      *
      */
-    public String getFieldName()
+    @Override
+	public String getFieldName()
     {
         return fieldName;
     }
@@ -458,7 +469,8 @@ public class DefaultFileItem
      * @see #getFieldName()
      *
      */
-    public void setFieldName(String fieldName)
+    @Override
+	public void setFieldName(String fieldName)
     {
         this.fieldName = fieldName;
     }
@@ -474,7 +486,8 @@ public class DefaultFileItem
      * @see #setFormField(boolean)
      *
      */
-    public boolean isFormField()
+    @Override
+	public boolean isFormField()
     {
         return isFormField;
     }
@@ -490,7 +503,8 @@ public class DefaultFileItem
      * @see #isFormField()
      *
      */
-    public void setFormField(boolean state)
+    @Override
+	public void setFormField(boolean state)
     {
         isFormField = state;
     }
@@ -505,7 +519,8 @@ public class DefaultFileItem
      *
      * @exception IOException if an error occurs.
      */
-    public OutputStream getOutputStream()
+    @Override
+	public OutputStream getOutputStream()
         throws IOException
     {
         if (dfos == null)
@@ -545,7 +560,8 @@ public class DefaultFileItem
     /**
      * Removes the file contents from the temporary storage.
      */
-    protected void finalize()
+    @Override
+	protected void finalize()
     {
         File outputFile = dfos.getFile();
 

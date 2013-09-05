@@ -82,7 +82,8 @@ class TagLibraryInfoImpl extends TagLibraryInfo implements TagConstants {
         }
     }
 
-    public String toString() {
+    @Override
+	public String toString() {
         StringWriter sw = new StringWriter();
         PrintWriter out = new PrintWriter(sw);
         print("tlibversion", tlibversion, out);
@@ -201,7 +202,8 @@ class TagLibraryInfoImpl extends TagLibraryInfo implements TagConstants {
 
     }
 
-    public TagLibraryInfo[] getTagLibraryInfos() {
+    @Override
+	public TagLibraryInfo[] getTagLibraryInfos() {
         Collection coll = pi.getTaglibs();
         return (TagLibraryInfo[]) coll.toArray(new TagLibraryInfo[0]);
     }

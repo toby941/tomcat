@@ -114,27 +114,31 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
         super();
     }
 
-    public boolean doDomainReplication() {
+    @Override
+	public boolean doDomainReplication() {
         return sendClusterDomainOnly;
     }
     
     /**
      * @param sendClusterDomainOnly The sendClusterDomainOnly to set.
      */
-    public void setDomainReplication(boolean sendClusterDomainOnly) {
+    @Override
+	public void setDomainReplication(boolean sendClusterDomainOnly) {
         this.sendClusterDomainOnly = sendClusterDomainOnly;
     }
   
     /**
      * @return Returns the defaultMode.
      */
-    public boolean isDefaultMode() {
+    @Override
+	public boolean isDefaultMode() {
         return defaultMode;
     }
     /**
      * @param defaultMode The defaultMode to set.
      */
-    public void setDefaultMode(boolean defaultMode) {
+    @Override
+	public void setDefaultMode(boolean defaultMode) {
         this.defaultMode = defaultMode;
     }
     
@@ -153,7 +157,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
         mExpireSessionsOnShutdown = expireSessionsOnShutdown;
     }
 
-    public void setCluster(CatalinaCluster cluster) {
+    @Override
+	public void setCluster(CatalinaCluster cluster) {
         if(log.isDebugEnabled())
             log.debug("Cluster associated with SimpleTcpReplicationManager");
         this.cluster = cluster;
@@ -179,7 +184,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
     /**
      * Override persistence since they don't go hand in hand with replication for now.
      */
-    public void unload() throws IOException {
+    @Override
+	public void unload() throws IOException {
         if ( !getDistributable() ) {
             super.unload();
         }
@@ -240,7 +246,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
      * @exception IllegalStateException if a new session cannot be
      *  instantiated for any reason
      */
-    public Session createSession(String sessionId)
+    @Override
+	public Session createSession(String sessionId)
     {
         //create a session and notify the other nodes in the cluster
         Session session =  createSession(sessionId,getDistributable(),true);
@@ -254,7 +261,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
         }
     }
 
-    public String[] getInvalidatedSessions() {
+    @Override
+	public String[] getInvalidatedSessions() {
         synchronized ( invalidatedSessions ) {
             String[] result = new String[invalidatedSessions.size()];
             invalidatedSessions.values().toArray(result);
@@ -263,7 +271,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
 
     }
 
-    public ClusterMessage requestCompleted(String sessionId)
+    @Override
+	public ClusterMessage requestCompleted(String sessionId)
     {
         if (  !getDistributable() ) {
             log.warn("Received requestCompleted message, although this context["+
@@ -369,11 +378,13 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
      * @return The object input stream
      * @throws IOException
      */
-    public ReplicationStream getReplicationStream(byte[] data) throws IOException {
+    @Override
+	public ReplicationStream getReplicationStream(byte[] data) throws IOException {
         return getReplicationStream(data,0,data.length);
     }
     
-    public ReplicationStream getReplicationStream(byte[] data, int offset, int length) throws IOException {
+    @Override
+	public ReplicationStream getReplicationStream(byte[] data, int offset, int length) throws IOException {
         ByteArrayInputStream fis =null;
         ReplicationStream ois = null;
         Loader loader = null;
@@ -461,7 +472,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
         return null;
     }
 
-    public String getName() {
+    @Override
+	public String getName() {
         return this.name;
     }
     /**
@@ -475,7 +487,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
         mManagerRunning = true;
         super.start();
         try {
@@ -537,7 +550,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException
+    @Override
+	public void stop() throws LifecycleException
     {
         mManagerRunning = false;
         mChannelStarted = false;
@@ -553,11 +567,13 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
         }
     }
 
-    public void setDistributable(boolean dist) {
+    @Override
+	public void setDistributable(boolean dist) {
         this.distributable = dist;
     }
 
-    public boolean getDistributable() {
+    @Override
+	public boolean getDistributable() {
         return distributable;
     }
 
@@ -647,7 +663,8 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
         }
     }
 
-    public void messageDataReceived(ClusterMessage cmsg) {
+    @Override
+	public void messageDataReceived(ClusterMessage cmsg) {
         try {
             if ( cmsg instanceof SessionMessage ) {
                 SessionMessage msg = (SessionMessage)cmsg;
@@ -663,10 +680,12 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
         return stateTransferred;
     }
 
-    public void setName(String name) {
+    @Override
+	public void setName(String name) {
         this.name = name;
     }
-    public boolean isNotifyListenersOnReplication() {
+    @Override
+	public boolean isNotifyListenersOnReplication() {
         return notifyListenersOnReplication;
     }
     public void setNotifyListenersOnReplication(boolean notifyListenersOnReplication) {
@@ -677,11 +696,13 @@ public class SimpleTcpReplicationManager extends StandardManager implements Clus
     /* 
      * @see org.apache.catalina.ha.ClusterManager#getCluster()
      */
-    public CatalinaCluster getCluster() {
+    @Override
+	public CatalinaCluster getCluster() {
         return cluster;
     }
 
-    public ClusterManager cloneFromTemplate() {
+    @Override
+	public ClusterManager cloneFromTemplate() {
         throw new UnsupportedOperationException();
     }
 

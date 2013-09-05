@@ -49,14 +49,16 @@ abstract public class AbstractObjectCreationFactory implements ObjectCreationFac
      *
      * @throws Exception any exception thrown will be propagated upwards
      */
-    public abstract Object createObject(Attributes attributes) throws Exception;
+    @Override
+	public abstract Object createObject(Attributes attributes) throws Exception;
 
 
     /**
      * <p>Returns the {@link Digester} that was set by the
      * {@link FactoryCreateRule} upon initialization.
      */
-    public Digester getDigester() {
+    @Override
+	public Digester getDigester() {
 
         return (this.digester);
 
@@ -69,7 +71,8 @@ abstract public class AbstractObjectCreationFactory implements ObjectCreationFac
      *
      * @param digester parent Digester object
      */
-    public void setDigester(Digester digester) {
+    @Override
+	public void setDigester(Digester digester) {
 
         this.digester = digester;
 

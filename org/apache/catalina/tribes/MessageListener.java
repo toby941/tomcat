@@ -36,8 +36,10 @@ public interface MessageListener {
     
     public boolean accept(ChannelMessage msg);
     
-    public boolean equals(Object listener);
+    @Override
+	public boolean equals(Object listener);
     
-    public int hashCode();
+    @Override
+	public int hashCode();
 
 }

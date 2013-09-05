@@ -95,14 +95,16 @@ public abstract class AbstractSender implements DataSender {
      * @throws IOException
      * @todo Implement this org.apache.catalina.tribes.transport.DataSender method
      */
-    public abstract void connect() throws IOException;
+    @Override
+	public abstract void connect() throws IOException;
 
     /**
      * disconnect
      *
      * @todo Implement this org.apache.catalina.tribes.transport.DataSender method
      */
-    public abstract void disconnect();
+    @Override
+	public abstract void disconnect();
 
     /**
      * keepalive
@@ -110,7 +112,8 @@ public abstract class AbstractSender implements DataSender {
      * @return boolean
      * @todo Implement this org.apache.catalina.tribes.transport.DataSender method
      */
-    public boolean keepalive() {
+    @Override
+	public boolean keepalive() {
         boolean disconnect = false;
         if ( keepAliveCount >= 0 && requestCount>keepAliveCount ) disconnect = true;
         else if ( keepAliveTime >= 0 && (System.currentTimeMillis()-connectTime)>keepAliveTime ) disconnect = true;
@@ -122,11 +125,13 @@ public abstract class AbstractSender implements DataSender {
         this.connected = connected;
     }
     
-    public boolean isConnected() {
+    @Override
+	public boolean isConnected() {
         return connected;
     }
 
-    public long getConnectTime() {
+    @Override
+	public long getConnectTime() {
         return connectTime;
     }
 
@@ -143,7 +148,8 @@ public abstract class AbstractSender implements DataSender {
         return keepAliveTime;
     }
 
-    public int getRequestCount() {
+    @Override
+	public int getRequestCount() {
         return requestCount;
     }
 
@@ -223,11 +229,13 @@ public abstract class AbstractSender implements DataSender {
         return throwOnFailedAck;
     }
 
-    public void setKeepAliveCount(int keepAliveCount) {
+    @Override
+	public void setKeepAliveCount(int keepAliveCount) {
         this.keepAliveCount = keepAliveCount;
     }
 
-    public void setKeepAliveTime(long keepAliveTime) {
+    @Override
+	public void setKeepAliveTime(long keepAliveTime) {
         this.keepAliveTime = keepAliveTime;
     }
 
@@ -235,15 +243,18 @@ public abstract class AbstractSender implements DataSender {
         this.requestCount = requestCount;
     }
 
-    public void setRxBufSize(int rxBufSize) {
+    @Override
+	public void setRxBufSize(int rxBufSize) {
         this.rxBufSize = rxBufSize;
     }
 
-    public void setTimeout(long timeout) {
+    @Override
+	public void setTimeout(long timeout) {
         this.timeout = timeout;
     }
 
-    public void setTxBufSize(int txBufSize) {
+    @Override
+	public void setTxBufSize(int txBufSize) {
         this.txBufSize = txBufSize;
     }
 

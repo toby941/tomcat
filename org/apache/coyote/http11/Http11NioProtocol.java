@@ -75,20 +75,23 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
 
     /** Pass config info
      */
-    public void setAttribute( String name, Object value ) {
+    @Override
+	public void setAttribute( String name, Object value ) {
         if( log.isTraceEnabled())
             log.trace(sm.getString("http11protocol.setattribute", name, value));
 
         attributes.put(name, value);
     }
 
-    public Object getAttribute( String key ) {
+    @Override
+	public Object getAttribute( String key ) {
         if( log.isTraceEnabled())
             log.trace(sm.getString("http11protocol.getattribute", key));
         return attributes.get(key);
     }
 
-    public Iterator getAttributeNames() {
+    @Override
+	public Iterator getAttributeNames() {
         return attributes.keySet().iterator();
     }
 
@@ -114,18 +117,21 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
 
     /** The adapter, used to call the connector
      */
-    public void setAdapter(Adapter adapter) {
+    @Override
+	public void setAdapter(Adapter adapter) {
         this.adapter=adapter;
     }
 
-    public Adapter getAdapter() {
+    @Override
+	public Adapter getAdapter() {
         return adapter;
     }
 
 
     /** Start the protocol
      */
-    public void init() throws Exception {
+    @Override
+	public void init() throws Exception {
         ep.setName(getName());
         ep.setHandler(cHandler);
         
@@ -148,7 +154,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
     ObjectName tpOname;
     ObjectName rgOname;
 
-    public void start() throws Exception {
+    @Override
+	public void start() throws Exception {
         if( this.domain != null ) {
             try {
                 tpOname=new ObjectName
@@ -174,7 +181,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
             log.info(sm.getString("http11protocol.start", getName()));
     }
 
-    public void pause() throws Exception {
+    @Override
+	public void pause() throws Exception {
         try {
             ep.pause();
         } catch (Exception ex) {
@@ -185,7 +193,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
             log.info(sm.getString("http11protocol.pause", getName()));
     }
 
-    public void resume() throws Exception {
+    @Override
+	public void resume() throws Exception {
         try {
             ep.resume();
         } catch (Exception ex) {
@@ -196,7 +205,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
             log.info(sm.getString("http11protocol.resume", getName()));
     }
 
-    public void destroy() throws Exception {
+    @Override
+	public void destroy() throws Exception {
         if(log.isInfoEnabled())
             log.info(sm.getString("http11protocol.stop", getName()));
         ep.destroy();
@@ -209,7 +219,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
     // -------------------- Properties--------------------
     protected NioEndpoint ep=new NioEndpoint();
 
-    protected final AbstractEndpoint getEndpoint() {
+    @Override
+	protected final AbstractEndpoint getEndpoint() {
         return ep;
     }
 
@@ -614,7 +625,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
             new ConcurrentHashMap<NioChannel, Http11NioProcessor>();
         protected ConcurrentLinkedQueue<Http11NioProcessor> recycledProcessors = new ConcurrentLinkedQueue<Http11NioProcessor>() {
             protected AtomicInteger size = new AtomicInteger(0);
-            public boolean offer(Http11NioProcessor processor) {
+            @Override
+			public boolean offer(Http11NioProcessor processor) {
                 boolean offer = proto.processorCache==-1?true:size.get() < proto.processorCache;
                 //avoid over growing our cache or add after we have stopped
                 boolean result = false;
@@ -628,7 +640,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
                 return result;
             }
             
-            public Http11NioProcessor poll() {
+            @Override
+			public Http11NioProcessor poll() {
                 Http11NioProcessor result = super.poll();
                 if ( result != null ) {
                     size.decrementAndGet();
@@ -636,7 +649,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
                 return result;
             }
             
-            public void clear() {
+            @Override
+			public void clear() {
                 Http11NioProcessor next = poll();
                 while ( next != null ) {
                     deregister(next);
@@ -651,7 +665,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
             this.proto = proto;
         }
         
-        public void releaseCaches() {
+        @Override
+		public void releaseCaches() {
             recycledProcessors.clear();
         }
         
@@ -659,7 +674,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
          * Use this only if the processor is not available, otherwise use
          * {@link #release(NioChannel, Http11NioProcessor).
          */
-        public void release(NioChannel socket) {
+        @Override
+		public void release(NioChannel socket) {
             Http11NioProcessor result = connections.remove(socket);
             if ( result != null ) {
                 result.recycle();
@@ -675,7 +691,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
         }
 
 
-        public SocketState event(NioChannel socket, SocketStatus status) {
+        @Override
+		public SocketState event(NioChannel socket, SocketStatus status) {
             Http11NioProcessor result = connections.get(socket);
 
             SocketState state = SocketState.CLOSED; 
@@ -721,7 +738,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
             return state;
         }
 
-        public SocketState process(NioChannel socket) {
+        @Override
+		public SocketState process(NioChannel socket) {
             Http11NioProcessor processor = null;
             try {
                 processor = connections.remove(socket);
@@ -878,7 +896,8 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
         return ep.getOomParachute();
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -886,12 +905,15 @@ public class Http11NioProtocol extends AbstractProtocol implements MBeanRegistra
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 }

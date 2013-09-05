@@ -70,20 +70,24 @@ public abstract class ClusterListener implements ChannelListener {
         this.cluster = cluster;
     }
 
-    public boolean equals(Object listener) {
+    @Override
+	public boolean equals(Object listener) {
         return super.equals(listener);
     }
 
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return super.hashCode();
     }
 
     //--Logic---------------------------------------------------
 
-    public final void messageReceived(Serializable msg, Member member) {
+    @Override
+	public final void messageReceived(Serializable msg, Member member) {
         if ( msg instanceof ClusterMessage ) messageReceived((ClusterMessage)msg);
     }
-    public final boolean accept(Serializable msg, Member member) {
+    @Override
+	public final boolean accept(Serializable msg, Member member) {
         if ( msg instanceof ClusterMessage ) return true;
         return false;
     }

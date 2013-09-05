@@ -37,6 +37,7 @@ public class SessionIDMessage extends ClusterMessageBase implements ClusterMessa
 	private String host ;
 	private String contextPath;
 
+	@Override
 	public String getUniqueId() {
 		StringBuffer result = new StringBuffer(getOrignalSessionID());
 		result.append("#-#");
@@ -122,6 +123,7 @@ public class SessionIDMessage extends ClusterMessageBase implements ClusterMessa
 		this.orignalSessionID = orignalSessionID;
 	}
 
+	@Override
 	public String toString() {
 	    return "SESSIONID-UPDATE#" + getHost() + "." + getContextPath() + "#" + getOrignalSessionID() + ":" + getBackupSessionID();
 	}

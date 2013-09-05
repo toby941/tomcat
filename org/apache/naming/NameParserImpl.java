@@ -47,7 +47,8 @@ public class NameParserImpl
      * @return A non-null parsed form of the name using the naming convention 
      * of this parser.
      */
-    public Name parse(String name)
+    @Override
+	public Name parse(String name)
         throws NamingException {
         return new CompositeName(name);
     }

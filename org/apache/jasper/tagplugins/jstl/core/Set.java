@@ -24,7 +24,8 @@ import org.apache.jasper.tagplugins.jstl.Util;
 
 public class Set implements TagPlugin {
     
-    public void doTag(TagPluginContext ctxt) {
+    @Override
+	public void doTag(TagPluginContext ctxt) {
         
         //the flags to indicate whether the attributes have been specified
         boolean hasValue = false, hasVar = false, hasScope = false, 

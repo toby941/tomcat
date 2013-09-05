@@ -105,7 +105,8 @@ public class HttpSessionBindingEvent extends HttpSessionEvent {
     
     
    	/** Return the session that changed. */
-    public HttpSession getSession () { 
+    @Override
+	public HttpSession getSession () { 
 	return super.getSession();
     }
  

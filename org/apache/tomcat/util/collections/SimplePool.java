@@ -27,6 +27,7 @@ package org.apache.tomcat.util.collections;
  * 
  * @deprecated
  */
+@Deprecated
 public final class SimplePool  {
     
     

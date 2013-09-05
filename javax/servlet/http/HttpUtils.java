@@ -32,6 +32,7 @@ import java.io.IOException;
 */
 
 
+@Deprecated
 public class HttpUtils {
 
     private static final String LSTRING_FILE =
@@ -95,7 +96,7 @@ public class HttpUtils {
 	StringBuffer sb = new StringBuffer();
 	StringTokenizer st = new StringTokenizer(s, "&");
 	while (st.hasMoreTokens()) {
-	    String pair = (String)st.nextToken();
+	    String pair = st.nextToken();
 	    int pos = pair.indexOf('=');
 	    if (pos == -1) {
 		// XXX

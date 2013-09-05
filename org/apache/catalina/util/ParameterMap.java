@@ -137,7 +137,8 @@ public final class ParameterMap extends HashMap {
      *
      * @exception IllegalStateException if this map is currently locked
      */
-    public void clear() {
+    @Override
+	public void clear() {
 
         if (locked)
             throw new IllegalStateException
@@ -160,7 +161,8 @@ public final class ParameterMap extends HashMap {
      *
      * @exception IllegalStateException if this map is currently locked
      */
-    public Object put(Object key, Object value) {
+    @Override
+	public Object put(Object key, Object value) {
 
         if (locked)
             throw new IllegalStateException
@@ -179,7 +181,8 @@ public final class ParameterMap extends HashMap {
      *
      * @exception IllegalStateException if this map is currently locked
      */
-    public void putAll(Map map) {
+    @Override
+	public void putAll(Map map) {
 
         if (locked)
             throw new IllegalStateException
@@ -199,7 +202,8 @@ public final class ParameterMap extends HashMap {
      *
      * @exception IllegalStateException if this map is currently locked
      */
-    public Object remove(Object key) {
+    @Override
+	public Object remove(Object key) {
 
         if (locked)
             throw new IllegalStateException

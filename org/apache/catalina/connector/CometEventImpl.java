@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.catalina.CometEvent;
 import org.apache.catalina.util.StringManager;
-import org.apache.coyote.ActionCode;
 
 public class CometEventImpl implements CometEvent {
 
@@ -89,7 +88,8 @@ public class CometEventImpl implements CometEvent {
         this.eventSubType = eventSubType;
     }
     
-    public void close() throws IOException {
+    @Override
+	public void close() throws IOException {
         if (request == null) {
             throw new IllegalStateException(sm.getString("cometEvent.nullRequest"));
         }
@@ -99,27 +99,32 @@ public class CometEventImpl implements CometEvent {
         if (iscomet) request.cometClose();
     }
 
-    public EventSubType getEventSubType() {
+    @Override
+	public EventSubType getEventSubType() {
         return eventSubType;
     }
 
-    public EventType getEventType() {
+    @Override
+	public EventType getEventType() {
         return eventType;
     }
 
-    public HttpServletRequest getHttpServletRequest() {
+    @Override
+	public HttpServletRequest getHttpServletRequest() {
         return request.getRequest();
     }
 
-    public HttpServletResponse getHttpServletResponse() {
+    @Override
+	public HttpServletResponse getHttpServletResponse() {
         return response.getResponse();
     }
 
-    public void setTimeout(int timeout) throws IOException, ServletException,
+    @Override
+	public void setTimeout(int timeout) throws IOException, ServletException,
             UnsupportedOperationException {
         if (request.getAttribute("org.apache.tomcat.comet.timeout.support") == Boolean.TRUE) {
             request.setAttribute("org.apache.tomcat.comet.timeout", new Integer(timeout));
-            if (request.isComet()) request.setCometTimeout((long)timeout);
+            if (request.isComet()) request.setCometTimeout(timeout);
         } else {
             throw new UnsupportedOperationException();
         }

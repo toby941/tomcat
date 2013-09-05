@@ -259,7 +259,8 @@ public abstract class AuthenticatorBase
     /**
      * Return the Container to which this Valve is attached.
      */
-    public Container getContainer() {
+    @Override
+	public Container getContainer() {
 
         return (this.context);
 
@@ -271,7 +272,8 @@ public abstract class AuthenticatorBase
      *
      * @param container The container to which we are attached
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         if (container != null && !(container instanceof Context))
             throw new IllegalArgumentException
@@ -313,7 +315,8 @@ public abstract class AuthenticatorBase
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -416,7 +419,8 @@ public abstract class AuthenticatorBase
      * @exception IOException if an input/output error occurs
      * @exception ServletException if thrown by a processing element
      */
-    public void invoke(Request request, Response response)
+    @Override
+	public void invoke(Request request, Response response)
         throws IOException, ServletException {
 
         if (log.isDebugEnabled())
@@ -831,7 +835,8 @@ public abstract class AuthenticatorBase
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -842,7 +847,8 @@ public abstract class AuthenticatorBase
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -854,7 +860,8 @@ public abstract class AuthenticatorBase
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -869,7 +876,8 @@ public abstract class AuthenticatorBase
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started)
@@ -914,7 +922,8 @@ public abstract class AuthenticatorBase
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Validate and update our current component state
         if (!started)

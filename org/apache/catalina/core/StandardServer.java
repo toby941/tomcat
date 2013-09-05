@@ -222,7 +222,8 @@ public final class StandardServer
     /**
      * Return the global naming resources.
      */
-    public NamingResources getGlobalNamingResources() {
+    @Override
+	public NamingResources getGlobalNamingResources() {
 
         return (this.globalNamingResources);
 
@@ -234,7 +235,8 @@ public final class StandardServer
      *
      * @param globalNamingResources The new global naming resources
      */
-    public void setGlobalNamingResources
+    @Override
+	public void setGlobalNamingResources
         (NamingResources globalNamingResources) {
 
         NamingResources oldGlobalNamingResources =
@@ -253,7 +255,8 @@ public final class StandardServer
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -271,7 +274,8 @@ public final class StandardServer
     /**
      * Return the port number we listen to for shutdown commands.
      */
-    public int getPort() {
+    @Override
+	public int getPort() {
 
         return (this.port);
 
@@ -283,7 +287,8 @@ public final class StandardServer
      *
      * @param port The new port number
      */
-    public void setPort(int port) {
+    @Override
+	public void setPort(int port) {
 
         this.port = port;
 
@@ -293,7 +298,8 @@ public final class StandardServer
     /**
      * Return the shutdown command string we are waiting for.
      */
-    public String getShutdown() {
+    @Override
+	public String getShutdown() {
 
         return (this.shutdown);
 
@@ -305,7 +311,8 @@ public final class StandardServer
      *
      * @param shutdown The new shutdown command
      */
-    public void setShutdown(String shutdown) {
+    @Override
+	public void setShutdown(String shutdown) {
 
         this.shutdown = shutdown;
 
@@ -320,7 +327,8 @@ public final class StandardServer
      *
      * @param service The Service to be added
      */
-    public void addService(Service service) {
+    @Override
+	public void addService(Service service) {
 
         service.setServer(this);
 
@@ -379,7 +387,8 @@ public final class StandardServer
      * This keeps the main thread alive - the thread pool listening for http 
      * connections is daemon threads.
      */
-    public void await() {
+    @Override
+	public void await() {
         // Negative values - don't wait on port - tomcat is embedded or we just don't like ports
         if( port == -2 ) {
             // undocumented yet - for embedding apps that are around, alive.
@@ -506,7 +515,8 @@ public final class StandardServer
      *
      * @param name Name of the Service to be returned
      */
-    public Service findService(String name) {
+    @Override
+	public Service findService(String name) {
 
         if (name == null) {
             return (null);
@@ -526,7 +536,8 @@ public final class StandardServer
     /**
      * Return the set of Services defined within this Server.
      */
-    public Service[] findServices() {
+    @Override
+	public Service[] findServices() {
 
         return (services);
 
@@ -550,7 +561,8 @@ public final class StandardServer
      *
      * @param service The Service to be removed
      */
-    public void removeService(Service service) {
+    @Override
+	public void removeService(Service service) {
 
         synchronized (services) {
             int j = -1;
@@ -614,7 +626,8 @@ public final class StandardServer
     /**
      * Return a String representation of this component.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("StandardServer[");
         sb.append(getPort());
@@ -694,7 +707,8 @@ public final class StandardServer
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -705,7 +719,8 @@ public final class StandardServer
      * Get the lifecycle listeners associated with this lifecycle. If this
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -717,7 +732,8 @@ public final class StandardServer
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -733,7 +749,8 @@ public final class StandardServer
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started) {
@@ -770,7 +787,8 @@ public final class StandardServer
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Validate and update our current component state
         if (!started)
@@ -803,7 +821,8 @@ public final class StandardServer
      * Invoke a pre-startup initialization. This is used to allow connectors
      * to bind to restricted ports under Unix operating environments.
      */
-    public void initialize()
+    @Override
+	public void initialize()
         throws LifecycleException 
     {
         if (initialized) {
@@ -853,7 +872,8 @@ public final class StandardServer
         return domain;
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -861,13 +881,16 @@ public final class StandardServer
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
     
 }

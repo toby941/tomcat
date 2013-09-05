@@ -43,7 +43,7 @@ public class LimitLifecycleListener implements LifecycleListener {
 		}
 		if (event.getType().equals(Lifecycle.INIT_EVENT)) {
 			init();
-		} else if (event.getType().equals(StandardContext.STOP_EVENT)) {
+		} else if (event.getType().equals(Lifecycle.STOP_EVENT)) {
 			stop();
 		}
 	}

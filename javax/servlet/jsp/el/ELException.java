@@ -25,6 +25,7 @@ package javax.servlet.jsp.el;
  * @since 2.0
  * @deprecated As of JSP 2.1, replaced by javax.el.ELException
  */
+@Deprecated
 @SuppressWarnings("dep-ann") // TCK signature test fails with annotation
 public class ELException extends Exception {
 

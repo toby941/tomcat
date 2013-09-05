@@ -254,7 +254,8 @@ public class OutputBuffer extends Writer
      * 
      * @throws IOException An underlying IOException occurred
      */
-    public void close()
+    @Override
+	public void close()
         throws IOException {
 
         if (closed)
@@ -291,7 +292,8 @@ public class OutputBuffer extends Writer
      * 
      * @throws IOException An underlying IOException occurred
      */
-    public void flush()
+    @Override
+	public void flush()
         throws IOException {
         doFlush(true);
     }
@@ -348,7 +350,8 @@ public class OutputBuffer extends Writer
      * 
      * @throws IOException An underlying IOException occurred
      */
-    public void realWriteBytes(byte buf[], int off, int cnt)
+    @Override
+	public void realWriteBytes(byte buf[], int off, int cnt)
 	throws IOException {
 
         if (closed)
@@ -416,7 +419,8 @@ public class OutputBuffer extends Writer
     // ------------------------------------------------- Chars Handling Methods
 
 
-    public void write(int c)
+    @Override
+	public void write(int c)
         throws IOException {
 
         if (suspended)
@@ -429,7 +433,8 @@ public class OutputBuffer extends Writer
     }
 
 
-    public void write(char c[])
+    @Override
+	public void write(char c[])
         throws IOException {
 
         if (suspended)
@@ -440,7 +445,8 @@ public class OutputBuffer extends Writer
     }
 
 
-    public void write(char c[], int off, int len)
+    @Override
+	public void write(char c[], int off, int len)
         throws IOException {
 
         if (suspended)
@@ -456,7 +462,8 @@ public class OutputBuffer extends Writer
     /**
      * Append a string to the buffer
      */
-    public void write(String s, int off, int len)
+    @Override
+	public void write(String s, int off, int len)
         throws IOException {
 
         if (suspended)
@@ -471,7 +478,8 @@ public class OutputBuffer extends Writer
     }
 
 
-    public void write(String s)
+    @Override
+	public void write(String s)
         throws IOException {
 
         if (suspended)
@@ -516,7 +524,8 @@ public class OutputBuffer extends Writer
                     conv = (C2BConverter)AccessController.doPrivileged(
                             new PrivilegedExceptionAction(){
 
-                                public Object run() throws IOException{
+                                @Override
+								public Object run() throws IOException{
                                     return new C2BConverter(bb, enc);
                                 }
 

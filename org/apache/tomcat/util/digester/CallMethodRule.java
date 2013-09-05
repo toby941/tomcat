@@ -83,7 +83,8 @@ public class CallMethodRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #CallMethodRule(String methodName,int paramCount)} instead.
      */
-    public CallMethodRule(Digester digester, String methodName,
+    @Deprecated
+	public CallMethodRule(Digester digester, String methodName,
                           int paramCount) {
 
         this(methodName, paramCount);
@@ -106,7 +107,8 @@ public class CallMethodRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #CallMethodRule(String methodName,int paramCount, String [] paramTypes)} instead.
      */
-    public CallMethodRule(Digester digester, String methodName,
+    @Deprecated
+	public CallMethodRule(Digester digester, String methodName,
                           int paramCount, String paramTypes[]) {
 
         this(methodName, paramCount, paramTypes);
@@ -130,7 +132,8 @@ public class CallMethodRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #CallMethodRule(String methodName,int paramCount, Class [] paramTypes)} instead.
      */
-    public CallMethodRule(Digester digester, String methodName,
+    @Deprecated
+	public CallMethodRule(Digester digester, String methodName,
                           int paramCount, Class paramTypes[]) {
 
         this(methodName, paramCount, paramTypes);
@@ -411,7 +414,8 @@ public class CallMethodRule extends Rule {
      * Set the associated digester.
      * If needed, this class loads the parameter classes from their names.
      */
-    public void setDigester(Digester digester)
+    @Override
+	public void setDigester(Digester digester)
     {
         // call superclass
         super.setDigester(digester);
@@ -436,7 +440,8 @@ public class CallMethodRule extends Rule {
      *
      * @param attributes The attribute list for this element
      */
-    public void begin(Attributes attributes) throws Exception {
+    @Override
+	public void begin(Attributes attributes) throws Exception {
 
         // Push an array to capture the parameter values if necessary
         if (paramCount > 0) {
@@ -455,7 +460,8 @@ public class CallMethodRule extends Rule {
      *
      * @param bodyText The body text of this element
      */
-    public void body(String bodyText) throws Exception {
+    @Override
+	public void body(String bodyText) throws Exception {
 
         if (paramCount == 0) {
             this.bodyText = bodyText.trim();
@@ -467,7 +473,8 @@ public class CallMethodRule extends Rule {
     /**
      * Process the end of this element.
      */
-    public void end() throws Exception {
+    @Override
+	public void end() throws Exception {
 
         // Retrieve or construct the parameter values array
         Object parameters[] = null;
@@ -585,7 +592,8 @@ public class CallMethodRule extends Rule {
     /**
      * Clean up after parsing is complete.
      */
-    public void finish() throws Exception {
+    @Override
+	public void finish() throws Exception {
 
         bodyText = null;
 
@@ -604,7 +612,8 @@ public class CallMethodRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("CallMethodRule[");
         sb.append("methodName=");

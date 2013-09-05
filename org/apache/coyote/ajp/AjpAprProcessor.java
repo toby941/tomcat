@@ -502,7 +502,8 @@ public class AjpAprProcessor implements ActionHook {
      * @param actionCode Type of the action
      * @param param Action parameter
      */
-    public void action(ActionCode actionCode, Object param) {
+    @Override
+	public void action(ActionCode actionCode, Object param) {
 
         if (actionCode == ActionCode.ACTION_COMMIT) {
 
@@ -672,7 +673,7 @@ public class AjpAprProcessor implements ActionHook {
         // Translate the HTTP method code to a String.
         byte methodCode = requestHeaderMessage.getByte();
         if (methodCode != Constants.SC_M_JK_STORED) {
-            String methodName = Constants.methodTransArray[(int)methodCode - 1];
+            String methodName = Constants.methodTransArray[methodCode - 1];
             request.method().setString(methodName);
         }
 
@@ -1285,7 +1286,8 @@ public class AjpAprProcessor implements ActionHook {
         /**
          * Read bytes into the specified chunk.
          */
-        public int doRead(ByteChunk chunk, Request req )
+        @Override
+		public int doRead(ByteChunk chunk, Request req )
             throws IOException {
 
             if (endOfStream) {
@@ -1325,7 +1327,8 @@ public class AjpAprProcessor implements ActionHook {
         /**
          * Write chunk.
          */
-        public int doWrite(ByteChunk chunk, Response res)
+        @Override
+		public int doWrite(ByteChunk chunk, Response res)
             throws IOException {
 
             if (!response.isCommitted()) {

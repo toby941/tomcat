@@ -185,11 +185,13 @@ public class Constants {
      * XXX This is a hack to avoid changing EL interpreter to recognize "\$"
      * @deprecated
      */
-    public static final char ESC = '\u001b';
+    @Deprecated
+	public static final char ESC = '\u001b';
     /**
      * @deprecated
      */
-    public static final String ESCStr = "'\\u001b'";
+    @Deprecated
+	public static final String ESCStr = "'\\u001b'";
 
     /**
      * Has security been turned on?

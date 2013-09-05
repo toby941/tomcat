@@ -190,7 +190,7 @@ public class DeltaRequest implements Externalizable {
                     Principal p = null;
                     if ( info.getAction() == ACTION_SET ) {
                         SerializablePrincipal sp = (SerializablePrincipal)info.getValue();
-                        p = (Principal)sp.getPrincipal(session.getManager().getContainer().getRealm());
+                        p = sp.getPrincipal(session.getManager().getContainer().getRealm());
                     }
                     session.setPrincipal(p,false);
                     break;
@@ -241,7 +241,8 @@ public class DeltaRequest implements Externalizable {
         actionPool.clear();
     }
     
-    public void readExternal(java.io.ObjectInput in) throws IOException,ClassNotFoundException {
+    @Override
+	public void readExternal(java.io.ObjectInput in) throws IOException,ClassNotFoundException {
         //sessionId - String
         //recordAll - boolean
         //size - int
@@ -274,7 +275,8 @@ public class DeltaRequest implements Externalizable {
         
 
 
-    public void writeExternal(java.io.ObjectOutput out ) throws java.io.IOException {
+    @Override
+	public void writeExternal(java.io.ObjectOutput out ) throws java.io.IOException {
         //sessionId - String
         //recordAll - boolean
         //size - int
@@ -342,7 +344,8 @@ public class DeltaRequest implements Externalizable {
         public Object getValue() {
             return value;
         }
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return name.hashCode();
         }
 
@@ -357,13 +360,15 @@ public class DeltaRequest implements Externalizable {
             action=-1;
         }
 
-        public boolean equals(Object o) {
+        @Override
+		public boolean equals(Object o) {
             if ( ! (o instanceof AttributeInfo ) ) return false;
             AttributeInfo other =  (AttributeInfo)o;
             return other.getName().equals(this.getName());
         }
         
-        public void readExternal(java.io.ObjectInput in ) throws IOException,ClassNotFoundException {
+        @Override
+		public void readExternal(java.io.ObjectInput in ) throws IOException,ClassNotFoundException {
             //type - int
             //action - int
             //name - String
@@ -376,7 +381,8 @@ public class DeltaRequest implements Externalizable {
             if ( hasValue ) value = in.readObject();
         }
 
-        public void writeExternal(java.io.ObjectOutput out) throws IOException {
+        @Override
+		public void writeExternal(java.io.ObjectOutput out) throws IOException {
             //type - int
             //action - int
             //name - String
@@ -389,7 +395,8 @@ public class DeltaRequest implements Externalizable {
             if (getValue()!=null) out.writeObject(getValue());
         }
         
-        public String toString() {
+        @Override
+		public String toString() {
             StringBuffer buf = new StringBuffer("AttributeInfo[type=");
             buf.append(getType()).append(", action=").append(getAction());
             buf.append(", name=").append(getName()).append(", value=").append(getValue());

@@ -43,14 +43,16 @@ public class WorkerDummy extends JkHandler
     /** Initialize the worker. After this call the worker will be
      *  ready to accept new requests.
      */
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         headersMsgNote=wEnv.getNoteId( WorkerEnv.ENDPOINT_NOTE, "headerMsg" );
     }
  
     MessageBytes body=MessageBytes.newInstance();
     private int headersMsgNote;
     
-    public int invoke( Msg in, MsgContext ep ) 
+    @Override
+	public int invoke( Msg in, MsgContext ep ) 
         throws IOException
     {
         MsgAjp msg=(MsgAjp)ep.getNote( headersMsgNote );

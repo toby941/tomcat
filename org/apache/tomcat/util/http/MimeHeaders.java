@@ -157,7 +157,8 @@ public class MimeHeaders {
     /**
      * EXPENSIVE!!!  only for debugging.
      */
-    public String toString() {
+    @Override
+	public String toString() {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
         pw.println("=== MimeHeaders ===");
@@ -427,11 +428,13 @@ class NamesEnumerator implements Enumeration {
         pos++;
     }
     
-    public boolean hasMoreElements() {
+    @Override
+	public boolean hasMoreElements() {
         return next!=null;
     }
 
-    public Object nextElement() {
+    @Override
+	public Object nextElement() {
         String current=next;
         findNext();
         return current;
@@ -468,11 +471,13 @@ class ValuesEnumerator implements Enumeration {
         pos++;
     }
     
-    public boolean hasMoreElements() {
+    @Override
+	public boolean hasMoreElements() {
         return next!=null;
     }
 
-    public Object nextElement() {
+    @Override
+	public Object nextElement() {
         MessageBytes current=next;
         findNext();
         return current.toString();

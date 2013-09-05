@@ -233,12 +233,14 @@ public class ExpressionParseTree {
         /**
          * Returns true if the string is not empty.
          */
-        public boolean evaluate() {
+        @Override
+		public boolean evaluate() {
             return !(getValue().length() == 0);
         }
 
 
-        public String toString() {
+        @Override
+		public String toString() {
             return value.toString();
         }
     }
@@ -278,12 +280,14 @@ public class ExpressionParseTree {
         }
     }
     private final class NotNode extends OppNode {
-        public boolean evaluate() {
+        @Override
+		public boolean evaluate() {
             return !left.evaluate();
         }
 
 
-        public int getPrecedence() {
+        @Override
+		public int getPrecedence() {
             return PRECEDENCE_NOT;
         }
 
@@ -291,46 +295,54 @@ public class ExpressionParseTree {
         /**
          * Overridden to pop only one value.
          */
-        public void popValues(List values) {
+        @Override
+		public void popValues(List values) {
             left = (Node)values.remove(0);
         }
 
 
-        public String toString() {
+        @Override
+		public String toString() {
             return left + " NOT";
         }
     }
     private final class AndNode extends OppNode {
-        public boolean evaluate() {
+        @Override
+		public boolean evaluate() {
             if (!left.evaluate()) // Short circuit
                 return false;
             return right.evaluate();
         }
 
 
-        public int getPrecedence() {
+        @Override
+		public int getPrecedence() {
             return PRECEDENCE_LOGICAL;
         }
 
 
-        public String toString() {
+        @Override
+		public String toString() {
             return left + " " + right + " AND";
         }
     }
     private final class OrNode extends OppNode {
-        public boolean evaluate() {
+        @Override
+		public boolean evaluate() {
             if (left.evaluate()) // Short circuit
                 return true;
             return right.evaluate();
         }
 
 
-        public int getPrecedence() {
+        @Override
+		public int getPrecedence() {
             return PRECEDENCE_LOGICAL;
         }
 
 
-        public String toString() {
+        @Override
+		public String toString() {
             return left + " " + right + " OR";
         }
     }
@@ -342,47 +354,56 @@ public class ExpressionParseTree {
         }
     }
     private final class EqualNode extends CompareNode {
-        public boolean evaluate() {
+        @Override
+		public boolean evaluate() {
             return (compareBranches() == 0);
         }
 
 
-        public int getPrecedence() {
+        @Override
+		public int getPrecedence() {
             return PRECEDENCE_COMPARE;
         }
 
 
-        public String toString() {
+        @Override
+		public String toString() {
             return left + " " + right + " EQ";
         }
     }
     private final class GreaterThanNode extends CompareNode {
-        public boolean evaluate() {
+        @Override
+		public boolean evaluate() {
             return (compareBranches() > 0);
         }
 
 
-        public int getPrecedence() {
+        @Override
+		public int getPrecedence() {
             return PRECEDENCE_COMPARE;
         }
 
 
-        public String toString() {
+        @Override
+		public String toString() {
             return left + " " + right + " GT";
         }
     }
     private final class LessThanNode extends CompareNode {
-        public boolean evaluate() {
+        @Override
+		public boolean evaluate() {
             return (compareBranches() < 0);
         }
 
 
-        public int getPrecedence() {
+        @Override
+		public int getPrecedence() {
             return PRECEDENCE_COMPARE;
         }
 
 
-        public String toString() {
+        @Override
+		public String toString() {
             return left + " " + right + " LT";
         }
     }

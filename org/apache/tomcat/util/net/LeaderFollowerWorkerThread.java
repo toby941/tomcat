@@ -43,7 +43,8 @@ class LeaderFollowerWorkerThread implements ThreadPoolRunnable {
         this.endpoint = endpoint;
     }
 
-    public Object[] getInitData() {
+    @Override
+	public Object[] getInitData() {
         // no synchronization overhead, but 2 array access 
         Object obj[]=new Object[2];
         obj[1]= endpoint.getConnectionHandler().init();
@@ -51,7 +52,8 @@ class LeaderFollowerWorkerThread implements ThreadPoolRunnable {
         return obj;
     }
     
-    public void runIt(Object perThrData[]) {
+    @Override
+	public void runIt(Object perThrData[]) {
 
         // Create per-thread cache
         if (endpoint.isRunning()) {

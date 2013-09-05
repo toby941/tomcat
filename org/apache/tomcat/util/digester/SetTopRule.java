@@ -50,7 +50,8 @@ public class SetTopRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #SetTopRule(String methodName)} instead.
      */
-    public SetTopRule(Digester digester, String methodName) {
+    @Deprecated
+	public SetTopRule(Digester digester, String methodName) {
 
         this(methodName);
 
@@ -70,7 +71,8 @@ public class SetTopRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #SetTopRule(String methodName, String paramType)} instead.
      */
-    public SetTopRule(Digester digester, String methodName,
+    @Deprecated
+	public SetTopRule(Digester digester, String methodName,
                       String paramType) {
 
         this(methodName, paramType);
@@ -172,7 +174,8 @@ public class SetTopRule extends Rule {
     /**
      * Process the end of this element.
      */
-    public void end() throws Exception {
+    @Override
+	public void end() throws Exception {
 
         // Identify the objects to be used
         Object child = digester.peek(0);
@@ -200,7 +203,8 @@ public class SetTopRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SetTopRule[");
         sb.append("methodName=");

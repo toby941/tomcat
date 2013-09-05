@@ -35,7 +35,8 @@ class DefaultErrorHandler implements ErrorHandler {
      * @param errMsg Parse error message
      * @param exception Parse exception
      */
-    public void jspError(String fname, int line, int column, String errMsg,
+    @Override
+	public void jspError(String fname, int line, int column, String errMsg,
             Exception ex) throws JasperException {
         throw new JasperException(fname + "(" + line + "," + column + ")"
                 + " " + errMsg, ex);
@@ -47,7 +48,8 @@ class DefaultErrorHandler implements ErrorHandler {
      * @param errMsg Parse error message
      * @param exception Parse exception
      */
-    public void jspError(String errMsg, Exception ex) throws JasperException {
+    @Override
+	public void jspError(String errMsg, Exception ex) throws JasperException {
         throw new JasperException(errMsg, ex);
     }
     
@@ -57,7 +59,8 @@ class DefaultErrorHandler implements ErrorHandler {
      * @param details Array of JavacErrorDetail instances corresponding to the
      * compilation errors
      */
-    public void javacError(JavacErrorDetail[] details) throws JasperException {
+    @Override
+	public void javacError(JavacErrorDetail[] details) throws JasperException {
         
         if (details == null) {
             return;
@@ -99,7 +102,8 @@ class DefaultErrorHandler implements ErrorHandler {
      * @param errorReport Compilation error report
      * @param exception Compilation exception
      */
-    public void javacError(String errorReport, Exception exception)
+    @Override
+	public void javacError(String errorReport, Exception exception)
     throws JasperException {
         
         throw new JasperException(

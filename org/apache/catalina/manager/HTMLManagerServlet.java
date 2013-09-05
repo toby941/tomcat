@@ -96,7 +96,8 @@ public final class HTMLManagerServlet extends ManagerServlet {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    public void doGet(HttpServletRequest request,
+    @Override
+	public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -155,7 +156,8 @@ public final class HTMLManagerServlet extends ManagerServlet {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    public void doPost(HttpServletRequest request,
+    @Override
+	public void doPost(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -675,14 +677,16 @@ public final class HTMLManagerServlet extends ManagerServlet {
     /**
      * @see javax.servlet.Servlet#getServletInfo()
      */
-    public String getServletInfo() {
+    @Override
+	public String getServletInfo() {
         return "HTMLManagerServlet, Copyright (c) 1999-2013, The Apache Software Foundation";
     }   
     
     /**
      * @see javax.servlet.GenericServlet#init()
      */
-    public void init() throws ServletException {
+    @Override
+	public void init() throws ServletException {
         super.init();
     }   
 
@@ -932,61 +936,71 @@ public final class HTMLManagerServlet extends ManagerServlet {
         Comparator comparator = null;
         if ("CreationTime".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return new Date(session.getCreationTime());
                 }
             };
         } else if ("id".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return session.getId();
                 }
             };
         } else if ("LastAccessedTime".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return new Date(session.getLastAccessedTime());
                 }
             };
         } else if ("MaxInactiveInterval".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return new Date(session.getMaxInactiveInterval());
                 }
             };
         } else if ("new".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return Boolean.valueOf(session.getSession().isNew());
                 }
             };
         } else if ("locale".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return JspHelper.guessDisplayLocaleFromSession(session);
                 }
             };
         } else if ("user".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return JspHelper.guessDisplayUserFromSession(session);
                 }
             };
         } else if ("UsedTime".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return new Date(SessionUtils.getUsedTimeForSession(session));
                 }
             };
         } else if ("InactiveTime".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return new Date(SessionUtils.getInactiveTimeForSession(session));
                 }
             };
         } else if ("TTL".equalsIgnoreCase(sortBy)) {
             comparator = new BaseSessionComparator() {
-                public Comparable getComparableObject(Session session) {
+                @Override
+				public Comparable getComparableObject(Session session) {
                     return new Date(SessionUtils.getTTLForSession(session));
                 }
             };

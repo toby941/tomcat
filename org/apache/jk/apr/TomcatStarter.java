@@ -74,7 +74,8 @@ public class TomcatStarter implements Runnable {
         this.args=args;
     }
     
-    public void run() {
+    @Override
+	public void run() {
         System.err.println("Starting " + c.getName());
         try {
             Class argClass=args.getClass();

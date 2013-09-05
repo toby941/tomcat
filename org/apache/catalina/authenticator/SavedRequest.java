@@ -69,7 +69,7 @@ public final class SavedRequest {
         new HashMap<String,ArrayList<String>>();
 
     public void addHeader(String name, String value) {
-        ArrayList<String> values = (ArrayList<String>) headers.get(name);
+        ArrayList<String> values = headers.get(name);
         if (values == null) {
             values = new ArrayList<String>();
             headers.put(name, values);
@@ -82,7 +82,7 @@ public final class SavedRequest {
     }
 
     public Iterator getHeaderValues(String name) {
-        ArrayList values = (ArrayList) headers.get(name);
+        ArrayList values = headers.get(name);
         if (values == null)
             return ((new ArrayList()).iterator());
         else
@@ -136,7 +136,7 @@ public final class SavedRequest {
     }
 
     public String[] getParameterValues(String name) {
-        return ((String[]) parameters.get(name));
+        return (parameters.get(name));
     }
 
 

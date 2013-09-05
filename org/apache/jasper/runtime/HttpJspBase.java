@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.HttpJspPage;
-import javax.servlet.jsp.JspFactory;
-
 import org.apache.jasper.compiler.Localizer;
 
 /**
@@ -44,7 +42,8 @@ public abstract class HttpJspBase
     protected HttpJspBase() {
     }
 
-    public final void init(ServletConfig config) 
+    @Override
+	public final void init(ServletConfig config) 
 	throws ServletException 
     {
         super.init(config);
@@ -52,11 +51,13 @@ public abstract class HttpJspBase
         _jspInit();
     }
     
-    public String getServletInfo() {
+    @Override
+	public String getServletInfo() {
 	return Localizer.getMessage("jsp.engine.info");
     }
 
-    public final void destroy() {
+    @Override
+	public final void destroy() {
 	jspDestroy();
 	_jspDestroy();
     }
@@ -64,25 +65,29 @@ public abstract class HttpJspBase
     /**
      * Entry point into service.
      */
-    public final void service(HttpServletRequest request, HttpServletResponse response) 
+    @Override
+	public final void service(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException 
     {
         _jspService(request, response);
     }
     
-    public void jspInit() {
+    @Override
+	public void jspInit() {
     }
 
     public void _jspInit() {
     }
 
-    public void jspDestroy() {
+    @Override
+	public void jspDestroy() {
     }
 
     protected void _jspDestroy() {
     }
 
-    public abstract void _jspService(HttpServletRequest request, 
+    @Override
+	public abstract void _jspService(HttpServletRequest request, 
 				     HttpServletResponse response) 
 	throws ServletException, IOException;
 }

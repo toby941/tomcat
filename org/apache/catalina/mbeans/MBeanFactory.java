@@ -878,7 +878,7 @@ public class MBeanFactory extends BaseModelMBean {
         String port = oname.getKeyProperty("port");
         //String address = oname.getKeyProperty("address");
 
-        Connector conns[] = (Connector[]) service.findConnectors();
+        Connector conns[] = service.findConnectors();
 
         for (int i = 0; i < conns.length; i++) {
             String connAddress = String.valueOf(conns[i].getProperty("address"));
@@ -1064,7 +1064,7 @@ public class MBeanFactory extends BaseModelMBean {
         ObjectName oname = new ObjectName(name);
         ContainerBase container = getParentContainerFromChild(oname);
         String sequence = oname.getKeyProperty("seq");
-        Valve[] valves = (Valve[])container.getValves();
+        Valve[] valves = container.getValves();
         for (int i = 0; i < valves.length; i++) {
             ObjectName voname = ((ValveBase) valves[i]).getObjectName();
             if (voname.equals(oname)) {

@@ -87,7 +87,8 @@ public class MemoryRuleSet extends RuleSetBase {
      * @param digester Digester instance to which the new Rule instances
      *  should be added.
      */
-    public void addRuleInstances(Digester digester) {
+    @Override
+	public void addRuleInstances(Digester digester) {
 
         digester.addRule(prefix + "user", new MemoryUserRule());
 
@@ -115,7 +116,8 @@ final class MemoryUserRule extends Rule {
      *
      * @param attributes The attribute list for this element
      */
-    public void begin(String namespace, String name, Attributes attributes)
+    @Override
+	public void begin(String namespace, String name, Attributes attributes)
         throws Exception {
 
         String username = attributes.getValue("name");

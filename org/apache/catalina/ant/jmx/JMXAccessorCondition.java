@@ -345,7 +345,8 @@ public class JMXAccessorCondition extends ProjectComponent implements Condition 
      * It support for operation ">,>=,<,<=" the types <code>long</code> and <code>double</code>.
      * @return expression <em>jmxValue</em> <em>operation</em> <em>value</em>
      */
-    public boolean eval() {
+    @Override
+	public boolean eval() {
         if (operation == null) {
             throw new BuildException("operation attribute is not set");
         }

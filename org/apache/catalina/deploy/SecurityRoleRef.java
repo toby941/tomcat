@@ -70,7 +70,8 @@ public class SecurityRoleRef {
     /**
      * Return a String representation of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SecurityRoleRef[");
         sb.append("name=");

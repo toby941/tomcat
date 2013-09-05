@@ -117,7 +117,8 @@ public class JvmRouteSessionIDBinderListener extends ClusterListener {
      * @param msg
      *            ClusterMessage - the message received from the cluster
      */
-    public void messageReceived(ClusterMessage msg) {
+    @Override
+	public void messageReceived(ClusterMessage msg) {
         if (msg instanceof SessionIDMessage && msg != null) {
             SessionIDMessage sessionmsg = (SessionIDMessage) msg;
             if (log.isDebugEnabled())
@@ -169,7 +170,8 @@ public class JvmRouteSessionIDBinderListener extends ClusterListener {
      *         invoked. If false is returned, the messageReceived method will
      *         not be invoked.
      */
-    public boolean accept(ClusterMessage msg) {
+    @Override
+	public boolean accept(ClusterMessage msg) {
         return (msg instanceof SessionIDMessage);
     }
 }

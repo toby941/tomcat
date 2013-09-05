@@ -44,7 +44,8 @@ public class ObjectCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #ObjectCreateRule(String className)} instead.
      */
-    public ObjectCreateRule(Digester digester, String className) {
+    @Deprecated
+	public ObjectCreateRule(Digester digester, String className) {
 
         this(className);
 
@@ -60,7 +61,8 @@ public class ObjectCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #ObjectCreateRule(Class clazz)} instead.
      */
-    public ObjectCreateRule(Digester digester, Class clazz) {
+    @Deprecated
+	public ObjectCreateRule(Digester digester, Class clazz) {
 
         this(clazz);
 
@@ -79,7 +81,8 @@ public class ObjectCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #ObjectCreateRule(String className, String attributeName)} instead.
      */
-    public ObjectCreateRule(Digester digester, String className,
+    @Deprecated
+	public ObjectCreateRule(Digester digester, String className,
                             String attributeName) {
 
         this (className, attributeName);
@@ -99,7 +102,8 @@ public class ObjectCreateRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #ObjectCreateRule(String attributeName, Class clazz)} instead.
      */
-    public ObjectCreateRule(Digester digester,
+    @Deprecated
+	public ObjectCreateRule(Digester digester,
                             String attributeName,
                             Class clazz) {
 
@@ -186,7 +190,8 @@ public class ObjectCreateRule extends Rule {
      *
      * @param attributes The attribute list of this element
      */
-    public void begin(Attributes attributes) throws Exception {
+    @Override
+	public void begin(Attributes attributes) throws Exception {
 
         // Identify the name of the class to instantiate
         String realClassName = className;
@@ -212,7 +217,8 @@ public class ObjectCreateRule extends Rule {
     /**
      * Process the end of this element.
      */
-    public void end() throws Exception {
+    @Override
+	public void end() throws Exception {
 
         Object top = digester.pop();
         if (digester.log.isDebugEnabled()) {
@@ -226,7 +232,8 @@ public class ObjectCreateRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("ObjectCreateRule[");
         sb.append("className=");

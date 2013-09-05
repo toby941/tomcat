@@ -149,7 +149,8 @@ public class MemoryUserDatabase implements UserDatabase {
     /**
      * Return the set of {@link Group}s defined in this user database.
      */
-    public Iterator getGroups() {
+    @Override
+	public Iterator getGroups() {
 
         synchronized (groups) {
             return (groups.values().iterator());
@@ -161,7 +162,8 @@ public class MemoryUserDatabase implements UserDatabase {
     /**
      * Return the unique global identifier of this user database.
      */
-    public String getId() {
+    @Override
+	public String getId() {
 
         return (this.id);
 
@@ -217,7 +219,8 @@ public class MemoryUserDatabase implements UserDatabase {
     /**
      * Return the set of {@link Role}s defined in this user database.
      */
-    public Iterator getRoles() {
+    @Override
+	public Iterator getRoles() {
 
         synchronized (roles) {
             return (roles.values().iterator());
@@ -229,7 +232,8 @@ public class MemoryUserDatabase implements UserDatabase {
     /**
      * Return the set of {@link User}s defined in this user database.
      */
-    public Iterator getUsers() {
+    @Override
+	public Iterator getUsers() {
 
         synchronized (users) {
             return (users.values().iterator());
@@ -247,7 +251,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @exception Exception if any exception is thrown during closing
      */
-    public void close() throws Exception {
+    @Override
+	public void close() throws Exception {
 
         save();
 
@@ -267,7 +272,8 @@ public class MemoryUserDatabase implements UserDatabase {
      * @param groupname The group name of the new group (must be unique)
      * @param description The description of this group
      */
-    public Group createGroup(String groupname, String description) {
+    @Override
+	public Group createGroup(String groupname, String description) {
 
         MemoryGroup group = new MemoryGroup(this, groupname, description);
         synchronized (groups) {
@@ -284,7 +290,8 @@ public class MemoryUserDatabase implements UserDatabase {
      * @param rolename The role name of the new group (must be unique)
      * @param description The description of this group
      */
-    public Role createRole(String rolename, String description) {
+    @Override
+	public Role createRole(String rolename, String description) {
 
         MemoryRole role = new MemoryRole(this, rolename, description);
         synchronized (roles) {
@@ -302,7 +309,8 @@ public class MemoryUserDatabase implements UserDatabase {
      * @param password The logon password of the new user
      * @param fullName The full name of the new user
      */
-    public User createUser(String username, String password,
+    @Override
+	public User createUser(String username, String password,
                            String fullName) {
 
         MemoryUser user = new MemoryUser(this, username, password, fullName);
@@ -320,7 +328,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @param groupname Name of the group to return
      */
-    public Group findGroup(String groupname) {
+    @Override
+	public Group findGroup(String groupname) {
 
         synchronized (groups) {
             return ((Group) groups.get(groupname));
@@ -335,7 +344,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @param rolename Name of the role to return
      */
-    public Role findRole(String rolename) {
+    @Override
+	public Role findRole(String rolename) {
 
         synchronized (roles) {
             return ((Role) roles.get(rolename));
@@ -350,7 +360,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @param username Name of the user to return
      */
-    public User findUser(String username) {
+    @Override
+	public User findUser(String username) {
 
         synchronized (users) {
             return ((User) users.get(username));
@@ -364,7 +375,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @exception Exception if any exception is thrown during opening
      */
-    public void open() throws Exception {
+    @Override
+	public void open() throws Exception {
 
         synchronized (groups) {
             synchronized (users) {
@@ -428,7 +440,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @param group The group to be removed
      */
-    public void removeGroup(Group group) {
+    @Override
+	public void removeGroup(Group group) {
 
         synchronized (groups) {
             Iterator users = getUsers();
@@ -447,7 +460,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @param role The role to be removed
      */
-    public void removeRole(Role role) {
+    @Override
+	public void removeRole(Role role) {
 
         synchronized (roles) {
             Iterator groups = getGroups();
@@ -471,7 +485,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @param user The user to be removed
      */
-    public void removeUser(User user) {
+    @Override
+	public void removeUser(User user) {
 
         synchronized (users) {
             users.remove(user.getUsername());
@@ -504,7 +519,8 @@ public class MemoryUserDatabase implements UserDatabase {
      *
      * @exception Exception if any exception is thrown during saving
      */
-    public void save() throws Exception {
+    @Override
+	public void save() throws Exception {
 
         if (getReadonly()) {
             log.error(sm.getString("memoryUserDatabase.readOnly"));
@@ -608,7 +624,8 @@ public class MemoryUserDatabase implements UserDatabase {
     /**
      * Return a String representation of this UserDatabase.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("MemoryUserDatabase[id=");
         sb.append(this.id);
@@ -652,7 +669,8 @@ class MemoryGroupCreationFactory implements ObjectCreationFactory {
         this.database = database;
     }
 
-    public Object createObject(Attributes attributes) {
+    @Override
+	public Object createObject(Attributes attributes) {
         String groupname = attributes.getValue("groupname");
         if (groupname == null) {
             groupname = attributes.getValue("name");
@@ -687,11 +705,13 @@ class MemoryGroupCreationFactory implements ObjectCreationFactory {
 
     private Digester digester = null;
 
-    public Digester getDigester() {
+    @Override
+	public Digester getDigester() {
         return (this.digester);
     }
 
-    public void setDigester(Digester digester) {
+    @Override
+	public void setDigester(Digester digester) {
         this.digester = digester;
     }
 
@@ -707,7 +727,8 @@ class MemoryRoleCreationFactory implements ObjectCreationFactory {
         this.database = database;
     }
 
-    public Object createObject(Attributes attributes) {
+    @Override
+	public Object createObject(Attributes attributes) {
         String rolename = attributes.getValue("rolename");
         if (rolename == null) {
             rolename = attributes.getValue("name");
@@ -721,11 +742,13 @@ class MemoryRoleCreationFactory implements ObjectCreationFactory {
 
     private Digester digester = null;
 
-    public Digester getDigester() {
+    @Override
+	public Digester getDigester() {
         return (this.digester);
     }
 
-    public void setDigester(Digester digester) {
+    @Override
+	public void setDigester(Digester digester) {
         this.digester = digester;
     }
 
@@ -741,7 +764,8 @@ class MemoryUserCreationFactory implements ObjectCreationFactory {
         this.database = database;
     }
 
-    public Object createObject(Attributes attributes) {
+    @Override
+	public Object createObject(Attributes attributes) {
         String username = attributes.getValue("username");
         if (username == null) {
             username = attributes.getValue("name");
@@ -801,11 +825,13 @@ class MemoryUserCreationFactory implements ObjectCreationFactory {
 
     private Digester digester = null;
 
-    public Digester getDigester() {
+    @Override
+	public Digester getDigester() {
         return (this.digester);
     }
 
-    public void setDigester(Digester digester) {
+    @Override
+	public void setDigester(Digester digester) {
         this.digester = digester;
     }
 

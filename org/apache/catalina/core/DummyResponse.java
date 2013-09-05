@@ -72,28 +72,43 @@ public class DummyResponse
     }
     public void finishResponse() throws IOException {}
     public int getContentLength() { return -1; }
-    public String getContentType() { return null; }
+    @Override
+	public String getContentType() { return null; }
     public PrintWriter getReporter() { return null; }
     public void recycle() {}
     public void write(int b) throws IOException {}
     public void write(byte b[]) throws IOException {}
     public void write(byte b[], int off, int len) throws IOException {}
-    public void flushBuffer() throws IOException {}
-    public int getBufferSize() { return -1; }
-    public String getCharacterEncoding() { return null; }
-    public void setCharacterEncoding(String charEncoding) {}
-    public ServletOutputStream getOutputStream() throws IOException {
+    @Override
+	public void flushBuffer() throws IOException {}
+    @Override
+	public int getBufferSize() { return -1; }
+    @Override
+	public String getCharacterEncoding() { return null; }
+    @Override
+	public void setCharacterEncoding(String charEncoding) {}
+    @Override
+	public ServletOutputStream getOutputStream() throws IOException {
         return null;
     }
-    public Locale getLocale() { return null; }
-    public PrintWriter getWriter() throws IOException { return null; }
-    public boolean isCommitted() { return false; }
-    public void reset() {}
-    public void resetBuffer() {}
-    public void setBufferSize(int size) {}
-    public void setContentLength(int length) {}
-    public void setContentType(String type) {}
-    public void setLocale(Locale locale) {}
+    @Override
+	public Locale getLocale() { return null; }
+    @Override
+	public PrintWriter getWriter() throws IOException { return null; }
+    @Override
+	public boolean isCommitted() { return false; }
+    @Override
+	public void reset() {}
+    @Override
+	public void resetBuffer() {}
+    @Override
+	public void setBufferSize(int size) {}
+    @Override
+	public void setContentLength(int length) {}
+    @Override
+	public void setContentType(String type) {}
+    @Override
+	public void setLocale(Locale locale) {}
 
     public Cookie[] getCookies() { return null; }
     public String getHeader(String name) { return null; }
@@ -102,24 +117,41 @@ public class DummyResponse
     public String getMessage() { return null; }
     public int getStatus() { return -1; }
     public void reset(int status, String message) {}
-    public void addCookie(Cookie cookie) {}
-    public void addDateHeader(String name, long value) {}
-    public void addHeader(String name, String value) {}
-    public void addIntHeader(String name, int value) {}
-    public boolean containsHeader(String name) { return false; }
-    public String encodeRedirectURL(String url) { return null; }
-    public String encodeRedirectUrl(String url) { return null; }
-    public String encodeURL(String url) { return null; }
-    public String encodeUrl(String url) { return null; }
+    @Override
+	public void addCookie(Cookie cookie) {}
+    @Override
+	public void addDateHeader(String name, long value) {}
+    @Override
+	public void addHeader(String name, String value) {}
+    @Override
+	public void addIntHeader(String name, int value) {}
+    @Override
+	public boolean containsHeader(String name) { return false; }
+    @Override
+	public String encodeRedirectURL(String url) { return null; }
+    @Override
+	public String encodeRedirectUrl(String url) { return null; }
+    @Override
+	public String encodeURL(String url) { return null; }
+    @Override
+	public String encodeUrl(String url) { return null; }
     public void sendAcknowledgement() throws IOException {}
-    public void sendError(int status) throws IOException {}
-    public void sendError(int status, String message) throws IOException {}
-    public void sendRedirect(String location) throws IOException {}
-    public void setDateHeader(String name, long value) {}
-    public void setHeader(String name, String value) {}
-    public void setIntHeader(String name, int value) {}
-    public void setStatus(int status) {}
-    public void setStatus(int status, String message) {}
+    @Override
+	public void sendError(int status) throws IOException {}
+    @Override
+	public void sendError(int status, String message) throws IOException {}
+    @Override
+	public void sendRedirect(String location) throws IOException {}
+    @Override
+	public void setDateHeader(String name, long value) {}
+    @Override
+	public void setHeader(String name, String value) {}
+    @Override
+	public void setIntHeader(String name, int value) {}
+    @Override
+	public void setStatus(int status) {}
+    @Override
+	public void setStatus(int status, String message) {}
 
 
 }

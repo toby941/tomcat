@@ -110,7 +110,8 @@ public class UCSReader extends Reader {
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public int read() throws IOException { 
+    @Override
+	public int read() throws IOException { 
         int b0 = fInputStream.read() & 0xff;
         if (b0 == 0xff)
             return -1;
@@ -152,7 +153,8 @@ public class UCSReader extends Reader {
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public int read(char ch[], int offset, int length) throws IOException {
+    @Override
+	public int read(char ch[], int offset, int length) throws IOException {
         int byteLength = length << ((fEncoding >= 4)?2:1);
         if (byteLength > fBuffer.length) {
             byteLength = fBuffer.length;
@@ -220,7 +222,8 @@ public class UCSReader extends Reader {
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public long skip(long n) throws IOException {
+    @Override
+	public long skip(long n) throws IOException {
         // charWidth will represent the number of bits to move
         // n leftward to get num of bytes to skip, and then move the result rightward
         // to get num of chars effectively skipped.
@@ -242,14 +245,16 @@ public class UCSReader extends Reader {
      *
      * @exception  IOException  If an I/O error occurs
      */
-    public boolean ready() throws IOException {
+    @Override
+	public boolean ready() throws IOException {
 	return false;
     } // ready()
 
     /**
      * Tell whether this stream supports the mark() operation.
      */
-    public boolean markSupported() {
+    @Override
+	public boolean markSupported() {
 	return fInputStream.markSupported();
     } // markSupported()
 
@@ -266,7 +271,8 @@ public class UCSReader extends Reader {
      * @exception  IOException  If the stream does not support mark(),
      *                          or if some other I/O error occurs
      */
-    public void mark(int readAheadLimit) throws IOException {
+    @Override
+	public void mark(int readAheadLimit) throws IOException {
 	fInputStream.mark(readAheadLimit);
     } // mark(int)
 
@@ -283,7 +289,8 @@ public class UCSReader extends Reader {
      *                          or if the stream does not support reset(),
      *                          or if some other I/O error occurs
      */
-    public void reset() throws IOException {
+    @Override
+	public void reset() throws IOException {
         fInputStream.reset();
     } // reset()
 
@@ -294,7 +301,8 @@ public class UCSReader extends Reader {
      *
      * @exception  IOException  If an I/O error occurs
      */
-     public void close() throws IOException {
+     @Override
+	public void close() throws IOException {
          fInputStream.close();
      } // close()
 

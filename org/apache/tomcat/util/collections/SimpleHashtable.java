@@ -57,6 +57,7 @@ import java.util.Enumeration;
  *
  *@deprecated
  */
+@Deprecated
 public final class SimpleHashtable implements Enumeration
 {
     
@@ -137,7 +138,8 @@ public final class SimpleHashtable implements Enumeration
      * Used to view this as an enumeration; returns true if there
      * are more keys to be enumerated.
      */
-    public boolean hasMoreElements ()
+    @Override
+	public boolean hasMoreElements ()
     {
 	if (current != null)
 	    return true;
@@ -153,7 +155,8 @@ public final class SimpleHashtable implements Enumeration
      * Used to view this as an enumeration; returns the next key
      * in the enumeration.
      */
-    public Object nextElement ()
+    @Override
+	public Object nextElement ()
     {
 	Object retval;
 

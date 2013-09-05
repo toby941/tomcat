@@ -112,7 +112,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      * @exception IllegalStateException if the response has already
      *  been committed
      */
-    public void reset() {
+    @Override
+	public void reset() {
 
         // If already committed, the wrapped response will throw ISE
         if (!included || getResponse().isCommitted())
@@ -126,7 +127,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @param len The new content length
      */
-    public void setContentLength(int len) {
+    @Override
+	public void setContentLength(int len) {
 
         if (!included)
             getResponse().setContentLength(len);
@@ -139,7 +141,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @param type The new content type
      */
-    public void setContentType(String type) {
+    @Override
+	public void setContentType(String type) {
 
         if (!included)
             getResponse().setContentType(type);
@@ -152,7 +155,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @param loc The new locale
      */
-    public void setLocale(Locale loc) {
+    @Override
+	public void setLocale(Locale loc) {
 
         if (!included)
             getResponse().setLocale(loc);
@@ -165,7 +169,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @param size The buffer size
      */
-    public void setBufferSize(int size) {
+    @Override
+	public void setBufferSize(int size) {
         if (!included)
             getResponse().setBufferSize(size);
     }
@@ -179,7 +184,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @param cookie The new cookie
      */
-    public void addCookie(Cookie cookie) {
+    @Override
+	public void addCookie(Cookie cookie) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).addCookie(cookie);
@@ -193,7 +199,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      * @param name The new header name
      * @param value The new header value
      */
-    public void addDateHeader(String name, long value) {
+    @Override
+	public void addDateHeader(String name, long value) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).addDateHeader(name, value);
@@ -207,7 +214,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      * @param name The new header name
      * @param value The new header value
      */
-    public void addHeader(String name, String value) {
+    @Override
+	public void addHeader(String name, String value) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).addHeader(name, value);
@@ -221,7 +229,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      * @param name The new header name
      * @param value The new header value
      */
-    public void addIntHeader(String name, int value) {
+    @Override
+	public void addIntHeader(String name, int value) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).addIntHeader(name, value);
@@ -236,7 +245,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @exception IOException if an input/output error occurs
      */
-    public void sendError(int sc) throws IOException {
+    @Override
+	public void sendError(int sc) throws IOException {
 
         if (!included)
             ((HttpServletResponse) getResponse()).sendError(sc);
@@ -252,7 +262,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @exception IOException if an input/output error occurs
      */
-    public void sendError(int sc, String msg) throws IOException {
+    @Override
+	public void sendError(int sc, String msg) throws IOException {
 
         if (!included)
             ((HttpServletResponse) getResponse()).sendError(sc, msg);
@@ -267,7 +278,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @exception IOException if an input/output error occurs
      */
-    public void sendRedirect(String location) throws IOException {
+    @Override
+	public void sendRedirect(String location) throws IOException {
 
         if (!included)
             ((HttpServletResponse) getResponse()).sendRedirect(location);
@@ -281,7 +293,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      * @param name The new header name
      * @param value The new header value
      */
-    public void setDateHeader(String name, long value) {
+    @Override
+	public void setDateHeader(String name, long value) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).setDateHeader(name, value);
@@ -295,7 +308,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      * @param name The new header name
      * @param value The new header value
      */
-    public void setHeader(String name, String value) {
+    @Override
+	public void setHeader(String name, String value) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).setHeader(name, value);
@@ -309,7 +323,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      * @param name The new header name
      * @param value The new header value
      */
-    public void setIntHeader(String name, int value) {
+    @Override
+	public void setIntHeader(String name, int value) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).setIntHeader(name, value);
@@ -322,7 +337,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      *
      * @param sc The new status code
      */
-    public void setStatus(int sc) {
+    @Override
+	public void setStatus(int sc) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).setStatus(sc);
@@ -336,7 +352,8 @@ class ApplicationHttpResponse extends HttpServletResponseWrapper {
      * @param sc The new status code
      * @param msg The new message
      */
-    public void setStatus(int sc, String msg) {
+    @Override
+	public void setStatus(int sc, String msg) {
 
         if (!included)
             ((HttpServletResponse) getResponse()).setStatus(sc, msg);

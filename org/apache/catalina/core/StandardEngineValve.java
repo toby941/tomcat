@@ -70,7 +70,8 @@ final class StandardEngineValve
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -92,7 +93,8 @@ final class StandardEngineValve
      * @exception IOException if an input/output error occurred
      * @exception ServletException if a servlet error occurred
      */
-    public final void invoke(Request request, Response response)
+    @Override
+	public final void invoke(Request request, Response response)
         throws IOException, ServletException {
 
         // Select the Host to be used for this Request
@@ -121,7 +123,8 @@ final class StandardEngineValve
      * @exception IOException if an input/output error occurred
      * @exception ServletException if a servlet error occurred
      */
-    public final void event(Request request, Response response, CometEvent event)
+    @Override
+	public final void event(Request request, Response response, CometEvent event)
         throws IOException, ServletException {
 
         // Ask this Host to process this request

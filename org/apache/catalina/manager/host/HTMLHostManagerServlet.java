@@ -72,7 +72,8 @@ public final class HTMLHostManagerServlet extends HostManagerServlet {
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    public void doGet(HttpServletRequest request,
+    @Override
+	public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -258,7 +259,7 @@ public final class HTMLHostManagerServlet extends HostManagerServlet {
             sortedHostNamesMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String,String> entry = iterator.next();
-            String hostName = (String) entry.getKey();
+            String hostName = entry.getKey();
             Host host = (Host) engine.findChild(hostName);
 
             if (host != null ) {

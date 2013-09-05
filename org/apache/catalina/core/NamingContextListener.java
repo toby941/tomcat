@@ -201,7 +201,8 @@ public class NamingContextListener
      *
      * @param event LifecycleEvent that has occurred
      */
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
 
         container = event.getLifecycle();
 
@@ -325,7 +326,8 @@ public class NamingContextListener
      *
      * @param event ContainerEvent that has occurred
      */
-    public void containerEvent(ContainerEvent event) {
+    @Override
+	public void containerEvent(ContainerEvent event) {
 
         if (!initialized)
             return;
@@ -462,7 +464,8 @@ public class NamingContextListener
      *
      * @param event The property change event that has occurred
      */
-    public void propertyChange(PropertyChangeEvent event) {
+    @Override
+	public void propertyChange(PropertyChangeEvent event) {
 
         if (!initialized)
             return;
@@ -947,7 +950,7 @@ public class NamingContextListener
             String serviceendpoint = (String) portcomponent.next();
             StringRefAddr refAddr = new StringRefAddr(ServiceRef.SERVICEENDPOINTINTERFACE, serviceendpoint);
             ref.add(refAddr);
-            String portlink = (String) service.getPortlink(serviceendpoint);
+            String portlink = service.getPortlink(serviceendpoint);
             refAddr = new StringRefAddr(ServiceRef.PORTCOMPONENTLINK, portlink);
             ref.add(refAddr);
         }
@@ -955,12 +958,12 @@ public class NamingContextListener
         Iterator handlers = service.getHandlers();
         while (handlers.hasNext()) {
             String handlername = (String) handlers.next();
-            ContextHandler handler = (ContextHandler) service.getHandler(handlername);
+            ContextHandler handler = service.getHandler(handlername);
             HandlerRef handlerRef = new HandlerRef(handlername, handler.getHandlerclass());
             Iterator localParts = handler.getLocalparts();
             while (localParts.hasNext()) {
                 String localPart = (String) localParts.next();
-                String namespaceURI = (String) handler.getNamespaceuri(localPart);
+                String namespaceURI = handler.getNamespaceuri(localPart);
                 handlerRef.add(new StringRefAddr(HandlerRef.HANDLER_LOCALPART, localPart));
                 handlerRef.add(new StringRefAddr(HandlerRef.HANDLER_NAMESPACE, namespaceURI));
             }

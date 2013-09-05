@@ -94,31 +94,36 @@ public class ChannelData implements ChannelMessage {
     /**
      * @return Returns the message byte buffer
      */
-    public XByteBuffer getMessage() {
+    @Override
+	public XByteBuffer getMessage() {
         return message;
     }
     /**
      * @param message The message to send.
      */
-    public void setMessage(XByteBuffer message) {
+    @Override
+	public void setMessage(XByteBuffer message) {
         this.message = message;
     }
     /**
      * @return Returns the timestamp.
      */
-    public long getTimestamp() {
+    @Override
+	public long getTimestamp() {
         return timestamp;
     }
     /**
      * @param timestamp The timestamp to send
      */
-    public void setTimestamp(long timestamp) {
+    @Override
+	public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
     /**
      * @return Returns the uniqueId.
      */
-    public byte[] getUniqueId() {
+    @Override
+	public byte[] getUniqueId() {
         return uniqueId;
     }
     /**
@@ -132,13 +137,15 @@ public class ChannelData implements ChannelMessage {
      * see org.apache.catalina.tribes.Channel#sendMessage(org.apache.catalina.tribes.Member[], java.io.Serializable, int)
      *                                                 
      */
-    public int getOptions() {
+    @Override
+	public int getOptions() {
         return options;
     }
     /**
      * @param sets the message options
      */
-    public void setOptions(int options) {
+    @Override
+	public void setOptions(int options) {
         this.options = options;
     }
     
@@ -146,7 +153,8 @@ public class ChannelData implements ChannelMessage {
      * Returns the source or reply-to address
      * @return Member
      */
-    public Member getAddress() {
+    @Override
+	public Member getAddress() {
         return address;
     }
 
@@ -154,7 +162,8 @@ public class ChannelData implements ChannelMessage {
      * Sets the source or reply-to address
      * @param address Member
      */
-    public void setAddress(Member address) {
+    @Override
+	public void setAddress(Member address) {
         this.address = address;
     }
     
@@ -271,7 +280,8 @@ public class ChannelData implements ChannelMessage {
         return data;
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return XByteBuffer.toInt(getUniqueId(),0);
     }
     
@@ -280,7 +290,8 @@ public class ChannelData implements ChannelMessage {
      * @param o Object
      * @return boolean
      */
-    public boolean equals(Object o) {
+    @Override
+	public boolean equals(Object o) {
         if ( o instanceof ChannelData ) {
             return Arrays.equals(getUniqueId(),((ChannelData)o).getUniqueId());
         } else return false;
@@ -290,7 +301,8 @@ public class ChannelData implements ChannelMessage {
      * Create a shallow clone, only the data gets recreated
      * @return ClusterData
      */
-    public Object clone() {
+    @Override
+	public Object clone() {
 //        byte[] d = this.getDataPackage();
 //        return ClusterData.getDataFromPackage(d);
         ChannelData clone = new ChannelData(false);
@@ -306,7 +318,8 @@ public class ChannelData implements ChannelMessage {
      * Complete clone
      * @return ClusterData
      */
-    public Object deepclone() {
+    @Override
+	public Object deepclone() {
         byte[] d = this.getDataPackage();
         return ChannelData.getDataFromPackage(d);
     }
@@ -338,7 +351,8 @@ public class ChannelData implements ChannelMessage {
             ( (Channel.SEND_OPTIONS_SYNCHRONIZED_ACK & options) != Channel.SEND_OPTIONS_SYNCHRONIZED_ACK);
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         StringBuffer buf = new StringBuffer();
         buf.append("ClusterData[src=");
         buf.append(getAddress()).append("; id=");

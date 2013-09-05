@@ -46,6 +46,7 @@ import org.apache.catalina.util.StringManager;
  * @version $Id: InvokerServlet.java 939518 2010-04-30 00:08:58Z kkolinko $
  */
 
+@Deprecated
 public final class InvokerServlet
     extends HttpServlet implements ContainerServlet {
 
@@ -84,7 +85,8 @@ public final class InvokerServlet
     /**
      * Return the Wrapper with which we are associated.
      */
-    public Wrapper getWrapper() {
+    @Override
+	public Wrapper getWrapper() {
 
         return (this.wrapper);
 
@@ -96,7 +98,8 @@ public final class InvokerServlet
      *
      * @param wrapper The new wrapper
      */
-    public void setWrapper(Wrapper wrapper) {
+    @Override
+	public void setWrapper(Wrapper wrapper) {
 
         this.wrapper = wrapper;
         if (wrapper == null)
@@ -113,7 +116,8 @@ public final class InvokerServlet
     /**
      * Finalize this servlet.
      */
-    public void destroy() {
+    @Override
+	public void destroy() {
 
         ;       // No actions necessary
 
@@ -129,7 +133,8 @@ public final class InvokerServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    public void doGet(HttpServletRequest request,
+    @Override
+	public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -147,7 +152,8 @@ public final class InvokerServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    public void doHead(HttpServletRequest request,
+    @Override
+	public void doHead(HttpServletRequest request,
                        HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -165,7 +171,8 @@ public final class InvokerServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    public void doPost(HttpServletRequest request,
+    @Override
+	public void doPost(HttpServletRequest request,
                        HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -177,7 +184,8 @@ public final class InvokerServlet
     /**
      * Initialize this servlet.
      */
-    public void init() throws ServletException {
+    @Override
+	public void init() throws ServletException {
 
         // Ensure that our ContainerServlet properties have been set
         if ((wrapper == null) || (context == null))

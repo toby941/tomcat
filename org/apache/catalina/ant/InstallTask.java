@@ -33,6 +33,7 @@ import org.apache.tools.ant.BuildException;
  * @since 4.1
  * @deprecated Replaced by DeployTask
  */
+@Deprecated
 public class InstallTask extends AbstractCatalinaTask {
 
 
@@ -90,7 +91,8 @@ public class InstallTask extends AbstractCatalinaTask {
      *
      * @exception BuildException if an error occurs
      */
-    public void execute() throws BuildException {
+    @Override
+	public void execute() throws BuildException {
 
         super.execute();
         if (path == null) {

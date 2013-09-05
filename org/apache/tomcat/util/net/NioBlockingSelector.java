@@ -202,7 +202,8 @@ public class NioBlockingSelector {
         protected AtomicInteger wakeupCounter = new AtomicInteger(0);
         public void cancelKey(final SelectionKey key) {
             Runnable r = new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     key.cancel();
                 }
             };
@@ -225,7 +226,8 @@ public class NioBlockingSelector {
         
         public void add(final KeyAttachment key, final int ops, final KeyReference ref) {
             Runnable r = new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     if ( key == null ) return;
                     NioChannel nch = key.getChannel();
                     if ( nch == null ) return;
@@ -254,7 +256,8 @@ public class NioBlockingSelector {
         
         public void remove(final KeyAttachment key, final int ops) {
             Runnable r = new Runnable() {
-                public void run() {
+                @Override
+				public void run() {
                     if ( key == null ) return;
                     NioChannel nch = key.getChannel();
                     if ( nch == null ) return;
@@ -303,7 +306,8 @@ public class NioBlockingSelector {
             return result;
         }
 
-        public void run() {
+        @Override
+		public void run() {
             while (run) {
                 try {
                     events();

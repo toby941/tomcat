@@ -628,13 +628,16 @@ public class StringCache {
         public Charset charset = null;
         public String value = null;
 
-        public String toString() {
+        @Override
+		public String toString() {
             return value;
         }
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return value.hashCode();
         }
-        public boolean equals(Object obj) {
+        @Override
+		public boolean equals(Object obj) {
             if (obj instanceof ByteEntry) {
                 return value.equals(((ByteEntry) obj).value);
             }
@@ -652,13 +655,16 @@ public class StringCache {
         public char[] name = null;
         public String value = null;
 
-        public String toString() {
+        @Override
+		public String toString() {
             return value;
         }
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return value.hashCode();
         }
-        public boolean equals(Object obj) {
+        @Override
+		public boolean equals(Object obj) {
             if (obj instanceof CharEntry) {
                 return value.equals(((CharEntry) obj).value);
             }

@@ -53,7 +53,8 @@ public final class RemoteAddrValve
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -75,7 +76,8 @@ public final class RemoteAddrValve
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void invoke(Request request, Response response)
+    @Override
+	public void invoke(Request request, Response response)
         throws IOException, ServletException {
 
         process(request.getRequest().getRemoteAddr(), request, response);

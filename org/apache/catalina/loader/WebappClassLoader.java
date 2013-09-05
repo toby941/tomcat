@@ -133,7 +133,8 @@ public class WebappClassLoader
     /**
      * @deprecated Not used
      */
-    protected class PrivilegedFindResource
+    @Deprecated
+	protected class PrivilegedFindResource
         implements PrivilegedAction {
 
         protected File file;
@@ -144,7 +145,8 @@ public class WebappClassLoader
             this.path = path;
         }
 
-        public Object run() {
+        @Override
+		public Object run() {
             return findResourceInternal(file, path);
         }
 
@@ -168,7 +170,8 @@ public class WebappClassLoader
             this.path = path;
         }
 
-        public ResourceEntry run() {
+        @Override
+		public ResourceEntry run() {
             return findResourceInternal(name, path);
         }
 
@@ -184,7 +187,8 @@ public class WebappClassLoader
             this.clazz = clazz;
         }
 
-        public ClassLoader run() {       
+        @Override
+		public ClassLoader run() {       
             return clazz.getClassLoader();
         }           
     }
@@ -295,7 +299,8 @@ public class WebappClassLoader
     protected HashMap<String, String> notFoundResources =
         new LinkedHashMap<String, String>() {
         private static final long serialVersionUID = 1L;
-        protected boolean removeEldestEntry(
+        @Override
+		protected boolean removeEldestEntry(
                 Map.Entry<String, String> eldest) {
             return size() > 1000;
         }
@@ -805,7 +810,8 @@ public class WebappClassLoader
      * @exception IllegalArgumentException if the specified repository is
      *  invalid or does not exist
      */
-    public void addRepository(String repository) {
+    @Override
+	public void addRepository(String repository) {
 
         // Ignore any of the standard repositories, as they are set up using
         // either addJar or addRepository
@@ -955,9 +961,10 @@ public class WebappClassLoader
      * returned.For security reason, returns a clone of the Array (since 
      * String are immutable).
      */
-    public String[] findRepositories() {
+    @Override
+	public String[] findRepositories() {
 
-        return ((String[])repositories.clone());
+        return (repositories.clone());
 
     }
 
@@ -966,7 +973,8 @@ public class WebappClassLoader
      * Have one or more classes or resources been modified so that a reload
      * is appropriate?
      */
-    public boolean modified() {
+    @Override
+	public boolean modified() {
 
         if (log.isDebugEnabled())
             log.debug("modified()");
@@ -1059,7 +1067,8 @@ public class WebappClassLoader
     /**
      * Render a String representation of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("WebappClassLoader\r\n");
         sb.append("  context: ");
@@ -1092,7 +1101,8 @@ public class WebappClassLoader
      /**
       * Add the specified URL to the classloader.
       */
-     protected void addURL(URL url) {
+     @Override
+	protected void addURL(URL url) {
          super.addURL(url);
          hasExternalRepositories = true;
          repositoryURLs = null;
@@ -1107,7 +1117,8 @@ public class WebappClassLoader
      *
      * @exception ClassNotFoundException if the class was not found
      */
-    public Class findClass(String name) throws ClassNotFoundException {
+    @Override
+	public Class findClass(String name) throws ClassNotFoundException {
 
         if (log.isDebugEnabled())
             log.debug("    findClass(" + name + ")");
@@ -1221,7 +1232,8 @@ public class WebappClassLoader
      *
      * @param name Name of the resource to be found
      */
-    public URL findResource(final String name) {
+    @Override
+	public URL findResource(final String name) {
 
         if (log.isDebugEnabled())
             log.debug("    findResource(" + name + ")");
@@ -1270,7 +1282,8 @@ public class WebappClassLoader
      *
      * @exception IOException if an input/output error occurs
      */
-    public Enumeration findResources(String name) throws IOException {
+    @Override
+	public Enumeration findResources(String name) throws IOException {
 
         if (log.isDebugEnabled())
             log.debug("    findResources(" + name + ")");
@@ -1364,7 +1377,8 @@ public class WebappClassLoader
      *
      * @param name Name of the resource to return a URL for
      */
-    public URL getResource(String name) {
+    @Override
+	public URL getResource(String name) {
 
         if (log.isDebugEnabled())
             log.debug("getResource(" + name + ")");
@@ -1439,7 +1453,8 @@ public class WebappClassLoader
      *
      * @param name Name of the resource to return an input stream for
      */
-    public InputStream getResourceAsStream(String name) {
+    @Override
+	public InputStream getResourceAsStream(String name) {
 
         if (log.isDebugEnabled())
             log.debug("getResourceAsStream(" + name + ")");
@@ -1521,7 +1536,8 @@ public class WebappClassLoader
      *
      * @exception ClassNotFoundException if the class was not found
      */
-    public Class loadClass(String name) throws ClassNotFoundException {
+    @Override
+	public Class loadClass(String name) throws ClassNotFoundException {
 
         return (loadClass(name, false));
 
@@ -1553,7 +1569,8 @@ public class WebappClassLoader
      *
      * @exception ClassNotFoundException if the class was not found
      */
-    public synchronized Class loadClass(String name, boolean resolve)
+    @Override
+	public synchronized Class loadClass(String name, boolean resolve)
         throws ClassNotFoundException {
 
         if (log.isDebugEnabled())
@@ -1692,7 +1709,8 @@ public class WebappClassLoader
      * @param codeSource where the code was loaded from
      * @return PermissionCollection for CodeSource
      */
-    protected PermissionCollection getPermissions(CodeSource codeSource) {
+    @Override
+	protected PermissionCollection getPermissions(CodeSource codeSource) {
 
         String codeUrl = codeSource.getLocation().toString();
         PermissionCollection pc;
@@ -1718,7 +1736,8 @@ public class WebappClassLoader
      * along with any URLs subsequently appended by the addURL() method.
      * @return the search path of URLs for loading classes and resources.
      */
-    public URL[] getURLs() {
+    @Override
+	public URL[] getURLs() {
 
         if (repositoryURLs != null) {
             return repositoryURLs.clone();
@@ -1774,7 +1793,8 @@ public class WebappClassLoader
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
     }
 
 
@@ -1782,7 +1802,8 @@ public class WebappClassLoader
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
         return new LifecycleListener[0];
     }
 
@@ -1792,7 +1813,8 @@ public class WebappClassLoader
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
     }
 
 
@@ -1801,7 +1823,8 @@ public class WebappClassLoader
      *
      * @exception LifecycleException if a lifecycle error occurs
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         started = true;
         String encoding = null;
@@ -1826,7 +1849,8 @@ public class WebappClassLoader
      *
      * @exception LifecycleException if a lifecycle error occurs
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Clearing references should be done before setting started to
         // false, due to possible side effects

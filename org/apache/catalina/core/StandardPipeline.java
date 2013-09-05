@@ -149,7 +149,8 @@ public class StandardPipeline
     /**
      * Return the Container with which this Pipeline is associated.
      */
-    public Container getContainer() {
+    @Override
+	public Container getContainer() {
 
         return (this.container);
 
@@ -161,7 +162,8 @@ public class StandardPipeline
      *
      * @param container The new associated container
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
 
         this.container = container;
 
@@ -176,7 +178,8 @@ public class StandardPipeline
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -187,7 +190,8 @@ public class StandardPipeline
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -199,7 +203,8 @@ public class StandardPipeline
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -211,7 +216,8 @@ public class StandardPipeline
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents it from being started
      */
-    public synchronized void start() throws LifecycleException {
+    @Override
+	public synchronized void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started)
@@ -250,7 +256,8 @@ public class StandardPipeline
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public synchronized void stop() throws LifecycleException {
+    @Override
+	public synchronized void stop() throws LifecycleException {
 
         // Validate and update our current component state
         if (!started)
@@ -336,7 +343,8 @@ public class StandardPipeline
      * <p>Return the Valve instance that has been distinguished as the basic
      * Valve for this Pipeline (if any).
      */
-    public Valve getBasic() {
+    @Override
+	public Valve getBasic() {
 
         return (this.basic);
 
@@ -355,7 +363,8 @@ public class StandardPipeline
      *
      * @param valve Valve to be distinguished as the basic Valve
      */
-    public void setBasic(Valve valve) {
+    @Override
+	public void setBasic(Valve valve) {
 
         // Change components if necessary
         Valve oldBasic = this.basic;
@@ -429,7 +438,8 @@ public class StandardPipeline
      * @exception IllegalStateException if the specified Valve is already
      *  associated with a different Container
      */
-    public void addValve(Valve valve) {
+    @Override
+	public void addValve(Valve valve) {
     
         // Validate that we can add this Valve
         if (valve instanceof Contained)
@@ -472,7 +482,8 @@ public class StandardPipeline
      * Container, including the basic Valve (if any).  If there are no
      * such Valves, a zero-length array is returned.
      */
-    public Valve[] getValves() {
+    @Override
+	public Valve[] getValves() {
 
     	ArrayList valveList = new ArrayList();
         Valve current = first;
@@ -514,7 +525,8 @@ public class StandardPipeline
      *
      * @param valve Valve to be removed
      */
-    public void removeValve(Valve valve) {
+    @Override
+	public void removeValve(Valve valve) {
 
         Valve current;
         if(first == valve) {
@@ -552,7 +564,8 @@ public class StandardPipeline
     }
 
 
-    public Valve getFirst() {
+    @Override
+	public Valve getFirst() {
         if (first != null) {
             return first;
         } else {

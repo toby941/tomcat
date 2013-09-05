@@ -28,6 +28,7 @@ import java.util.Hashtable;
  * @deprecated
  */
 
+@Deprecated
 public class LRUCache
 {
     class CacheNode

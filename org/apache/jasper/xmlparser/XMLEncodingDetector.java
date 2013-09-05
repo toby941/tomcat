@@ -1092,7 +1092,8 @@ public class XMLEncodingDetector {
             fOffset = fStartOffset;
         }
 
-        public int read() throws IOException {
+        @Override
+		public int read() throws IOException {
             int b = 0;
             if (fOffset < fLength) {
                 return fData[fOffset++] & 0xff;
@@ -1115,7 +1116,8 @@ public class XMLEncodingDetector {
             return b & 0xff;
         }
 
-        public int read(byte[] b, int off, int len) throws IOException {
+        @Override
+		public int read(byte[] b, int off, int len) throws IOException {
             int bytesLeft = fLength - fOffset;
             if (bytesLeft == 0) {
                 if (fOffset == fEndOffset) {
@@ -1148,7 +1150,8 @@ public class XMLEncodingDetector {
             return len;
         }
 
-        public long skip(long n)
+        @Override
+		public long skip(long n)
             throws IOException
         {
             int bytesLeft;
@@ -1182,7 +1185,8 @@ public class XMLEncodingDetector {
             return fInputStream.skip(n) + bytesLeft;
         }
 
-        public int available() throws IOException {
+        @Override
+		public int available() throws IOException {
             int bytesLeft = fLength - fOffset;
             if (bytesLeft == 0) {
                 if (fOffset == fEndOffset) {
@@ -1194,19 +1198,23 @@ public class XMLEncodingDetector {
             return bytesLeft;
         }
 
-        public void mark(int howMuch) {
+        @Override
+		public void mark(int howMuch) {
             fMark = fOffset;
         }
 
-        public void reset() {
+        @Override
+		public void reset() {
             fOffset = fMark;
         }
 
-        public boolean markSupported() {
+        @Override
+		public boolean markSupported() {
             return true;
         }
 
-        public void close() throws IOException {
+        @Override
+		public void close() throws IOException {
             if (fInputStream != null) {
                 fInputStream.close();
                 fInputStream = null;

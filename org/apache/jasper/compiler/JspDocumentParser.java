@@ -253,7 +253,8 @@ class JspDocumentParser
      * corresponding TagLibraryInfo object is added to the set of custom
      * tag libraries.
      */
-    public void startElement(
+    @Override
+	public void startElement(
         String uri,
         String localName,
         String qName,
@@ -450,7 +451,8 @@ class JspDocumentParser
      *
      * @throws SAXException
      */
-    public void characters(char[] buf, int offset, int len) {
+    @Override
+	public void characters(char[] buf, int offset, int len) {
 
         if (charBuffer == null) {
             charBuffer = new StringBuffer();
@@ -606,7 +608,8 @@ class JspDocumentParser
     /*
      * Receives notification of the end of an element.
      */
-    public void endElement(String uri, String localName, String qName)
+    @Override
+	public void endElement(String uri, String localName, String qName)
         throws SAXException {
 
         processChars();
@@ -687,14 +690,16 @@ class JspDocumentParser
      *
      * @param locator the document locator
      */
-    public void setDocumentLocator(Locator locator) {
+    @Override
+	public void setDocumentLocator(Locator locator) {
         this.locator = locator;
     }
 
     /*
      * See org.xml.sax.ext.LexicalHandler.
      */
-    public void comment(char[] buf, int offset, int len) throws SAXException {
+    @Override
+	public void comment(char[] buf, int offset, int len) throws SAXException {
 
         processChars();  // Flush char buffer and remove white spaces
 
@@ -713,7 +718,8 @@ class JspDocumentParser
     /*
      * See org.xml.sax.ext.LexicalHandler.
      */
-    public void startCDATA() throws SAXException {
+    @Override
+	public void startCDATA() throws SAXException {
 
         processChars();  // Flush char buffer and remove white spaces
         startMark = new Mark(ctxt, path, locator.getLineNumber(),
@@ -723,28 +729,32 @@ class JspDocumentParser
     /*
      * See org.xml.sax.ext.LexicalHandler.
      */
-    public void endCDATA() throws SAXException {
+    @Override
+	public void endCDATA() throws SAXException {
         processChars();  // Flush char buffer and remove white spaces
     }
 
     /*
      * See org.xml.sax.ext.LexicalHandler.
      */
-    public void startEntity(String name) throws SAXException {
+    @Override
+	public void startEntity(String name) throws SAXException {
         // do nothing
     }
 
     /*
      * See org.xml.sax.ext.LexicalHandler.
      */
-    public void endEntity(String name) throws SAXException {
+    @Override
+	public void endEntity(String name) throws SAXException {
         // do nothing
     }
 
     /*
      * See org.xml.sax.ext.LexicalHandler.
      */
-    public void startDTD(String name, String publicId, String systemId)
+    @Override
+	public void startDTD(String name, String publicId, String systemId)
         throws SAXException {
         if (!isValidating) {
             fatalError(new EnableDTDValidationException(
@@ -757,28 +767,32 @@ class JspDocumentParser
     /*
      * See org.xml.sax.ext.LexicalHandler.
      */
-    public void endDTD() throws SAXException {
+    @Override
+	public void endDTD() throws SAXException {
         inDTD = false;
     }
 
     /*
      * Receives notification of a non-recoverable error.
      */
-    public void fatalError(SAXParseException e) throws SAXException {
+    @Override
+	public void fatalError(SAXParseException e) throws SAXException {
         throw e;
     }
 
     /*
      * Receives notification of a recoverable error.
      */
-    public void error(SAXParseException e) throws SAXException {
+    @Override
+	public void error(SAXParseException e) throws SAXException {
         throw e;
     }
 
     /*
      * Receives notification of the start of a Namespace mapping. 
      */
-    public void startPrefixMapping(String prefix, String uri)
+    @Override
+	public void startPrefixMapping(String prefix, String uri)
         throws SAXException {
         TagLibraryInfo taglibInfo;
 
@@ -808,7 +822,8 @@ class JspDocumentParser
     /*
      * Receives notification of the end of a Namespace mapping. 
      */
-    public void endPrefixMapping(String prefix) throws SAXException {
+    @Override
+	public void endPrefixMapping(String prefix) throws SAXException {
 
         if (directivesOnly) {
             String uri = pageInfo.getURI(prefix);

@@ -97,7 +97,8 @@ public class DiskFileUpload
      *
      * @return The factory class for new file items.
      */
-    public FileItemFactory getFileItemFactory()
+    @Override
+	public FileItemFactory getFileItemFactory()
     {
         return fileItemFactory;
     }
@@ -110,7 +111,8 @@ public class DiskFileUpload
      *
      * @param factory The factory class for new file items.
      */
-    public void setFileItemFactory(FileItemFactory factory)
+    @Override
+	public void setFileItemFactory(FileItemFactory factory)
     {
         this.fileItemFactory = (DefaultFileItemFactory) factory;
     }

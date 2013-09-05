@@ -13,6 +13,11 @@ import java.io.Writer;
  * @since 2013年8月22日
  */
 public class IOUtils {
+
+	public static String convertByteToString(byte[] b) {
+		return new String(b);
+	}
+
 	public static String convertStreamToString(InputStream is) throws IOException {
 		if (is != null) {
 			Writer writer = new StringWriter();

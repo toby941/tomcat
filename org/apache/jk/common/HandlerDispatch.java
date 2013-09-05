@@ -41,7 +41,8 @@ public class HandlerDispatch extends JkHandler
     {
     }
 
-    public void init() {
+    @Override
+	public void init() {
     }
 
     JkHandler handlers[]=new JkHandler[MAX_HANDLERS];
@@ -77,7 +78,8 @@ public class HandlerDispatch extends JkHandler
     
     // -------------------- Incoming message --------------------
 
-    public int invoke(Msg msg, MsgContext ep ) 
+    @Override
+	public int invoke(Msg msg, MsgContext ep ) 
         throws IOException
     {
         int type=msg.peekByte();

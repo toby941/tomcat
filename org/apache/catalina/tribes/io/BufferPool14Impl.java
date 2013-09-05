@@ -29,7 +29,8 @@ class BufferPool14Impl implements BufferPool.BufferPoolAPI {
     protected int size = 0;
     protected LinkedList queue = new LinkedList();
 
-    public void setMaxSize(int bytes) {
+    @Override
+	public void setMaxSize(int bytes) {
         this.maxSize = bytes;
     }
     
@@ -40,7 +41,8 @@ class BufferPool14Impl implements BufferPool.BufferPoolAPI {
     
     
 
-    public synchronized XByteBuffer getBuffer(int minSize, boolean discard) {
+    @Override
+	public synchronized XByteBuffer getBuffer(int minSize, boolean discard) {
         XByteBuffer buffer = (XByteBuffer)(queue.size()>0?queue.remove(0):null);
         if ( buffer != null ) addAndGet(-buffer.getCapacity());
         if ( buffer == null ) buffer = new XByteBuffer(minSize,discard);
@@ -50,14 +52,16 @@ class BufferPool14Impl implements BufferPool.BufferPoolAPI {
         return buffer;
     }
 
-    public synchronized void returnBuffer(XByteBuffer buffer) {
+    @Override
+	public synchronized void returnBuffer(XByteBuffer buffer) {
         if ( (size + buffer.getCapacity()) <= maxSize ) {
             addAndGet(buffer.getCapacity());
             queue.add(buffer);
         }
     }
 
-    public synchronized void clear() {
+    @Override
+	public synchronized void clear() {
         queue.clear();
         size = 0;
     }

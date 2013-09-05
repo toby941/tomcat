@@ -22,7 +22,8 @@ import org.apache.jasper.compiler.tagplugin.*;
 
 public final class Choose implements TagPlugin {
     
-    public void doTag(TagPluginContext ctxt) {
+    @Override
+	public void doTag(TagPluginContext ctxt) {
         
         // Not much to do here, much of the work will be done in the
         // containing tags, <c:when> and <c:otherwise>.

@@ -46,36 +46,44 @@ public abstract class ChannelInterceptorBase implements ChannelInterceptor {
         return ((optionFlag&messageFlags) == optionFlag);
     }
 
-    public final void setNext(ChannelInterceptor next) {
+    @Override
+	public final void setNext(ChannelInterceptor next) {
         this.next = next;
     }
 
-    public final ChannelInterceptor getNext() {
+    @Override
+	public final ChannelInterceptor getNext() {
         return next;
     }
 
-    public final void setPrevious(ChannelInterceptor previous) {
+    @Override
+	public final void setPrevious(ChannelInterceptor previous) {
         this.previous = previous;
     }
 
-    public void setOptionFlag(int optionFlag) {
+    @Override
+	public void setOptionFlag(int optionFlag) {
         this.optionFlag = optionFlag;
     }
 
-    public final ChannelInterceptor getPrevious() {
+    @Override
+	public final ChannelInterceptor getPrevious() {
         return previous;
     }
 
-    public int getOptionFlag() {
+    @Override
+	public int getOptionFlag() {
         return optionFlag;
     }
 
-    public void sendMessage(Member[] destination, ChannelMessage msg, InterceptorPayload payload) throws
+    @Override
+	public void sendMessage(Member[] destination, ChannelMessage msg, InterceptorPayload payload) throws
         ChannelException {
         if (getNext() != null) getNext().sendMessage(destination, msg, payload);
     }
 
-    public void messageReceived(ChannelMessage msg) {
+    @Override
+	public void messageReceived(ChannelMessage msg) {
         if (getPrevious() != null) getPrevious().messageReceived(msg);
     }
 
@@ -83,24 +91,28 @@ public abstract class ChannelInterceptorBase implements ChannelInterceptor {
         return true;
     }
 
-    public void memberAdded(Member member) {
+    @Override
+	public void memberAdded(Member member) {
         //notify upwards
         if (getPrevious() != null) getPrevious().memberAdded(member);
     }
 
-    public void memberDisappeared(Member member) {
+    @Override
+	public void memberDisappeared(Member member) {
         //notify upwards
         if (getPrevious() != null) getPrevious().memberDisappeared(member);
     }
 
-    public void heartbeat() {
+    @Override
+	public void heartbeat() {
         if (getNext() != null) getNext().heartbeat();
     }
 
     /**
      * has members
      */
-    public boolean hasMembers() {
+    @Override
+	public boolean hasMembers() {
         if ( getNext()!=null )return getNext().hasMembers();
         else return false;
     }
@@ -109,7 +121,8 @@ public abstract class ChannelInterceptorBase implements ChannelInterceptor {
      * Get all current cluster members
      * @return all members or empty array
      */
-    public Member[] getMembers() {
+    @Override
+	public Member[] getMembers() {
         if ( getNext()!=null ) return getNext().getMembers();
         else return null;
     }
@@ -119,7 +132,8 @@ public abstract class ChannelInterceptorBase implements ChannelInterceptor {
      * @param mbr Member
      * @return Member
      */
-    public Member getMember(Member mbr) {
+    @Override
+	public Member getMember(Member mbr) {
         if ( getNext()!=null) return getNext().getMember(mbr);
         else return null;
     }
@@ -129,7 +143,8 @@ public abstract class ChannelInterceptorBase implements ChannelInterceptor {
      *
      * @return Member
      */
-    public Member getLocalMember(boolean incAlive) {
+    @Override
+	public Member getLocalMember(boolean incAlive) {
         if ( getNext()!=null ) return getNext().getLocalMember(incAlive);
         else return null;
     }
@@ -145,7 +160,8 @@ public abstract class ChannelInterceptorBase implements ChannelInterceptor {
      * SND_RX_SEQ - starts the replication receiver<BR>
      * @throws ChannelException if a startup error occurs or the service is already started.
      */
-    public void start(int svc) throws ChannelException {
+    @Override
+	public void start(int svc) throws ChannelException {
         if ( getNext()!=null ) getNext().start(svc);
     }
 
@@ -160,11 +176,13 @@ public abstract class ChannelInterceptorBase implements ChannelInterceptor {
      * SND_RX_SEQ - stops the replication receiver<BR>
      * @throws ChannelException if a startup error occurs or the service is already started.
      */
-    public void stop(int svc) throws ChannelException {
+    @Override
+	public void stop(int svc) throws ChannelException {
         if (getNext() != null) getNext().stop(svc);
     }
     
-    public void fireInterceptorEvent(InterceptorEvent event) {
+    @Override
+	public void fireInterceptorEvent(InterceptorEvent event) {
         //empty operation
     }
 

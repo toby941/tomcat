@@ -86,7 +86,8 @@ public class NamingRuleSet extends RuleSetBase {
      * @param digester Digester instance to which the new Rule instances
      *  should be added.
      */
-    public void addRuleInstances(Digester digester) {
+    @Override
+	public void addRuleInstances(Digester digester) {
 
         digester.addObjectCreate(prefix + "Ejb",
                                  "org.apache.catalina.deploy.ContextEjb");

@@ -58,7 +58,8 @@ public class CoyoteWriter
     /**
      * Prevent cloning the facade.
      */
-    protected Object clone()
+    @Override
+	protected Object clone()
         throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
@@ -86,7 +87,8 @@ public class CoyoteWriter
     // --------------------------------------------------------- Writer Methods
 
 
-    public void flush() {
+    @Override
+	public void flush() {
 
         if (error)
             return;
@@ -100,7 +102,8 @@ public class CoyoteWriter
     }
 
 
-    public void close() {
+    @Override
+	public void close() {
 
         // We don't close the PrintWriter - super() is not called,
         // so the stream can be reused. We close ob.
@@ -114,13 +117,15 @@ public class CoyoteWriter
     }
 
 
-    public boolean checkError() {
+    @Override
+	public boolean checkError() {
         flush();
         return error;
     }
 
 
-    public void write(int c) {
+    @Override
+	public void write(int c) {
 
         if (error)
             return;
@@ -134,7 +139,8 @@ public class CoyoteWriter
     }
 
 
-    public void write(char buf[], int off, int len) {
+    @Override
+	public void write(char buf[], int off, int len) {
 
         if (error)
             return;
@@ -148,12 +154,14 @@ public class CoyoteWriter
     }
 
 
-    public void write(char buf[]) {
+    @Override
+	public void write(char buf[]) {
 	write(buf, 0, buf.length);
     }
 
 
-    public void write(String s, int off, int len) {
+    @Override
+	public void write(String s, int off, int len) {
 
         if (error)
             return;
@@ -167,7 +175,8 @@ public class CoyoteWriter
     }
 
 
-    public void write(String s) {
+    @Override
+	public void write(String s) {
         write(s, 0, s.length());
     }
 
@@ -175,7 +184,8 @@ public class CoyoteWriter
     // ---------------------------------------------------- PrintWriter Methods
 
 
-    public void print(boolean b) {
+    @Override
+	public void print(boolean b) {
         if (b) {
             write("true");
         } else {
@@ -184,37 +194,44 @@ public class CoyoteWriter
     }
 
 
-    public void print(char c) {
+    @Override
+	public void print(char c) {
         write(c);
     }
 
 
-    public void print(int i) {
+    @Override
+	public void print(int i) {
         write(String.valueOf(i));
     }
 
 
-    public void print(long l) {
+    @Override
+	public void print(long l) {
         write(String.valueOf(l));
     }
 
 
-    public void print(float f) {
+    @Override
+	public void print(float f) {
         write(String.valueOf(f));
     }
 
 
-    public void print(double d) {
+    @Override
+	public void print(double d) {
         write(String.valueOf(d));
     }
 
 
-    public void print(char s[]) {
+    @Override
+	public void print(char s[]) {
         write(s);
     }
 
 
-    public void print(String s) {
+    @Override
+	public void print(String s) {
         if (s == null) {
             s = "null";
         }
@@ -222,65 +239,76 @@ public class CoyoteWriter
     }
 
 
-    public void print(Object obj) {
+    @Override
+	public void print(Object obj) {
         write(String.valueOf(obj));
     }
 
 
-    public void println() {
+    @Override
+	public void println() {
         write(LINE_SEP);
     }
 
 
-    public void println(boolean b) {
+    @Override
+	public void println(boolean b) {
         print(b);
         println();
     }
 
 
-    public void println(char c) {
+    @Override
+	public void println(char c) {
         print(c);
         println();
     }
 
 
-    public void println(int i) {
+    @Override
+	public void println(int i) {
         print(i);
         println();
     }
 
 
-    public void println(long l) {
+    @Override
+	public void println(long l) {
         print(l);
         println();
     }
 
 
-    public void println(float f) {
+    @Override
+	public void println(float f) {
         print(f);
         println();
     }
 
 
-    public void println(double d) {
+    @Override
+	public void println(double d) {
         print(d);
         println();
     }
 
 
-    public void println(char c[]) {
+    @Override
+	public void println(char c[]) {
         print(c);
         println();
     }
 
 
-    public void println(String s) {
+    @Override
+	public void println(String s) {
         print(s);
         println();
     }
 
 
-    public void println(Object o) {
+    @Override
+	public void println(Object o) {
         print(o);
         println();
     }

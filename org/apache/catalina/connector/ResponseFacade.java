@@ -58,7 +58,8 @@ public class ResponseFacade
             this.contentType = contentType;
         }
         
-        public Object run() {
+        @Override
+		public Object run() {
             response.setContentType(contentType);
             return null;
         }            
@@ -77,7 +78,8 @@ public class ResponseFacade
             this.add = add;
         }
 
-        public Object run() {
+        @Override
+		public Object run() {
             if(add) {
                 response.addDateHeader(name, value);
             } else {
@@ -131,7 +133,8 @@ public class ResponseFacade
     /**
      * Prevent cloning the facade.
      */
-    protected Object clone()
+    @Override
+	protected Object clone()
         throws CloneNotSupportedException {
         throw new CloneNotSupportedException();
     }
@@ -162,7 +165,8 @@ public class ResponseFacade
     // ------------------------------------------------ ServletResponse Methods
 
 
-    public String getCharacterEncoding() {
+    @Override
+	public String getCharacterEncoding() {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -173,7 +177,8 @@ public class ResponseFacade
     }
 
 
-    public ServletOutputStream getOutputStream()
+    @Override
+	public ServletOutputStream getOutputStream()
         throws IOException {
 
         //        if (isFinished())
@@ -188,7 +193,8 @@ public class ResponseFacade
     }
 
 
-    public PrintWriter getWriter()
+    @Override
+	public PrintWriter getWriter()
         throws IOException {
 
         //        if (isFinished())
@@ -203,7 +209,8 @@ public class ResponseFacade
     }
 
 
-    public void setContentLength(int len) {
+    @Override
+	public void setContentLength(int len) {
 
         if (isCommitted())
             return;
@@ -213,7 +220,8 @@ public class ResponseFacade
     }
 
 
-    public void setContentType(String type) {
+    @Override
+	public void setContentType(String type) {
 
         if (isCommitted())
             return;
@@ -226,7 +234,8 @@ public class ResponseFacade
     }
 
 
-    public void setBufferSize(int size) {
+    @Override
+	public void setBufferSize(int size) {
 
         if (isCommitted())
             throw new IllegalStateException
@@ -237,7 +246,8 @@ public class ResponseFacade
     }
 
 
-    public int getBufferSize() {
+    @Override
+	public int getBufferSize() {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -248,7 +258,8 @@ public class ResponseFacade
     }
 
 
-    public void flushBuffer()
+    @Override
+	public void flushBuffer()
         throws IOException {
 
         if (isFinished())
@@ -260,7 +271,8 @@ public class ResponseFacade
             try{
                 AccessController.doPrivileged(new PrivilegedExceptionAction(){
 
-                    public Object run() throws IOException{
+                    @Override
+					public Object run() throws IOException{
                         response.setAppCommitted(true);
 
                         response.flushBuffer();
@@ -282,7 +294,8 @@ public class ResponseFacade
     }
 
 
-    public void resetBuffer() {
+    @Override
+	public void resetBuffer() {
 
         if (isCommitted())
             throw new IllegalStateException
@@ -293,7 +306,8 @@ public class ResponseFacade
     }
 
 
-    public boolean isCommitted() {
+    @Override
+	public boolean isCommitted() {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -304,7 +318,8 @@ public class ResponseFacade
     }
 
 
-    public void reset() {
+    @Override
+	public void reset() {
 
         if (isCommitted())
             throw new IllegalStateException
@@ -315,7 +330,8 @@ public class ResponseFacade
     }
 
 
-    public void setLocale(Locale loc) {
+    @Override
+	public void setLocale(Locale loc) {
 
         if (isCommitted())
             return;
@@ -324,7 +340,8 @@ public class ResponseFacade
     }
 
 
-    public Locale getLocale() {
+    @Override
+	public Locale getLocale() {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -335,7 +352,8 @@ public class ResponseFacade
     }
 
 
-    public void addCookie(Cookie cookie) {
+    @Override
+	public void addCookie(Cookie cookie) {
 
         if (isCommitted())
             return;
@@ -345,7 +363,8 @@ public class ResponseFacade
     }
 
 
-    public boolean containsHeader(String name) {
+    @Override
+	public boolean containsHeader(String name) {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -356,7 +375,8 @@ public class ResponseFacade
     }
 
 
-    public String encodeURL(String url) {
+    @Override
+	public String encodeURL(String url) {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -367,7 +387,8 @@ public class ResponseFacade
     }
 
 
-    public String encodeRedirectURL(String url) {
+    @Override
+	public String encodeRedirectURL(String url) {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -378,7 +399,8 @@ public class ResponseFacade
     }
 
 
-    public String encodeUrl(String url) {
+    @Override
+	public String encodeUrl(String url) {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -389,7 +411,8 @@ public class ResponseFacade
     }
 
 
-    public String encodeRedirectUrl(String url) {
+    @Override
+	public String encodeRedirectUrl(String url) {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -400,7 +423,8 @@ public class ResponseFacade
     }
 
 
-    public void sendError(int sc, String msg)
+    @Override
+	public void sendError(int sc, String msg)
         throws IOException {
 
         if (isCommitted())
@@ -414,7 +438,8 @@ public class ResponseFacade
     }
 
 
-    public void sendError(int sc)
+    @Override
+	public void sendError(int sc)
         throws IOException {
 
         if (isCommitted())
@@ -428,7 +453,8 @@ public class ResponseFacade
     }
 
 
-    public void sendRedirect(String location)
+    @Override
+	public void sendRedirect(String location)
         throws IOException {
 
         if (isCommitted())
@@ -442,7 +468,8 @@ public class ResponseFacade
     }
 
 
-    public void setDateHeader(String name, long date) {
+    @Override
+	public void setDateHeader(String name, long date) {
 
         if (isCommitted())
             return;
@@ -457,7 +484,8 @@ public class ResponseFacade
     }
 
 
-    public void addDateHeader(String name, long date) {
+    @Override
+	public void addDateHeader(String name, long date) {
 
         if (isCommitted())
             return;
@@ -472,7 +500,8 @@ public class ResponseFacade
     }
 
 
-    public void setHeader(String name, String value) {
+    @Override
+	public void setHeader(String name, String value) {
 
         if (isCommitted())
             return;
@@ -482,7 +511,8 @@ public class ResponseFacade
     }
 
 
-    public void addHeader(String name, String value) {
+    @Override
+	public void addHeader(String name, String value) {
 
         if (isCommitted())
             return;
@@ -492,7 +522,8 @@ public class ResponseFacade
     }
 
 
-    public void setIntHeader(String name, int value) {
+    @Override
+	public void setIntHeader(String name, int value) {
 
         if (isCommitted())
             return;
@@ -502,7 +533,8 @@ public class ResponseFacade
     }
 
 
-    public void addIntHeader(String name, int value) {
+    @Override
+	public void addIntHeader(String name, int value) {
 
         if (isCommitted())
             return;
@@ -512,7 +544,8 @@ public class ResponseFacade
     }
 
 
-    public void setStatus(int sc) {
+    @Override
+	public void setStatus(int sc) {
 
         if (isCommitted())
             return;
@@ -522,7 +555,8 @@ public class ResponseFacade
     }
 
 
-    public void setStatus(int sc, String sm) {
+    @Override
+	public void setStatus(int sc, String sm) {
 
         if (isCommitted())
             return;
@@ -531,7 +565,8 @@ public class ResponseFacade
     }
 
 
-    public String getContentType() {
+    @Override
+	public String getContentType() {
 
         if (response == null) {
             throw new IllegalStateException(
@@ -542,7 +577,8 @@ public class ResponseFacade
     }
 
 
-    public void setCharacterEncoding(String arg0) {
+    @Override
+	public void setCharacterEncoding(String arg0) {
 
         if (response == null) {
             throw new IllegalStateException(

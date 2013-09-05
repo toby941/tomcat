@@ -55,7 +55,8 @@ public abstract class AbstractRole implements Role {
     /**
      * Return the description of this role.
      */
-    public String getDescription() {
+    @Override
+	public String getDescription() {
 
         return (this.description);
 
@@ -67,7 +68,8 @@ public abstract class AbstractRole implements Role {
      *
      * @param description The new description
      */
-    public void setDescription(String description) {
+    @Override
+	public void setDescription(String description) {
 
         this.description = description;
 
@@ -78,7 +80,8 @@ public abstract class AbstractRole implements Role {
      * Return the role name of this role, which must be unique
      * within the scope of a {@link UserDatabase}.
      */
-    public String getRolename() {
+    @Override
+	public String getRolename() {
 
         return (this.rolename);
 
@@ -91,7 +94,8 @@ public abstract class AbstractRole implements Role {
      *
      * @param rolename The new role name
      */
-    public void setRolename(String rolename) {
+    @Override
+	public void setRolename(String rolename) {
 
         this.rolename = rolename;
 
@@ -101,7 +105,8 @@ public abstract class AbstractRole implements Role {
     /**
      * Return the {@link UserDatabase} within which this Role is defined.
      */
-    public abstract UserDatabase getUserDatabase();
+    @Override
+	public abstract UserDatabase getUserDatabase();
 
 
     // --------------------------------------------------------- Public Methods
@@ -113,7 +118,8 @@ public abstract class AbstractRole implements Role {
     /**
      * Make the principal name the same as the role name.
      */
-    public String getName() {
+    @Override
+	public String getName() {
 
         return (getRolename());
 

@@ -70,7 +70,8 @@ public class ChannelUn extends JniHandler implements JkChannel {
     
     int localId=0;
     
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         if( file==null ) {
             log.debug("No file, disabling unix channel");
             return;
@@ -173,7 +174,8 @@ public class ChannelUn extends JniHandler implements JkChannel {
     public void start() throws IOException {
     }
 
-    public void destroy() throws IOException {
+    @Override
+	public void destroy() throws IOException {
         if( apr==null ) return;
         try {
             if( tp != null )
@@ -193,7 +195,8 @@ public class ChannelUn extends JniHandler implements JkChannel {
         }
     }
 
-    public void registerRequest(Request req, MsgContext ep, int count) {
+    @Override
+	public void registerRequest(Request req, MsgContext ep, int count) {
 	if(this.domain != null) {
 	    try {
 
@@ -226,13 +229,15 @@ public class ChannelUn extends JniHandler implements JkChannel {
         super.nativeDispatch( ep.getMsg(0), ep, CH_CLOSE, 1 );
     }
 
-    public int send( Msg msg, MsgContext ep)
+    @Override
+	public int send( Msg msg, MsgContext ep)
         throws IOException
     {
         return super.nativeDispatch( msg, ep, CH_WRITE, 0 );
     }
 
-    public int receive( Msg msg, MsgContext ep )
+    @Override
+	public int receive( Msg msg, MsgContext ep )
         throws IOException
     {
         int rc=super.nativeDispatch( msg, ep, CH_READ, 1 );
@@ -250,11 +255,13 @@ public class ChannelUn extends JniHandler implements JkChannel {
 	return msg.getLen();
     }
 
-    public int flush( Msg msg, MsgContext ep) throws IOException {
+    @Override
+	public int flush( Msg msg, MsgContext ep) throws IOException {
 	return OK;
     }
 
-    public boolean isSameAddress( MsgContext ep ) {
+    @Override
+	public boolean isSameAddress( MsgContext ep ) {
 	return false; // Not supporting shutdown on this channel.
     }
 
@@ -310,7 +317,7 @@ public class ChannelUn extends JniHandler implements JkChannel {
             if( log.isDebugEnabled() )
                 log.debug( "Closing un channel");
             try{
-                Request req = (Request)ep.getRequest();
+                Request req = ep.getRequest();
                 if( req != null ) {
                     ObjectName roname = (ObjectName)ep.getNote(JMXRequestNote);
                     if( roname != null ) {
@@ -327,7 +334,8 @@ public class ChannelUn extends JniHandler implements JkChannel {
         }
     }
 
-    public int invoke( Msg msg, MsgContext ep ) throws IOException {
+    @Override
+	public int invoke( Msg msg, MsgContext ep ) throws IOException {
         int type=ep.getType();
 
         switch( type ) {
@@ -343,7 +351,8 @@ public class ChannelUn extends JniHandler implements JkChannel {
         return OK;
     }
 
-    public String getChannelName() {
+    @Override
+	public String getChannelName() {
         String encodedAddr = "";
         String address = file;
         if (address != null) {
@@ -366,11 +375,13 @@ class AprAcceptor implements ThreadPoolRunnable {
         this.wajp=wajp;
     }
 
-    public Object[] getInitData() {
+    @Override
+	public Object[] getInitData() {
         return null;
     }
 
-    public void runIt(Object thD[]) {
+    @Override
+	public void runIt(Object thD[]) {
         wajp.acceptConnections();
     }
 }
@@ -385,11 +396,13 @@ class AprConnection implements ThreadPoolRunnable {
     }
 
 
-    public Object[] getInitData() {
+    @Override
+	public Object[] getInitData() {
         return null;
     }
     
-    public void runIt(Object perTh[]) {
+    @Override
+	public void runIt(Object perTh[]) {
         wajp.processConnection(ep);
     }
 }

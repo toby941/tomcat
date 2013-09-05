@@ -201,7 +201,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * 
      * @since 1.1
      */ 
-    public void stop() {
+    @Override
+	public void stop() {
         descriptorsByClass = new HashMap();
         descriptors = new HashMap();
         searchedPaths=new HashMap();
@@ -222,7 +223,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * 
      * @since 1.1
      */ 
-    public List loadMBeans( Object source, ClassLoader cl )
+    @Override
+	public List loadMBeans( Object source, ClassLoader cl )
             throws Exception
     {
         return load("MbeansSource", source, null );
@@ -239,7 +241,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * 
      * @param source
      */ 
-    public void loadMetadata(Object source ) throws Exception {
+    @Override
+	public void loadMetadata(Object source ) throws Exception {
         loadDescriptors( null, source, null );
     }
 
@@ -272,7 +275,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      *
      * @since 1.1
      */ 
-    public void registerComponent(Object bean, String oname, String type)
+    @Override
+	public void registerComponent(Object bean, String oname, String type)
            throws Exception
     {
         registerComponent(bean, new ObjectName(oname), type);        
@@ -285,7 +289,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * 
      * @since 1.1
      */ 
-    public void unregisterComponent( String oname ) {
+    @Override
+	public void unregisterComponent( String oname ) {
         try {
             unregisterComponent(new ObjectName(oname));
         } catch (MalformedObjectNameException e) {
@@ -303,7 +308,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @throws Exception
      * @since 1.1
      */
-    public void invoke( List mbeans, String operation, boolean failFirst )
+    @Override
+	public void invoke( List mbeans, String operation, boolean failFirst )
             throws Exception
     {
         if( mbeans==null ) {
@@ -346,7 +352,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @return  An unique id for the domain:name combination
      * @since 1.1
      */
-    public synchronized int getId( String domain, String name) {
+    @Override
+	public synchronized int getId( String domain, String name) {
         if( domain==null) {
             domain="";
         }
@@ -467,7 +474,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @since 1.0
      * @deprecated Use the instance method
      */
-    public static MBeanServer getServer() {
+    @Deprecated
+	public static MBeanServer getServer() {
         return Registry.getRegistry().getMBeanServer();
     }
 
@@ -479,7 +487,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @since 1.0
      * @deprecated Use the instance method
      */
-    public static void setServer(MBeanServer mbeanServer) {
+    @Deprecated
+	public static void setServer(MBeanServer mbeanServer) {
         Registry.getRegistry().setMBeanServer(mbeanServer);
     }
 
@@ -494,7 +503,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @deprecated use normal class method instead
      * @since 1.0
      */
-    public static void loadRegistry(InputStream stream) throws Exception {
+    @Deprecated
+	public static void loadRegistry(InputStream stream) throws Exception {
         Registry registry = getRegistry();
         registry.loadMetadata(stream);
     }
@@ -505,7 +515,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @deprecated Not enough info - use the method that takes CL and domain
      * @since 1.0 
      */ 
-    public synchronized static Registry getRegistry() {
+    @Deprecated
+	public synchronized static Registry getRegistry() {
         return getRegistry(null, null);
     }    
 
@@ -589,7 +600,7 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
 
         if (server == null) {
             if( MBeanServerFactory.findMBeanServer(null).size() > 0 ) {
-                server=(MBeanServer)MBeanServerFactory.findMBeanServer(null).get(0);
+                server=MBeanServerFactory.findMBeanServer(null).get(0);
                 if( log.isDebugEnabled() ) {
                     log.debug("Using existing MBeanServer " + (System.currentTimeMillis() - t1 ));
                 }
@@ -707,7 +718,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @throws Exception
      * @deprecated bad interface, mixing of metadata and mbeans
      */
-    public List load( String sourceType, Object source, String param)
+    @Deprecated
+	public List load( String sourceType, Object source, String param)
         throws Exception
     {
         if( log.isTraceEnabled()) {
@@ -860,7 +872,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @throws Exception
      * @deprecated
      */
-    public void loadDescriptors( String sourceType, Object source, String param)
+    @Deprecated
+	public void loadDescriptors( String sourceType, Object source, String param)
         throws Exception
     {
         List mbeans=load( sourceType, source, param );
@@ -926,20 +939,24 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
 
     // -------------------- Registration  --------------------
     
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception 
     {
         this.server=server;
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 
     
@@ -992,7 +1009,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
 
     /** @deprecated - may still be used in code using pre-1.1 builds
      */
-    public void registerComponent(Object bean, String domain, String type,
+    @Deprecated
+	public void registerComponent(Object bean, String domain, String type,
                                   String name)
             throws Exception
     {
@@ -1028,7 +1046,8 @@ public class Registry implements RegistryMBean, MBeanRegistration  {
      * @exception Exception if any parsing or processing error occurs
      * @deprecated Loaded automatically or using a File or Url ending in .ser
      */
-    public void loadCachedDescriptors( Object source )
+    @Deprecated
+	public void loadCachedDescriptors( Object source )
             throws Exception
     {
         loadDescriptors("MbeansDescriptorsSerSource", source, null );

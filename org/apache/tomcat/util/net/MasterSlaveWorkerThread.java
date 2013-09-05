@@ -99,7 +99,8 @@ class MasterSlaveWorkerThread implements Runnable {
      * The background thread that listens for incoming TCP/IP connections and
      * hands them off to an appropriate processor.
      */
-    public void run() {
+    @Override
+	public void run() {
 
         // Process requests until we receive a shutdown signal
         while (!stopped) {

@@ -120,7 +120,8 @@ public class BaseJkConfig  implements LifecycleListener {
      *  Generate the configuration - only when the server is
      *  completely initialized ( before starting )
      */
-    public void lifecycleEvent(LifecycleEvent evt) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent evt) {
         if(Lifecycle.START_EVENT.equals(evt.getType())) {
            execute( evt );
         } 

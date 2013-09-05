@@ -103,22 +103,26 @@ public class SessionMessageImpl extends ClusterMessageBase implements SessionMes
      * returns the event type
      * @return one of the event types EVT_XXXX
      */
-    public int getEventType() { return mEvtType; }
+    @Override
+	public int getEventType() { return mEvtType; }
 
     /**
      * @return the serialized data for the session
      */
-    public byte[] getSession() { return mSession;}
+    @Override
+	public byte[] getSession() { return mSession;}
 
     /**
      * @return the session ID for the session
      */
-    public String getSessionID(){ return mSessionID; }
+    @Override
+	public String getSessionID(){ return mSessionID; }
     
     /**
      * set message send time but only the first setting works (one shot)
      */
-    public void setTimestamp(long time) {
+    @Override
+	public void setTimestamp(long time) {
         synchronized(this) {
             if(!timestampSet) {
                 serializationTimestamp=time;
@@ -127,13 +131,15 @@ public class SessionMessageImpl extends ClusterMessageBase implements SessionMes
         }
     }
     
-    public long getTimestamp() { return serializationTimestamp;}
+    @Override
+	public long getTimestamp() { return serializationTimestamp;}
     
     /**
      * clear text event type name (for logging purpose only) 
      * @return the event type in a string representating, useful for debugging
      */
-    public String getEventTypeString()
+    @Override
+	public String getEventTypeString()
     {
         switch (mEvtType)
         {
@@ -150,17 +156,21 @@ public class SessionMessageImpl extends ClusterMessageBase implements SessionMes
         }
     }
 
-    public String getContextName() {
+    @Override
+	public String getContextName() {
        return mContextName;
     }
-    public String getUniqueId() {
+    @Override
+	public String getUniqueId() {
         return uniqueId;
     }
-    public void setUniqueId(String uniqueId) {
+    @Override
+	public void setUniqueId(String uniqueId) {
         this.uniqueId = uniqueId;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return getEventTypeString() + "#" + getContextName() + "#" + getSessionID() ;
     }
 }

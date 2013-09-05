@@ -87,7 +87,8 @@ public class HostRuleSet extends RuleSetBase {
      * @param digester Digester instance to which the new Rule instances
      *  should be added.
      */
-    public void addRuleInstances(Digester digester) {
+    @Override
+	public void addRuleInstances(Digester digester) {
 
         digester.addObjectCreate(prefix + "Host",
                                  "org.apache.catalina.core.StandardHost",

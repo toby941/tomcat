@@ -129,7 +129,8 @@ public class Shm extends JniHandler {
         this.unregister=true;
     }
     
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         super.initNative( "shm" );
         if( apr==null ) return;
         if( file==null ) {
@@ -149,7 +150,7 @@ public class Shm extends JniHandler {
     public void resetScoreboard() throws IOException {
         if( apr==null ) return;
         MsgContext mCtx=createMsgContext();
-        Msg msg=(Msg)mCtx.getMsg(0);
+        Msg msg=mCtx.getMsg(0);
         msg.reset();
 
         msg.appendByte( SHM_RESET );
@@ -160,7 +161,7 @@ public class Shm extends JniHandler {
     public void dumpScoreboard(String fname) throws IOException {
         if( apr==null ) return;
         MsgContext mCtx=createMsgContext();
-        Msg msg=(Msg)mCtx.getMsg(0);
+        Msg msg=mCtx.getMsg(0);
         C2BConverter c2b=mCtx.getConverter();
         msg.reset();
 
@@ -181,7 +182,7 @@ public class Shm extends JniHandler {
 
         String slotName="TOMCAT:" + instanceId;
         MsgContext mCtx=createMsgContext();
-        Msg msg=(Msg)mCtx.getMsg(0);
+        Msg msg=mCtx.getMsg(0);
         msg.reset();
         C2BConverter c2b=mCtx.getConverter();
         
@@ -224,7 +225,7 @@ public class Shm extends JniHandler {
     {
         String slotName="TOMCAT:" + host + ":" + port;
         MsgContext mCtx=createMsgContext();
-        Msg msg=(Msg)mCtx.getMsg(0);
+        Msg msg=mCtx.getMsg(0);
         msg.reset();
         C2BConverter c2b=mCtx.getConverter();
         
@@ -240,12 +241,14 @@ public class Shm extends JniHandler {
         this.invoke( msg, mCtx );
     }
 
-    public void destroy() throws IOException {
+    @Override
+	public void destroy() throws IOException {
         destroyJkComponent();
     }
 
     
-    public  int invoke(Msg msg, MsgContext ep )
+    @Override
+	public  int invoke(Msg msg, MsgContext ep )
         throws IOException
     {
         if( apr==null ) return 0;

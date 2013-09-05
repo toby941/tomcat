@@ -58,7 +58,8 @@ public final class AstFunction extends SimpleNode {
         return prefix;
     }
 
-    public Class getType(EvaluationContext ctx)
+    @Override
+	public Class getType(EvaluationContext ctx)
             throws ELException {
         
         FunctionMapper fnMapper = ctx.getFunctionMapper();
@@ -75,7 +76,8 @@ public final class AstFunction extends SimpleNode {
         return m.getReturnType();
     }
 
-    public Object getValue(EvaluationContext ctx)
+    @Override
+	public Object getValue(EvaluationContext ctx)
             throws ELException {
         
         FunctionMapper fnMapper = ctx.getFunctionMapper();
@@ -127,7 +129,8 @@ public final class AstFunction extends SimpleNode {
     }
     
     
-    public String toString()
+    @Override
+	public String toString()
     {
         return ELParserTreeConstants.jjtNodeName[id] + "[" + this.getOutputName() + "]";
     }

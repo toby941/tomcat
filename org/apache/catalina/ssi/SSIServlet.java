@@ -65,7 +65,8 @@ public class SSIServlet extends HttpServlet {
      * @exception ServletException
      *                if an error occurs
      */
-    public void init() throws ServletException {
+    @Override
+	public void init() throws ServletException {
         
         if (getServletConfig().getInitParameter("debug") != null)
             debug = Integer.parseInt(getServletConfig().getInitParameter("debug"));
@@ -104,7 +105,8 @@ public class SSIServlet extends HttpServlet {
      * @exception ServletException
      *                if an error occurs
      */
-    public void doGet(HttpServletRequest req, HttpServletResponse res)
+    @Override
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
             throws IOException, ServletException {
         if (debug > 0) log("SSIServlet.doGet()");
         requestHandler(req, res);
@@ -124,7 +126,8 @@ public class SSIServlet extends HttpServlet {
      * @exception ServletException
      *                if an error occurs
      */
-    public void doPost(HttpServletRequest req, HttpServletResponse res)
+    @Override
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
             throws IOException, ServletException {
         if (debug > 0) log("SSIServlet.doPost()");
         requestHandler(req, res);

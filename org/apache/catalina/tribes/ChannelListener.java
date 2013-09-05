@@ -56,13 +56,15 @@ public interface ChannelListener {
      * @return boolean
      * @see Object#equals(Object)
      */
-    public boolean equals(Object listener);
+    @Override
+	public boolean equals(Object listener);
 
     /**
      * 
      * @return int
      * @see Object#hashCode(int)
      */
-    public int hashCode();
+    @Override
+	public int hashCode();
 
 }

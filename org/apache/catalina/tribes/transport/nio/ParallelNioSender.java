@@ -60,7 +60,8 @@ public class ParallelNioSender extends AbstractSender implements MultiPointSende
     }
     
     
-    public synchronized void sendMessage(Member[] destination, ChannelMessage msg) throws ChannelException {
+    @Override
+	public synchronized void sendMessage(Member[] destination, ChannelMessage msg) throws ChannelException {
         long start = System.currentTimeMillis();
         byte[] data = XByteBuffer.createDataPackage((ChannelData)msg);
         NioSender[] senders = setupForSend(destination);
@@ -215,7 +216,7 @@ public class ParallelNioSender extends AbstractSender implements MultiPointSende
 
                 if (sender == null) {
                     sender = new NioSender();
-                    sender.transferProperties(this, sender);
+                    AbstractSender.transferProperties(this, sender);
                     nioSenders.put(destination[i], sender);
                 }
                 if (sender != null) {
@@ -233,7 +234,8 @@ public class ParallelNioSender extends AbstractSender implements MultiPointSende
         else return result;
     }
     
-    public void connect() {
+    @Override
+	public void connect() {
         //do nothing, we connect on demand
         setConnected(true);
     }
@@ -256,29 +258,34 @@ public class ParallelNioSender extends AbstractSender implements MultiPointSende
         if ( x != null ) throw x;
     }
     
-    public void add(Member member) {
+    @Override
+	public void add(Member member) {
         
     }
     
-    public void remove(Member member) {
+    @Override
+	public void remove(Member member) {
         //disconnect senders
         NioSender sender = (NioSender)nioSenders.remove(member);
         if ( sender != null ) sender.disconnect();
     }
 
     
-    public synchronized void disconnect() {
+    @Override
+	public synchronized void disconnect() {
         setConnected(false);
         try {close(); }catch (Exception x){}
         
     }
     
-    public void finalize() {
+    @Override
+	public void finalize() {
         try {disconnect(); }catch ( Exception ignore){}
         try {selector.close();} catch (Exception ignore) {}
     }
 
-    public boolean keepalive() {
+    @Override
+	public boolean keepalive() {
         boolean result = false;
         for ( Iterator i = nioSenders.entrySet().iterator(); i.hasNext();  ) {
             Map.Entry entry = (Map.Entry)i.next();

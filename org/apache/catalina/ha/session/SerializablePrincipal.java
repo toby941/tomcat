@@ -185,7 +185,8 @@ public class SerializablePrincipal  implements java.io.Serializable {
      * Return a String representation of this object, which exposes only
      * information that should be public.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SerializablePrincipal[");
         sb.append(this.name);

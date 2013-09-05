@@ -51,7 +51,8 @@ public class StaticMembershipInterceptor
     /**
      * has members
      */
-    public boolean hasMembers() {
+    @Override
+	public boolean hasMembers() {
         return super.hasMembers() || (members.size()>0);
     }
 
@@ -59,7 +60,8 @@ public class StaticMembershipInterceptor
      * Get all current cluster members
      * @return all members or empty array
      */
-    public Member[] getMembers() {
+    @Override
+	public Member[] getMembers() {
         if ( members.size() == 0 ) return super.getMembers();
         else {
             synchronized (members) {
@@ -78,7 +80,8 @@ public class StaticMembershipInterceptor
      * @param mbr Member
      * @return Member
      */
-    public Member getMember(Member mbr) {
+    @Override
+	public Member getMember(Member mbr) {
         if ( members.contains(mbr) ) return (Member)members.get(members.indexOf(mbr));
         else return super.getMember(mbr);
     }
@@ -88,7 +91,8 @@ public class StaticMembershipInterceptor
      *
      * @return Member
      */
-    public Member getLocalMember(boolean incAlive) {
+    @Override
+	public Member getLocalMember(boolean incAlive) {
         if (this.localMember != null ) return localMember;
         else return super.getLocalMember(incAlive);
     }
@@ -98,13 +102,15 @@ public class StaticMembershipInterceptor
      * @param svc int
      * @throws ChannelException
      */
-    public void start(int svc) throws ChannelException {
+    @Override
+	public void start(int svc) throws ChannelException {
         if ( (Channel.SND_RX_SEQ&svc)==Channel.SND_RX_SEQ ) super.start(Channel.SND_RX_SEQ); 
         if ( (Channel.SND_TX_SEQ&svc)==Channel.SND_TX_SEQ ) super.start(Channel.SND_TX_SEQ); 
         final Member[] mbrs = (Member[])members.toArray(new Member[members.size()]);
         final ChannelInterceptorBase base = this;
         Thread t = new Thread() {
-            public void run() {
+            @Override
+			public void run() {
                 for (int i=0; i<mbrs.length; i++ ) {
                     base.memberAdded(mbrs[i]);
                 }

@@ -330,7 +330,8 @@ public class ELParser {
             return 0;
         }
 
-        public String toString() {
+        @Override
+		public String toString() {
             return "";
         }
     }
@@ -345,7 +346,8 @@ public class ELParser {
             this.id = id;
         }
 
-        public String toString() {
+        @Override
+		public String toString() {
             return id;
         }
     }
@@ -361,11 +363,13 @@ public class ELParser {
             this.ch = ch;
         }
 
-        char toChar() {
+        @Override
+		char toChar() {
             return ch;
         }
 
-        public String toString() {
+        @Override
+		public String toString() {
             return (new Character(ch)).toString();
         }
     }
@@ -381,7 +385,8 @@ public class ELParser {
             this.value = v;
         }
 
-        public String toString() {
+        @Override
+		public String toString() {
             return value;
         }
     }

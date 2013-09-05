@@ -314,7 +314,8 @@ public class JkMX extends JkHandler
 
     }
 
-    public void destroy() {
+    @Override
+	public void destroy() {
         try {
             if(log.isInfoEnabled())
                 log.info("Stoping JMX ");
@@ -330,7 +331,8 @@ public class JkMX extends JkHandler
         }
     }
 
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         try {
             mserver = getMBeanServer();
 
@@ -353,13 +355,14 @@ public class JkMX extends JkHandler
         }
     }
 
-    public void addHandlerCallback( JkHandler w ) {
+    @Override
+	public void addHandlerCallback( JkHandler w ) {
     }
 
     MBeanServer getMBeanServer() {
         MBeanServer server;
         if( MBeanServerFactory.findMBeanServer(null).size() > 0 ) {
-            server=(MBeanServer)MBeanServerFactory.findMBeanServer(null).get(0);
+            server=MBeanServerFactory.findMBeanServer(null).get(0);
         } else {
             server=MBeanServerFactory.createMBeanServer();
         }

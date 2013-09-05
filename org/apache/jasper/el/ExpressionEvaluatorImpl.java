@@ -16,7 +16,6 @@
  */
 package org.apache.jasper.el;
 
-import javax.el.ELContext;
 import javax.el.ExpressionFactory;
 import javax.el.ValueExpression;
 import javax.servlet.jsp.el.ELException;
@@ -35,7 +34,8 @@ public final class ExpressionEvaluatorImpl extends ExpressionEvaluator {
 		this.factory = factory;
 	}
 
-    public Expression parseExpression(String expression,
+    @Override
+	public Expression parseExpression(String expression,
             @SuppressWarnings("unchecked") // API does not use generics
             Class expectedType,
 			FunctionMapper fMapper) throws ELException {
@@ -52,7 +52,8 @@ public final class ExpressionEvaluatorImpl extends ExpressionEvaluator {
 		}
 	}
 
-    public Object evaluate(String expression,
+    @Override
+	public Object evaluate(String expression,
             @SuppressWarnings("unchecked") // API does not use generics
             Class expectedType,
 			VariableResolver vResolver, FunctionMapper fMapper)

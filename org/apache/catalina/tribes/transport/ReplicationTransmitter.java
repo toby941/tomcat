@@ -75,7 +75,8 @@ public class ReplicationTransmitter implements ChannelSender {
      * Send data to one member
      * @see org.apache.catalina.tribes.ClusterSender#sendMessage(org.apache.catalina.tribes.ClusterMessage, org.apache.catalina.tribes.Member)
      */
-    public void sendMessage(ChannelMessage message, Member[] destination) throws ChannelException {
+    @Override
+	public void sendMessage(ChannelMessage message, Member[] destination) throws ChannelException {
         MultiPointSender sender = getTransport();
         sender.sendMessage(destination,message);
     }
@@ -86,7 +87,8 @@ public class ReplicationTransmitter implements ChannelSender {
      * 
      * @see org.apache.catalina.tribes.ClusterSender#start()
      */
-    public void start() throws java.io.IOException {
+    @Override
+	public void start() throws java.io.IOException {
         getTransport().connect();
     }
 
@@ -95,7 +97,8 @@ public class ReplicationTransmitter implements ChannelSender {
      * 
      * @see org.apache.catalina.tribes.ClusterSender#stop()
      */
-    public synchronized void stop() {
+    @Override
+	public synchronized void stop() {
         getTransport().disconnect();
     }
 
@@ -105,7 +108,8 @@ public class ReplicationTransmitter implements ChannelSender {
      * @see SimpleTcpCluster#backgroundProcess()
      */
 
-    public void heartbeat() {
+    @Override
+	public void heartbeat() {
         if (getTransport()!=null) getTransport().keepalive();
     }
 
@@ -115,7 +119,8 @@ public class ReplicationTransmitter implements ChannelSender {
      * 
      * @see org.apache.catalina.tribes.ClusterSender#add(org.apache.catalina.tribes.Member)
      */
-    public synchronized void add(Member member) {
+    @Override
+	public synchronized void add(Member member) {
         getTransport().add(member);
     }
 
@@ -124,7 +129,8 @@ public class ReplicationTransmitter implements ChannelSender {
      * 
      * @see org.apache.catalina.tribes.ClusterSender#remove(org.apache.catalina.tribes.Member)
      */
-    public synchronized void remove(Member member) {
+    @Override
+	public synchronized void remove(Member member) {
         getTransport().remove(member);
     }
 

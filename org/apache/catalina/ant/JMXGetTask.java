@@ -85,7 +85,8 @@ public class JMXGetTask extends AbstractCatalinaTask {
      *
      * @exception BuildException if an error occurs
      */
-    public void execute() throws BuildException {
+    @Override
+	public void execute() throws BuildException {
         super.execute();
         if (bean == null || attribute == null) {
             throw new BuildException

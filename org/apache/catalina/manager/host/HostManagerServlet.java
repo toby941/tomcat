@@ -159,7 +159,8 @@ public class HostManagerServlet
     /**
      * Return the Wrapper with which we are associated.
      */
-    public Wrapper getWrapper() {
+    @Override
+	public Wrapper getWrapper() {
 
         return (this.wrapper);
 
@@ -171,7 +172,8 @@ public class HostManagerServlet
      *
      * @param wrapper The new wrapper
      */
-    public void setWrapper(Wrapper wrapper) {
+    @Override
+	public void setWrapper(Wrapper wrapper) {
 
         this.wrapper = wrapper;
         if (wrapper == null) {
@@ -196,7 +198,8 @@ public class HostManagerServlet
     /**
      * Finalize this servlet.
      */
-    public void destroy() {
+    @Override
+	public void destroy() {
 
         ;       // No actions necessary
 
@@ -212,7 +215,8 @@ public class HostManagerServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    public void doGet(HttpServletRequest request,
+    @Override
+	public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -317,7 +321,8 @@ public class HostManagerServlet
     /**
      * Initialize this servlet.
      */
-    public void init() throws ServletException {
+    @Override
+	public void init() throws ServletException {
 
         // Ensure that our ContainerServlet properties have been set
         if ((wrapper == null) || (context == null))

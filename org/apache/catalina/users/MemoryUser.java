@@ -90,7 +90,8 @@ public class MemoryUser extends AbstractUser {
     /**
      * Return the set of {@link Group}s to which this user belongs.
      */
-    public Iterator getGroups() {
+    @Override
+	public Iterator getGroups() {
 
         synchronized (groups) {
             return (groups.iterator());
@@ -102,7 +103,8 @@ public class MemoryUser extends AbstractUser {
     /**
      * Return the set of {@link Role}s assigned specifically to this user.
      */
-    public Iterator getRoles() {
+    @Override
+	public Iterator getRoles() {
 
         synchronized (roles) {
             return (roles.iterator());
@@ -114,7 +116,8 @@ public class MemoryUser extends AbstractUser {
     /**
      * Return the {@link UserDatabase} within which this User is defined.
      */
-    public UserDatabase getUserDatabase() {
+    @Override
+	public UserDatabase getUserDatabase() {
 
         return (this.database);
 
@@ -129,7 +132,8 @@ public class MemoryUser extends AbstractUser {
      *
      * @param group The new group
      */
-    public void addGroup(Group group) {
+    @Override
+	public void addGroup(Group group) {
 
         synchronized (groups) {
             if (!groups.contains(group)) {
@@ -145,7 +149,8 @@ public class MemoryUser extends AbstractUser {
      *
      * @param role The new role
      */
-    public void addRole(Role role) {
+    @Override
+	public void addRole(Role role) {
 
         synchronized (roles) {
             if (!roles.contains(role)) {
@@ -161,7 +166,8 @@ public class MemoryUser extends AbstractUser {
      *
      * @param group The group to check
      */
-    public boolean isInGroup(Group group) {
+    @Override
+	public boolean isInGroup(Group group) {
 
         synchronized (groups) {
             return (groups.contains(group));
@@ -177,7 +183,8 @@ public class MemoryUser extends AbstractUser {
      *
      * @param role The role to check
      */
-    public boolean isInRole(Role role) {
+    @Override
+	public boolean isInRole(Role role) {
 
         synchronized (roles) {
             return (roles.contains(role));
@@ -191,7 +198,8 @@ public class MemoryUser extends AbstractUser {
      *
      * @param group The old group
      */
-    public void removeGroup(Group group) {
+    @Override
+	public void removeGroup(Group group) {
 
         synchronized (groups) {
             groups.remove(group);
@@ -203,7 +211,8 @@ public class MemoryUser extends AbstractUser {
     /**
      * Remove all {@link Group}s from those this user belongs to.
      */
-    public void removeGroups() {
+    @Override
+	public void removeGroups() {
 
         synchronized (groups) {
             groups.clear();
@@ -217,7 +226,8 @@ public class MemoryUser extends AbstractUser {
      *
      * @param role The old role
      */
-    public void removeRole(Role role) {
+    @Override
+	public void removeRole(Role role) {
 
         synchronized (roles) {
             roles.remove(role);
@@ -229,7 +239,8 @@ public class MemoryUser extends AbstractUser {
     /**
      * Remove all {@link Role}s from those assigned to this user.
      */
-    public void removeRoles() {
+    @Override
+	public void removeRoles() {
 
         synchronized (roles) {
             roles.clear();

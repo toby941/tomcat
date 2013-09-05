@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * @version $Id: InvokerHttpRequest.java 939518 2010-04-30 00:08:58Z kkolinko $
  */
 
+@Deprecated
 class InvokerHttpRequest extends HttpServletRequestWrapper {
 
 
@@ -97,7 +98,8 @@ class InvokerHttpRequest extends HttpServletRequestWrapper {
     /**
      * Override the <code>getPathInfo()</code> method of the wrapped request.
      */
-    public String getPathInfo() {
+    @Override
+	public String getPathInfo() {
 
         return (this.pathInfo);
 
@@ -108,7 +110,8 @@ class InvokerHttpRequest extends HttpServletRequestWrapper {
      * Override the <code>getPathTranslated()</code> method of the
      * wrapped request.
      */
-    public String getPathTranslated() {
+    @Override
+	public String getPathTranslated() {
 
         return (this.pathTranslated);
 
@@ -118,7 +121,8 @@ class InvokerHttpRequest extends HttpServletRequestWrapper {
     /**
      * Override the <code>getRequestURI()</code> method of the wrapped request.
      */
-    public String getRequestURI() {
+    @Override
+	public String getRequestURI() {
 
         return (this.requestURI);
 
@@ -129,7 +133,8 @@ class InvokerHttpRequest extends HttpServletRequestWrapper {
      * Override the <code>getServletPath()</code> method of the wrapped
      * request.
      */
-    public String getServletPath() {
+    @Override
+	public String getServletPath() {
 
         return (this.servletPath);
 

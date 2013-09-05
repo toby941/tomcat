@@ -73,7 +73,8 @@ public class SecureNioChannel extends NioChannel  {
         this.sslEngine = engine;
         reset();
     }
-    public void reset() throws IOException {
+    @Override
+	public void reset() throws IOException {
         super.reset();
         netOutBuffer.position(0);
         netOutBuffer.limit(0);
@@ -87,7 +88,8 @@ public class SecureNioChannel extends NioChannel  {
         initHandshakeStatus = sslEngine.getHandshakeStatus();
     }
     
-    public int getBufferSize() {
+    @Override
+	public int getBufferSize() {
         int size = super.getBufferSize();
         size += netInBuffer!=null?netInBuffer.capacity():0;
         size += netOutBuffer!=null?netOutBuffer.capacity():0;
@@ -103,7 +105,8 @@ public class SecureNioChannel extends NioChannel  {
      * been flushed out and is empty
      * @return boolean
      */
-    public boolean flush(boolean block, Selector s, long timeout,MutableInteger lastWrite) throws IOException {
+    @Override
+	public boolean flush(boolean block, Selector s, long timeout,MutableInteger lastWrite) throws IOException {
         if (!block) {
             flush(netOutBuffer);
         } else {
@@ -139,7 +142,8 @@ public class SecureNioChannel extends NioChannel  {
      * @return int - 0 if hand shake is complete, otherwise it returns a SelectionKey interestOps value
      * @throws IOException
      */
-    public int handshake(boolean read, boolean write) throws IOException {
+    @Override
+	public int handshake(boolean read, boolean write) throws IOException {
         if ( initHandshakeComplete ) return 0; //we have done our initial handshake
         
         if (!flush(netOutBuffer)) return SelectionKey.OP_WRITE; //we still have data to write
@@ -287,7 +291,8 @@ public class SecureNioChannel extends NioChannel  {
      * @throws IOException if there is data on the outgoing network buffer and we are unable to flush it
      * @todo Implement this java.io.Closeable method
      */
-    public void close() throws IOException {
+    @Override
+	public void close() throws IOException {
         if (closing) return;
         closing = true;
         sslEngine.closeOutbound();
@@ -317,7 +322,8 @@ public class SecureNioChannel extends NioChannel  {
      * @param force boolean
      * @throws IOException
      */
-    public void close(boolean force) throws IOException {
+    @Override
+	public void close(boolean force) throws IOException {
         try {
             close();
         }finally {
@@ -338,7 +344,8 @@ public class SecureNioChannel extends NioChannel  {
      * @throws IllegalArgumentException if the destination buffer is different than bufHandler.getReadBuffer()
      * @todo Implement this java.nio.channels.ReadableByteChannel method
      */
-    public int read(ByteBuffer dst) throws IOException {
+    @Override
+	public int read(ByteBuffer dst) throws IOException {
         //if we want to take advantage of the expand function, make sure we only use the ApplicationBufferHandler's buffers
         if ( dst != bufHandler.getReadBuffer() ) throw new IllegalArgumentException("You can only read using the application read buffer provided by the handler.");
         //are we in the middle of closing or closed?
@@ -392,7 +399,8 @@ public class SecureNioChannel extends NioChannel  {
      * @throws IOException If some other I/O error occurs
      * @todo Implement this java.nio.channels.WritableByteChannel method
      */
-    public int write(ByteBuffer src) throws IOException {
+    @Override
+	public int write(ByteBuffer src) throws IOException {
         if ( src == this.netOutBuffer ) {
             //we can get here through a recursive call
             //by using the NioBlockingSelector
@@ -458,15 +466,18 @@ public class SecureNioChannel extends NioChannel  {
         public ByteBuffer getWriteBuffer();
     }
 
-    public ApplicationBufferHandler getBufHandler() {
+    @Override
+	public ApplicationBufferHandler getBufHandler() {
         return bufHandler;
     }
 
-    public boolean isInitHandshakeComplete() {
+    @Override
+	public boolean isInitHandshakeComplete() {
         return initHandshakeComplete;
     }
 
-    public boolean isClosing() {
+    @Override
+	public boolean isClosing() {
         return closing;
     }
 
@@ -482,7 +493,8 @@ public class SecureNioChannel extends NioChannel  {
         this.bufHandler = bufHandler;
     }
     
-    public SocketChannel getIOChannel() {
+    @Override
+	public SocketChannel getIOChannel() {
         return sc;
     }
 

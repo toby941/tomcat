@@ -37,7 +37,8 @@ public class ReverseComparator implements Comparator {
     /* (non-Javadoc)
      * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
      */
-    public int compare(Object o1, Object o2) {
+    @Override
+	public int compare(Object o1, Object o2) {
         int returnValue = comparator.compare(o1, o2);
         return (- returnValue);
     }

@@ -381,7 +381,8 @@ public class SecurityConstraint implements Serializable {
     /**
      * Return a String representation of this security constraint.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SecurityConstraint[");
         for (int i = 0; i < collections.length; i++) {

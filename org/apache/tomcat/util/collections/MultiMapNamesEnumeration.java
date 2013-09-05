@@ -69,11 +69,13 @@ public final class MultiMapNamesEnumeration implements Enumeration {
 	pos++;
     }
     
-    public boolean hasMoreElements() {
+    @Override
+	public boolean hasMoreElements() {
 	return next!=null;
     }
 
-    public Object nextElement() {
+    @Override
+	public Object nextElement() {
 	String current=next;
 	findNext();
 	return current;

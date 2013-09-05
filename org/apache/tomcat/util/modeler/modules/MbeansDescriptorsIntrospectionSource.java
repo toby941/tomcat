@@ -66,7 +66,8 @@ public class MbeansDescriptorsIntrospectionSource extends ModelerSource
         this.source=source;
     }
 
-    public List loadDescriptors( Registry registry, String location,
+    @Override
+	public List loadDescriptors( Registry registry, String location,
                                  String type, Object source)
             throws Exception
     {

@@ -378,7 +378,8 @@ public class JspC extends Task implements Options {
      * In JspC this always returns <code>true</code>.
      * {@inheritDoc}
      */
-    public boolean getKeepGenerated() {
+    @Override
+	public boolean getKeepGenerated() {
         // isn't this why we are running jspc?
         return true;
     }
@@ -386,7 +387,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean getTrimSpaces() {
+    @Override
+	public boolean getTrimSpaces() {
         return trimSpaces;
     }
 
@@ -400,7 +402,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean isPoolingEnabled() {
+    @Override
+	public boolean isPoolingEnabled() {
         return poolingEnabled;
     }
 
@@ -414,7 +417,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean isXpoweredBy() {
+    @Override
+	public boolean isXpoweredBy() {
         return xpoweredBy;
     }
 
@@ -429,14 +433,16 @@ public class JspC extends Task implements Options {
      * In JspC this always returns <code>true</code>.
      * {@inheritDoc}
      */
-    public boolean getDisplaySourceFragment() {
+    @Override
+	public boolean getDisplaySourceFragment() {
         return true;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean getErrorOnUseBeanInvalidClassAttribute() {
+    @Override
+	public boolean getErrorOnUseBeanInvalidClassAttribute() {
         return errorOnUseBeanInvalidClassAttribute;
     }
 
@@ -459,7 +465,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean getMappedFile() {
+    @Override
+	public boolean getMappedFile() {
         return mappedFile;
     }
 
@@ -475,7 +482,8 @@ public class JspC extends Task implements Options {
     /**
      * @deprecated
      */
-    @Deprecated
+    @Override
+	@Deprecated
     public boolean getSendErrorToClient() {
         return true;
     }
@@ -490,7 +498,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean getClassDebugInfo() {
+    @Override
+	public boolean getClassDebugInfo() {
         // compile with debug info
         return classDebugInfo;
     }
@@ -498,7 +507,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean isCaching() {
+    @Override
+	public boolean isCaching() {
         return caching;
     }
 
@@ -514,7 +524,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public Map getCache() {
+    @Override
+	public Map getCache() {
         return cache;
     }
 
@@ -522,7 +533,8 @@ public class JspC extends Task implements Options {
      * In JspC this always returns <code>0</code>.
      * {@inheritDoc}
      */
-    public int getCheckInterval() {
+    @Override
+	public int getCheckInterval() {
         return 0;
     }
 
@@ -530,7 +542,8 @@ public class JspC extends Task implements Options {
      * In JspC this always returns <code>0</code>.
      * {@inheritDoc}
      */
-    public int getModificationTestInterval() {
+    @Override
+	public int getModificationTestInterval() {
         return 0;
     }
 
@@ -539,7 +552,8 @@ public class JspC extends Task implements Options {
      * In JspC this always returns <code>false</code>.
      * {@inheritDoc}
      */
-    public boolean getRecompileOnFail() {
+    @Override
+	public boolean getRecompileOnFail() {
         return false;
     }
     
@@ -548,14 +562,16 @@ public class JspC extends Task implements Options {
      * In JspC this always returns <code>false</code>.
      * {@inheritDoc}
      */
-    public boolean getDevelopment() {
+    @Override
+	public boolean getDevelopment() {
         return false;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isSmapSuppressed() {
+    @Override
+	public boolean isSmapSuppressed() {
         return smapSuppressed;
     }
 
@@ -569,7 +585,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean isSmapDumped() {
+    @Override
+	public boolean isSmapDumped() {
         return smapDumped;
     }
 
@@ -597,7 +614,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean genStringAsCharArray() {
+    @Override
+	public boolean genStringAsCharArray() {
         return genStringAsCharArray;
     }
 
@@ -615,14 +633,16 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public String getIeClassId() {
+    @Override
+	public String getIeClassId() {
         return ieClassId;
     }
 
     /**
      * {@inheritDoc}
      */
-    public File getScratchDir() {
+    @Override
+	public File getScratchDir() {
         return scratchDir;
     }
 
@@ -647,7 +667,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public String getCompiler() {
+    @Override
+	public String getCompiler() {
         return compiler;
     }
 
@@ -663,14 +684,16 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public String getCompilerClassName() {
+    @Override
+	public String getCompilerClassName() {
         return null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getCompilerTargetVM() {
+    @Override
+	public String getCompilerTargetVM() {
         return compilerTargetVM;
     }
 
@@ -686,7 +709,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-     public String getCompilerSourceVM() {
+     @Override
+	public String getCompilerSourceVM() {
          return compilerSourceVM;
      }
 
@@ -702,7 +726,8 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public TldLocationsCache getTldLocationsCache() {
+    @Override
+	public TldLocationsCache getTldLocationsCache() {
         return tldLocationsCache;
     }
 
@@ -712,7 +737,8 @@ public class JspC extends Task implements Options {
      *
      * @return String The encoding
      */
-    public String getJavaEncoding() {
+    @Override
+	public String getJavaEncoding() {
         return javaEncoding;
     }
 
@@ -729,14 +755,16 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public boolean getFork() {
+    @Override
+	public boolean getFork() {
         return false;
     }
 
     /**
      * {@inheritDoc}
      */
-    public String getClassPath() {
+    @Override
+	public String getClassPath() {
         if( classPath != null )
             return classPath;
         return System.getProperty("java.class.path");
@@ -930,14 +958,16 @@ public class JspC extends Task implements Options {
     /**
      * {@inheritDoc}
      */
-    public JspConfig getJspConfig() {
+    @Override
+	public JspConfig getJspConfig() {
         return jspConfig;
     }
 
     /**
      * {@inheritDoc}
      */
-    public TagPluginManager getTagPluginManager() {
+    @Override
+	public TagPluginManager getTagPluginManager() {
         return tagPluginManager;
     }
 

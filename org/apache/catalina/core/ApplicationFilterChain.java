@@ -158,6 +158,7 @@ final class ApplicationFilterChain implements FilterChain, CometFilterChain {
 	 * @exception ServletException
 	 *                if a servlet exception occurs
 	 */
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response) throws IOException, ServletException {
 
 		if (Globals.IS_SECURITY_ENABLED) {
@@ -165,6 +166,7 @@ final class ApplicationFilterChain implements FilterChain, CometFilterChain {
 			final ServletResponse res = response;
 			try {
 				java.security.AccessController.doPrivileged(new java.security.PrivilegedExceptionAction() {
+					@Override
 					public Object run() throws ServletException, IOException {
 						internalDoFilter(req, res);
 						return null;
@@ -248,7 +250,7 @@ final class ApplicationFilterChain implements FilterChain, CometFilterChain {
 					SecurityUtil.doAsPrivilege("service", servlet, classTypeUsedInService, args, principal);
 					args = null;
 				} else {
-					servlet.service((HttpServletRequest) request, (HttpServletResponse) response);
+					servlet.service(request, response);
 				}
 			} else {
 				servlet.service(request, response);
@@ -290,12 +292,14 @@ final class ApplicationFilterChain implements FilterChain, CometFilterChain {
 	 * @exception ServletException
 	 *                if a servlet exception occurs
 	 */
+	@Override
 	public void doFilterEvent(CometEvent event) throws IOException, ServletException {
 
 		if (Globals.IS_SECURITY_ENABLED) {
 			final CometEvent ev = event;
 			try {
 				java.security.AccessController.doPrivileged(new java.security.PrivilegedExceptionAction() {
+					@Override
 					public Object run() throws ServletException, IOException {
 						internalDoFilterEvent(ev);
 						return null;

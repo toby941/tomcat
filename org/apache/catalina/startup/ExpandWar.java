@@ -437,7 +437,8 @@ public class ExpandWar {
      * 
      * @deprecated
      */
-    protected static File expand(InputStream input, File docBase, String name)
+    @Deprecated
+	protected static File expand(InputStream input, File docBase, String name)
         throws IOException {
         File file = new File(docBase, name);
         expand(input, file);

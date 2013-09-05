@@ -43,11 +43,13 @@ public class NioX509KeyManager extends X509ExtendedKeyManager {
         this.serverKeyAlias = serverKeyAlias;
     }
 
-    public String chooseClientAlias(String[] keyType, Principal[] issuers, Socket socket) {
+    @Override
+	public String chooseClientAlias(String[] keyType, Principal[] issuers, Socket socket) {
         return delegate.chooseClientAlias(keyType, issuers, socket);
     }
 
-    public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
+    @Override
+	public String chooseServerAlias(String keyType, Principal[] issuers, Socket socket) {
         if (serverKeyAlias!=null) {
             return serverKeyAlias;
         } else {
@@ -55,19 +57,23 @@ public class NioX509KeyManager extends X509ExtendedKeyManager {
         }
     }
 
-    public X509Certificate[] getCertificateChain(String alias) {
+    @Override
+	public X509Certificate[] getCertificateChain(String alias) {
         return delegate.getCertificateChain(alias);
     }
 
-    public String[] getClientAliases(String keyType, Principal[] issuers) {
+    @Override
+	public String[] getClientAliases(String keyType, Principal[] issuers) {
         return delegate.getClientAliases(keyType, issuers);
     }
 
-    public PrivateKey getPrivateKey(String alias) {
+    @Override
+	public PrivateKey getPrivateKey(String alias) {
         return delegate.getPrivateKey(alias);
     }
 
-    public String[] getServerAliases(String keyType, Principal[] issuers) {
+    @Override
+	public String[] getServerAliases(String keyType, Principal[] issuers) {
         return delegate.getServerAliases(keyType, issuers);
     }
 

@@ -40,7 +40,8 @@ public abstract class FilterBase implements Filter {
 
     protected abstract Log getLogger();
     
-    public void init(FilterConfig filterConfig) throws ServletException {
+    @Override
+	public void init(FilterConfig filterConfig) throws ServletException {
         
         @SuppressWarnings("unchecked") // Servlet 2.5 doesn't use generics
         Enumeration paramNames = filterConfig.getInitParameterNames();
@@ -60,7 +61,8 @@ public abstract class FilterBase implements Filter {
         }    
     }
 
-    public void destroy() {
+    @Override
+	public void destroy() {
         // NOOP
     }
 

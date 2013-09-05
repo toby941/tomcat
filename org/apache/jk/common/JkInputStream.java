@@ -76,7 +76,8 @@ public class JkInputStream implements InputBuffer, OutputBuffer {
     /**
      * @deprecated
      */
-    public JkInputStream(MsgContext context) {
+    @Deprecated
+	public JkInputStream(MsgContext context) {
         this(context, AjpConstants.MAX_PACKET_SIZE);
     }
 
@@ -132,7 +133,8 @@ public class JkInputStream implements InputBuffer, OutputBuffer {
     // -------------------- OutputBuffer implementation --------------------
 
         
-    public int doWrite(ByteChunk chunk, Response res) 
+    @Override
+	public int doWrite(ByteChunk chunk, Response res) 
         throws IOException    {
         if (!res.isCommitted()) {
             // Send the connector a request for commit. The connector should
@@ -164,7 +166,8 @@ public class JkInputStream implements InputBuffer, OutputBuffer {
         return 0;
     }
 
-    public int doRead(ByteChunk responseChunk, Request req) 
+    @Override
+	public int doRead(ByteChunk responseChunk, Request req) 
         throws IOException {
 
         if( log.isDebugEnabled())

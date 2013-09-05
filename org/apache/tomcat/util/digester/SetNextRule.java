@@ -50,7 +50,8 @@ public class SetNextRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #SetNextRule(String methodName)} instead.
      */
-    public SetNextRule(Digester digester, String methodName) {
+    @Deprecated
+	public SetNextRule(Digester digester, String methodName) {
 
         this(methodName);
 
@@ -70,7 +71,8 @@ public class SetNextRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #SetNextRule(String methodName,String paramType)} instead.
      */
-    public SetNextRule(Digester digester, String methodName,
+    @Deprecated
+	public SetNextRule(Digester digester, String methodName,
                        String paramType) {
 
         this(methodName, paramType);
@@ -172,7 +174,8 @@ public class SetNextRule extends Rule {
     /**
      * Process the end of this element.
      */
-    public void end() throws Exception {
+    @Override
+	public void end() throws Exception {
 
         // Identify the objects to be used
         Object child = digester.peek(0);
@@ -199,7 +202,8 @@ public class SetNextRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SetNextRule[");
         sb.append("methodName=");

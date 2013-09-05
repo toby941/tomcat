@@ -63,18 +63,21 @@ public class CoyoteInputStream extends ServletInputStream {
 	/**
 	 * Prevent cloning the facade.
 	 */
+	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		throw new CloneNotSupportedException();
 	}
 
 	// --------------------------------------------- ServletInputStream Methods
 
+	@Override
 	public int read() throws IOException {
 		if (SecurityUtil.isPackageProtectionEnabled()) {
 
 			try {
 				Integer result = (Integer) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 
+					@Override
 					public Object run() throws IOException {
 						Integer integer = new Integer(ib.readByte());
 						return integer;
@@ -95,12 +98,14 @@ public class CoyoteInputStream extends ServletInputStream {
 		}
 	}
 
+	@Override
 	public int available() throws IOException {
 
 		if (SecurityUtil.isPackageProtectionEnabled()) {
 			try {
 				Integer result = (Integer) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 
+					@Override
 					public Object run() throws IOException {
 						Integer integer = new Integer(ib.available());
 						return integer;
@@ -121,12 +126,14 @@ public class CoyoteInputStream extends ServletInputStream {
 		}
 	}
 
+	@Override
 	public int read(final byte[] b) throws IOException {
 
 		if (SecurityUtil.isPackageProtectionEnabled()) {
 			try {
 				Integer result = (Integer) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 
+					@Override
 					public Object run() throws IOException {
 						Integer integer = new Integer(ib.read(b, 0, b.length));
 						return integer;
@@ -147,11 +154,13 @@ public class CoyoteInputStream extends ServletInputStream {
 		}
 	}
 
+	@Override
 	public int read(final byte[] b, final int off, final int len) throws IOException {
 		if (SecurityUtil.isPackageProtectionEnabled()) {
 			try {
 				Integer result = (Integer) AccessController.doPrivileged(new PrivilegedExceptionAction() {
 
+					@Override
 					public Object run() throws IOException {
 						Integer integer = new Integer(ib.read(b, off, len));
 						return integer;
@@ -172,6 +181,7 @@ public class CoyoteInputStream extends ServletInputStream {
 		}
 	}
 
+	@Override
 	public int readLine(byte[] b, int off, int len) throws IOException {
 		return super.readLine(b, off, len);
 	}
@@ -180,12 +190,14 @@ public class CoyoteInputStream extends ServletInputStream {
 	 * Close the stream Since we re-cycle, we can't allow the call to
 	 * super.close() which would permantely disable us.
 	 */
+	@Override
 	public void close() throws IOException {
 
 		if (SecurityUtil.isPackageProtectionEnabled()) {
 			try {
 				AccessController.doPrivileged(new PrivilegedExceptionAction() {
 
+					@Override
 					public Object run() throws IOException {
 						ib.close();
 						return null;

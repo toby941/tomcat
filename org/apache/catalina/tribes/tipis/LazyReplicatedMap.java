@@ -26,7 +26,6 @@ import org.apache.catalina.tribes.MembershipListener;
 import org.apache.catalina.tribes.group.RpcCallback;
 import org.apache.catalina.tribes.util.Arrays;
 import org.apache.catalina.tribes.UniqueId;
-import org.apache.catalina.tribes.tipis.AbstractReplicatedMap.MapOwner;
 
 /**
  * A smart implementation of a stateful replicated map. uses primary/secondary backup strategy. 
@@ -94,7 +93,7 @@ public class LazyReplicatedMap extends AbstractReplicatedMap
          * @param initialCapacity int - the size of this map, see HashMap
          */
         public LazyReplicatedMap(MapOwner owner, Channel channel, long timeout, String mapContextName, int initialCapacity, ClassLoader[] cls) {
-            super(owner, channel,timeout,mapContextName,initialCapacity, LazyReplicatedMap.DEFAULT_LOAD_FACTOR, Channel.SEND_OPTIONS_DEFAULT, cls);
+            super(owner, channel,timeout,mapContextName,initialCapacity, AbstractReplicatedMap.DEFAULT_LOAD_FACTOR, Channel.SEND_OPTIONS_DEFAULT, cls);
         }
 
         /**
@@ -104,7 +103,7 @@ public class LazyReplicatedMap extends AbstractReplicatedMap
          * @param mapContextName String - unique name for this map, to allow multiple maps per channel
          */
         public LazyReplicatedMap(MapOwner owner, Channel channel, long timeout, String mapContextName, ClassLoader[] cls) {
-            super(owner, channel,timeout,mapContextName, LazyReplicatedMap.DEFAULT_INITIAL_CAPACITY,LazyReplicatedMap.DEFAULT_LOAD_FACTOR,Channel.SEND_OPTIONS_DEFAULT, cls);
+            super(owner, channel,timeout,mapContextName, AbstractReplicatedMap.DEFAULT_INITIAL_CAPACITY,AbstractReplicatedMap.DEFAULT_LOAD_FACTOR,Channel.SEND_OPTIONS_DEFAULT, cls);
         }
 
 
@@ -114,7 +113,8 @@ public class LazyReplicatedMap extends AbstractReplicatedMap
 //------------------------------------------------------------------------------    
 //              METHODS TO OVERRIDE    
 //------------------------------------------------------------------------------
-    protected int getStateMessageType() {
+    @Override
+	protected int getStateMessageType() {
         return AbstractReplicatedMap.MapMessage.MSG_STATE;
     }
 
@@ -125,7 +125,8 @@ public class LazyReplicatedMap extends AbstractReplicatedMap
      * @return Member - the backup node
      * @throws ChannelException
      */
-    protected Member[] publishEntryInfo(Object key, Object value) throws ChannelException {
+    @Override
+	protected Member[] publishEntryInfo(Object key, Object value) throws ChannelException {
         if  (! (key instanceof Serializable && value instanceof Serializable)  ) return new Member[0];
         Member[] members = getMapMembers();
         int firstIdx = getNextBackupIndex();

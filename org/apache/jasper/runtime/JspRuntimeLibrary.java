@@ -82,7 +82,8 @@ public class JspRuntimeLibrary {
 	    this.ignoreMethodNF = ignoreMethodNF;
         }
          
-        public Object run() throws JasperException {
+        @Override
+		public Object run() throws JasperException {
 	    internalIntrospecthelper(
                 bean,prop,value,request,param,ignoreMethodNF);
             return null;
@@ -136,20 +137,20 @@ public class JspRuntimeLibrary {
 	    return (char) 0;
 	} else {
 	    // this trick avoids escaping issues
-	    return (char)(int) s.charAt(0);
+	    return (char)s.charAt(0);
 	}
     }
 
     public static double coerceToDouble(String s) {
 	if (s == null || s.length() == 0)
-	    return (double) 0;
+	    return 0;
 	else
 	    return Double.valueOf(s).doubleValue();
     }
 
     public static float coerceToFloat(String s) {
 	if (s == null || s.length() == 0)
-	    return (float) 0;
+	    return 0;
 	else
 	    return Float.valueOf(s).floatValue();
     }
@@ -170,7 +171,7 @@ public class JspRuntimeLibrary {
 
     public static long coerceToLong(String s) {
 	if (s == null || s.length() == 0)
-	    return (long) 0;
+	    return 0;
 	else
 	    return Long.valueOf(s).longValue();
     }

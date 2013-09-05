@@ -85,7 +85,8 @@ public class TldRuleSet extends RuleSetBase {
      * @param digester Digester instance to which the new Rule instances
      *  should be added.
      */
-    public void addRuleInstances(Digester digester) {
+    @Override
+	public void addRuleInstances(Digester digester) {
 
         digester.addCallMethod(prefix + "taglib/listener/listener-class",
                                "addApplicationListener", 0);

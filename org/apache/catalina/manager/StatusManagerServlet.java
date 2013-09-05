@@ -104,7 +104,8 @@ public class StatusManagerServlet
     /**
      * Initialize this servlet.
      */
-    public void init() throws ServletException {
+    @Override
+	public void init() throws ServletException {
 
         // Retrieve the MBean server
         mBeanServer = Registry.getRegistry(null, null).getMBeanServer();
@@ -175,7 +176,8 @@ public class StatusManagerServlet
     /**
      * Finalize this servlet.
      */
-    public void destroy() {
+    @Override
+	public void destroy() {
 
         ;       // No actions necessary
 
@@ -191,7 +193,8 @@ public class StatusManagerServlet
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet-specified error occurs
      */
-    public void doGet(HttpServletRequest request,
+    @Override
+	public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
         throws IOException, ServletException {
 
@@ -312,7 +315,8 @@ public class StatusManagerServlet
     // ------------------------------------------- NotificationListener Methods
 
 
-    public void handleNotification(Notification notification,
+    @Override
+	public void handleNotification(Notification notification,
                                    java.lang.Object handback) {
 
         if (notification instanceof MBeanServerNotification) {

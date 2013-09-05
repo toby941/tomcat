@@ -92,7 +92,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param name Name of the requested attribute
      */
-    public Object getAttribute(String name) {
+    @Override
+	public Object getAttribute(String name) {
 
         return (myAttributes.get(name));
 
@@ -102,7 +103,8 @@ public class JspCServletContext implements ServletContext {
     /**
      * Return an enumeration of context attribute names.
      */
-    public Enumeration getAttributeNames() {
+    @Override
+	public Enumeration getAttributeNames() {
 
         return (myAttributes.keys());
 
@@ -114,7 +116,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param uripath Server-relative path starting with '/'
      */
-    public ServletContext getContext(String uripath) {
+    @Override
+	public ServletContext getContext(String uripath) {
 
         return (null);
 
@@ -124,7 +127,8 @@ public class JspCServletContext implements ServletContext {
     /**
      * Return the context path.
      */
-    public String getContextPath() {
+    @Override
+	public String getContextPath() {
 
         return (null);
 
@@ -136,7 +140,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param name Name of the requested parameter
      */
-    public String getInitParameter(String name) {
+    @Override
+	public String getInitParameter(String name) {
 
         return (null);
 
@@ -147,7 +152,8 @@ public class JspCServletContext implements ServletContext {
      * Return an enumeration of the names of context initialization
      * parameters.
      */
-    public Enumeration getInitParameterNames() {
+    @Override
+	public Enumeration getInitParameterNames() {
 
         return (new Vector().elements());
 
@@ -157,7 +163,8 @@ public class JspCServletContext implements ServletContext {
     /**
      * Return the Servlet API major version number.
      */
-    public int getMajorVersion() {
+    @Override
+	public int getMajorVersion() {
 
         return (2);
 
@@ -169,7 +176,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param file Filename whose MIME type is requested
      */
-    public String getMimeType(String file) {
+    @Override
+	public String getMimeType(String file) {
 
         return (null);
 
@@ -179,7 +187,8 @@ public class JspCServletContext implements ServletContext {
     /**
      * Return the Servlet API minor version number.
      */
-    public int getMinorVersion() {
+    @Override
+	public int getMinorVersion() {
 
         return (3);
 
@@ -191,7 +200,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param name Name of the requested servlet
      */
-    public RequestDispatcher getNamedDispatcher(String name) {
+    @Override
+	public RequestDispatcher getNamedDispatcher(String name) {
 
         return (null);
 
@@ -204,7 +214,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param path The context-relative virtual path to resolve
      */
-    public String getRealPath(String path) {
+    @Override
+	public String getRealPath(String path) {
 
         if (!myResourceBaseURL.getProtocol().equals("file"))
             return (null);
@@ -225,7 +236,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param path Context-relative path for which to acquire a dispatcher
      */
-    public RequestDispatcher getRequestDispatcher(String path) {
+    @Override
+	public RequestDispatcher getRequestDispatcher(String path) {
 
         return (null);
 
@@ -241,7 +253,8 @@ public class JspCServletContext implements ServletContext {
      * @exception MalformedURLException if the resource path is
      *  not properly formed
      */
-    public URL getResource(String path) throws MalformedURLException {
+    @Override
+	public URL getResource(String path) throws MalformedURLException {
 
         if (!path.startsWith("/"))
             throw new MalformedURLException("Path '" + path +
@@ -272,7 +285,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param path Context-relative path of the desired resource
      */
-    public InputStream getResourceAsStream(String path) {
+    @Override
+	public InputStream getResourceAsStream(String path) {
 
         try {
             return (getResource(path).openStream());
@@ -289,7 +303,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param path Context-relative base path
      */
-    public Set getResourcePaths(String path) {
+    @Override
+	public Set getResourcePaths(String path) {
 
         Set thePaths = new HashSet();
         if (!path.endsWith("/"))
@@ -316,7 +331,8 @@ public class JspCServletContext implements ServletContext {
     /**
      * Return descriptive information about this server.
      */
-    public String getServerInfo() {
+    @Override
+	public String getServerInfo() {
 
         return ("JspCServletContext/1.0");
 
@@ -330,7 +346,9 @@ public class JspCServletContext implements ServletContext {
      *
      * @deprecated This method has been deprecated with no replacement
      */
-    public Servlet getServlet(String name) throws ServletException {
+    @Deprecated
+	@Override
+	public Servlet getServlet(String name) throws ServletException {
 
         return (null);
 
@@ -340,7 +358,8 @@ public class JspCServletContext implements ServletContext {
     /**
      * Return the name of this servlet context.
      */
-    public String getServletContextName() {
+    @Override
+	public String getServletContextName() {
 
         return (getServerInfo());
 
@@ -352,7 +371,9 @@ public class JspCServletContext implements ServletContext {
      *
      * @deprecated This method has been deprecated with no replacement
      */
-    public Enumeration getServletNames() {
+    @Deprecated
+	@Override
+	public Enumeration getServletNames() {
 
         return (new Vector().elements());
 
@@ -364,7 +385,9 @@ public class JspCServletContext implements ServletContext {
      *
      * @deprecated This method has been deprecated with no replacement
      */
-    public Enumeration getServlets() {
+    @Deprecated
+	@Override
+	public Enumeration getServlets() {
 
         return (new Vector().elements());
 
@@ -376,7 +399,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param message The message to be logged
      */
-    public void log(String message) {
+    @Override
+	public void log(String message) {
 
         myLogWriter.println(message);
 
@@ -391,7 +415,9 @@ public class JspCServletContext implements ServletContext {
      *
      * @deprecated Use log(String,Throwable) instead
      */
-    public void log(Exception exception, String message) {
+    @Deprecated
+	@Override
+	public void log(Exception exception, String message) {
 
         log(message, exception);
 
@@ -404,7 +430,8 @@ public class JspCServletContext implements ServletContext {
      * @param message The message to be logged
      * @param exception The exception to be logged
      */
-    public void log(String message, Throwable exception) {
+    @Override
+	public void log(String message, Throwable exception) {
 
         myLogWriter.println(message);
         exception.printStackTrace(myLogWriter);
@@ -417,7 +444,8 @@ public class JspCServletContext implements ServletContext {
      *
      * @param name Name of the attribute to remove
      */
-    public void removeAttribute(String name) {
+    @Override
+	public void removeAttribute(String name) {
 
         myAttributes.remove(name);
 
@@ -430,7 +458,8 @@ public class JspCServletContext implements ServletContext {
      * @param name Name of the context attribute to set
      * @param value Corresponding attribute value
      */
-    public void setAttribute(String name, Object value) {
+    @Override
+	public void setAttribute(String name, Object value) {
 
         myAttributes.put(name, value);
 

@@ -106,7 +106,8 @@ public class B2CConverter {
     /** Convert a buffer of bytes into a chars
      * @deprecated
      */
-    public  void convert( ByteChunk bb, CharChunk cb )
+    @Deprecated
+	public  void convert( ByteChunk bb, CharChunk cb )
         throws IOException
     {
         // Set the ByteChunk as input to the Intermediate reader
@@ -240,12 +241,14 @@ final class  ReadConvertor extends InputStreamReader {
     
     /** Overriden - will do nothing but reset internal state.
      */
-    public  final void close() throws IOException {
+    @Override
+	public  final void close() throws IOException {
         // NOTHING
         // Calling super.close() would reset out and cb.
     }
     
-    public  final int read(char cbuf[], int off, int len)
+    @Override
+	public  final int read(char cbuf[], int off, int len)
         throws IOException
     {
         // will do the conversion and call write on the output stream
@@ -279,16 +282,19 @@ final class IntermediateInputStream extends InputStream {
     public IntermediateInputStream() {
     }
     
-    public  final void close() throws IOException {
+    @Override
+	public  final void close() throws IOException {
         // shouldn't be called - we filter it out in writer
         throw new IOException("close() called - shouldn't happen ");
     }
     
-    public  final  int read(byte cbuf[], int off, int len) throws IOException {
+    @Override
+	public  final  int read(byte cbuf[], int off, int len) throws IOException {
         return bc.substract(cbuf, off, len);
     }
     
-    public  final int read() throws IOException {
+    @Override
+	public  final int read() throws IOException {
         return bc.substract();
     }
 

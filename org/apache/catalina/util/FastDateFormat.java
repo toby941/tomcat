@@ -44,7 +44,8 @@ public class FastDateFormat extends DateFormat {
         this.df = df;
     }
 
-    public Date parse(String text, ParsePosition pos) {
+    @Override
+	public Date parse(String text, ParsePosition pos) {
         return df.parse(text, pos);
     }
 
@@ -53,7 +54,8 @@ public class FastDateFormat extends DateFormat {
      * there's a bug in SimpleDateFormat with "S" and "SS", use "SSS"
      * instead if you want a msec field.
      **/
-    public StringBuffer format(Date date, StringBuffer toAppendTo,
+    @Override
+	public StringBuffer format(Date date, StringBuffer toAppendTo,
                                FieldPosition fieldPosition) {
         long dt = date.getTime();
         long ds = dt / 1000;

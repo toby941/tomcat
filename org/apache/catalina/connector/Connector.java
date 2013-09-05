@@ -374,6 +374,7 @@ public class Connector implements Lifecycle, MBeanRegistration {
 	 * 
 	 * @deprecated
 	 */
+	@Deprecated
 	public int getBufferSize() {
 		return 2048;
 	}
@@ -385,6 +386,7 @@ public class Connector implements Lifecycle, MBeanRegistration {
 	 *            The new input buffer size.
 	 * @deprecated
 	 */
+	@Deprecated
 	public void setBufferSize(int bufferSize) {
 	}
 
@@ -947,6 +949,7 @@ public class Connector implements Lifecycle, MBeanRegistration {
 	 * @param listener
 	 *            The listener to add
 	 */
+	@Override
 	public void addLifecycleListener(LifecycleListener listener) {
 
 		lifecycle.addLifecycleListener(listener);
@@ -957,6 +960,7 @@ public class Connector implements Lifecycle, MBeanRegistration {
 	 * Get the lifecycle listeners associated with this lifecycle. If this
 	 * Lifecycle has no listeners registered, a zero-length array is returned.
 	 */
+	@Override
 	public LifecycleListener[] findLifecycleListeners() {
 
 		return lifecycle.findLifecycleListeners();
@@ -969,6 +973,7 @@ public class Connector implements Lifecycle, MBeanRegistration {
 	 * @param listener
 	 *            The listener to add
 	 */
+	@Override
 	public void removeLifecycleListener(LifecycleListener listener) {
 
 		lifecycle.removeLifecycleListener(listener);
@@ -1064,6 +1069,7 @@ public class Connector implements Lifecycle, MBeanRegistration {
 	 * @exception LifecycleException
 	 *                if a fatal startup error occurs
 	 */
+	@Override
 	public void start() throws LifecycleException {
 		if (!initialized)
 			initialize();
@@ -1123,6 +1129,7 @@ public class Connector implements Lifecycle, MBeanRegistration {
 	 * @exception LifecycleException
 	 *                if a fatal shutdown error occurs
 	 */
+	@Override
 	public void stop() throws LifecycleException {
 
 		// Validate and update our current state
@@ -1171,6 +1178,7 @@ public class Connector implements Lifecycle, MBeanRegistration {
 		return domain;
 	}
 
+	@Override
 	public ObjectName preRegister(MBeanServer server, ObjectName name) throws Exception {
 		oname = name;
 		mserver = server;
@@ -1178,12 +1186,15 @@ public class Connector implements Lifecycle, MBeanRegistration {
 		return name;
 	}
 
+	@Override
 	public void postRegister(Boolean registrationDone) {
 	}
 
+	@Override
 	public void preDeregister() throws Exception {
 	}
 
+	@Override
 	public void postDeregister() {
 		try {
 			if (started) {

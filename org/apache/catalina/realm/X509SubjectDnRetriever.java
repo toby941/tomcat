@@ -24,7 +24,8 @@ import java.security.cert.X509Certificate;
  */
 public class X509SubjectDnRetriever implements X509UsernameRetriever {
 
-    public String getUsername(X509Certificate clientCert) {
+    @Override
+	public String getUsername(X509Certificate clientCert) {
         return clientCert.getSubjectDN().getName();
     }
 }

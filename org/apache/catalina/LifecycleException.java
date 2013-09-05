@@ -105,7 +105,8 @@ public final class LifecycleException extends Exception {
     /**
      * Returns the message associated with this exception, if any.
      */
-    public String getMessage() {
+    @Override
+	public String getMessage() {
 
         return (message);
 
@@ -125,7 +126,8 @@ public final class LifecycleException extends Exception {
     /**
      * Return a formatted string that describes this exception.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("LifecycleException:  ");
         if (message != null) {

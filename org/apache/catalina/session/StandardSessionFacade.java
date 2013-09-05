@@ -45,7 +45,7 @@ public class StandardSessionFacade
      */
     public StandardSessionFacade(StandardSession session) {
         super();
-        this.session = (HttpSession) session;
+        this.session = session;
     }
 
 
@@ -70,88 +70,105 @@ public class StandardSessionFacade
     // ---------------------------------------------------- HttpSession Methods
 
 
-    public long getCreationTime() {
+    @Override
+	public long getCreationTime() {
         return session.getCreationTime();
     }
 
 
-    public String getId() {
+    @Override
+	public String getId() {
         return session.getId();
     }
 
 
-    public long getLastAccessedTime() {
+    @Override
+	public long getLastAccessedTime() {
         return session.getLastAccessedTime();
     }
 
 
-    public ServletContext getServletContext() {
+    @Override
+	public ServletContext getServletContext() {
         // FIXME : Facade this object ?
         return session.getServletContext();
     }
 
 
-    public void setMaxInactiveInterval(int interval) {
+    @Override
+	public void setMaxInactiveInterval(int interval) {
         session.setMaxInactiveInterval(interval);
     }
 
 
-    public int getMaxInactiveInterval() {
+    @Override
+	public int getMaxInactiveInterval() {
         return session.getMaxInactiveInterval();
     }
 
 
-    public HttpSessionContext getSessionContext() {
+    @Override
+	public HttpSessionContext getSessionContext() {
         return session.getSessionContext();
     }
 
 
-    public Object getAttribute(String name) {
+    @Override
+	public Object getAttribute(String name) {
         return session.getAttribute(name);
     }
 
 
-    public Object getValue(String name) {
+    @Override
+	public Object getValue(String name) {
         return session.getAttribute(name);
     }
 
 
-    public Enumeration getAttributeNames() {
+    @Override
+	public Enumeration getAttributeNames() {
         return session.getAttributeNames();
     }
 
 
-    public String[] getValueNames() {
+    @Override
+	public String[] getValueNames() {
         return session.getValueNames();
     }
 
 
-    public void setAttribute(String name, Object value) {
+    @Override
+	public void setAttribute(String name, Object value) {
         session.setAttribute(name, value);
     }
 
 
-    public void putValue(String name, Object value) {
+    @Override
+	public void putValue(String name, Object value) {
         session.setAttribute(name, value);
     }
 
 
-    public void removeAttribute(String name) {
+    @Override
+	public void removeAttribute(String name) {
         session.removeAttribute(name);
     }
 
 
-    public void removeValue(String name) {
+    @Override
+	public void removeValue(String name) {
         session.removeAttribute(name);
     }
 
 
-    public void invalidate() {
+    @Override
+	public void invalidate() {
         session.invalidate();
     }
 
 
-    public boolean isNew() {
+    @Override
+	public boolean isNew() {
         return session.isNew();
     }
 

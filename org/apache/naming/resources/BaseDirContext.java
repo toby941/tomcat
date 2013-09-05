@@ -246,7 +246,8 @@ public abstract class BaseDirContext implements DirContext {
      * @return the object bound to name
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookup(Name name)
+    @Override
+	public Object lookup(Name name)
         throws NamingException {
         return lookup(name.toString());
     }
@@ -259,7 +260,8 @@ public abstract class BaseDirContext implements DirContext {
      * @return the object bound to name
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract Object lookup(String name)
+    @Override
+	public abstract Object lookup(String name)
         throws NamingException;
 
 
@@ -275,7 +277,8 @@ public abstract class BaseDirContext implements DirContext {
      * mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public void bind(Name name, Object obj)
+    @Override
+	public void bind(Name name, Object obj)
         throws NamingException {
         bind(name.toString(), obj);
     }
@@ -291,7 +294,8 @@ public abstract class BaseDirContext implements DirContext {
      * mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public void bind(String name, Object obj)
+    @Override
+	public void bind(String name, Object obj)
         throws NamingException {
         bind(name, obj, null);
     }
@@ -312,7 +316,8 @@ public abstract class BaseDirContext implements DirContext {
      * mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public void rebind(Name name, Object obj)
+    @Override
+	public void rebind(Name name, Object obj)
         throws NamingException {
         rebind(name.toString(), obj);
     }
@@ -327,7 +332,8 @@ public abstract class BaseDirContext implements DirContext {
      * mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public void rebind(String name, Object obj)
+    @Override
+	public void rebind(String name, Object obj)
         throws NamingException {
         rebind(name, obj, null);
     }
@@ -347,7 +353,8 @@ public abstract class BaseDirContext implements DirContext {
      * exist
      * @exception NamingException if a naming exception is encountered
      */
-    public void unbind(Name name)
+    @Override
+	public void unbind(Name name)
         throws NamingException {
         unbind(name.toString());
     }
@@ -361,7 +368,8 @@ public abstract class BaseDirContext implements DirContext {
      * exist
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract void unbind(String name)
+    @Override
+	public abstract void unbind(String name)
         throws NamingException;
 
 
@@ -376,7 +384,8 @@ public abstract class BaseDirContext implements DirContext {
      * @exception NameAlreadyBoundException if newName is already bound
      * @exception NamingException if a naming exception is encountered
      */
-    public void rename(Name oldName, Name newName)
+    @Override
+	public void rename(Name oldName, Name newName)
         throws NamingException {
         rename(oldName.toString(), newName.toString());
     }
@@ -391,7 +400,8 @@ public abstract class BaseDirContext implements DirContext {
      * @exception NameAlreadyBoundException if newName is already bound
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract void rename(String oldName, String newName)
+    @Override
+	public abstract void rename(String oldName, String newName)
         throws NamingException;
 
 
@@ -408,7 +418,8 @@ public abstract class BaseDirContext implements DirContext {
      * this context. Each element of the enumeration is of type NameClassPair.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration list(Name name)
+    @Override
+	public NamingEnumeration list(Name name)
         throws NamingException {
         return list(name.toString());
     }
@@ -423,7 +434,8 @@ public abstract class BaseDirContext implements DirContext {
      * this context. Each element of the enumeration is of type NameClassPair.
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract NamingEnumeration list(String name)
+    @Override
+	public abstract NamingEnumeration list(String name)
         throws NamingException;
 
 
@@ -440,7 +452,8 @@ public abstract class BaseDirContext implements DirContext {
      * Each element of the enumeration is of type Binding.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration listBindings(Name name)
+    @Override
+	public NamingEnumeration listBindings(Name name)
         throws NamingException {
         return listBindings(name.toString());
     }
@@ -455,7 +468,8 @@ public abstract class BaseDirContext implements DirContext {
      * Each element of the enumeration is of type Binding.
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract NamingEnumeration listBindings(String name)
+    @Override
+	public abstract NamingEnumeration listBindings(String name)
         throws NamingException;
 
 
@@ -484,7 +498,8 @@ public abstract class BaseDirContext implements DirContext {
      * @exception NotContextException if the name is bound but does not name 
      * a context, or does not name a context of the appropriate type
      */
-    public void destroySubcontext(Name name)
+    @Override
+	public void destroySubcontext(Name name)
         throws NamingException {
         destroySubcontext(name.toString());
     }
@@ -499,7 +514,8 @@ public abstract class BaseDirContext implements DirContext {
      * @exception NotContextException if the name is bound but does not name 
      * a context, or does not name a context of the appropriate type
      */
-    public abstract void destroySubcontext(String name)
+    @Override
+	public abstract void destroySubcontext(String name)
         throws NamingException;
 
 
@@ -516,7 +532,8 @@ public abstract class BaseDirContext implements DirContext {
      * requires specification of mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public Context createSubcontext(Name name)
+    @Override
+	public Context createSubcontext(Name name)
         throws NamingException {
         return createSubcontext(name.toString());
     }
@@ -532,7 +549,8 @@ public abstract class BaseDirContext implements DirContext {
      * requires specification of mandatory attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public Context createSubcontext(String name)
+    @Override
+	public Context createSubcontext(String name)
         throws NamingException {
         return createSubcontext(name, null);
     }
@@ -548,7 +566,8 @@ public abstract class BaseDirContext implements DirContext {
      * (if any).
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookupLink(Name name)
+    @Override
+	public Object lookupLink(Name name)
         throws NamingException {
         return lookupLink(name.toString());
     }
@@ -563,7 +582,8 @@ public abstract class BaseDirContext implements DirContext {
      * (if any).
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract Object lookupLink(String name)
+    @Override
+	public abstract Object lookupLink(String name)
         throws NamingException;
 
 
@@ -581,7 +601,8 @@ public abstract class BaseDirContext implements DirContext {
      * components
      * @exception NamingException if a naming exception is encountered
      */
-    public NameParser getNameParser(Name name)
+    @Override
+	public NameParser getNameParser(Name name)
         throws NamingException {
         return new NameParserImpl();
     }
@@ -595,7 +616,8 @@ public abstract class BaseDirContext implements DirContext {
      * components
      * @exception NamingException if a naming exception is encountered
      */
-    public NameParser getNameParser(String name)
+    @Override
+	public NameParser getNameParser(String name)
         throws NamingException {
         return new NameParserImpl();
     }
@@ -616,7 +638,8 @@ public abstract class BaseDirContext implements DirContext {
      * @return the composition of prefix and name
      * @exception NamingException if a naming exception is encountered
      */
-    public Name composeName(Name name, Name prefix)
+    @Override
+	public Name composeName(Name name, Name prefix)
         throws NamingException {
         prefix = (Name) prefix.clone();
         return prefix.addAll(name);
@@ -631,7 +654,8 @@ public abstract class BaseDirContext implements DirContext {
      * @return the composition of prefix and name
      * @exception NamingException if a naming exception is encountered
      */
-    public String composeName(String name, String prefix)
+    @Override
+	public String composeName(String name, String prefix)
         throws NamingException {
         return prefix + "/" + name;
     }
@@ -646,7 +670,8 @@ public abstract class BaseDirContext implements DirContext {
      * @param propVal the value of the property to add; may not be null
      * @exception NamingException if a naming exception is encountered
      */
-    public Object addToEnvironment(String propName, Object propVal)
+    @Override
+	public Object addToEnvironment(String propName, Object propVal)
         throws NamingException {
         return env.put(propName, propVal);
     }
@@ -659,7 +684,8 @@ public abstract class BaseDirContext implements DirContext {
      * may not be null
      * @exception NamingException if a naming exception is encountered
      */
-    public Object removeFromEnvironment(String propName)
+    @Override
+	public Object removeFromEnvironment(String propName)
         throws NamingException {
         return env.remove(propName);
     }
@@ -675,7 +701,8 @@ public abstract class BaseDirContext implements DirContext {
      * @return the environment of this context; never null
      * @exception NamingException if a naming exception is encountered
      */
-    public Hashtable getEnvironment()
+    @Override
+	public Hashtable getEnvironment()
         throws NamingException {
         return env;
     }
@@ -691,7 +718,8 @@ public abstract class BaseDirContext implements DirContext {
      * 
      * @exception NamingException if a naming exception is encountered
      */
-    public void close()
+    @Override
+	public void close()
         throws NamingException {
         env.clear();
     }
@@ -714,7 +742,8 @@ public abstract class BaseDirContext implements DirContext {
      * not have the notion of a full name
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract String getNameInNamespace()
+    @Override
+	public abstract String getNameInNamespace()
         throws NamingException;
 
 
@@ -729,7 +758,8 @@ public abstract class BaseDirContext implements DirContext {
      * @param name the name of the object from which to retrieve attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public Attributes getAttributes(Name name)
+    @Override
+	public Attributes getAttributes(Name name)
         throws NamingException {
         return getAttributes(name.toString());
     }
@@ -742,7 +772,8 @@ public abstract class BaseDirContext implements DirContext {
      * @param name the name of the object from which to retrieve attributes
      * @exception NamingException if a naming exception is encountered
      */
-    public Attributes getAttributes(String name)
+    @Override
+	public Attributes getAttributes(String name)
         throws NamingException {
         return getAttributes(name, null);
     }
@@ -760,7 +791,8 @@ public abstract class BaseDirContext implements DirContext {
      * indicates that none should be retrieved
      * @exception NamingException if a naming exception is encountered
      */
-    public Attributes getAttributes(Name name, String[] attrIds)
+    @Override
+	public Attributes getAttributes(Name name, String[] attrIds)
         throws NamingException {
         return getAttributes(name.toString(), attrIds);
     }
@@ -776,7 +808,8 @@ public abstract class BaseDirContext implements DirContext {
      * indicates that none should be retrieved
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract Attributes getAttributes(String name, String[] attrIds)
+    @Override
+	public abstract Attributes getAttributes(String name, String[] attrIds)
         throws NamingException;
 
 
@@ -794,7 +827,8 @@ public abstract class BaseDirContext implements DirContext {
      * completed successfully
      * @exception NamingException if a naming exception is encountered
      */
-    public void modifyAttributes(Name name, int mod_op, Attributes attrs)
+    @Override
+	public void modifyAttributes(Name name, int mod_op, Attributes attrs)
         throws NamingException {
         modifyAttributes(name.toString(), mod_op, attrs);
     }
@@ -812,7 +846,8 @@ public abstract class BaseDirContext implements DirContext {
      * completed successfully
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract void modifyAttributes
+    @Override
+	public abstract void modifyAttributes
         (String name, int mod_op, Attributes attrs)
         throws NamingException;
 
@@ -831,7 +866,8 @@ public abstract class BaseDirContext implements DirContext {
      * completed successfully
      * @exception NamingException if a naming exception is encountered
      */
-    public void modifyAttributes(Name name, ModificationItem[] mods)
+    @Override
+	public void modifyAttributes(Name name, ModificationItem[] mods)
         throws NamingException {
         modifyAttributes(name.toString(), mods);
     }
@@ -848,7 +884,8 @@ public abstract class BaseDirContext implements DirContext {
      * completed successfully
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract void modifyAttributes(String name, ModificationItem[] mods)
+    @Override
+	public abstract void modifyAttributes(String name, ModificationItem[] mods)
         throws NamingException;
 
 
@@ -867,7 +904,8 @@ public abstract class BaseDirContext implements DirContext {
      * of the binding are not supplied
      * @exception NamingException if a naming exception is encountered
      */
-    public void bind(Name name, Object obj, Attributes attrs)
+    @Override
+	public void bind(Name name, Object obj, Attributes attrs)
         throws NamingException {
         bind(name.toString(), obj, attrs);
     }
@@ -884,7 +922,8 @@ public abstract class BaseDirContext implements DirContext {
      * of the binding are not supplied
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract void bind(String name, Object obj, Attributes attrs)
+    @Override
+	public abstract void bind(String name, Object obj, Attributes attrs)
         throws NamingException;
 
 
@@ -906,7 +945,8 @@ public abstract class BaseDirContext implements DirContext {
      * of the binding are not supplied
      * @exception NamingException if a naming exception is encountered
      */
-    public void rebind(Name name, Object obj, Attributes attrs)
+    @Override
+	public void rebind(Name name, Object obj, Attributes attrs)
         throws NamingException {
         rebind(name.toString(), obj, attrs);
     }
@@ -923,7 +963,8 @@ public abstract class BaseDirContext implements DirContext {
      * of the binding are not supplied
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract void rebind(String name, Object obj, Attributes attrs)
+    @Override
+	public abstract void rebind(String name, Object obj, Attributes attrs)
         throws NamingException;
 
 
@@ -944,7 +985,8 @@ public abstract class BaseDirContext implements DirContext {
      * the mandatory attributes required for creation
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext createSubcontext(Name name, Attributes attrs)
+    @Override
+	public DirContext createSubcontext(Name name, Attributes attrs)
         throws NamingException {
         return createSubcontext(name.toString(), attrs);
     }
@@ -961,7 +1003,8 @@ public abstract class BaseDirContext implements DirContext {
      * the mandatory attributes required for creation
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract DirContext createSubcontext(String name, Attributes attrs)
+    @Override
+	public abstract DirContext createSubcontext(String name, Attributes attrs)
         throws NamingException;
 
 
@@ -978,7 +1021,8 @@ public abstract class BaseDirContext implements DirContext {
      * @exception OperationNotSupportedException if schema not supported
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext getSchema(Name name)
+    @Override
+	public DirContext getSchema(Name name)
         throws NamingException {
         return getSchema(name.toString());
     }
@@ -992,7 +1036,8 @@ public abstract class BaseDirContext implements DirContext {
      * @exception OperationNotSupportedException if schema not supported
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract DirContext getSchema(String name)
+    @Override
+	public abstract DirContext getSchema(String name)
         throws NamingException;
 
 
@@ -1007,7 +1052,8 @@ public abstract class BaseDirContext implements DirContext {
      * @exception OperationNotSupportedException if schema not supported
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext getSchemaClassDefinition(Name name)
+    @Override
+	public DirContext getSchemaClassDefinition(Name name)
         throws NamingException {
         return getSchemaClassDefinition(name.toString());
     }
@@ -1024,7 +1070,8 @@ public abstract class BaseDirContext implements DirContext {
      * @exception OperationNotSupportedException if schema not supported
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract DirContext getSchemaClassDefinition(String name)
+    @Override
+	public abstract DirContext getSchemaClassDefinition(String name)
         throws NamingException;
 
 
@@ -1045,7 +1092,8 @@ public abstract class BaseDirContext implements DirContext {
      * context named by name.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(Name name, Attributes matchingAttributes,
+    @Override
+	public NamingEnumeration search(Name name, Attributes matchingAttributes,
                                     String[] attributesToReturn)
         throws NamingException {
         return search(name.toString(), matchingAttributes, attributesToReturn);
@@ -1068,7 +1116,8 @@ public abstract class BaseDirContext implements DirContext {
      * context named by name.
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract NamingEnumeration search
+    @Override
+	public abstract NamingEnumeration search
         (String name, Attributes matchingAttributes,
          String[] attributesToReturn)
         throws NamingException;
@@ -1089,7 +1138,8 @@ public abstract class BaseDirContext implements DirContext {
      * context named by name.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(Name name, Attributes matchingAttributes)
+    @Override
+	public NamingEnumeration search(Name name, Attributes matchingAttributes)
         throws NamingException {
         return search(name.toString(), matchingAttributes);
     }
@@ -1108,7 +1158,8 @@ public abstract class BaseDirContext implements DirContext {
      * context named by name.
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract NamingEnumeration search
+    @Override
+	public abstract NamingEnumeration search
         (String name, Attributes matchingAttributes)
         throws NamingException;
 
@@ -1132,7 +1183,8 @@ public abstract class BaseDirContext implements DirContext {
      * contain invalid settings
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search
+    @Override
+	public NamingEnumeration search
         (Name name, String filter, SearchControls cons)
         throws NamingException {
         return search(name.toString(), filter, cons);
@@ -1158,7 +1210,8 @@ public abstract class BaseDirContext implements DirContext {
      * contain invalid settings
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract NamingEnumeration search(String name, String filter, 
+    @Override
+	public abstract NamingEnumeration search(String name, String filter, 
                                              SearchControls cons)
         throws NamingException;
 
@@ -1187,7 +1240,8 @@ public abstract class BaseDirContext implements DirContext {
      * represents an invalid search filter
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(Name name, String filterExpr, 
+    @Override
+	public NamingEnumeration search(Name name, String filterExpr, 
                                     Object[] filterArgs, SearchControls cons)
         throws NamingException {
         return search(name.toString(), filterExpr, filterArgs, cons);
@@ -1218,7 +1272,8 @@ public abstract class BaseDirContext implements DirContext {
      * represents an invalid search filter
      * @exception NamingException if a naming exception is encountered
      */
-    public abstract NamingEnumeration search
+    @Override
+	public abstract NamingEnumeration search
         (String name, String filterExpr, 
          Object[] filterArgs, SearchControls cons)
         throws NamingException;

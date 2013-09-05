@@ -59,7 +59,8 @@ public class ServerCookie implements Serializable {
         "EEE, dd-MMM-yyyy HH:mm:ss z";
     private static final ThreadLocal<DateFormat> OLD_COOKIE_FORMAT =
         new ThreadLocal<DateFormat>() {
-        protected DateFormat initialValue() {
+        @Override
+		protected DateFormat initialValue() {
             DateFormat df =
                 new SimpleDateFormat(OLD_COOKIE_PATTERN, Locale.US);
             df.setTimeZone(TimeZone.getTimeZone("GMT"));
@@ -155,7 +156,8 @@ public class ServerCookie implements Serializable {
 
     // -------------------- utils --------------------
 
-    public String toString() {
+    @Override
+	public String toString() {
         return "Cookie " + getName() + "=" + getValue() + " ; "
             + getVersion() + " " + getPath() + " " + getDomain();
     }
@@ -225,7 +227,8 @@ public class ServerCookie implements Serializable {
     /**
      * @deprecated - Not used
      */
-    public static boolean checkName( String name ) {
+    @Deprecated
+	public static boolean checkName( String name ) {
         if (!isToken(name)
                 || name.equalsIgnoreCase("Comment")     // rfc2019
                 || name.equalsIgnoreCase("Discard")     // rfc2965

@@ -29,12 +29,14 @@ class BufferPool15Impl implements BufferPool.BufferPoolAPI {
     protected AtomicInteger size = new AtomicInteger(0);
     protected ConcurrentLinkedQueue queue = new ConcurrentLinkedQueue();
 
-    public void setMaxSize(int bytes) {
+    @Override
+	public void setMaxSize(int bytes) {
         this.maxSize = bytes;
     }
 
 
-    public XByteBuffer getBuffer(int minSize, boolean discard) {
+    @Override
+	public XByteBuffer getBuffer(int minSize, boolean discard) {
         XByteBuffer buffer = (XByteBuffer)queue.poll();
         if ( buffer != null ) size.addAndGet(-buffer.getCapacity());
         if ( buffer == null ) buffer = new XByteBuffer(minSize,discard);
@@ -44,14 +46,16 @@ class BufferPool15Impl implements BufferPool.BufferPoolAPI {
         return buffer;
     }
 
-    public void returnBuffer(XByteBuffer buffer) {
+    @Override
+	public void returnBuffer(XByteBuffer buffer) {
         if ( (size.get() + buffer.getCapacity()) <= maxSize ) {
             size.addAndGet(buffer.getCapacity());
             queue.offer(buffer);
         }
     }
 
-    public void clear() {
+    @Override
+	public void clear() {
         queue.clear();
         size.set(0);
     }

@@ -122,7 +122,8 @@ public class FileDirContext extends BaseDirContext {
      * @exception IllegalArgumentException if this would create a
      *  malformed URL
      */
-    public void setDocBase(String docBase) {
+    @Override
+	public void setDocBase(String docBase) {
 
     // Validate the format of the proposed document root
     if (docBase == null)
@@ -185,7 +186,8 @@ public class FileDirContext extends BaseDirContext {
     /**
      * Release any resources allocated for this directory context.
      */
-    public void release() {
+    @Override
+	public void release() {
         super.release();
     }
 
@@ -200,7 +202,8 @@ public class FileDirContext extends BaseDirContext {
      * @return the object bound to name
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookup(String name)
+    @Override
+	public Object lookup(String name)
         throws NamingException {
         Object result = null;
         File file = file(name);
@@ -238,7 +241,8 @@ public class FileDirContext extends BaseDirContext {
      * exist
      * @exception NamingException if a naming exception is encountered
      */
-    public void unbind(String name)
+    @Override
+	public void unbind(String name)
         throws NamingException {
 
         File file = file(name);
@@ -265,7 +269,8 @@ public class FileDirContext extends BaseDirContext {
      * @exception NameAlreadyBoundException if newName is already bound
      * @exception NamingException if a naming exception is encountered
      */
-    public void rename(String oldName, String newName)
+    @Override
+	public void rename(String oldName, String newName)
         throws NamingException {
 
         File file = file(oldName);
@@ -294,7 +299,8 @@ public class FileDirContext extends BaseDirContext {
      * this context. Each element of the enumeration is of type NameClassPair.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration list(String name)
+    @Override
+	public NamingEnumeration list(String name)
         throws NamingException {
 
         File file = file(name);
@@ -321,7 +327,8 @@ public class FileDirContext extends BaseDirContext {
      * Each element of the enumeration is of type Binding.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration listBindings(String name)
+    @Override
+	public NamingEnumeration listBindings(String name)
         throws NamingException {
 
         File file = file(name);
@@ -361,7 +368,8 @@ public class FileDirContext extends BaseDirContext {
      * @exception NotContextException if the name is bound but does not name
      * a context, or does not name a context of the appropriate type
      */
-    public void destroySubcontext(String name)
+    @Override
+	public void destroySubcontext(String name)
         throws NamingException {
         unbind(name);
     }
@@ -377,7 +385,8 @@ public class FileDirContext extends BaseDirContext {
      * (if any).
      * @exception NamingException if a naming exception is encountered
      */
-    public Object lookupLink(String name)
+    @Override
+	public Object lookupLink(String name)
         throws NamingException {
         // Note : Links are not supported
         return lookup(name);
@@ -401,7 +410,8 @@ public class FileDirContext extends BaseDirContext {
      * not have the notion of a full name
      * @exception NamingException if a naming exception is encountered
      */
-    public String getNameInNamespace()
+    @Override
+	public String getNameInNamespace()
         throws NamingException {
         return docBase;
     }
@@ -422,7 +432,8 @@ public class FileDirContext extends BaseDirContext {
      * indicates that none should be retrieved
      * @exception NamingException if a naming exception is encountered
      */
-    public Attributes getAttributes(String name, String[] attrIds)
+    @Override
+	public Attributes getAttributes(String name, String[] attrIds)
         throws NamingException {
 
         // Building attribute list
@@ -451,7 +462,8 @@ public class FileDirContext extends BaseDirContext {
      * completed successfully
      * @exception NamingException if a naming exception is encountered
      */
-    public void modifyAttributes(String name, int mod_op, Attributes attrs)
+    @Override
+	public void modifyAttributes(String name, int mod_op, Attributes attrs)
         throws NamingException {
 
     }
@@ -471,7 +483,8 @@ public class FileDirContext extends BaseDirContext {
      * completed successfully
      * @exception NamingException if a naming exception is encountered
      */
-    public void modifyAttributes(String name, ModificationItem[] mods)
+    @Override
+	public void modifyAttributes(String name, ModificationItem[] mods)
         throws NamingException {
 
     }
@@ -492,7 +505,8 @@ public class FileDirContext extends BaseDirContext {
      * of the binding are not supplied
      * @exception NamingException if a naming exception is encountered
      */
-    public void bind(String name, Object obj, Attributes attrs)
+    @Override
+	public void bind(String name, Object obj, Attributes attrs)
         throws NamingException {
 
         // Note: No custom attributes allowed
@@ -525,7 +539,8 @@ public class FileDirContext extends BaseDirContext {
      * of the binding are not supplied
      * @exception NamingException if a naming exception is encountered
      */
-    public void rebind(String name, Object obj, Attributes attrs)
+    @Override
+	public void rebind(String name, Object obj, Attributes attrs)
         throws NamingException {
 
         // Note: No custom attributes allowed
@@ -601,7 +616,8 @@ public class FileDirContext extends BaseDirContext {
      * the mandatory attributes required for creation
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext createSubcontext(String name, Attributes attrs)
+    @Override
+	public DirContext createSubcontext(String name, Attributes attrs)
         throws NamingException {
 
         File file = new File(base, name);
@@ -629,7 +645,8 @@ public class FileDirContext extends BaseDirContext {
      * @exception OperationNotSupportedException if schema not supported
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext getSchema(String name)
+    @Override
+	public DirContext getSchema(String name)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -646,7 +663,8 @@ public class FileDirContext extends BaseDirContext {
      * @exception OperationNotSupportedException if schema not supported
      * @exception NamingException if a naming exception is encountered
      */
-    public DirContext getSchemaClassDefinition(String name)
+    @Override
+	public DirContext getSchemaClassDefinition(String name)
         throws NamingException {
         throw new OperationNotSupportedException();
     }
@@ -669,7 +687,8 @@ public class FileDirContext extends BaseDirContext {
      * context named by name.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(String name, Attributes matchingAttributes,
+    @Override
+	public NamingEnumeration search(String name, Attributes matchingAttributes,
                                     String[] attributesToReturn)
         throws NamingException {
         return null;
@@ -691,7 +710,8 @@ public class FileDirContext extends BaseDirContext {
      * context named by name.
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(String name, Attributes matchingAttributes)
+    @Override
+	public NamingEnumeration search(String name, Attributes matchingAttributes)
         throws NamingException {
         return null;
     }
@@ -716,7 +736,8 @@ public class FileDirContext extends BaseDirContext {
      * contain invalid settings
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(String name, String filter,
+    @Override
+	public NamingEnumeration search(String name, String filter,
                                     SearchControls cons)
         throws NamingException {
         return null;
@@ -747,7 +768,8 @@ public class FileDirContext extends BaseDirContext {
      * represents an invalid search filter
      * @exception NamingException if a naming exception is encountered
      */
-    public NamingEnumeration search(String name, String filterExpr,
+    @Override
+	public NamingEnumeration search(String name, String filterExpr,
                                     Object[] filterArgs, SearchControls cons)
         throws NamingException {
         return null;
@@ -921,7 +943,8 @@ public class FileDirContext extends BaseDirContext {
          *
          * @return InputStream
          */
-        public InputStream streamContent()
+        @Override
+		public InputStream streamContent()
             throws IOException {
             if (binaryContent == null) {
                 FileInputStream fis = new FileInputStream(file);
@@ -973,7 +996,8 @@ public class FileDirContext extends BaseDirContext {
         /**
          * Is collection.
          */
-        public boolean isCollection() {
+        @Override
+		public boolean isCollection() {
             if (!accessed) {
                 collection = file.isDirectory();
                 accessed = true;
@@ -987,7 +1011,8 @@ public class FileDirContext extends BaseDirContext {
          *
          * @return content length value
          */
-        public long getContentLength() {
+        @Override
+		public long getContentLength() {
             if (contentLength != -1L)
                 return contentLength;
             contentLength = file.length();
@@ -1000,7 +1025,8 @@ public class FileDirContext extends BaseDirContext {
          *
          * @return creation time value
          */
-        public long getCreation() {
+        @Override
+		public long getCreation() {
             if (creation != -1L)
                 return creation;
             creation = getLastModified();
@@ -1013,7 +1039,8 @@ public class FileDirContext extends BaseDirContext {
          *
          * @return Creation date value
          */
-        public Date getCreationDate() {
+        @Override
+		public Date getCreationDate() {
             if (creation == -1L) {
                 creation = getCreation();
             }
@@ -1026,7 +1053,8 @@ public class FileDirContext extends BaseDirContext {
          *
          * @return lastModified time value
          */
-        public long getLastModified() {
+        @Override
+		public long getLastModified() {
             if (lastModified != -1L)
                 return lastModified;
             lastModified = file.lastModified();
@@ -1039,7 +1067,8 @@ public class FileDirContext extends BaseDirContext {
          *
          * @return LastModified date value
          */
-        public Date getLastModifiedDate() {
+        @Override
+		public Date getLastModifiedDate() {
             if (lastModified == -1L) {
                 lastModified = getLastModified();
             }
@@ -1052,7 +1081,8 @@ public class FileDirContext extends BaseDirContext {
          *
          * @return Name value
          */
-        public String getName() {
+        @Override
+		public String getName() {
             if (name == null)
                 name = file.getName();
             return name;
@@ -1064,7 +1094,8 @@ public class FileDirContext extends BaseDirContext {
          *
          * @return String resource type
          */
-        public String getResourceType() {
+        @Override
+		public String getResourceType() {
             if (!accessed) {
                 collection = file.isDirectory();
                 accessed = true;
@@ -1078,7 +1109,8 @@ public class FileDirContext extends BaseDirContext {
          * 
          * @return String the file's canonical path
          */
-        public String getCanonicalPath() {
+        @Override
+		public String getCanonicalPath() {
             if (canonicalPath == null) {
                 try {
                     canonicalPath = file.getCanonicalPath();

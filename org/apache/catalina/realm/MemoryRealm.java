@@ -101,7 +101,8 @@ public class MemoryRealm  extends RealmBase {
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return info;
 
@@ -142,10 +143,11 @@ public class MemoryRealm  extends RealmBase {
      * @param credentials Password or other credentials to use in
      *  authenticating this username
      */
-    public Principal authenticate(String username, String credentials) {
+    @Override
+	public Principal authenticate(String username, String credentials) {
 
         GenericPrincipal principal =
-            (GenericPrincipal) principals.get(username);
+            principals.get(username);
 
         boolean validated = false;
         if (principal != null && credentials != null) {
@@ -233,7 +235,8 @@ public class MemoryRealm  extends RealmBase {
     /**
      * Return a short name for this Realm implementation.
      */
-    protected String getName() {
+    @Override
+	protected String getName() {
 
         return (name);
 
@@ -243,10 +246,11 @@ public class MemoryRealm  extends RealmBase {
     /**
      * Return the password associated with the given principal's user name.
      */
-    protected String getPassword(String username) {
+    @Override
+	protected String getPassword(String username) {
 
         GenericPrincipal principal =
-            (GenericPrincipal) principals.get(username);
+            principals.get(username);
         if (principal != null) {
             return (principal.getPassword());
         } else {
@@ -259,9 +263,10 @@ public class MemoryRealm  extends RealmBase {
     /**
      * Return the Principal associated with the given user name.
      */
-    protected Principal getPrincipal(String username) {
+    @Override
+	protected Principal getPrincipal(String username) {
 
-        return (Principal) principals.get(username);
+        return principals.get(username);
 
     }
 
@@ -284,7 +289,8 @@ public class MemoryRealm  extends RealmBase {
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents it from being started
      */
-    public synchronized void start() throws LifecycleException {
+    @Override
+	public synchronized void start() throws LifecycleException {
 
         // Perform normal superclass initialization
         super.start();
@@ -324,7 +330,8 @@ public class MemoryRealm  extends RealmBase {
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public synchronized void stop() throws LifecycleException {
+    @Override
+	public synchronized void stop() throws LifecycleException {
 
         // Perform normal superclass finalization
         super.stop();

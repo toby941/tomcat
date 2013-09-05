@@ -110,7 +110,8 @@ public class McastService implements MembershipService,MembershipListener {
      * 8. tcpListenHost - the bind address of this member<BR>
      * @exception java.lang.IllegalArgumentException if a property is missing.
      */
-    public void setProperties(Properties properties) {
+    @Override
+	public void setProperties(Properties properties) {
         hasProperty(properties,"mcastPort");
         hasProperty(properties,"mcastAddress");
         hasProperty(properties,"memberDropTime");
@@ -123,7 +124,8 @@ public class McastService implements MembershipService,MembershipListener {
     /**
      * Return the properties, see setProperties
      */
-    public Properties getProperties() {
+    @Override
+	public Properties getProperties() {
         return properties;
     }
 
@@ -137,7 +139,8 @@ public class McastService implements MembershipService,MembershipListener {
     /**
      * Return the local member
      */
-    public Member getLocalMember(boolean alive) {
+    @Override
+	public Member getLocalMember(boolean alive) {
         if ( alive && localMember != null && impl != null) localMember.setMemberAliveTime(System.currentTimeMillis()-impl.getServiceStartTime());
         return localMember;
     }
@@ -145,7 +148,8 @@ public class McastService implements MembershipService,MembershipListener {
     /**
      * Sets the local member properties for broadcasting
      */
-    public void setLocalMemberProperties(String listenHost, int listenPort) {
+    @Override
+	public void setLocalMemberProperties(String listenHost, int listenPort) {
         properties.setProperty("tcpListenHost",listenHost);
         properties.setProperty("tcpListenPort",String.valueOf(listenPort));
         try {
@@ -172,7 +176,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use setAddress
      * @param addr String
      */
-    public void setMcastAddr(String addr) {
+    @Deprecated
+	public void setMcastAddr(String addr) {
         setAddress(addr);
     }
     
@@ -184,7 +189,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use getAddress
      * @return String
      */
-    public String getMcastAddr() {
+    @Deprecated
+	public String getMcastAddr() {
         return getAddress();
     }
 
@@ -199,7 +205,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use getBind
      * @return String
      */
-    public String getMcastBindAddress() {
+    @Deprecated
+	public String getMcastBindAddress() {
         return getBind();
     }
 
@@ -211,7 +218,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use setPort
      * @param port int
      */
-    public void setMcastPort(int port) {
+    @Deprecated
+	public void setMcastPort(int port) {
         setPort(port);
     }
 
@@ -236,7 +244,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use getPort()
      * @return int
      */
-    public int getMcastPort() {
+    @Deprecated
+	public int getMcastPort() {
         return getPort();
     }
     public int getPort() {
@@ -248,7 +257,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use setFrequency
      * @param time long
      */
-    public void setMcastFrequency(long time) {
+    @Deprecated
+	public void setMcastFrequency(long time) {
         setFrequency(time);
     }
     
@@ -260,7 +270,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use getFrequency
      * @return long
      */
-    public long getMcastFrequency() {
+    @Deprecated
+	public long getMcastFrequency() {
         return getFrequency();
     }
 
@@ -280,7 +291,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use getDropTime
      * @return long
      */
-    public long getMcastDropTime() {
+    @Deprecated
+	public long getMcastDropTime() {
         return getDropTime();
     }
 
@@ -302,12 +314,14 @@ public class McastService implements MembershipService,MembershipListener {
      * Start broadcasting and listening to membership pings
      * @throws java.lang.Exception if a IO error occurs
      */
-    public void start() throws java.lang.Exception {
+    @Override
+	public void start() throws java.lang.Exception {
         start(MembershipService.MBR_RX);
         start(MembershipService.MBR_TX);
     }
     
-    public void start(int level) throws java.lang.Exception {
+    @Override
+	public void start(int level) throws java.lang.Exception {
         hasProperty(properties,"mcastPort");
         hasProperty(properties,"mcastAddress");
         hasProperty(properties,"memberDropTime");
@@ -354,7 +368,7 @@ public class McastService implements MembershipService,MembershipListener {
             }
         }
 
-        impl = new McastServiceImpl((MemberImpl)localMember,Long.parseLong(properties.getProperty("mcastFrequency")),
+        impl = new McastServiceImpl(localMember,Long.parseLong(properties.getProperty("mcastFrequency")),
                                     Long.parseLong(properties.getProperty("memberDropTime")),
                                     Integer.parseInt(properties.getProperty("mcastPort")),
                                     bind,
@@ -380,7 +394,8 @@ public class McastService implements MembershipService,MembershipListener {
     /**
      * Stop broadcasting and listening to membership pings
      */
-    public void stop(int svc) {
+    @Override
+	public void stop(int svc) {
         try  {
             if ( impl != null && impl.stop(svc) ) impl = null;
         } catch ( Exception x)  {
@@ -392,7 +407,8 @@ public class McastService implements MembershipService,MembershipListener {
     /**
      * Return all the members by name
      */
-    public String[] getMembersByName() {
+    @Override
+	public String[] getMembersByName() {
         Member[] currentMembers = getMembers();
         String [] membernames ;
         if(currentMembers != null) {
@@ -408,7 +424,8 @@ public class McastService implements MembershipService,MembershipListener {
     /**
      * Return the member by name
      */
-    public Member findMemberByName(String name) {
+    @Override
+	public Member findMemberByName(String name) {
         Member[] currentMembers = getMembers();
         for (int i = 0; i < currentMembers.length; i++) {
             if (name.equals(currentMembers[i].toString()))
@@ -420,12 +437,14 @@ public class McastService implements MembershipService,MembershipListener {
     /**
      * has members?
      */
-    public boolean hasMembers() {
+    @Override
+	public boolean hasMembers() {
        if ( impl == null || impl.membership == null ) return false;
        return impl.membership.hasMembers();
     }
     
-    public Member getMember(Member mbr) {
+    @Override
+	public Member getMember(Member mbr) {
         if ( impl == null || impl.membership == null ) return null;
         return impl.membership.getMember(mbr);
     }
@@ -434,7 +453,8 @@ public class McastService implements MembershipService,MembershipListener {
      * Return all the members
      */
     protected static final Member[]EMPTY_MEMBERS = new Member[0];
-    public Member[] getMembers() {
+    @Override
+	public Member[] getMembers() {
         if ( impl == null || impl.membership == null ) return EMPTY_MEMBERS;
         return impl.membership.getMembers();
     }
@@ -443,17 +463,20 @@ public class McastService implements MembershipService,MembershipListener {
      * so calling this method twice will result in only the second listener being active.
      * @param listener The listener
      */
-    public void setMembershipListener(MembershipListener listener) {
+    @Override
+	public void setMembershipListener(MembershipListener listener) {
         this.listener = listener;
     }
     /**
      * Remove the membership listener
      */
-    public void removeMembershipListener(){
+    @Override
+	public void removeMembershipListener(){
         listener = null;
     }
 
-    public void memberAdded(Member member) {
+    @Override
+	public void memberAdded(Member member) {
         if ( listener!=null ) listener.memberAdded(member);
     }
 
@@ -461,7 +484,8 @@ public class McastService implements MembershipService,MembershipListener {
      * Callback from the impl when a new member has been received
      * @param member The member
      */
-    public void memberDisappeared(Member member)
+    @Override
+	public void memberDisappeared(Member member)
     {
         if ( listener!=null ) listener.memberDisappeared(member);
     }
@@ -470,7 +494,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use getSoTimeout
      * @return int
      */
-    public int getMcastSoTimeout() {
+    @Deprecated
+	public int getMcastSoTimeout() {
         return getSoTimeout();
     }
     
@@ -482,7 +507,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use setSoTimeout
      * @param mcastSoTimeout int
      */
-    public void setMcastSoTimeout(int mcastSoTimeout) {
+    @Deprecated
+	public void setMcastSoTimeout(int mcastSoTimeout) {
         setSoTimeout(mcastSoTimeout);
     }
     
@@ -495,7 +521,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use getTtl
      * @return int
      */
-    public int getMcastTTL() {
+    @Deprecated
+	public int getMcastTTL() {
         return getTtl();
     }
     
@@ -515,7 +542,8 @@ public class McastService implements MembershipService,MembershipListener {
      * @deprecated use setTtl
      * @param mcastTTL int
      */
-    public void setMcastTTL(int mcastTTL) {
+    @Deprecated
+	public void setMcastTTL(int mcastTTL) {
         setTtl(mcastTTL);
     }
 
@@ -524,7 +552,8 @@ public class McastService implements MembershipService,MembershipListener {
         properties.setProperty("mcastTTL", String.valueOf(mcastTTL));
     }
 
-    public void setPayload(byte[] payload) {
+    @Override
+	public void setPayload(byte[] payload) {
         this.payload = payload;
         if ( localMember != null ) {
             localMember.setPayload(payload);
@@ -537,7 +566,8 @@ public class McastService implements MembershipService,MembershipListener {
         }
     }
     
-    public void setDomain(byte[] domain) {
+    @Override
+	public void setDomain(byte[] domain) {
         this.domain = domain;
         if ( localMember != null ) {
             localMember.setDomain(domain);

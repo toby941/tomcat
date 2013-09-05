@@ -61,7 +61,8 @@ public class JasperLoader extends URLClassLoader {
      *
      * @exception ClassNotFoundException if the class was not found
      */
-    public Class loadClass(String name) throws ClassNotFoundException {
+    @Override
+	public Class loadClass(String name) throws ClassNotFoundException {
 
         return (loadClass(name, false));
     }
@@ -91,7 +92,8 @@ public class JasperLoader extends URLClassLoader {
      *                                     
      * @exception ClassNotFoundException if the class was not found
      */                                    
-    public synchronized Class loadClass(final String name, boolean resolve)
+    @Override
+	public synchronized Class loadClass(final String name, boolean resolve)
         throws ClassNotFoundException {
 
         Class clazz = null;                
@@ -140,7 +142,8 @@ public class JasperLoader extends URLClassLoader {
      * 
      * @see java.lang.ClassLoader#getResourceAsStream(java.lang.String)
      */
-    public InputStream getResourceAsStream(String name) {
+    @Override
+	public InputStream getResourceAsStream(String name) {
         InputStream is = parent.getResourceAsStream(name);
         if (is == null) {
             URL url = findResource(name);
@@ -166,7 +169,8 @@ public class JasperLoader extends URLClassLoader {
      * @param codeSource Code source where the code was loaded from
      * @return PermissionCollection for CodeSource
      */
-    public final PermissionCollection getPermissions(CodeSource codeSource) {
+    @Override
+	public final PermissionCollection getPermissions(CodeSource codeSource) {
         return permissionCollection;
     }
 }

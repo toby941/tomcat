@@ -65,7 +65,8 @@ public class EngineConfig
      *
      * @param event The lifecycle event that has occurred
      */
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
 
         // Identify the engine we are associated with
         try {

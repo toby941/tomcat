@@ -221,7 +221,8 @@ public class SingleSignOn
      *
      * @param listener The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -232,7 +233,8 @@ public class SingleSignOn
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -244,7 +246,8 @@ public class SingleSignOn
      *
      * @param listener The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -259,7 +262,8 @@ public class SingleSignOn
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents this component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         // Validate and update our current component state
         if (started)
@@ -279,7 +283,8 @@ public class SingleSignOn
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         // Validate and update our current component state
         if (!started)
@@ -299,7 +304,8 @@ public class SingleSignOn
      *
      * @param event SessionEvent that has occurred
      */
-    public void sessionEvent(SessionEvent event) {
+    @Override
+	public void sessionEvent(SessionEvent event) {
 
         // We only care about session destroyed events
         if (!Session.SESSION_DESTROYED_EVENT.equals(event.getType())
@@ -313,7 +319,7 @@ public class SingleSignOn
 
         String ssoId = null;
         synchronized (reverse) {
-            ssoId = (String) reverse.get(session);
+            ssoId = reverse.get(session);
         }
         if (ssoId == null)
             return;
@@ -343,7 +349,8 @@ public class SingleSignOn
     /**
      * Return descriptive information about this Valve implementation.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return (info);
 
@@ -359,7 +366,8 @@ public class SingleSignOn
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    public void invoke(Request request, Response response)
+    @Override
+	public void invoke(Request request, Response response)
         throws IOException, ServletException {
 
         request.removeNote(Constants.REQ_SSOID_NOTE);
@@ -429,7 +437,8 @@ public class SingleSignOn
     /**
      * Return a String rendering of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SingleSignOn[");
         if (container == null )
@@ -489,7 +498,7 @@ public class SingleSignOn
         Session sessions[] = sso.findSessions();
         if ( sessions == null || sessions.length == 0 ) {
             synchronized (cache) {
-                sso = (SingleSignOnEntry) cache.remove(ssoId);
+                sso = cache.remove(ssoId);
             }
         }
 
@@ -510,7 +519,7 @@ public class SingleSignOn
         // Look up and remove the corresponding SingleSignOnEntry
         SingleSignOnEntry sso = null;
         synchronized (cache) {
-            sso = (SingleSignOnEntry) cache.remove(ssoId);
+            sso = cache.remove(ssoId);
         }
 
         if (sso == null)
@@ -661,7 +670,7 @@ public class SingleSignOn
     protected SingleSignOnEntry lookup(String ssoId) {
 
         synchronized (cache) {
-            return ((SingleSignOnEntry) cache.get(ssoId));
+            return (cache.get(ssoId));
         }
 
     }

@@ -225,7 +225,8 @@ public abstract class JspContext {
      * @deprecated As of JSP 2.1, replaced by
      *             JspApplicationContext.getExpressionFactory()
      */
-    @SuppressWarnings("dep-ann") // TCK signature test fails with annotation
+    @Deprecated
+	@SuppressWarnings("dep-ann") // TCK signature test fails with annotation
     public abstract ExpressionEvaluator getExpressionEvaluator();
     
     
@@ -243,7 +244,8 @@ public abstract class JspContext {
      *             which can be obtained by
      *             jspContext.getELContext().getELResolver()
      */
-    @SuppressWarnings("dep-ann") // TCK signature test fails with annotation
+    @Deprecated
+	@SuppressWarnings("dep-ann") // TCK signature test fails with annotation
     public abstract VariableResolver getVariableResolver();
     
     /**

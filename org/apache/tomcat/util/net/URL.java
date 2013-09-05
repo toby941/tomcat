@@ -302,7 +302,8 @@ public final class URL implements Serializable {
      *
      * @param obj The URL to compare against
      */
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
 
         if (obj == null)
             return (false);
@@ -561,7 +562,8 @@ public final class URL implements Serializable {
     /**
      * Return a string representation of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("URL[");
         sb.append("authority=");

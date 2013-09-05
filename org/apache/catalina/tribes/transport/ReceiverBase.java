@@ -81,13 +81,15 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
     public ReceiverBase() {
     }
     
-    public void start() throws IOException {
+    @Override
+	public void start() throws IOException {
         if ( executor == null ) {
             executor = new ThreadPoolExecutor(minThreads,maxThreads,60,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>());
         }
     }
     
-    public void stop() {
+    @Override
+	public void stop() {
         if ( executor != null ) executor.shutdownNow();//ignore left overs
         executor = null;
     }
@@ -98,7 +100,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @return MessageListener
      * @todo Implement this org.apache.catalina.tribes.ChannelReceiver method
      */
-    public MessageListener getMessageListener() {
+    @Override
+	public MessageListener getMessageListener() {
         return listener;
     }
 
@@ -107,7 +110,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @return The port
      * @todo Implement this org.apache.catalina.tribes.ChannelReceiver method
      */
-    public int getPort() {
+    @Override
+	public int getPort() {
         return port;
     }
 
@@ -123,7 +127,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @deprecated use getMinThreads()/getMaxThreads()
      * @return int
      */
-    public int getTcpThreadCount() {
+    @Deprecated
+	public int getTcpThreadCount() {
         return getMaxThreads();
     }
 
@@ -133,7 +138,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @param listener MessageListener
      * @todo Implement this org.apache.catalina.tribes.ChannelReceiver method
      */
-    public void setMessageListener(MessageListener listener) {
+    @Override
+	public void setMessageListener(MessageListener listener) {
         this.listener = listener;
     }
 
@@ -141,7 +147,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @deprecated use setPort
      * @param tcpListenPort int
      */
-    public void setTcpListenPort(int tcpListenPort) {
+    @Deprecated
+	public void setTcpListenPort(int tcpListenPort) {
         setPort(tcpListenPort);
     }
 
@@ -149,7 +156,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @deprecated use setAddress
      * @param tcpListenHost String
      */
-    public void setTcpListenAddress(String tcpListenHost) {
+    @Deprecated
+	public void setTcpListenAddress(String tcpListenHost) {
         setAddress(tcpListenHost);
     }
 
@@ -165,7 +173,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @deprecated use setMaxThreads/setMinThreads
      * @param tcpThreadCount int
      */
-    public void setTcpThreadCount(int tcpThreadCount) {
+    @Deprecated
+	public void setTcpThreadCount(int tcpThreadCount) {
         setMaxThreads(tcpThreadCount);
         setMinThreads(tcpThreadCount);
     }
@@ -213,14 +222,16 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
                     throw x;
                 }
                 portstart++;
-                try {Thread.sleep(25);}catch( InterruptedException ti){Thread.currentThread().interrupted();}
+                try {Thread.sleep(25);}catch( InterruptedException ti){Thread.currentThread();
+				Thread.interrupted();}
                 retries = bind(socket,portstart,retries);
             }
         }
         return retries;
     }
     
-    public void messageDataReceived(ChannelMessage data) {
+    @Override
+	public void messageDataReceived(ChannelMessage data) {
         if ( this.listener != null ) {
             if ( listener.accept(data) ) listener.messageReceived(data);
         }
@@ -244,7 +255,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @deprecated use getPort
      * @return int
      */
-    public int getTcpListenPort() {
+    @Deprecated
+	public int getTcpListenPort() {
         return getPort();
     }
 
@@ -265,7 +277,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
         return this.host;
     }
     
-    public String getHost() {
+    @Override
+	public String getHost() {
         return getAddress();
     }
 
@@ -276,7 +289,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @deprecated use getSelectorTimeout
      * @return long
      */
-    public long getTcpSelectorTimeout() {
+    @Deprecated
+	public long getTcpSelectorTimeout() {
         return getSelectorTimeout();
     }
 
@@ -296,7 +310,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @deprecated use getAddress
      * @return String
      */
-    public String getTcpListenAddress() {
+    @Deprecated
+	public String getTcpListenAddress() {
         return getAddress();
     }
 
@@ -349,7 +364,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
         return useBufferPool;
     }
 
-    public int getSecurePort() {
+    @Override
+	public int getSecurePort() {
         return securePort;
     }
 
@@ -373,7 +389,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
      * @deprecated use setSelectorTimeout
      * @param selTimeout long
      */
-    public void setTcpSelectorTimeout(long selTimeout) {
+    @Deprecated
+	public void setTcpSelectorTimeout(long selTimeout) {
         setSelectorTimeout(selTimeout);
     }
     
@@ -398,7 +415,7 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
     }
 
     public void setLog(Log log) {
-        this.log = log;
+        ReceiverBase.log = log;
     }
 
     public void setPool(RxTaskPool pool) {
@@ -475,7 +492,8 @@ public abstract class ReceiverBase implements ChannelReceiver, ListenCallback, R
         this.executor = executor;
     }
 
-    public void heartbeat() {
+    @Override
+	public void heartbeat() {
         //empty operation
     }
     

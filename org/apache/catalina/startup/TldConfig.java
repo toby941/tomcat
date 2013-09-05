@@ -622,7 +622,8 @@ public final class TldConfig  implements LifecycleListener {
         return jarPathMap;
     }
 
-    public void lifecycleEvent(LifecycleEvent event) {
+    @Override
+	public void lifecycleEvent(LifecycleEvent event) {
         // Identify the context we are associated with
         try {
             context = (Context) event.getLifecycle();

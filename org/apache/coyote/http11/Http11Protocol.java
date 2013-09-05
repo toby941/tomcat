@@ -85,7 +85,8 @@ public class Http11Protocol extends AbstractProtocol
     protected Http11ConnectionHandler cHandler = new Http11ConnectionHandler(this);
     protected JIoEndpoint endpoint = new JIoEndpoint();
 
-    protected final AbstractEndpoint getEndpoint() {
+    @Override
+	protected final AbstractEndpoint getEndpoint() {
         return endpoint;
     }
 
@@ -109,18 +110,21 @@ public class Http11Protocol extends AbstractProtocol
     /**
      * Pass config info
      */
-    public void setAttribute(String name, Object value) {
+    @Override
+	public void setAttribute(String name, Object value) {
         if (log.isTraceEnabled()) {
             log.trace(sm.getString("http11protocol.setattribute", name, value));
         }
         attributes.put(name, value);
     }
 
-    public Object getAttribute(String key) {
+    @Override
+	public Object getAttribute(String key) {
         return attributes.get(key);
     }
 
-    public Iterator getAttributeNames() {
+    @Override
+	public Iterator getAttributeNames() {
         return attributes.keySet().iterator();
     }
 
@@ -142,11 +146,14 @@ public class Http11Protocol extends AbstractProtocol
      * The adapter, used to call the connector.
      */
     protected Adapter adapter;
-    public void setAdapter(Adapter adapter) { this.adapter = adapter; }
-    public Adapter getAdapter() { return adapter; }
+    @Override
+	public void setAdapter(Adapter adapter) { this.adapter = adapter; }
+    @Override
+	public Adapter getAdapter() { return adapter; }
 
 
-    public void init() throws Exception {
+    @Override
+	public void init() throws Exception {
         endpoint.setName(getName());
         endpoint.setHandler(cHandler);
 
@@ -187,7 +194,8 @@ public class Http11Protocol extends AbstractProtocol
 
     }
 
-    public void start() throws Exception {
+    @Override
+	public void start() throws Exception {
         if (this.domain != null) {
             try {
                 tpOname = new ObjectName
@@ -213,7 +221,8 @@ public class Http11Protocol extends AbstractProtocol
             log.info(sm.getString("http11protocol.start", getName()));
     }
 
-    public void pause() throws Exception {
+    @Override
+	public void pause() throws Exception {
         try {
             endpoint.pause();
         } catch (Exception ex) {
@@ -224,7 +233,8 @@ public class Http11Protocol extends AbstractProtocol
             log.info(sm.getString("http11protocol.pause", getName()));
     }
 
-    public void resume() throws Exception {
+    @Override
+	public void resume() throws Exception {
         try {
             endpoint.resume();
         } catch (Exception ex) {
@@ -235,7 +245,8 @@ public class Http11Protocol extends AbstractProtocol
             log.info(sm.getString("http11protocol.resume", getName()));
     }
 
-    public void destroy() throws Exception {
+    @Override
+	public void destroy() throws Exception {
         if (log.isInfoEnabled())
             log.info(sm.getString("http11protocol.stop", getName()));
         endpoint.destroy();
@@ -547,7 +558,8 @@ public class Http11Protocol extends AbstractProtocol
         protected ConcurrentLinkedQueue<Http11Processor> recycledProcessors = 
             new ConcurrentLinkedQueue<Http11Processor>() {
             protected AtomicInteger size = new AtomicInteger(0);
-            public boolean offer(Http11Processor processor) {
+            @Override
+			public boolean offer(Http11Processor processor) {
                 boolean offer = (proto.processorCache == -1) ? true : (size.get() < proto.processorCache);
                 //avoid over growing our cache or add after we have stopped
                 boolean result = false;
@@ -561,7 +573,8 @@ public class Http11Protocol extends AbstractProtocol
                 return result;
             }
             
-            public Http11Processor poll() {
+            @Override
+			public Http11Processor poll() {
                 Http11Processor result = super.poll();
                 if ( result != null ) {
                     size.decrementAndGet();
@@ -569,7 +582,8 @@ public class Http11Protocol extends AbstractProtocol
                 return result;
             }
             
-            public void clear() {
+            @Override
+			public void clear() {
                 Http11Processor next = poll();
                 while ( next != null ) {
                     unregister(next);
@@ -584,7 +598,8 @@ public class Http11Protocol extends AbstractProtocol
             this.proto = proto;
         }
 
-        public boolean process(Socket socket) {
+        @Override
+		public boolean process(Socket socket) {
             Http11Processor processor = recycledProcessors.poll();
             try {
 
@@ -717,7 +732,8 @@ public class Http11Protocol extends AbstractProtocol
         return domain;
     }
 
-    public ObjectName preRegister(MBeanServer server,
+    @Override
+	public ObjectName preRegister(MBeanServer server,
                                   ObjectName name) throws Exception {
         oname=name;
         mserver=server;
@@ -725,12 +741,15 @@ public class Http11Protocol extends AbstractProtocol
         return name;
     }
 
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
     }
 
-    public void preDeregister() throws Exception {
+    @Override
+	public void preDeregister() throws Exception {
     }
 
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
     }
 }

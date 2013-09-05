@@ -24,23 +24,28 @@ public class KeyValueHandler extends DefaultHandler {
 		kv = new HashMap<String, String>();
 	}
 
+	@Override
 	public void startDocument() throws SAXException {
 		buf = new StringBuffer();
 		// System.out.println("*******開始剖析文件*******");
 	}
 
+	@Override
 	public void endDocument() throws SAXException {
 		// System.out.println("*******剖析文件結束*******");
 	}
 
+	@Override
 	public void startPrefixMapping(String prefix, String uri) {
 		// System.out.println("\n字首對應: " + prefix + " 開始!" + "  它的URI是:" + uri);
 	}
 
+	@Override
 	public void endPrefixMapping(String prefix) {
 		// System.out.println("\n字首對應: " + prefix + " 結束!");
 	}
 
+	@Override
 	public void startElement(String namespaceURI, String localName, String fullName, Attributes attributes) throws SAXException {
 
 		// System.out.println("\n元素: " + "[" + fullName + "]" + " 開始剖析!");
@@ -52,6 +57,7 @@ public class KeyValueHandler extends DefaultHandler {
 		}
 	}
 
+	@Override
 	public void endElement(String namespaceURI, String localName, String fullName) throws SAXException {
 		// 列印出非空的元素內容並將StringBuffer清空
 		String nullStr = "";
@@ -76,11 +82,13 @@ public class KeyValueHandler extends DefaultHandler {
 		this.kv = kv;
 	}
 
+	@Override
 	public void characters(char[] chars, int start, int length) throws SAXException {
 		// 將元素內容累加到StringBuffer中
 		buf.append(chars, start, length);
 	}
 
+	@Override
 	public void warning(SAXParseException exception) {
 		System.out.println("*******WARNING******");
 		System.out.println("\t行:\t" + exception.getLineNumber());
@@ -89,6 +97,7 @@ public class KeyValueHandler extends DefaultHandler {
 		System.out.println("********************");
 	}
 
+	@Override
 	public void error(SAXParseException exception) throws SAXException {
 		System.out.println("******* ERROR ******");
 		System.out.println("\t行:\t" + exception.getLineNumber());
@@ -97,6 +106,7 @@ public class KeyValueHandler extends DefaultHandler {
 		System.out.println("********************");
 	}
 
+	@Override
 	public void fatalError(SAXParseException exception) throws SAXException {
 		System.out.println("******** FATAL ERROR ********");
 		System.out.println("\t行:\t" + exception.getLineNumber());

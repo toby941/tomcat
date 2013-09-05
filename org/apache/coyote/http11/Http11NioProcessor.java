@@ -847,7 +847,7 @@ public class Http11NioProcessor implements ActionHook {
                 }
                 request.setStartTime(System.currentTimeMillis());
                 if (!disableUploadTimeout) { //only for body, not for request headers
-                    socket.getIOChannel().socket().setSoTimeout((int)timeout);
+                    socket.getIOChannel().socket().setSoTimeout(timeout);
                 }
             } catch (IOException e) {
                 if (log.isDebugEnabled()) {
@@ -1029,7 +1029,8 @@ public class Http11NioProcessor implements ActionHook {
      * @param actionCode Type of the action
      * @param param Action parameter
      */
-    public void action(ActionCode actionCode, Object param) {
+    @Override
+	public void action(ActionCode actionCode, Object param) {
 
         if (actionCode == ActionCode.ACTION_COMMIT) {
             // Commit current response

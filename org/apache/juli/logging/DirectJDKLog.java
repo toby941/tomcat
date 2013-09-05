@@ -71,75 +71,93 @@ class DirectJDKLog implements Log {
         logger=Logger.getLogger(name);        
     }
     
-    public final boolean isErrorEnabled() {
+    @Override
+	public final boolean isErrorEnabled() {
         return logger.isLoggable(Level.SEVERE);
     }
     
-    public final boolean isWarnEnabled() {
+    @Override
+	public final boolean isWarnEnabled() {
         return logger.isLoggable(Level.WARNING); 
     }
     
-    public final boolean isInfoEnabled() {
+    @Override
+	public final boolean isInfoEnabled() {
         return logger.isLoggable(Level.INFO);
     }
     
-    public final boolean isDebugEnabled() {
+    @Override
+	public final boolean isDebugEnabled() {
         return logger.isLoggable(Level.FINE);
     }
     
-    public final boolean isFatalEnabled() {
+    @Override
+	public final boolean isFatalEnabled() {
         return logger.isLoggable(Level.SEVERE);
     }
     
-    public final boolean isTraceEnabled() {
+    @Override
+	public final boolean isTraceEnabled() {
         return logger.isLoggable(Level.FINER);
     }
     
-    public final void debug(Object message) {
+    @Override
+	public final void debug(Object message) {
         log(Level.FINE, String.valueOf(message), null);
     }
     
-    public final void debug(Object message, Throwable t) {
+    @Override
+	public final void debug(Object message, Throwable t) {
         log(Level.FINE, String.valueOf(message), t);
     }
     
-    public final void trace(Object message) {
+    @Override
+	public final void trace(Object message) {
         log(Level.FINER, String.valueOf(message), null);
     }
     
-    public final void trace(Object message, Throwable t) {
+    @Override
+	public final void trace(Object message, Throwable t) {
         log(Level.FINER, String.valueOf(message), t);
     }
     
-    public final void info(Object message) {
+    @Override
+	public final void info(Object message) {
         log(Level.INFO, String.valueOf(message), null);
     }
     
-    public final void info(Object message, Throwable t) {        
+    @Override
+	public final void info(Object message, Throwable t) {        
         log(Level.INFO, String.valueOf(message), t);
     }
     
-    public final void warn(Object message) {
+    @Override
+	public final void warn(Object message) {
         log(Level.WARNING, String.valueOf(message), null);
     }
     
-    public final void warn(Object message, Throwable t) {
+    @Override
+	public final void warn(Object message, Throwable t) {
         log(Level.WARNING, String.valueOf(message), t);
     }
     
-    public final void error(Object message) {
+    @Override
+	public final void error(Object message) {
         log(Level.SEVERE, String.valueOf(message), null);
     }
     
-    public final void error(Object message, Throwable t) {
+    @Override
+	public final void error(Object message, Throwable t) {
         log(Level.SEVERE, String.valueOf(message), t);
     }
     
-    public final void fatal(Object message) {
+    @Override
+	public final void fatal(Object message) {
         log(Level.SEVERE, String.valueOf(message), null);
     }
     
-    public final void fatal(Object message, Throwable t) {
+    @Override
+	public final void fatal(Object message, Throwable t) {
         log(Level.SEVERE, String.valueOf(message), t);
     }    
 

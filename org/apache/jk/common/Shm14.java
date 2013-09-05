@@ -41,7 +41,8 @@ public class Shm14 extends Shm {
     
     MappedByteBuffer bb;
 
-    public void init() {
+    @Override
+	public void init() {
         try {
             RandomAccessFile f=new RandomAccessFile( file, "rw" );
             FileChannel fc=f.getChannel();
@@ -52,18 +53,21 @@ public class Shm14 extends Shm {
         }
     }
 
-    public void dumpScoreboard(String file) {
+    @Override
+	public void dumpScoreboard(String file) {
         // We can only sync with our backing store.
         bb.force();
         // XXX we should copy the content to the file
     }
 
-    public void resetScoreboard() throws IOException {
+    @Override
+	public void resetScoreboard() throws IOException {
         // XXX Need to write the head
     }
 
 
-    public  int invoke(Msg msg, MsgContext ep )
+    @Override
+	public  int invoke(Msg msg, MsgContext ep )
         throws IOException
     {
         if (log.isDebugEnabled())
@@ -74,7 +78,8 @@ public class Shm14 extends Shm {
         return 0;
     }    
 
-    public void initCli() {
+    @Override
+	public void initCli() {
     }
 
     public static void main( String args[] ) {

@@ -654,7 +654,8 @@ public interface HttpServletRequest extends ServletRequest {
      *
      */
 
-    public boolean isRequestedSessionIdFromUrl();
+    @Deprecated
+	public boolean isRequestedSessionIdFromUrl();
 
 
     

@@ -304,13 +304,15 @@ public class ChannelNioSocket extends JkHandler
     final int notifNote=4;
     boolean paused = false;
 
-    public void pause() throws Exception {
+    @Override
+	public void pause() throws Exception {
         synchronized(this) {
             paused = true;
         }
     }
 
-    public void resume()  {
+    @Override
+	public void resume()  {
         synchronized(this) {
             paused = false;
             notify();
@@ -376,7 +378,8 @@ public class ChannelNioSocket extends JkHandler
     /**
      * jmx:managed-operation
      */
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         // Find a port.
         if (startPort == 0) {
             port = 0;
@@ -477,7 +480,8 @@ public class ChannelNioSocket extends JkHandler
         destroy();
     }
 
-    public void registerRequest(Request req, MsgContext ep, int count) {
+    @Override
+	public void registerRequest(Request req, MsgContext ep, int count) {
         if(this.domain != null) {
             try {
                 RequestInfo rp=req.getRequestProcessor();
@@ -507,7 +511,8 @@ public class ChannelNioSocket extends JkHandler
         s.close();
     }
 
-    public void destroy() throws IOException {
+    @Override
+	public void destroy() throws IOException {
         running = false;
         try {
             /* If we disabled the channel return */
@@ -531,7 +536,8 @@ public class ChannelNioSocket extends JkHandler
         }
     }
 
-    public int send( Msg msg, MsgContext ep)
+    @Override
+	public int send( Msg msg, MsgContext ep)
         throws IOException    {
         msg.end(); // Write the packet header
         byte buf[]=msg.getBuffer();
@@ -545,14 +551,16 @@ public class ChannelNioSocket extends JkHandler
         return len;
     }
 
-    public int flush( Msg msg, MsgContext ep)
+    @Override
+	public int flush( Msg msg, MsgContext ep)
         throws IOException    {
         OutputStream os=(OutputStream)ep.getNote( osNote );
         os.flush();
         return 0;
     }
 
-    public int receive( Msg msg, MsgContext ep )
+    @Override
+	public int receive( Msg msg, MsgContext ep )
         throws IOException    {
         if (log.isTraceEnabled()) {
             log.trace("receive() ");
@@ -685,7 +693,8 @@ public class ChannelNioSocket extends JkHandler
 
 
     // XXX This should become handleNotification
-    public int invoke( Msg msg, MsgContext ep ) throws IOException {
+    @Override
+	public int invoke( Msg msg, MsgContext ep ) throws IOException {
         int type=ep.getType();
 
         switch( type ) {
@@ -720,12 +729,14 @@ public class ChannelNioSocket extends JkHandler
         return OK;
     }
     
-    public boolean isSameAddress(MsgContext ep) {
+    @Override
+	public boolean isSameAddress(MsgContext ep) {
         Socket s=(Socket)ep.getNote( socketNote );
         return isSameAddress( s.getLocalAddress(), s.getInetAddress());
     }
     
-    public String getChannelName() {
+    @Override
+	public String getChannelName() {
         String encodedAddr = "";
         if (inet != null && !"0.0.0.0".equals(inet.getHostAddress())) {
             encodedAddr = getAddress();
@@ -777,7 +788,8 @@ public class ChannelNioSocket extends JkHandler
 
     private NotificationBroadcasterSupport nSupport= null;
 
-    public void addNotificationListener(NotificationListener listener,
+    @Override
+	public void addNotificationListener(NotificationListener listener,
                                         NotificationFilter filter,
                                         Object handback)
             throws IllegalArgumentException
@@ -786,7 +798,8 @@ public class ChannelNioSocket extends JkHandler
         nSupport.addNotificationListener(listener, filter, handback);
     }
 
-    public void removeNotificationListener(NotificationListener listener)
+    @Override
+	public void removeNotificationListener(NotificationListener listener)
             throws ListenerNotFoundException
     {
         if( nSupport!=null)
@@ -799,7 +812,8 @@ public class ChannelNioSocket extends JkHandler
         this.notifInfo=info;
     }
 
-    public MBeanNotificationInfo[] getNotificationInfo() {
+    @Override
+	public MBeanNotificationInfo[] getNotificationInfo() {
         return notifInfo;
     }
 
@@ -812,11 +826,13 @@ public class ChannelNioSocket extends JkHandler
             this.ep=ep;
         }
 
-        public Object[] getInitData() {
+        @Override
+		public Object[] getInitData() {
             return null;
         }
     
-        public void runIt(Object perTh[]) {
+        @Override
+		public void runIt(Object perTh[]) {
             if(!processConnection(ep)) {
                 unregister(ep);
             }
@@ -919,7 +935,7 @@ public class ChannelNioSocket extends JkHandler
                 log.error("Error closing connection", e);
             }
             try{
-                Request req = (Request)ep.getRequest();
+                Request req = ep.getRequest();
                 if( req != null ) {
                     ObjectName roname = (ObjectName)ep.getNote(JMXRequestNote);
                     if( roname != null ) {
@@ -949,11 +965,13 @@ public class ChannelNioSocket extends JkHandler
         Poller() {
         }
 
-        public Object[] getInitData() {
+        @Override
+		public Object[] getInitData() {
             return null;
         }
     
-        public void runIt(Object perTh[]) {
+        @Override
+		public void runIt(Object perTh[]) {
             while(running) {
                 try {
                     int ns = selector.select(serverTimeout);
@@ -1000,23 +1018,28 @@ public class ChannelNioSocket extends JkHandler
             buffer.limit(0);
         }
 
-        public int available() {
+        @Override
+		public int available() {
             return buffer.remaining();
         }
 
-        public void mark(int readlimit) {
+        @Override
+		public void mark(int readlimit) {
             buffer.mark();
         }
 
-        public boolean markSupported() {
+        @Override
+		public boolean markSupported() {
             return true;
         }
 
-        public void reset() {
+        @Override
+		public void reset() {
             buffer.reset();
         }
 
-        public synchronized int read() throws IOException {
+        @Override
+		public synchronized int read() throws IOException {
             if(!checkAvailable(1)) {
                 block(1);
             }
@@ -1099,11 +1122,13 @@ public class ChannelNioSocket extends JkHandler
                 notify();
         }
 
-        public int read(byte [] data) throws IOException {
+        @Override
+		public int read(byte [] data) throws IOException {
             return read(data, 0, data.length);
         }
 
-        public synchronized int read(byte [] data, int offset, int len) throws IOException {
+        @Override
+		public synchronized int read(byte [] data, int offset, int len) throws IOException {
             int olen = len;
             while(!checkAvailable(len)) {
                 int avail = buffer.remaining();
@@ -1152,25 +1177,29 @@ public class ChannelNioSocket extends JkHandler
             this.channel = channel;
         }
 
-        public void write(int b) throws IOException {
+        @Override
+		public void write(int b) throws IOException {
             if(!checkAvailable(1)) {
                 flush();
             }
             buffer.put((byte)b);
         }
 
-        public void write(byte [] data) throws IOException {
+        @Override
+		public void write(byte [] data) throws IOException {
             write(data, 0, data.length);
         }
 
-        public void write(byte [] data, int offset, int len) throws IOException {
+        @Override
+		public void write(byte [] data, int offset, int len) throws IOException {
             if(!checkAvailable(len)) {
                 flush();
             }
             buffer.put(data, offset, len);
         }
 
-        public void flush() throws IOException {
+        @Override
+		public void flush() throws IOException {
             buffer.flip();
             while(buffer.hasRemaining()) {
                 int count = channel.write(buffer);

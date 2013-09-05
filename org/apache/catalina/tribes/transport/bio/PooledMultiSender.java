@@ -16,6 +16,7 @@
  */
 package org.apache.catalina.tribes.transport.bio;
 
+import org.apache.catalina.tribes.transport.AbstractSender;
 import org.apache.catalina.tribes.transport.DataSender;
 import org.apache.catalina.tribes.transport.PooledSender;
 import org.apache.catalina.tribes.Member;
@@ -39,7 +40,8 @@ public class PooledMultiSender extends PooledSender {
     public PooledMultiSender() {
     }
     
-    public void sendMessage(Member[] destination, ChannelMessage msg) throws ChannelException {
+    @Override
+	public void sendMessage(Member[] destination, ChannelMessage msg) throws ChannelException {
         MultiPointSender sender = null;
         try {
             sender = (MultiPointSender)getSender();
@@ -63,9 +65,10 @@ public class PooledMultiSender extends PooledSender {
      * @todo Implement this org.apache.catalina.tribes.transport.PooledSender
      *   method
      */
-    public DataSender getNewDataSender() {
+    @Override
+	public DataSender getNewDataSender() {
         MultipointBioSender sender = new MultipointBioSender();
-        sender.transferProperties(this,sender);
+        AbstractSender.transferProperties(this,sender);
         return sender;
     }
 

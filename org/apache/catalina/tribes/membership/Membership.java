@@ -63,7 +63,8 @@ public class Membership
       */
     protected Comparator memberComparator = new MemberComparator();
 
-    public Object clone() {
+    @Override
+	public Object clone() {
         synchronized (membersLock) {
             Membership clone = new Membership(local, memberComparator);
             clone.map = (HashMap) map.clone();
@@ -267,7 +268,8 @@ public class Membership
 
     private class MemberComparator implements java.util.Comparator {
 
-        public int compare(Object o1, Object o2) {
+        @Override
+		public int compare(Object o1, Object o2) {
             try {
                 return compare((MemberImpl) o1, (MemberImpl) o2);
             } catch (ClassCastException x) {

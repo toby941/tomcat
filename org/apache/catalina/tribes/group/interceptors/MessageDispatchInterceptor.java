@@ -52,7 +52,8 @@ public class MessageDispatchInterceptor extends ChannelInterceptorBase implement
         setOptionFlag(Channel.SEND_OPTIONS_ASYNCHRONOUS);
     }
 
-    public void sendMessage(Member[] destination, ChannelMessage msg, InterceptorPayload payload) throws ChannelException {
+    @Override
+	public void sendMessage(Member[] destination, ChannelMessage msg, InterceptorPayload payload) throws ChannelException {
         boolean async = (msg.getOptions() & Channel.SEND_OPTIONS_ASYNCHRONOUS) == Channel.SEND_OPTIONS_ASYNCHRONOUS;
         if ( async && run ) {
             if ( (getCurrentSize()+msg.getMessage().getLength()) > maxQueueSize ) {
@@ -100,7 +101,8 @@ public class MessageDispatchInterceptor extends ChannelInterceptorBase implement
     }
     
     
-    public void setOptionFlag(int flag) {
+    @Override
+	public void setOptionFlag(int flag) {
         if ( flag != Channel.SEND_OPTIONS_ASYNCHRONOUS ) log.warn("Warning, you are overriding the asynchronous option flag, this will disable the Channel.SEND_OPTIONS_ASYNCHRONOUS that other apps might use.");
         super.setOptionFlag(flag);
     }
@@ -135,7 +137,8 @@ public class MessageDispatchInterceptor extends ChannelInterceptorBase implement
         return value;
     }
 
-    public void start(int svc) throws ChannelException {
+    @Override
+	public void start(int svc) throws ChannelException {
         //start the thread
         if (!run ) {
             synchronized (this) {
@@ -148,7 +151,8 @@ public class MessageDispatchInterceptor extends ChannelInterceptorBase implement
     }
 
     
-    public void stop(int svc) throws ChannelException {
+    @Override
+	public void stop(int svc) throws ChannelException {
         //stop the thread
         if ( run ) {
             synchronized (this) {
@@ -161,7 +165,8 @@ public class MessageDispatchInterceptor extends ChannelInterceptorBase implement
         super.stop(svc);
     }
     
-    public void run() {
+    @Override
+	public void run() {
         while ( run ) {
             LinkObject link = removeFromQueue();
             if ( link == null ) continue; //should not happen unless we exceed wait time

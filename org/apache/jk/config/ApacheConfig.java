@@ -224,7 +224,8 @@ public class ApacheConfig  extends BaseJkConfig {
     /** Initialize defaults for properties that are not set
 	explicitely
     */
-    protected void initProperties() {
+    @Override
+	protected void initProperties() {
         super.initProperties();
 
 	jkConfig= getConfigFile( jkConfig, configHome, MOD_JK_CONFIG);
@@ -238,7 +239,8 @@ public class ApacheConfig  extends BaseJkConfig {
     }
     // -------------------- Generate config --------------------
     
-    protected PrintWriter getWriter() throws IOException {
+    @Override
+	protected PrintWriter getWriter() throws IOException {
 	String abJkConfig = jkConfig.getAbsolutePath();
 	return new PrintWriter(new FileWriter(abJkConfig, append));
     }
@@ -248,7 +250,8 @@ public class ApacheConfig  extends BaseJkConfig {
 
     /** Generate the loadModule and general options
      */
-    protected boolean generateJkHead(PrintWriter mod_jk)
+    @Override
+	protected boolean generateJkHead(PrintWriter mod_jk)
     {
 
 	mod_jk.println("########## Auto generated on " +  new Date() +
@@ -299,7 +302,8 @@ public class ApacheConfig  extends BaseJkConfig {
 	return true;
     }
 
-    protected void generateVhostHead(Host host, PrintWriter mod_jk) {
+    @Override
+	protected void generateVhostHead(Host host, PrintWriter mod_jk) {
 
         mod_jk.println();
         String vhostip = host.getName();
@@ -321,12 +325,14 @@ public class ApacheConfig  extends BaseJkConfig {
         indent="    ";
     }
 
-    protected void generateVhostTail(Host host, PrintWriter mod_jk) {
+    @Override
+	protected void generateVhostTail(Host host, PrintWriter mod_jk) {
         mod_jk.println("</VirtualHost>");
         indent="";
     }
     
-    protected void generateSSLConfig(PrintWriter mod_jk) {
+    @Override
+	protected void generateSSLConfig(PrintWriter mod_jk) {
 	if( ! sslExtract ) {
 	    mod_jk.println("JkExtractSSL Off");        
 	}
@@ -352,7 +358,8 @@ public class ApacheConfig  extends BaseJkConfig {
     /** Forward all requests for a context to tomcat.
 	The default.
      */
-    protected void generateStupidMappings(Context context,
+    @Override
+	protected void generateStupidMappings(Context context,
 					   PrintWriter mod_jk )
     {
 	String ctxPath  = context.getPath();
@@ -391,7 +398,8 @@ public class ApacheConfig  extends BaseJkConfig {
     // -------------------- Apache serves static mode --------------------
     // This is not going to work for all apps. We fall back to stupid mode.
     
-    protected void generateContextMappings(Context context, PrintWriter mod_jk )
+    @Override
+	protected void generateContextMappings(Context context, PrintWriter mod_jk )
     {
 	String ctxPath  = context.getPath();
 	Host vhost = getHost(context);
@@ -432,7 +440,8 @@ public class ApacheConfig  extends BaseJkConfig {
 
     /** Add an Apache extension mapping.
      */
-    protected boolean addExtensionMapping( String ctxPath, String ext,
+    @Override
+	protected boolean addExtensionMapping( String ctxPath, String ext,
 					 PrintWriter mod_jk )
     {
         if( log.isDebugEnabled() )
@@ -445,7 +454,8 @@ public class ApacheConfig  extends BaseJkConfig {
     
     /** Add a fulling specified Appache mapping.
      */
-    protected boolean addMapping( String fullPath, PrintWriter mod_jk ) {
+    @Override
+	protected boolean addMapping( String fullPath, PrintWriter mod_jk ) {
         if( log.isDebugEnabled() )
             log.debug( "Adding map for " + fullPath );
 	mod_jk.println(indent + "JkMount " + fullPath + "  " + jkWorker );

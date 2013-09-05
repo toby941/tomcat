@@ -37,7 +37,8 @@ public class ChannelJni extends JniHandler implements JkChannel {
         // Easy to change after we get everything working
     }
 
-    public void init() throws IOException {
+    @Override
+	public void init() throws IOException {
         super.initNative("channel.jni:jni");
 
         if( apr==null ) return;
@@ -61,7 +62,8 @@ public class ChannelJni extends JniHandler implements JkChannel {
     /** Receives does nothing - send will put the response
      *  in the same buffer
      */
-    public int receive( Msg msg, MsgContext ep )
+    @Override
+	public int receive( Msg msg, MsgContext ep )
         throws IOException
     {
         Msg sentResponse=(Msg)ep.getNote( receivedNote );
@@ -92,7 +94,8 @@ public class ChannelJni extends JniHandler implements JkChannel {
      *  We could use 2 packets, or sendAndReceive().
      *    
      */
-    public int send( Msg msg, MsgContext ep )
+    @Override
+	public int send( Msg msg, MsgContext ep )
         throws IOException
     {
         ep.setNote( receivedNote, null );
@@ -108,20 +111,24 @@ public class ChannelJni extends JniHandler implements JkChannel {
         return rc;
     }
 
-    public int flush(Msg msg, MsgContext ep) throws IOException {
+    @Override
+	public int flush(Msg msg, MsgContext ep) throws IOException {
         ep.setNote( receivedNote, null );
         return OK;
     }
 
-    public boolean isSameAddress(MsgContext ep) {
+    @Override
+	public boolean isSameAddress(MsgContext ep) {
         return true;
     }
 
-    public void registerRequest(Request req, MsgContext ep, int count) {
+    @Override
+	public void registerRequest(Request req, MsgContext ep, int count) {
         // Not supported.
     }
 
-    public String getChannelName() {
+    @Override
+	public String getChannelName() {
         return getName();
     }
     /** Receive a packet from the C side. This is called from the C
@@ -143,7 +150,8 @@ public class ChannelJni extends JniHandler implements JkChannel {
      *  the conversion done in java ( after we know the encoding and
      *  if anyone asks for it - same lazy behavior as in 3.3 ).
      */
-    public  int invoke(Msg msg, MsgContext ep )  throws IOException {
+    @Override
+	public  int invoke(Msg msg, MsgContext ep )  throws IOException {
         if( apr==null ) return -1;
         
         long xEnv=ep.getJniEnv();

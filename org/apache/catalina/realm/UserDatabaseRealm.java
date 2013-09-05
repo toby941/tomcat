@@ -97,7 +97,8 @@ public class UserDatabaseRealm
      * the corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
 
         return info;
 
@@ -141,7 +142,8 @@ public class UserDatabaseRealm
      * @param principal Principal for whom the role is to be checked
      * @param role Security role to be checked
      */
-    public boolean hasRole(Principal principal, String role) {
+    @Override
+	public boolean hasRole(Principal principal, String role) {
         if( principal instanceof GenericPrincipal) {
             GenericPrincipal gp = (GenericPrincipal)principal;
             if(gp.getUserPrincipal() instanceof User) {
@@ -181,7 +183,8 @@ public class UserDatabaseRealm
     /**
      * Return a short name for this Realm implementation.
      */
-    protected String getName() {
+    @Override
+	protected String getName() {
 
         return (name);
 
@@ -191,7 +194,8 @@ public class UserDatabaseRealm
     /**
      * Return the password associated with the given principal's user name.
      */
-    protected String getPassword(String username) {
+    @Override
+	protected String getPassword(String username) {
 
         User user = database.findUser(username);
 
@@ -207,7 +211,8 @@ public class UserDatabaseRealm
     /**
      * Return the Principal associated with the given user name.
      */
-    protected Principal getPrincipal(String username) {
+    @Override
+	protected Principal getPrincipal(String username) {
 
         User user = database.findUser(username);
         if(user == null) {
@@ -242,7 +247,8 @@ public class UserDatabaseRealm
      * @exception LifecycleException if this component detects a fatal error
      *  that prevents it from being started
      */
-    public synchronized void start() throws LifecycleException {
+    @Override
+	public synchronized void start() throws LifecycleException {
 
         // Perform normal superclass initialization
         super.start();
@@ -271,7 +277,8 @@ public class UserDatabaseRealm
      * @exception LifecycleException if this component detects a fatal error
      *  that needs to be reported
      */
-    public synchronized void stop() throws LifecycleException {
+    @Override
+	public synchronized void stop() throws LifecycleException {
 
         // Perform normal superclass finalization
         super.stop();

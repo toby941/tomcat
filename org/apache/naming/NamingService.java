@@ -67,24 +67,28 @@ public final class NamingService
     // ---------------------------------------------- MBeanRegistration Methods
     
     
-    public ObjectName preRegister(MBeanServer server, ObjectName name)
+    @Override
+	public ObjectName preRegister(MBeanServer server, ObjectName name)
         throws Exception {
         return new ObjectName(OBJECT_NAME);
     }
     
     
-    public void postRegister(Boolean registrationDone) {
+    @Override
+	public void postRegister(Boolean registrationDone) {
         if (!registrationDone.booleanValue())
             destroy();
     }
     
     
-    public void preDeregister()
+    @Override
+	public void preDeregister()
         throws Exception {
     }
     
     
-    public void postDeregister() {
+    @Override
+	public void postDeregister() {
         destroy();
     }
     
@@ -95,7 +99,8 @@ public final class NamingService
     /**
      * Retruns the Catalina component name.
      */
-    public String getName() {
+    @Override
+	public String getName() {
         return NAME;
     }
     
@@ -103,7 +108,8 @@ public final class NamingService
     /**
      * Returns the state.
      */
-    public int getState() {
+    @Override
+	public int getState() {
         return state;
     }
     
@@ -111,7 +117,8 @@ public final class NamingService
     /**
      * Returns a String representation of the state.
      */
-    public String getStateString() {
+    @Override
+	public String getStateString() {
         return states[state];
     }
     
@@ -119,7 +126,8 @@ public final class NamingService
     /**
      * Start the servlet container.
      */
-    public void start()
+    @Override
+	public void start()
         throws Exception {
         
         Notification notification = null;
@@ -178,7 +186,8 @@ public final class NamingService
     /**
      * Stop the servlet container.
      */
-    public void stop() {
+    @Override
+	public void stop() {
         
         Notification notification = null;
         
@@ -219,7 +228,8 @@ public final class NamingService
     /**
      * Destroy servlet container (if any is running).
      */
-    public void destroy() {
+    @Override
+	public void destroy() {
         
         if (getState() != STOPPED)
             stop();

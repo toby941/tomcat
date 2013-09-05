@@ -54,7 +54,8 @@ public class PerThreadTagHandlerPool extends TagHandlerPool {
         perThreadDataVector = new Vector();
     }
 
-    protected void init(ServletConfig config) {
+    @Override
+	protected void init(ServletConfig config) {
         maxSize = Constants.MAX_POOL_SIZE;
         String maxSizeS = getOption(config, OPTION_MAXSIZE, null);
         if (maxSizeS != null) {
@@ -65,7 +66,8 @@ public class PerThreadTagHandlerPool extends TagHandlerPool {
         }
 
         perThread = new ThreadLocal() {
-            protected Object initialValue() {
+            @Override
+			protected Object initialValue() {
                 PerThreadData ptd = new PerThreadData();
                 ptd.handlers = new Tag[maxSize];
                 ptd.current = -1;
@@ -85,7 +87,8 @@ public class PerThreadTagHandlerPool extends TagHandlerPool {
      *
      * @throws JspException if a tag handler cannot be instantiated
      */
-    public Tag get(Class handlerClass) throws JspException {
+    @Override
+	public Tag get(Class handlerClass) throws JspException {
         PerThreadData ptd = (PerThreadData)perThread.get();
         if(ptd.current >=0 ) {
             return ptd.handlers[ptd.current--];
@@ -105,7 +108,8 @@ public class PerThreadTagHandlerPool extends TagHandlerPool {
      *
      * @param handler Tag handler to add to this tag handler pool
      */
-    public void reuse(Tag handler) {
+    @Override
+	public void reuse(Tag handler) {
         PerThreadData ptd=(PerThreadData)perThread.get();
 	if (ptd.current < (ptd.handlers.length - 1)) {
 	    ptd.handlers[++ptd.current] = handler;
@@ -117,7 +121,8 @@ public class PerThreadTagHandlerPool extends TagHandlerPool {
     /**
      * Calls the release() method of all tag handlers in this tag handler pool.
      */
-    public void release() {        
+    @Override
+	public void release() {        
         Enumeration enumeration = perThreadDataVector.elements();
         while (enumeration.hasMoreElements()) {
 	    PerThreadData ptd = (PerThreadData)enumeration.nextElement();

@@ -85,7 +85,8 @@ public class RulesBase implements Rules {
      * Return the Digester instance with which this Rules instance is
      * associated.
      */
-    public Digester getDigester() {
+    @Override
+	public Digester getDigester() {
 
         return (this.digester);
 
@@ -97,7 +98,8 @@ public class RulesBase implements Rules {
      *
      * @param digester The newly associated Digester instance
      */
-    public void setDigester(Digester digester) {
+    @Override
+	public void setDigester(Digester digester) {
 
         this.digester = digester;
         Iterator items = rules.iterator();
@@ -113,7 +115,8 @@ public class RulesBase implements Rules {
      * Return the namespace URI that will be applied to all subsequently
      * added <code>Rule</code> objects.
      */
-    public String getNamespaceURI() {
+    @Override
+	public String getNamespaceURI() {
 
         return (this.namespaceURI);
 
@@ -128,7 +131,8 @@ public class RulesBase implements Rules {
      *  subsequently added rules, or <code>null</code> for matching
      *  regardless of the current namespace URI
      */
-    public void setNamespaceURI(String namespaceURI) {
+    @Override
+	public void setNamespaceURI(String namespaceURI) {
 
         this.namespaceURI = namespaceURI;
 
@@ -144,7 +148,8 @@ public class RulesBase implements Rules {
      * @param pattern Nesting pattern to be matched for this Rule
      * @param rule Rule instance to be registered
      */
-    public void add(String pattern, Rule rule) {
+    @Override
+	public void add(String pattern, Rule rule) {
         // to help users who accidently add '/' to the end of their patterns
         int patternLength = pattern.length();
         if (patternLength>1 && pattern.endsWith("/")) {
@@ -172,7 +177,8 @@ public class RulesBase implements Rules {
     /**
      * Clear all existing Rule instance registrations.
      */
-    public void clear() {
+    @Override
+	public void clear() {
 
         cache.clear();
         rules.clear();
@@ -191,7 +197,9 @@ public class RulesBase implements Rules {
      *
      * @deprecated Call match(namespaceURI,pattern) instead.
      */
-    public List match(String pattern) {
+    @Deprecated
+	@Override
+	public List match(String pattern) {
 
         return (match(null, pattern));
 
@@ -209,7 +217,8 @@ public class RulesBase implements Rules {
      *  or <code>null</code> to match regardless of namespace URI
      * @param pattern Nesting pattern to be matched
      */
-    public List match(String namespaceURI, String pattern) {
+    @Override
+	public List match(String namespaceURI, String pattern) {
 
         // List rulesList = (List) this.cache.get(pattern);
         List rulesList = lookup(namespaceURI, pattern);
@@ -246,7 +255,8 @@ public class RulesBase implements Rules {
      * in the order originally registered through the <code>add()</code>
      * method.
      */
-    public List rules() {
+    @Override
+	public List rules() {
 
         return (this.rules);
 

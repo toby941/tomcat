@@ -160,7 +160,8 @@ public class FileHandler
      *
      * @param  record  description of the log event
      */
-    public void publish(LogRecord record) {
+    @Override
+	public void publish(LogRecord record) {
 
         if (!isLoggable(record)) {
             return;
@@ -226,7 +227,8 @@ public class FileHandler
     /**
      * Close the currently open log file (if any).
      */
-    public void close() {
+    @Override
+	public void close() {
         closeWriter();
     }
 
@@ -252,7 +254,8 @@ public class FileHandler
     /**
      * Flush the writer.
      */
-    public void flush() {
+    @Override
+	public void flush() {
 
         writerLock.readLock().lock();
         try {

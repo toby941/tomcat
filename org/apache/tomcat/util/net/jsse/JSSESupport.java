@@ -77,14 +77,16 @@ class JSSESupport implements SSLSupport {
         this.session = session;
     }
 
-    public String getCipherSuite() throws IOException {
+    @Override
+	public String getCipherSuite() throws IOException {
         // Look up the current SSLSession
         if (session == null)
             return null;
         return session.getCipherSuite();
     }
 
-    public Object[] getPeerCertificateChain() 
+    @Override
+	public Object[] getPeerCertificateChain() 
         throws IOException {
         return getPeerCertificateChain(false);
     }
@@ -128,7 +130,8 @@ class JSSESupport implements SSLSupport {
         return x509Certs;
     }
 
-    public Object[] getPeerCertificateChain(boolean force)
+    @Override
+	public Object[] getPeerCertificateChain(boolean force)
         throws IOException {
         // Look up the current SSLSession
         if (session == null)
@@ -206,7 +209,8 @@ class JSSESupport implements SSLSupport {
     /**
      * Copied from <code>org.apache.catalina.valves.CertificateValve</code>
      */
-    public Integer getKeySize() 
+    @Override
+	public Integer getKeySize() 
         throws IOException {
         // Look up the current SSLSession
         SSLSupport.CipherData c_aux[]=ciphers;
@@ -235,7 +239,8 @@ class JSSESupport implements SSLSupport {
         return keySize;
     }
 
-    public String getSessionId()
+    @Override
+	public String getSessionId()
         throws IOException {
         // Look up the current SSLSession
         if (session == null)
@@ -246,7 +251,7 @@ class JSSESupport implements SSLSupport {
             return null;
         StringBuffer buf=new StringBuffer("");
         for(int x=0; x<ssl_session.length; x++) {
-            String digit=Integer.toHexString((int)ssl_session[x]);
+            String digit=Integer.toHexString(ssl_session[x]);
             if (digit.length()<2) buf.append('0');
             if (digit.length()>2) digit=digit.substring(digit.length()-2);
             buf.append(digit);
@@ -257,7 +262,8 @@ class JSSESupport implements SSLSupport {
 
     private static class Listener implements HandshakeCompletedListener {
         volatile boolean completed = false;
-        public void handshakeCompleted(HandshakeCompletedEvent event) {
+        @Override
+		public void handshakeCompleted(HandshakeCompletedEvent event) {
             completed = true;
         }
         void reset() {

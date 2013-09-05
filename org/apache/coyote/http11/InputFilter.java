@@ -37,7 +37,8 @@ public interface InputFilter extends InputBuffer {
      * 
      * @return Number of bytes read.
      */
-    public int doRead(ByteChunk chunk, Request unused)
+    @Override
+	public int doRead(ByteChunk chunk, Request unused)
         throws IOException;
 
 

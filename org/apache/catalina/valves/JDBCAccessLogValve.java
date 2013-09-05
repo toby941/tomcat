@@ -456,7 +456,8 @@ public final class JDBCAccessLogValve extends ValveBase
      * @exception ServletException Database SQLException is wrapped 
      * in a ServletException.
      */    
-    public void invoke(Request request, Response response) 
+    @Override
+	public void invoke(Request request, Response response) 
         throws IOException, ServletException {
         
         getNext().invoke(request, response);
@@ -465,7 +466,8 @@ public final class JDBCAccessLogValve extends ValveBase
     }
 
 
-    public void log(Request request, Response response, long time) {
+    @Override
+	public void log(Request request, Response response, long time) {
         final String EMPTY = "" ;
         
         String remoteHost;
@@ -542,7 +544,8 @@ public final class JDBCAccessLogValve extends ValveBase
      * 
      * @param listener The listener to add.
      */  
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
 
         lifecycle.addLifecycleListener(listener);
 
@@ -553,7 +556,8 @@ public final class JDBCAccessLogValve extends ValveBase
      * Get the lifecycle listeners associated with this lifecycle. If this 
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
 
         return lifecycle.findLifecycleListeners();
 
@@ -565,7 +569,8 @@ public final class JDBCAccessLogValve extends ValveBase
      * 
      * @param listener The listener to remove.
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
 
         lifecycle.removeLifecycleListener(listener);
 
@@ -656,7 +661,8 @@ public final class JDBCAccessLogValve extends ValveBase
      * @exception LifecycleException Can be thrown on lifecycle 
      * inconsistencies or on database errors (as a wrapped SQLException).
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
 
         if (started)
             throw new LifecycleException
@@ -679,7 +685,8 @@ public final class JDBCAccessLogValve extends ValveBase
      * @exception LifecycleException Can be thrown on lifecycle 
      * inconsistencies or on database errors (as a wrapped SQLException).
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         if (!started)
             throw new LifecycleException

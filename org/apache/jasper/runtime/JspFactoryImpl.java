@@ -50,13 +50,14 @@ public class JspFactoryImpl extends JspFactory {
 
     private ThreadLocal<PageContextPool> localPool = new ThreadLocal<PageContextPool>();
 
-    public PageContext getPageContext(Servlet servlet, ServletRequest request,
+    @Override
+	public PageContext getPageContext(Servlet servlet, ServletRequest request,
             ServletResponse response, String errorPageURL, boolean needsSession,
             int bufferSize, boolean autoflush) {
 
         if( Constants.IS_SECURITY_ENABLED ) {
             PrivilegedGetPageContext dp = new PrivilegedGetPageContext(
-                    (JspFactoryImpl)this, servlet, request, response, errorPageURL,
+                    this, servlet, request, response, errorPageURL,
                     needsSession, bufferSize, autoflush);
             return (PageContext)AccessController.doPrivileged(dp);
         } else {
@@ -66,21 +67,24 @@ public class JspFactoryImpl extends JspFactory {
         }
     }
 
-    public void releasePageContext(PageContext pc) {
+    @Override
+	public void releasePageContext(PageContext pc) {
         if( pc == null )
             return;
         if( Constants.IS_SECURITY_ENABLED ) {
             PrivilegedReleasePageContext dp = new PrivilegedReleasePageContext(
-                    (JspFactoryImpl)this,pc);
+                    this,pc);
             AccessController.doPrivileged(dp);
         } else {
             internalReleasePageContext(pc);
         }
     }
 
-    public JspEngineInfo getEngineInfo() {
+    @Override
+	public JspEngineInfo getEngineInfo() {
         return new JspEngineInfo() {
-            public String getSpecificationVersion() {
+            @Override
+			public String getSpecificationVersion() {
                 return SPEC_VERSION;
             }
         };
@@ -145,7 +149,8 @@ public class JspFactoryImpl extends JspFactory {
             this.autoflush = autoflush;
         }
 
-        public Object run() {
+        @Override
+		public Object run() {
             return factory.internalGetPageContext(servlet, request, response,
                     errorPageURL, needsSession, bufferSize, autoflush);
         }
@@ -162,7 +167,8 @@ public class JspFactoryImpl extends JspFactory {
             this.pageContext = pageContext;
         }
 
-        public Object run() {
+        @Override
+		public Object run() {
             factory.internalReleasePageContext(pageContext);
             return null;
         }
@@ -196,12 +202,14 @@ public class JspFactoryImpl extends JspFactory {
 
     }
 
-    public JspApplicationContext getJspApplicationContext(
+    @Override
+	public JspApplicationContext getJspApplicationContext(
             final ServletContext context) {
         if (Constants.IS_SECURITY_ENABLED) {
             return AccessController.doPrivileged(
                     new PrivilegedAction<JspApplicationContext>() {
-                public JspApplicationContext run() {
+                @Override
+				public JspApplicationContext run() {
                     return JspApplicationContextImpl.getInstance(context);
                 }
             });

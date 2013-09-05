@@ -59,14 +59,16 @@ public class GeneratorApache2 implements WebXml2Jk.MappingGenerator {
     String worker;
     PrintWriter out;
     
-    public void setWebXmlReader(WebXml2Jk wxml ) {
+    @Override
+	public void setWebXmlReader(WebXml2Jk wxml ) {
         this.wxml=wxml;
         vhost=wxml.vhost;
         cpath=wxml.cpath;
         worker=wxml.worker;
     }
 
-    public void generateStart() throws IOException {
+    @Override
+	public void generateStart() throws IOException {
         File base=wxml.getJkDir();
         File outF=new File(base, "jk2.conf");
         out=new PrintWriter( new FileWriter( outF ));
@@ -119,11 +121,13 @@ public class GeneratorApache2 implements WebXml2Jk.MappingGenerator {
 
     }
 
-    public void generateEnd() {
+    @Override
+	public void generateEnd() {
         out.close();
     }
     
-    public void generateServletMapping( String servlet, String url ) {
+    @Override
+	public void generateServletMapping( String servlet, String url ) {
         out.println( "<Location \"" + cpath + url + "\" >");
         out.println( "  SetHandler jakarta-servlet2" );
         out.println( "  JkUriSet group " + worker );
@@ -134,7 +138,8 @@ public class GeneratorApache2 implements WebXml2Jk.MappingGenerator {
         out.println();
     }
 
-    public void generateFilterMapping( String servlet, String url ) {
+    @Override
+	public void generateFilterMapping( String servlet, String url ) {
         out.println( "<Location \"" + cpath + url + "\" >");
         out.println( "  SetHandler jakarta-servlet2" );
         out.println( "  JkUriSet group " + worker );
@@ -145,7 +150,8 @@ public class GeneratorApache2 implements WebXml2Jk.MappingGenerator {
         out.println();
     }
 
-    public void generateLoginConfig( String loginPage,
+    @Override
+	public void generateLoginConfig( String loginPage,
                                      String errPage, String authM ) {
         out.println( "<Location \"" + cpath + loginPage + "\" >");
         out.println( "  SetHandler jakarta-servlet2" );
@@ -156,12 +162,14 @@ public class GeneratorApache2 implements WebXml2Jk.MappingGenerator {
         out.println();
     }
 
-    public void generateErrorPage( int err, String location ) {
+    @Override
+	public void generateErrorPage( int err, String location ) {
         
     }
 
     // XXX Only if BASIC/DIGEST and 'integrated auth'
-    public void generateConstraints( Vector urls, Vector methods, Vector roles, boolean isSSL ) {
+    @Override
+	public void generateConstraints( Vector urls, Vector methods, Vector roles, boolean isSSL ) {
         for( int i=0; i<urls.size(); i++ ) {
             String url=(String)urls.elementAt(i);
 

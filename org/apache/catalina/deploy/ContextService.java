@@ -19,7 +19,6 @@
 package org.apache.catalina.deploy;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.HashMap;
 
@@ -183,7 +182,8 @@ public class ContextService extends ResourceBase implements Serializable {
     /**
      * Return a String representation of this object.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("ContextService[");
         sb.append("name=");

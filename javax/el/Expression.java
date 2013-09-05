@@ -24,9 +24,11 @@ import java.io.Serializable;
  */
 public abstract class Expression implements Serializable {
 
-    public abstract boolean equals(Object obj);
+    @Override
+	public abstract boolean equals(Object obj);
 
-    public abstract int hashCode();
+    @Override
+	public abstract int hashCode();
     
     public abstract String getExpressionString();
     

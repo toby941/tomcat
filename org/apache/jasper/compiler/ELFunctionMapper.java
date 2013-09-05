@@ -75,38 +75,45 @@ public class ELFunctionMapper {
          */
         private HashMap<String, String> gMap = new HashMap<String, String>();
 
-        public void visit(Node.ParamAction n) throws JasperException {
+        @Override
+		public void visit(Node.ParamAction n) throws JasperException {
             doMap(n.getValue());
             visitBody(n);
         }
 
-        public void visit(Node.IncludeAction n) throws JasperException {
+        @Override
+		public void visit(Node.IncludeAction n) throws JasperException {
             doMap(n.getPage());
             visitBody(n);
         }
 
-        public void visit(Node.ForwardAction n) throws JasperException {
+        @Override
+		public void visit(Node.ForwardAction n) throws JasperException {
             doMap(n.getPage());
             visitBody(n);
         }
 
-        public void visit(Node.SetProperty n) throws JasperException {
+        @Override
+		public void visit(Node.SetProperty n) throws JasperException {
             doMap(n.getValue());
             visitBody(n);
         }
 
-        public void visit(Node.UseBean n) throws JasperException {
+        @Override
+		public void visit(Node.UseBean n) throws JasperException {
             doMap(n.getBeanName());
             visitBody(n);
         }
 
-        public void visit(Node.PlugIn n) throws JasperException {
+        @Override
+		public void visit(Node.PlugIn n) throws JasperException {
             doMap(n.getHeight());
             doMap(n.getWidth());
             visitBody(n);
         }
 
-        public void visit(Node.JspElement n) throws JasperException {
+        @Override
+		public void visit(Node.JspElement n) throws JasperException {
 
             Node.JspAttribute[] attrs = n.getJspAttributes();
             for (int i = 0; attrs != null && i < attrs.length; i++) {
@@ -116,7 +123,8 @@ public class ELFunctionMapper {
             visitBody(n);
         }
 
-        public void visit(Node.UninterpretedTag n) throws JasperException {
+        @Override
+		public void visit(Node.UninterpretedTag n) throws JasperException {
 
             Node.JspAttribute[] attrs = n.getJspAttributes();
             for (int i = 0; attrs != null && i < attrs.length; i++) {
@@ -125,7 +133,8 @@ public class ELFunctionMapper {
             visitBody(n);
         }
 
-        public void visit(Node.CustomTag n) throws JasperException {
+        @Override
+		public void visit(Node.CustomTag n) throws JasperException {
             Node.JspAttribute[] attrs = n.getJspAttributes();
             for (int i = 0; attrs != null && i < attrs.length; i++) {
                 doMap(attrs[i]);
@@ -133,7 +142,8 @@ public class ELFunctionMapper {
             visitBody(n);
         }
 
-        public void visit(Node.ELExpression n) throws JasperException {
+        @Override
+		public void visit(Node.ELExpression n) throws JasperException {
             doMap(n.getEL());
         }
 
@@ -155,7 +165,8 @@ public class ELFunctionMapper {
                 ArrayList<ELNode.Function> funcs =
                     new ArrayList<ELNode.Function>();
                 HashMap<String, String> keyMap = new HashMap<String, String>();
-                public void visit(ELNode.Function n) throws JasperException {
+                @Override
+				public void visit(ELNode.Function n) throws JasperException {
                     String key = n.getPrefix() + ":" + n.getName();
                     if (! keyMap.containsKey(key)) {
                         keyMap.put(key,"");
@@ -259,7 +270,7 @@ public class ELFunctionMapper {
             String mapName = null;
             for (int i = 0; i < functions.size(); i++) {
                 ELNode.Function f = (ELNode.Function)functions.get(i);
-                String temName = (String) gMap.get(f.getPrefix() + ':' +
+                String temName = gMap.get(f.getPrefix() + ':' +
                                         f.getName() + ':' + f.getUri());
                 if (temName == null) {
                     return null;
@@ -311,7 +322,8 @@ public class ELFunctionMapper {
     private static class PrivilegedGetTccl
             implements PrivilegedAction<ClassLoader> {
 
-        public ClassLoader run() {
+        @Override
+		public ClassLoader run() {
             return Thread.currentThread().getContextClassLoader();
         }
     }

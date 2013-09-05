@@ -106,7 +106,8 @@ public class IdentityInputFilter implements InputFilter {
      * whichever is greater. If the filter does not do request body length
      * control, the returned value should be -1.
      */
-    public int doRead(ByteChunk chunk, Request req)
+    @Override
+	public int doRead(ByteChunk chunk, Request req)
         throws IOException {
 
         int result = -1;
@@ -144,7 +145,8 @@ public class IdentityInputFilter implements InputFilter {
     /**
      * Read the content length from the request.
      */
-    public void setRequest(Request request) {
+    @Override
+	public void setRequest(Request request) {
         contentLength = request.getContentLengthLong();
         remaining = contentLength;
     }
@@ -153,7 +155,8 @@ public class IdentityInputFilter implements InputFilter {
     /**
      * End the current request.
      */
-    public long end()
+    @Override
+	public long end()
         throws IOException {
 
         // Consume extra bytes.
@@ -175,7 +178,8 @@ public class IdentityInputFilter implements InputFilter {
     /**
      * Amount of bytes still available in a buffer.
      */
-    public int available() {
+    @Override
+	public int available() {
         return 0;
     }
     
@@ -183,7 +187,8 @@ public class IdentityInputFilter implements InputFilter {
     /**
      * Set the next buffer in the filter pipeline.
      */
-    public void setBuffer(InputBuffer buffer) {
+    @Override
+	public void setBuffer(InputBuffer buffer) {
         this.buffer = buffer;
     }
 
@@ -191,7 +196,8 @@ public class IdentityInputFilter implements InputFilter {
     /**
      * Make the filter ready to process the next request.
      */
-    public void recycle() {
+    @Override
+	public void recycle() {
         contentLength = -1;
         remaining = 0;
         endChunk.recycle();
@@ -202,7 +208,8 @@ public class IdentityInputFilter implements InputFilter {
      * Return the name of the associated encoding; Here, the value is 
      * "identity".
      */
-    public ByteChunk getEncodingName() {
+    @Override
+	public ByteChunk getEncodingName() {
         return ENCODING;
     }
 

@@ -50,7 +50,8 @@ public class SetRootRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #SetRootRule(String methodName)} instead.
      */
-    public SetRootRule(Digester digester, String methodName) {
+    @Deprecated
+	public SetRootRule(Digester digester, String methodName) {
 
         this(methodName);
 
@@ -70,7 +71,8 @@ public class SetRootRule extends Rule {
      * @deprecated The digester instance is now set in the {@link Digester#addRule} method. 
      * Use {@link #SetRootRule(String methodName,String paramType)} instead.
      */
-    public SetRootRule(Digester digester, String methodName,
+    @Deprecated
+	public SetRootRule(Digester digester, String methodName,
                        String paramType) {
 
         this(methodName, paramType);
@@ -173,7 +175,8 @@ public class SetRootRule extends Rule {
     /**
      * Process the end of this element.
      */
-    public void end() throws Exception {
+    @Override
+	public void end() throws Exception {
 
         // Identify the objects to be used
         Object child = digester.peek(0);
@@ -200,7 +203,8 @@ public class SetRootRule extends Rule {
     /**
      * Render a printable version of this Rule.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         StringBuffer sb = new StringBuffer("SetRootRule[");
         sb.append("methodName=");

@@ -48,11 +48,13 @@ public final class JspValueExpression extends ValueExpression implements
         this.mark = mark;
     }
 
-    public Class<?> getExpectedType() {
+    @Override
+	public Class<?> getExpectedType() {
         return this.target.getExpectedType();
     }
 
-    public Class<?> getType(ELContext context) throws NullPointerException,
+    @Override
+	public Class<?> getType(ELContext context) throws NullPointerException,
             PropertyNotFoundException, ELException {
         try {
             return this.target.getType(context);
@@ -65,7 +67,8 @@ public final class JspValueExpression extends ValueExpression implements
         }
     }
 
-    public boolean isReadOnly(ELContext context) throws NullPointerException,
+    @Override
+	public boolean isReadOnly(ELContext context) throws NullPointerException,
             PropertyNotFoundException, ELException {
         try {
             return this.target.isReadOnly(context);
@@ -78,7 +81,8 @@ public final class JspValueExpression extends ValueExpression implements
         }
     }
 
-    public void setValue(ELContext context, Object value)
+    @Override
+	public void setValue(ELContext context, Object value)
             throws NullPointerException, PropertyNotFoundException,
             PropertyNotWritableException, ELException {
         try {
@@ -95,7 +99,8 @@ public final class JspValueExpression extends ValueExpression implements
         }
     }
 
-    public Object getValue(ELContext context) throws NullPointerException,
+    @Override
+	public Object getValue(ELContext context) throws NullPointerException,
             PropertyNotFoundException, ELException {
         try {
             return this.target.getValue(context);
@@ -108,28 +113,34 @@ public final class JspValueExpression extends ValueExpression implements
         }
     }
 
-    public boolean equals(Object obj) {
+    @Override
+	public boolean equals(Object obj) {
         return this.target.equals(obj);
     }
 
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.target.hashCode();
     }
 
-    public String getExpressionString() {
+    @Override
+	public String getExpressionString() {
         return this.target.getExpressionString();
     }
 
-    public boolean isLiteralText() {
+    @Override
+	public boolean isLiteralText() {
         return this.target.isLiteralText();
     }
 
-    public void writeExternal(ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(ObjectOutput out) throws IOException {
         out.writeUTF(this.mark);
         out.writeObject(this.target);
     }
 
-    public void readExternal(ObjectInput in) throws IOException,
+    @Override
+	public void readExternal(ObjectInput in) throws IOException,
             ClassNotFoundException {
         this.mark = in.readUTF();
         this.target = (ValueExpression) in.readObject();

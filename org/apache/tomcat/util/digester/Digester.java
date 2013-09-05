@@ -83,7 +83,8 @@ public class Digester extends DefaultHandler {
 
     private static class SystemPropertySource 
         implements IntrospectionUtils.PropertySource {
-        public String getProperty( String key ) {
+        @Override
+		public String getProperty( String key ) {
             return System.getProperty(key);
         }
     }
@@ -206,7 +207,8 @@ public class Digester extends DefaultHandler {
     /**
      * @deprecated This is now managed by {@link ParserFeatureSetterFactory}
      */
-    protected String JAXP_SCHEMA_LANGUAGE =
+    @Deprecated
+	protected String JAXP_SCHEMA_LANGUAGE =
         "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
     
     
@@ -444,7 +446,8 @@ public class Digester extends DefaultHandler {
      * @deprecated This method now always returns 0. This copy of Digester uses
      * JULI; see the documentation for that library for more information.
      */
-    public int getDebug() {
+    @Deprecated
+	public int getDebug() {
 
         return (0);
 
@@ -460,7 +463,8 @@ public class Digester extends DefaultHandler {
      * @deprecated This method now has no effect at all. This copy of Digester
      * uses JULI; see the documentation for that library for more information.
      */
-    public void setDebug(int debug) {
+    @Deprecated
+	public void setDebug(int debug) {
 
         ; // No action is taken
 
@@ -764,7 +768,8 @@ public class Digester extends DefaultHandler {
      * @deprecated Use getXMLReader() instead, which can throw a
      *  SAXException if the reader cannot be instantiated
      */
-    public XMLReader getReader() {
+    @Deprecated
+	public XMLReader getReader() {
 
         try {
             return (getXMLReader());
@@ -1003,7 +1008,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing error is to be reported
      */
-    public void characters(char buffer[], int start, int length)
+    @Override
+	public void characters(char buffer[], int start, int length)
             throws SAXException {
 
         if (saxLog.isDebugEnabled()) {
@@ -1020,7 +1026,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing error is to be reported
      */
-    public void endDocument() throws SAXException {
+    @Override
+	public void endDocument() throws SAXException {
 
         if (saxLog.isDebugEnabled()) {
             if (getCount() > 1) {
@@ -1068,7 +1075,8 @@ public class Digester extends DefaultHandler {
      *   empty string if qualified names are not available.
      * @exception SAXException if a parsing error is to be reported
      */
-    public void endElement(String namespaceURI, String localName,
+    @Override
+	public void endElement(String namespaceURI, String localName,
                            String qName) throws SAXException {
 
         boolean debug = log.isDebugEnabled();
@@ -1164,7 +1172,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing error is to be reported
      */
-    public void endPrefixMapping(String prefix) throws SAXException {
+    @Override
+	public void endPrefixMapping(String prefix) throws SAXException {
 
         if (saxLog.isDebugEnabled()) {
             saxLog.debug("endPrefixMapping(" + prefix + ")");
@@ -1196,7 +1205,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing error is to be reported
      */
-    public void ignorableWhitespace(char buffer[], int start, int len)
+    @Override
+	public void ignorableWhitespace(char buffer[], int start, int len)
             throws SAXException {
 
         if (saxLog.isDebugEnabled()) {
@@ -1217,7 +1227,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing error is to be reported
      */
-    public void processingInstruction(String target, String data)
+    @Override
+	public void processingInstruction(String target, String data)
             throws SAXException {
 
         if (saxLog.isDebugEnabled()) {
@@ -1245,7 +1256,8 @@ public class Digester extends DefaultHandler {
      *
      * @param locator The new locator
      */
-    public void setDocumentLocator(Locator locator) {
+    @Override
+	public void setDocumentLocator(Locator locator) {
 
         if (saxLog.isDebugEnabled()) {
             saxLog.debug("setDocumentLocator(" + locator + ")");
@@ -1263,7 +1275,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing error is to be reported
      */
-    public void skippedEntity(String name) throws SAXException {
+    @Override
+	public void skippedEntity(String name) throws SAXException {
 
         if (saxLog.isDebugEnabled()) {
             saxLog.debug("skippedEntity(" + name + ")");
@@ -1279,7 +1292,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing error is to be reported
      */
-    public void startDocument() throws SAXException {
+    @Override
+	public void startDocument() throws SAXException {
 
         if (saxLog.isDebugEnabled()) {
             saxLog.debug("startDocument()");
@@ -1305,7 +1319,8 @@ public class Digester extends DefaultHandler {
      *   no attributes, it shall be an empty Attributes object. 
      * @exception SAXException if a parsing error is to be reported
      */
-    public void startElement(String namespaceURI, String localName,
+    @Override
+	public void startElement(String namespaceURI, String localName,
                              String qName, Attributes list)
             throws SAXException {
         boolean debug = log.isDebugEnabled();
@@ -1379,7 +1394,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing error is to be reported
      */
-    public void startPrefixMapping(String prefix, String namespaceURI)
+    @Override
+	public void startPrefixMapping(String prefix, String namespaceURI)
             throws SAXException {
 
         if (saxLog.isDebugEnabled()) {
@@ -1407,7 +1423,8 @@ public class Digester extends DefaultHandler {
      * @param publicId The public identifier (if any)
      * @param systemId The system identifier (if any)
      */
-    public void notationDecl(String name, String publicId, String systemId) {
+    @Override
+	public void notationDecl(String name, String publicId, String systemId) {
 
         if (saxLog.isDebugEnabled()) {
             saxLog.debug("notationDecl(" + name + "," + publicId + "," +
@@ -1425,7 +1442,8 @@ public class Digester extends DefaultHandler {
      * @param systemId The system identifier (if any)
      * @param notation The name of the associated notation
      */
-    public void unparsedEntityDecl(String name, String publicId,
+    @Override
+	public void unparsedEntityDecl(String name, String publicId,
                                    String systemId, String notation) {
 
         if (saxLog.isDebugEnabled()) {
@@ -1466,7 +1484,8 @@ public class Digester extends DefaultHandler {
      * @exception SAXException if a parsing exception occurs
      * 
      */
-    public InputSource resolveEntity(String publicId, String systemId)
+    @Override
+	public InputSource resolveEntity(String publicId, String systemId)
             throws SAXException {     
                 
         if (saxLog.isDebugEnabled()) {
@@ -1528,7 +1547,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing exception occurs
      */
-    public void error(SAXParseException exception) throws SAXException {
+    @Override
+	public void error(SAXParseException exception) throws SAXException {
 
         log.error("Parse Error at line " + exception.getLineNumber() +
                 " column " + exception.getColumnNumber() + ": " +
@@ -1548,7 +1568,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing exception occurs
      */
-    public void fatalError(SAXParseException exception) throws SAXException {
+    @Override
+	public void fatalError(SAXParseException exception) throws SAXException {
 
         log.error("Parse Fatal Error at line " + exception.getLineNumber() +
                 " column " + exception.getColumnNumber() + ": " +
@@ -1568,7 +1589,8 @@ public class Digester extends DefaultHandler {
      *
      * @exception SAXException if a parsing exception occurs
      */
-    public void warning(SAXParseException exception) throws SAXException {
+    @Override
+	public void warning(SAXParseException exception) throws SAXException {
          if (errorHandler != null) {
             log.warn("Parse Warning Error at line " + exception.getLineNumber() +
                 " column " + exception.getColumnNumber() + ": " +
@@ -1589,7 +1611,8 @@ public class Digester extends DefaultHandler {
      * @param message The message to be logged
      * @deprecated Call getLogger() and use it's logging methods
      */
-    public void log(String message) {
+    @Deprecated
+	public void log(String message) {
 
         log.info(message);
 
@@ -1602,7 +1625,8 @@ public class Digester extends DefaultHandler {
      * @param message The message to be logged
      * @deprecated Call getLogger() and use it's logging methods
      */
-    public void log(String message, Throwable exception) {
+    @Deprecated
+	public void log(String message, Throwable exception) {
 
         log.error(message, exception);
 
@@ -2698,7 +2722,8 @@ public class Digester extends DefaultHandler {
      * @deprecated Call <code>match()</code> on the <code>Rules</code>
      *  implementation returned by <code>getRules()</code>
      */
-    List getRules(String match) {
+    @Deprecated
+	List getRules(String match) {
 
         return (getRules().match(match));
 

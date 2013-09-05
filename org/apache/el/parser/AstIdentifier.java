@@ -40,7 +40,8 @@ public final class AstIdentifier extends SimpleNode {
         super(id);
     }
 
-    public Class getType(EvaluationContext ctx) throws ELException {
+    @Override
+	public Class getType(EvaluationContext ctx) throws ELException {
         VariableMapper varMapper = ctx.getVariableMapper();
         if (varMapper != null) {
             ValueExpression expr = varMapper.resolveVariable(this.image);
@@ -57,7 +58,8 @@ public final class AstIdentifier extends SimpleNode {
         return result;
     }
 
-    public Object getValue(EvaluationContext ctx) throws ELException {
+    @Override
+	public Object getValue(EvaluationContext ctx) throws ELException {
         VariableMapper varMapper = ctx.getVariableMapper();
         if (varMapper != null) {
             ValueExpression expr = varMapper.resolveVariable(this.image);
@@ -74,7 +76,8 @@ public final class AstIdentifier extends SimpleNode {
         return result;
     }
 
-    public boolean isReadOnly(EvaluationContext ctx) throws ELException {
+    @Override
+	public boolean isReadOnly(EvaluationContext ctx) throws ELException {
         VariableMapper varMapper = ctx.getVariableMapper();
         if (varMapper != null) {
             ValueExpression expr = varMapper.resolveVariable(this.image);
@@ -91,7 +94,8 @@ public final class AstIdentifier extends SimpleNode {
         return result;
     }
 
-    public void setValue(EvaluationContext ctx, Object value)
+    @Override
+	public void setValue(EvaluationContext ctx, Object value)
             throws ELException {
         VariableMapper varMapper = ctx.getVariableMapper();
         if (varMapper != null) {
@@ -126,13 +130,15 @@ public final class AstIdentifier extends SimpleNode {
         }
     }
 
-    public Object invoke(EvaluationContext ctx, Class[] paramTypes,
+    @Override
+	public Object invoke(EvaluationContext ctx, Class[] paramTypes,
             Object[] paramValues) throws ELException {
         return this.getMethodExpression(ctx).invoke(ctx.getELContext(), paramValues);
     }
     
 
-    public MethodInfo getMethodInfo(EvaluationContext ctx, Class[] paramTypes)
+    @Override
+	public MethodInfo getMethodInfo(EvaluationContext ctx, Class[] paramTypes)
             throws ELException {
         return this.getMethodExpression(ctx).getMethodInfo(ctx.getELContext());
     }

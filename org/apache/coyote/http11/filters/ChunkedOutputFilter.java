@@ -103,7 +103,8 @@ public class ChunkedOutputFilter implements OutputFilter {
      * 
      * @return number of bytes written by the filter
      */
-    public int doWrite(ByteChunk chunk, Response res)
+    @Override
+	public int doWrite(ByteChunk chunk, Response res)
         throws IOException {
 
         int result = chunk.getLength();
@@ -141,14 +142,16 @@ public class ChunkedOutputFilter implements OutputFilter {
      * necessary reading can occur in that method, as this method is called
      * after the response header processing is complete.
      */
-    public void setResponse(Response response) {
+    @Override
+	public void setResponse(Response response) {
     }
 
 
     /**
      * Set the next buffer in the filter pipeline.
      */
-    public void setBuffer(OutputBuffer buffer) {
+    @Override
+	public void setBuffer(OutputBuffer buffer) {
         this.buffer = buffer;
     }
 
@@ -157,7 +160,8 @@ public class ChunkedOutputFilter implements OutputFilter {
      * End the current request. It is acceptable to write extra bytes using
      * buffer.doWrite during the execution of this method.
      */
-    public long end()
+    @Override
+	public long end()
         throws IOException {
 
         // Write end chunk
@@ -171,7 +175,8 @@ public class ChunkedOutputFilter implements OutputFilter {
     /**
      * Make the filter ready to process the next request.
      */
-    public void recycle() {
+    @Override
+	public void recycle() {
     }
 
 
@@ -179,7 +184,8 @@ public class ChunkedOutputFilter implements OutputFilter {
      * Return the name of the associated encoding; Here, the value is 
      * "identity".
      */
-    public ByteChunk getEncodingName() {
+    @Override
+	public ByteChunk getEncodingName() {
         return ENCODING;
     }
 

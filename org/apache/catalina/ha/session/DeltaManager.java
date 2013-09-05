@@ -167,18 +167,21 @@ public class DeltaManager extends ClusterManagerBase{
      * corresponding version number, in the format
      * <code>&lt;description&gt;/&lt;version&gt;</code>.
      */
-    public String getInfo() {
+    @Override
+	public String getInfo() {
         return info;
     }
 
-    public void setName(String name) {
+    @Override
+	public void setName(String name) {
         this.name = name;
     }
 
     /**
      * Return the descriptive short name of this Manager implementation.
      */
-    public String getName() {
+    @Override
+	public String getName() {
         return name;
     }
 
@@ -305,7 +308,8 @@ public class DeltaManager extends ClusterManagerBase{
     /**
      * @return Returns the processingTime.
      */
-    public long getProcessingTime() {
+    @Override
+	public long getProcessingTime() {
         return processingTime;
     }
  
@@ -321,11 +325,13 @@ public class DeltaManager extends ClusterManagerBase{
      * 
      * @return The count
      */
-    public int getRejectedSessions() {
+    @Override
+	public int getRejectedSessions() {
         return rejectedSessions;
     }
 
-    public void setRejectedSessions(int rejectedSessions) {
+    @Override
+	public void setRejectedSessions(int rejectedSessions) {
         this.rejectedSessions = rejectedSessions;
     }
 
@@ -394,14 +400,16 @@ public class DeltaManager extends ClusterManagerBase{
     /**
      * @return Returns the sendClusterDomainOnly.
      */
-    public boolean doDomainReplication() {
+    @Override
+	public boolean doDomainReplication() {
         return sendClusterDomainOnly;
     }
     
     /**
      * @param sendClusterDomainOnly The sendClusterDomainOnly to set.
      */
-    public void setDomainReplication(boolean sendClusterDomainOnly) {
+    @Override
+	public void setDomainReplication(boolean sendClusterDomainOnly) {
         this.sendClusterDomainOnly = sendClusterDomainOnly;
     }
 
@@ -490,7 +498,8 @@ public class DeltaManager extends ClusterManagerBase{
         this.expireSessionsOnShutdown = expireSessionsOnShutdown;
     }
     
-    public boolean isNotifyListenersOnReplication() {
+    @Override
+	public boolean isNotifyListenersOnReplication() {
         return notifyListenersOnReplication;
     }
 
@@ -510,21 +519,25 @@ public class DeltaManager extends ClusterManagerBase{
     /**
      * @return Returns the defaultMode.
      */
-    public boolean isDefaultMode() {
+    @Override
+	public boolean isDefaultMode() {
         return defaultMode;
     }
     /**
      * @param defaultMode The defaultMode to set.
      */
-    public void setDefaultMode(boolean defaultMode) {
+    @Override
+	public void setDefaultMode(boolean defaultMode) {
         this.defaultMode = defaultMode;
     }
     
-    public CatalinaCluster getCluster() {
+    @Override
+	public CatalinaCluster getCluster() {
         return cluster;
     }
 
-    public void setCluster(CatalinaCluster cluster) {
+    @Override
+	public void setCluster(CatalinaCluster cluster) {
         this.cluster = cluster;
     }
 
@@ -536,7 +549,8 @@ public class DeltaManager extends ClusterManagerBase{
      * @param container
      *            The associated Container
      */
-    public void setContainer(Container container) {
+    @Override
+	public void setContainer(Container container) {
         // De-register from the old Container (if any)
         if ((this.container != null) && (this.container instanceof Context))
             ((Context) this.container).removePropertyChangeListener(this);
@@ -573,7 +587,8 @@ public class DeltaManager extends ClusterManagerBase{
      * @exception IllegalStateException
      *                if a new session cannot be instantiated for any reason
      */
-    public Session createSession(String sessionId) {
+    @Override
+	public Session createSession(String sessionId) {
         return createSession(sessionId, true);
     }
 
@@ -638,7 +653,8 @@ public class DeltaManager extends ClusterManagerBase{
      * Create DeltaSession
      * @see org.apache.catalina.Manager#createEmptySession()
      */
-    public Session createEmptySession() {
+    @Override
+	public Session createEmptySession() {
         return getNewDeltaSession() ;
     }
     
@@ -867,7 +883,8 @@ public class DeltaManager extends ClusterManagerBase{
      * @param listener
      *            The listener to add
      */
-    public void addLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void addLifecycleListener(LifecycleListener listener) {
         lifecycle.addLifecycleListener(listener);
     }
 
@@ -875,7 +892,8 @@ public class DeltaManager extends ClusterManagerBase{
      * Get the lifecycle listeners associated with this lifecycle. If this
      * Lifecycle has no listeners registered, a zero-length array is returned.
      */
-    public LifecycleListener[] findLifecycleListeners() {
+    @Override
+	public LifecycleListener[] findLifecycleListeners() {
         return lifecycle.findLifecycleListeners();
     }
 
@@ -885,7 +903,8 @@ public class DeltaManager extends ClusterManagerBase{
      * @param listener
      *            The listener to remove
      */
-    public void removeLifecycleListener(LifecycleListener listener) {
+    @Override
+	public void removeLifecycleListener(LifecycleListener listener) {
         lifecycle.removeLifecycleListener(listener);
     }
 
@@ -898,7 +917,8 @@ public class DeltaManager extends ClusterManagerBase{
      *                if this component detects a fatal error that prevents this
      *                component from being used
      */
-    public void start() throws LifecycleException {
+    @Override
+	public void start() throws LifecycleException {
         if (!initialized) init();
 
         // Validate and update our current component state
@@ -1109,7 +1129,8 @@ public class DeltaManager extends ClusterManagerBase{
      *                if this component detects a fatal error that needs to be
      *                reported
      */
-    public void stop() throws LifecycleException {
+    @Override
+	public void stop() throws LifecycleException {
 
         if (log.isDebugEnabled())
             log.debug(sm.getString("deltaManager.stopped", getName()));
@@ -1152,7 +1173,8 @@ public class DeltaManager extends ClusterManagerBase{
      * @param event
      *            The property change event that has occurred
      */
-    public void propertyChange(PropertyChangeEvent event) {
+    @Override
+	public void propertyChange(PropertyChangeEvent event) {
 
         // Validate the source of this event
         if (!(event.getSource() instanceof Context))
@@ -1178,7 +1200,8 @@ public class DeltaManager extends ClusterManagerBase{
      * @param cmsg -
      *            the message received.
      */
-    public void messageDataReceived(ClusterMessage cmsg) {
+    @Override
+	public void messageDataReceived(ClusterMessage cmsg) {
         if (cmsg != null && cmsg instanceof SessionMessage) {
             SessionMessage msg = (SessionMessage) cmsg;
             switch (msg.getEventType()) {
@@ -1217,7 +1240,8 @@ public class DeltaManager extends ClusterManagerBase{
      *            the sessionId that just completed.
      * @return a SessionMessage to be sent,
      */
-    public ClusterMessage requestCompleted(String sessionId) {
+    @Override
+	public ClusterMessage requestCompleted(String sessionId) {
         return requestCompleted(sessionId, false);
     }
 
@@ -1359,11 +1383,13 @@ public class DeltaManager extends ClusterManagerBase{
    
     //  -------------------------------------------------------- persistence handler
 
-    public void load() {
+    @Override
+	public void load() {
 
     }
 
-    public void unload() {
+    @Override
+	public void unload() {
 
     }
 
@@ -1419,7 +1445,8 @@ public class DeltaManager extends ClusterManagerBase{
      * 
      * @return The invalidated sessions array
      */
-    public String[] getInvalidatedSessions() {
+    @Override
+	public String[] getInvalidatedSessions() {
         return new String[0];
     }
 
@@ -1716,7 +1743,8 @@ public class DeltaManager extends ClusterManagerBase{
         cluster.send(newmsg, sender);
     }
 
-    public ClusterManager cloneFromTemplate() {
+    @Override
+	public ClusterManager cloneFromTemplate() {
         DeltaManager result = new DeltaManager();
         result.name = "Clone-from-"+name;
         result.cluster = cluster;

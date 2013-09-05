@@ -101,7 +101,8 @@ public final class ContainerEvent
     /**
      * Return a string representation of this event.
      */
-    public String toString() {
+    @Override
+	public String toString() {
 
         return ("ContainerEvent['" + getContainer() + "','" +
                 getType() + "','" + getData() + "']");

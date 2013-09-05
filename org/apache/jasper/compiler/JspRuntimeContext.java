@@ -336,7 +336,7 @@ public final class JspRuntimeContext {
             // protocol URL's to the classpath.
             
             if( urls[i].getProtocol().equals("file") ) {
-                cpath.append((String)urls[i].getFile()+sep);
+                cpath.append(urls[i].getFile()+sep);
             }
         }    
 
