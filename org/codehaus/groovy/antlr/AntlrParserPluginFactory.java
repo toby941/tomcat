@@ -24,10 +24,6 @@ import org.codehaus.groovy.control.ParserPluginFactory;
 public class AntlrParserPluginFactory extends ParserPluginFactory {
 
 	public ParserPlugin createParserPlugin() {
-		// return new AntlrParserPlugin();
-		if (true) {
-			throw new RuntimeException("AntlrParserPlugin do no exist");
-		}
-		return null;
+		return new AntlrParserPlugin();
 	}
 }
