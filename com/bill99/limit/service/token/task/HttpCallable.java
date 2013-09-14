@@ -17,10 +17,11 @@ public class HttpCallable implements Callable<String> {
 	private Map<String, String> postMap;
 	private boolean postMethod = false;
 
-	public HttpCallable(Map<String, String> info) {
+	public HttpCallable(String url, Map<String, String> info, boolean isPost) {
 		super();
 		this.postMap = info;
-		this.requstURL = "http://localhost:8080/alarm";
+		this.requstURL = url;
+		postMethod = isPost;
 	}
 
 	public String getRequstURL() {

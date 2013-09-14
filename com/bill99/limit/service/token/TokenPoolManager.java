@@ -170,8 +170,9 @@ public class TokenPoolManager {
 	private Map<String, String> getAlarmInfo(String requestURI, int priority) {
 		Map<String, String> map = new HashMap<String, String>();
 		TokenPool pool = getPool(requestURI);
-		map.put("name", requestURI);
-		map.put("priority", String.valueOf(priority));
+		map.put("pn", requestURI);
+		map.put("p", String.valueOf(priority));
+		map.put("t", Calendar.getInstance().getTime().toString());
 		// map.put("size", String.valueOf(pool.getQueue(priority).size()));
 		return map;
 	}
@@ -187,12 +188,12 @@ public class TokenPoolManager {
 			Exception exception) {
 		Map<String, String> map = getAlarmInfo(requestURI, priority);
 		if (exception != null) {
-			map.put("error", com.bill99.limit.util.ExceptionUtils
+			map.put("i", com.bill99.limit.util.ExceptionUtils
 					.getStackTrace(exception));
 		}
 		map.put("threadName", Thread.currentThread().getName());
-		HttpCallable callable = new HttpCallable(map);
-		callable.setPostMethod(true);
+		HttpCallable callable = new HttpCallable(Config.getAlarmUrl(), map,
+				true);
 		alarmPoolExecutor.submit(callable);
 	}
 
@@ -210,8 +211,8 @@ public class TokenPoolManager {
 		}
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("snapshot", snapshot.toString());
-		HttpCallable callable = new HttpCallable(map);
-		callable.setPostMethod(true);
+		HttpCallable callable = new HttpCallable(Config.getSnapshotUrl(), map,
+				true);
 		snapshotPoolExecutor.submit(callable);
 
 		System.out.println(Calendar.getInstance().getTime() + "send Snapshot");

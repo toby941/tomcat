@@ -14,7 +14,9 @@ public class Config {
 
 	public static String get_config_url = "/getconfig?name={0}";
 
-	public static String post_alarm_url = "/post/alarm/{0}";
+	public static String post_alarm_url = "/upload/alarm";
+
+	public static String post_snapshot_url = "/upload/snapshot";
 
 	public static String getHost() {
 		if (isDev) {
@@ -24,8 +26,12 @@ public class Config {
 		}
 	}
 
-	public static String getAlarmUrl(String name) {
-		return MessageFormat.format(getHost() + post_alarm_url, name);
+	public static String getSnapshotUrl() {
+		return getHost() + post_snapshot_url;
+	}
+
+	public static String getAlarmUrl() {
+		return getHost() + post_alarm_url;
 	}
 
 	public static String getConfigUrl(String name) {
