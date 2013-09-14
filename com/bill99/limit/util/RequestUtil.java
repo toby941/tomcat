@@ -12,12 +12,14 @@ public class RequestUtil {
 
 	/**
 	 * 判断是否soap请求
-	 * 
 	 * @param request
 	 * @return
 	 */
 	public static boolean isSOAPRequest(HttpServletRequest request) {
 		return request.getHeader(SAOP_HEAD_NAME) != null;
+	}
+
+	public static void getValue(HttpServletRequest request) {
 	}
 
 }

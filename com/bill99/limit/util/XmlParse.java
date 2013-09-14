@@ -2,7 +2,6 @@ package com.bill99.limit.util;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -15,6 +14,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLFilter;
@@ -22,12 +23,12 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * 测试各种xml解析效率
- * 
+ * 基于SAX的xml解析器
  * @author jun.bao
  * @since 2013年8月27日
  */
 public class XmlParse {
+	protected static Log log = LogFactory.getLog(XmlParse.class);
 
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
 		// ClassLoader.getSystemResourceAsStream("soap.xml");
@@ -49,17 +50,11 @@ public class XmlParse {
 
 	/**
 	 * 解析xml
-	 * 
 	 * @param in
 	 * @param keys
 	 * @return 提取 xml中 所有 keys中属性，以key-value形式map返回
-	 * @throws ParserConfigurationException
-	 * @throws SAXException
-	 * @throws FileNotFoundException
-	 * @throws IOException
 	 */
-	public static Map<String, String> sax(InputStream in, List<String> keys) throws ParserConfigurationException, SAXException,
-			FileNotFoundException, IOException {
+	public static Map<String, String> sax(InputStream in, List<String> keys) {
 		Map<String, String> map = null;
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -74,8 +69,7 @@ public class XmlParse {
 
 			map = ((KeyValueHandler) defaultHandler).getKv();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("parser error", e);
 		}
 		return map;
 	}

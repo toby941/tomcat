@@ -42,19 +42,19 @@ public class LimitLifecycleListener implements LifecycleListener {
 			return;
 		}
 		if (event.getType().equals(Lifecycle.INIT_EVENT)) {
-			init();
+			init(context.getName());
 		} else if (event.getType().equals(Lifecycle.STOP_EVENT)) {
 			stop();
 		}
 	}
 
-	protected synchronized void init() {
+	protected synchronized void init(String contextName) {
 		if (initialized) {
 			log.warn("lifecycleEvent already init with context: " + context.getPath());
 			return;
 		}
-		System.out.println(this.getClass().getName() + "init TokenPoolManager");
-		TokenPoolManager.getTokenPoolManager().init();
+		log.warn(this.getClass().getName() + " init TokenPoolManager with context :" + contextName);
+		TokenPoolManager.getTokenPoolManager().init(contextName);
 		initialized = true;
 	}
 
@@ -64,6 +64,5 @@ public class LimitLifecycleListener implements LifecycleListener {
 			return;
 		}
 		context = null;
-		log.error("finish stop;");
 	}
 }

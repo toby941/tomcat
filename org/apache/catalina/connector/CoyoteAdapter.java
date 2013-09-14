@@ -51,7 +51,6 @@ import com.bill99.limit.util.IOUtils;
 /**
  * Implementation of a request processor which delegates the processing to a
  * Coyote processor.
- * 
  * @author Craig R. McClanahan
  * @author Remy Maucherat
  * @version $Id: CoyoteAdapter.java 1232086 2012-01-16 18:10:51Z kkolinko $
@@ -75,7 +74,6 @@ public class CoyoteAdapter implements Adapter {
 
 	/**
 	 * Construct a new CoyoteProcessor associated with the specified connector.
-	 * 
 	 * @param connector
 	 *            CoyoteConnector that owns this processor
 	 */
@@ -121,7 +119,6 @@ public class CoyoteAdapter implements Adapter {
 
 	/**
 	 * Event method.
-	 * 
 	 * @return false to indicate an error, expected or not
 	 */
 	@Override
@@ -277,11 +274,11 @@ public class CoyoteAdapter implements Adapter {
 			response.addHeader("X-Powered-By", POWERED_BY);
 		}
 
-		System.out.println("enter coyoteAdapter service");
-		while (request.getParameterNames().hasMoreElements()) {
-			String key = (String) request.getParameterNames().nextElement();
-			System.out.println(key + " :" + request.getParameter(key));
-		}
+		System.out.println("enter coyoteAdapter service " + request.getContentType());
+		// while (request.getParameterNames().hasMoreElements()) {
+		// String key = (String) request.getParameterNames().nextElement();
+		// System.out.println(key + " :" + request.getParameter(key));
+		// }
 
 		System.out.println(IOUtils.convertStreamToString(request.getInputStream()));
 
@@ -589,7 +586,6 @@ public class CoyoteAdapter implements Adapter {
 	 * of the form /path;name=value;name2=value2/ etc. Currently only really
 	 * interested in the session ID that will be in this form. Other parameters
 	 * can safely be ignored.
-	 * 
 	 * @param req
 	 * @param request
 	 */
@@ -679,7 +675,6 @@ public class CoyoteAdapter implements Adapter {
 
 	/**
 	 * Parse session id in URL.
-	 * 
 	 * @deprecated Not used since 6.0.33
 	 */
 	@Deprecated
@@ -824,7 +819,6 @@ public class CoyoteAdapter implements Adapter {
 	 * This method normalizes "\", "//", "/./" and "/../". This method will
 	 * return false when trying to go above the root, or if the URI contains a
 	 * null byte.
-	 * 
 	 * @param uriMB
 	 *            URI to be normalized
 	 */
@@ -932,7 +926,6 @@ public class CoyoteAdapter implements Adapter {
 	 * This method checks for "\", 0, "//", "/./" and "/../". This method will
 	 * return false if sequences that are supposed to be normalized are still
 	 * present in the URI.
-	 * 
 	 * @param uriMB
 	 *            URI to be checked (should be chars)
 	 */

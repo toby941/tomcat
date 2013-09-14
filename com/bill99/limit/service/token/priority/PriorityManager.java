@@ -1,6 +1,12 @@
 package com.bill99.limit.service.token.priority;
 
-import org.apache.catalina.connector.Request;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.bill99.limit.domain.TokenPoolConfig;
 
 /**
  * @author jun.bao
@@ -16,26 +22,34 @@ public class PriorityManager {
 
 	private static PriorityManager manager;
 
-	private PriorityPloy priorityPloy;
+	private Map<String, PriorityPloy> priorityMap;
 
 	public static PriorityManager getPriorityManager() {
 		if (manager == null) {
 			manager = new PriorityManager();
-			manager.init();
 		}
 		return manager;
 	}
 
-	public void init() {
-		priorityPloy = new DefaultPriorityPloy();
+	public void init(List<TokenPoolConfig> configs) {
+		for (TokenPoolConfig config : configs) {
+			PriorityPloy priorityPloy = new KeyValuePriorityPloy(config);
+			priorityMap.put(config.getRequestUrl(), priorityPloy);
+		}
 	}
 
 	private PriorityManager() {
 		super();
+		priorityMap = new HashMap<String, PriorityPloy>();
 	}
 
-	public Integer getPriority(String requestURI, Request request) {
-		return priorityPloy.getPriority(request);
+	public Integer getPriority(HttpServletRequest request) {
+		String requestURL = request.getRequestURI();
+		PriorityPloy priorityPloy = priorityMap.get(requestURL);
+		if (priorityPloy != null) {
+			return priorityPloy.getPriority(request);
+		}
+		return Integer.MAX_VALUE;
 	}
 
 }

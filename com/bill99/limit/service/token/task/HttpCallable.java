@@ -15,15 +15,7 @@ public class HttpCallable implements Callable<String> {
 
 	private String requstURL;
 	private Map<String, String> postMap;
-	private Boolean isGet;
-
-	public Boolean getIsGet() {
-		return isGet;
-	}
-
-	public void setIsGet(Boolean isGet) {
-		this.isGet = isGet;
-	}
+	private boolean postMethod = false;
 
 	public HttpCallable(Map<String, String> info) {
 		super();
@@ -49,11 +41,19 @@ public class HttpCallable implements Callable<String> {
 
 	@Override
 	public String call() throws Exception {
-		if (isGet) {
-			return JDKHttpClient.doGet(requstURL);
-		} else {
+		if (postMethod) {
 			return JDKHttpClient.doPost(requstURL, postMap);
+		} else {
+			return JDKHttpClient.doGet(requstURL);
 		}
+	}
+
+	public boolean isPostMethod() {
+		return postMethod;
+	}
+
+	public void setPostMethod(boolean postMethod) {
+		this.postMethod = postMethod;
 	}
 
 }

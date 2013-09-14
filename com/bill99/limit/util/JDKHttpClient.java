@@ -9,6 +9,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * 封装get post请求工具类
  * 
@@ -17,12 +19,12 @@ import java.util.Map;
  */
 public class JDKHttpClient {
 
-	public static final Integer connectTimeout = 1000 * 6;
+	public static final Integer connectTimeout = 1000 * 5;
 	public static final Integer readTimeout = 1000 * 10;
-	protected static org.apache.juli.logging.Log log = org.apache.juli.logging.LogFactory.getLog(JDKHttpClient.class);
+	protected static org.apache.juli.logging.Log log = org.apache.juli.logging.LogFactory
+			.getLog(JDKHttpClient.class);
 
 	/**
-	 * 
 	 * @param requestURL
 	 * @param timeout
 	 *            调用者指定请求超时时间
@@ -40,18 +42,32 @@ public class JDKHttpClient {
 			connection = (HttpURLConnection) getUrl.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setUseCaches(false);
+			connection.setDoOutput(false);
 			connection.setConnectTimeout(timeout);
 			connection.setReadTimeout(readTimeout);
+			connection.setRequestProperty("User-Agent",
+					"Mozilla/5.0 ( compatible ) ");
+			connection.setRequestProperty("Accept", "*/*");
 			// 进行连接，但是实际上get request要在下一句的connection.getInputStream()函数中才会真正发到
 			// 服务器
 			connection.connect();
-			// 取得输入流，并使用Reader读取
-			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-			String lines;
-			while ((lines = reader.readLine()) != null) {
-				sb.append(lines);
+			System.out.println(connection.getResponseCode());
+			int statusCode = connection.getResponseCode();
+			if (HttpServletResponse.SC_OK == statusCode) {
+				// 取得输入流，并使用Reader读取
+				reader = new BufferedReader(new InputStreamReader(
+						connection.getInputStream()));
+				String lines;
+				while ((lines = reader.readLine()) != null) {
+					sb.append(lines);
+				}
+				return sb.toString();
+			} else {
+				log.error("doGet with url: " + requestURL + " error code:"
+						+ statusCode);
+				return null;
 			}
-			return sb.toString();
+
 		} catch (IOException e) {
 			log.error("doGet with url: " + requestURL, e);
 			return null;
@@ -68,7 +84,6 @@ public class JDKHttpClient {
 	}
 
 	/**
-	 * 
 	 * @param getURL
 	 * @return
 	 * @throws IOException
@@ -77,7 +92,8 @@ public class JDKHttpClient {
 		return doGet(requestURL, connectTimeout);
 	}
 
-	public static String doPost(String postURL, Map<String, String> paramaters, Integer timeout) {
+	public static String doPost(String postURL, Map<String, String> paramaters,
+			Integer timeout) {
 		StringBuffer sb = new StringBuffer();
 		BufferedReader reader = null;
 		HttpURLConnection connection = null;
@@ -92,29 +108,37 @@ public class JDKHttpClient {
 			connection.setRequestMethod("POST");
 			// Post 请求不能使用缓存
 			connection.setUseCaches(false);
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded");
 			connection.setConnectTimeout(timeout);
 			connection.setReadTimeout(readTimeout);
 			// 连接，从postUrl.openConnection()至此的配置必须要在connect之前完成，
 			// 要注意的是connection.getOutputStream会隐含的进行connect。
 			connection.connect();
-			DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+			DataOutputStream out = new DataOutputStream(
+					connection.getOutputStream());
 			for (String key : paramaters.keySet()) {
-				contentBuffer.append(key + "=" + URLEncoder.encode(paramaters.get(key), "utf-8") + "&");
+				contentBuffer
+						.append(key
+								+ "="
+								+ URLEncoder.encode(paramaters.get(key),
+										"utf-8") + "&");
 			}
 			// DataOutputStream.writeBytes将字符串中的16位的unicode字符以8位的字符形式写道流里面
 			out.writeBytes(contentBuffer.toString());
 
 			out.flush();
 			out.close(); // flush and close
-			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			reader = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
 			String line;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line);
 			}
 			return sb.toString();
 		} catch (IOException e) {
-			log.error("doPost with url: " + postURL + " content: " + contentBuffer.toString(), e);
+			log.error("doPost with url: " + postURL + " content: "
+					+ contentBuffer.toString(), e);
 			return null;
 		} finally {
 			try {
@@ -137,7 +161,7 @@ public class JDKHttpClient {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String s = doGet("http://www.163.com");
+		String s = doGet("http://www.163.com:80");
 		System.out.println(s);
 	}
 }

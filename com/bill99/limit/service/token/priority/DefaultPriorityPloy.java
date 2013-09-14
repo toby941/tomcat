@@ -5,10 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.catalina.connector.Request;
-import org.xml.sax.SAXException;
+import javax.servlet.http.HttpServletRequest;
 
 import com.bill99.limit.util.RequestUtil;
 import com.bill99.limit.util.XmlParse;
@@ -20,7 +17,7 @@ import com.bill99.limit.util.XmlParse;
 public class DefaultPriorityPloy implements PriorityPloy {
 
 	@Override
-	public Integer getPriority(Request request) {
+	public Integer getPriority(HttpServletRequest request) {
 
 		boolean isSOAPRequest = RequestUtil.isSOAPRequest(request);
 		if (isSOAPRequest) {
@@ -34,16 +31,11 @@ public class DefaultPriorityPloy implements PriorityPloy {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 			if (kv != null) {
 				for (String key : kv.keySet()) {
-					System.out.println("key: " + key + " value: " + kv.get(key));
+					System.out
+							.println("key: " + key + " value: " + kv.get(key));
 				}
 			}
 		}
